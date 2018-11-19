@@ -1,0 +1,16 @@
+{
+    "commit-msg": {
+        "enabled": true,
+        "actions": []
+    },
+    "pre-commit": {
+        "enabled": false,
+        "actions": [
+
+        ]
+    },
+    "pre-push": {
+        "enabled": true,
+        "actions": []
+    }
+}

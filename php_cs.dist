@@ -1,0 +1,68 @@
+<?php
+
+use PhpCsFixer\{Finder, Config};
+
+$finder = Finder::create()
+    ->exclude([
+        'bin',
+        'bootstrap/cache',
+        'node_modules',
+        'public/css',
+        'public/fonts',
+        'public/img',
+        'public/js',
+        'resources/assets',
+        'resources/views',
+        'storage'
+    ])
+    ->in(__DIR__);
+
+return Config::create()
+    ->setRules(array(
+        '@PSR2' => true,
+        'array_syntax' => ['syntax' => 'short'],
+        'blank_line_after_opening_tag' => true,
+        'cast_spaces' => true,
+        'combine_consecutive_unsets' => true,
+        'concat_space' => ['spacing' => 'none'],
+        'function_typehint_space' => true,
+        'include' => true,
+        'linebreak_after_opening_tag' => true,
+        'lowercase_cast' => true,
+        'method_separation' => true,
+        'native_function_casing' => true,
+        'new_with_braces' => true,
+        'no_blank_lines_after_class_opening' => true,
+        'no_empty_phpdoc' => true,
+        'no_empty_statement' => true,
+        'no_leading_import_slash' => true,
+        'no_multiline_whitespace_around_double_arrow' => true,
+        'no_multiline_whitespace_before_semicolons' => true,
+        'no_short_echo_tag' => true,
+        'no_singleline_whitespace_before_semicolons' => true,
+        'no_trailing_comma_in_list_call' => true,
+        'no_trailing_comma_in_singleline_array' => true,
+        'no_unneeded_control_parentheses' => true,
+        'no_unused_imports' => true,
+        'no_useless_else' => true,
+        'no_useless_return' => true,
+        'no_whitespace_before_comma_in_array' => true,
+        'no_whitespace_in_blank_line' => true,
+        'object_operator_without_whitespace' => true,
+        'ordered_class_elements' => true,
+        'phpdoc_scalar' => true,
+        'phpdoc_single_line_var_spacing' => true,
+        'phpdoc_types' => true,
+        'return_type_declaration' => true,
+        'short_scalar_cast' => true,
+        'single_blank_line_before_namespace' => true,
+        'single_quote' => true,
+        'space_after_semicolon' => true,
+        'ternary_operator_spaces' => true,
+        'trailing_comma_in_multiline_array' => true,
+        'trim_array_spaces' => true,
+        'whitespace_after_comma_in_array' => true,
+        //non @PSR2:
+        'single_import_per_statement' => false,
+    ))
+    ->setFinder($finder);
