@@ -15,7 +15,22 @@ class CreateGeneralsTable extends Migration
     {
         Schema::create('generals', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('status');
+            $table->string('title');
+            $table->integer('version');
             $table->timestamps();
+        });
+
+        Schema::create('addresses', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('city')->nullable();
+            $table->string('postal_code')->nullable();
+            $table->string('country')->nullable();
+            $table->string('locality')->nullable();
+            $table->string('address')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
+            $table->text('description')->nullable();
         });
     }
 
@@ -27,5 +42,6 @@ class CreateGeneralsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('generals');
+        Schema::dropIfExists('addresses');
     }
 }
