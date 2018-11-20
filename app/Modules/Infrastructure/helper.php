@@ -1,0 +1,5 @@
+<?php
+
+/**
+ *	Infrastructures Helper  
+ */
