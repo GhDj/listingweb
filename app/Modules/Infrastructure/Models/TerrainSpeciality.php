@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Modules\Notification\Models;
+namespace App\Modules\Infrastructures\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Notification extends Model
-{
+class TerrainSpeciality extends Model {
+
     /**
      * Indicates if the model should be timestamped.
      *
@@ -18,7 +18,7 @@ class Notification extends Model
      *
      * @var string
      */
-    protected $table = 'notifications';
+    protected $table = 'terrain_specialities';
 
     /**
      * The attributes that are mass assignable.
@@ -26,16 +26,11 @@ class Notification extends Model
      * @var array
      */
     protected $fillable = [
-        'title',
-        'description',
-        'code',
-        'target',
-        'status',
-        'user_id'
+        'speciality',
+        'terrain_id'
     ];
 
 
-    public function user(){
-        return $this->belongsTo('App\Modules\User\Models\User');
-    }
+
 }
+

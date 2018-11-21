@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Modules\Notification\Models;
+namespace App\Modules\Content\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Notification extends Model
-{
+class Page extends Model {
+
     /**
      * Indicates if the model should be timestamped.
      *
@@ -18,7 +18,7 @@ class Notification extends Model
      *
      * @var string
      */
-    protected $table = 'notifications';
+    protected $table = 'pages';
 
     /**
      * The attributes that are mass assignable.
@@ -27,15 +27,21 @@ class Notification extends Model
      */
     protected $fillable = [
         'title',
-        'description',
-        'code',
-        'target',
         'status',
         'user_id'
     ];
 
+    public function posts()
+    {
+        return $this->hasMany('App\Modules\Content\Models\Post','page_id');
+    }
 
     public function user(){
+
         return $this->belongsTo('App\Modules\User\Models\User');
     }
+
+
+
+
 }
