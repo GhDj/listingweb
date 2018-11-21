@@ -14,44 +14,6 @@ class CreateInfrastructuresTable extends Migration
     public function up()
     {
 
-        Schema::create('terrain_specialities', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('speciality');
-            $table->timestamps();
-        });
-
-        Schema::create('equipements', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('description');
-            $table->string('status');
-            $table->integer('media_id')->unsigned();
-            $table->foreign('media_id')->references('id')->on('medias');
-            $table->timestamps();
-        });
-
-        Schema::create('categories', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('category');
-            $table->timestamps();
-        });
-
-        Schema::create('terrains', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('type');
-            $table->float('size');
-            $table->integer('speciality_id')->unsigned();
-            $table->foreign('speciality_id')->references('id')->on('terrain_specialities');
-            $table->integer('equipement_id')->unsigned();
-            $table->foreign('equipement_id')->references('id')->on('equipements');
-            $table->integer('category_id')->unsigned();
-            $table->foreign('category_id')->references('id')->on('categories');
-            $table->integer('media_id')->unsigned();
-            $table->foreign('media_id')->references('id')->on('medias');
-            $table->timestamps();
-        });
-
         Schema::create('complexes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
@@ -60,10 +22,46 @@ class CreateInfrastructuresTable extends Migration
             $table->string('web_site');
             $table->integer('address_id')->unsigned();
             $table->foreign('address_id')->references('id')->on('addresses');
+            $table->timestamps();
+        });
+
+
+        Schema::create('categories', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('category');
+            $table->integer('complex_id')->unsigned();
+            $table->foreign('complex_id')->references('id')->on('complexes');
+            $table->timestamps();
+        });
+
+        Schema::create('terrains', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->string('type');
+            $table->float('size');
+            $table->integer('complex_id')->unsigned();
+            $table->foreign('complex_id')->references('id')->on('complexes');
+            $table->integer('category_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('categories');
+            $table->timestamps();
+        });
+
+
+        Schema::create('equipments', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->string('description');
+            $table->string('status');
             $table->integer('terrain_id')->unsigned();
             $table->foreign('terrain_id')->references('id')->on('terrains');
-            $table->integer('media_id')->unsigned();
-            $table->foreign('media_id')->references('id')->on('medias');
+            $table->timestamps();
+        });
+
+        Schema::create('terrain_specialities', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('speciality');
+            $table->integer('terrain_id')->unsigned();
+            $table->foreign('terrain_id')->references('id')->on('terrains');
             $table->timestamps();
         });
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Modules\Notification\Models;
+namespace App\Modules\Reviews\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Notification extends Model
-{
+class Review extends Model {
+
     /**
      * Indicates if the model should be timestamped.
      *
@@ -18,7 +18,7 @@ class Notification extends Model
      *
      * @var string
      */
-    protected $table = 'notifications';
+    protected $table = 'reviews';
 
     /**
      * The attributes that are mass assignable.
@@ -26,16 +26,13 @@ class Notification extends Model
      * @var array
      */
     protected $fillable = [
-        'title',
-        'description',
-        'code',
-        'target',
-        'status',
+        'note',
+        'comment',
+        'reviewed_id',
+        'reviewed_type',
         'user_id'
+
     ];
 
 
-    public function user(){
-        return $this->belongsTo('App\Modules\User\Models\User');
-    }
 }

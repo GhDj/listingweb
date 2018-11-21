@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Modules\Notification\Models;
+namespace App\Modules\Content\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Notification extends Model
-{
+class Ad extends Model {
+
     /**
      * Indicates if the model should be timestamped.
      *
@@ -18,7 +18,7 @@ class Notification extends Model
      *
      * @var string
      */
-    protected $table = 'notifications';
+    protected $table = 'ads';
 
     /**
      * The attributes that are mass assignable.
@@ -26,16 +26,16 @@ class Notification extends Model
      * @var array
      */
     protected $fillable = [
-        'title',
-        'description',
-        'code',
-        'target',
+        'place',
         'status',
-        'user_id'
+        'media_id'
     ];
 
+    public function media(){
 
-    public function user(){
-        return $this->belongsTo('App\Modules\User\Models\User');
+        return $this->hasOne('App\Modules\General\Models\Media','id','media_id');
     }
+
+
+
 }

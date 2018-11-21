@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Modules\Notification\Models;
+namespace App\Modules\User\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Notification extends Model
+class Role extends Model
 {
     /**
      * Indicates if the model should be timestamped.
@@ -18,7 +18,7 @@ class Notification extends Model
      *
      * @var string
      */
-    protected $table = 'notifications';
+    protected $table = 'roles';
 
     /**
      * The attributes that are mass assignable.
@@ -27,15 +27,15 @@ class Notification extends Model
      */
     protected $fillable = [
         'title',
-        'description',
-        'code',
-        'target',
-        'status',
-        'user_id'
     ];
 
-
-    public function user(){
-        return $this->belongsTo('App\Modules\User\Models\User');
+    public function users()
+    {
+        return $this->belongsToMany(
+            'App\Modules\User\Models\User',
+            'user_roles',
+            'role_id',
+            'user_id'
+        )->withTimestamps();
     }
 }

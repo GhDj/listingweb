@@ -32,8 +32,6 @@ class CreateReviewsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('reported_id');
             $table->string('reported_type');
-            $table->integer('media_id')->unsigned()->nullable();
-            $table->foreign('media_id')->references('id')->on('medias');
             $table->timestamps();
         });
     }
