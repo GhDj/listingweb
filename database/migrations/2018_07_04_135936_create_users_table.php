@@ -27,7 +27,9 @@ class CreateUsersTable extends Migration
             $table->string('password', 60);
             $table->integer('phone')->nullable();
             $table->char('gender', 1); //1 - homme / 2 - femme
+            $table->integer('status')->default(0); //0 - inactive / 1 - active
             $table->string('picture')->nullable();
+            $table->string('validation')->nullable();
             $table->integer('promo_pts')->default(0);
             $table->integer('address_id')->unsigned();
             $table->foreign('address_id')->references('id')->on('addresses');
