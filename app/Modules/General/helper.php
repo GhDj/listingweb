@@ -7,7 +7,6 @@ if (!function_exists('checkApiToken')) {
      */
     function checkApiToken($token)
     {
-      //dd(encryptAES('Olymiade+Sports+Web/dKd72$XMEH39_+@=j6wzn?t*8783JH5dsfsfsDKodpkTb#Dp=N5SnRJKg3?T2MTz^L@&@3kSg2nPbS2qxx@!VBUg$C!!t=nwG7EuJXpqy5$vp2tBT9vmpf'));
         if(decryptAES(config('api.SHA256Token')) === decryptAES($token)){
             return true;
         }
