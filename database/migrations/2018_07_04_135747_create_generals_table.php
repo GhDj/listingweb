@@ -31,6 +31,7 @@ class CreateGeneralsTable extends Migration
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
             $table->text('description')->nullable();
+            $table->timestamps();
         });
     }
 
