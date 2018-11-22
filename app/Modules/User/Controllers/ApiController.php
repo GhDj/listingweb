@@ -7,6 +7,7 @@ use App\Modules\General\Models\Address;
 use Illuminate\Http\Request;
 use App\Modules\User\Models\User;
 use Mail;
+use Auth;
 
 class ApiController extends Controller
 {
@@ -76,6 +77,40 @@ class ApiController extends Controller
 
             return response()->json(['status' => 200]);
 
+    }
+
+    public function handleUserLogin(Request $request){
+
+        if (!$request->has('token') or !checkApiToken($request->input('token')) or $request->getContentType() !== 'json') {
+            return response()->json(['status' => 403]);
+        }
+
+        if(
+            !$request->has('email') or
+            !$request->has('password')
+        ){
+            return response()->json(['status' => 404]);
+        }
+
+        $user = User::where('email', '=', $request->input('email'))
+            ->with('address')
+            ->with('roles')
+            ->first();
+
+        if($user && ($user->status != 0)){
+            $credentials = [
+                'email' => $request->input('email'),
+                'password' => $request->input('password')
+            ];
+
+            if (Auth::attempt($credentials)) {
+                return response()->json(['status' => 200, 'user' => $user]);
+            } else {
+                return response()->json(['status' => 405]);
+            }
+        } else {
+            return response()->json(['status' => 400]);
+        }
     }
 
 }
