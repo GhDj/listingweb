@@ -113,4 +113,63 @@ class ApiController extends Controller
         }
     }
 
+    public function handleUpdateUserProfile(Request $request, $id){
+
+        if (!$request->has('token') or !checkApiToken($request->input('token')) or $request->getContentType() !== 'json') {
+            return response()->json(['status' => 403]);
+        }
+
+        $user = User::find($id);
+        if(!$user or $user->status == 0)
+        {
+            return response()->json(['status' => 404]);
+        }
+
+        $request->has('first_name') ? $user->first_name = $request->input('first_name') : null;
+        $request->has('last_name') ? $user->last_name = $request->input('last_name') : null;
+        $request->has('email') ? $user->email = $request->input('email') : null;
+        $request->has('phone') ? $user->phone = $request->input('phone') : null;
+        $request->has('gender') ? $user->gender = $request->input('gender') : null;
+        $request->has('picture') ? $user->picture = $request->input('picture') : null;
+
+        if($request->has('address'))
+        {
+            $address = $request->input('address');
+            $user->address->update([
+                'city' => isset($address['city'])? $address['city'] : null,
+                'postal_code'=> isset($address['postal_code'])? $address['postal_code'] : null,
+                'country' => isset($address['country'])? $address['country'] : null,
+                'locality' => isset($address['locality'])? $address['locality'] : null,
+                'address' => isset($address['address'])? $address['address'] : null,
+                'latitude' => isset($address['latitude'])? $address['latitude'] : null,
+                'longitude' => isset($address['longitude'])? $address['longitude'] : null,
+                'description' => isset($address['description'])? $address['description'] : null
+            ]);
+        }
+
+              if($request->has('password') and $request->has('newPassword')){
+
+              if($request->input('password') != $request->input('newPassword')){
+                $credentials = [
+                    'email' => $user->email,
+                    'password' => $request->input('password')
+                ];
+
+                if (Auth::attempt($credentials)) {
+                    $user->password = bcrypt($request->input('newPassword'));
+                } else {
+                    return response()->json(['status' => 300]);
+                }
+              }else
+              {
+                  return response()->json(['status' => 301]);
+              }
+        }
+
+        $user->save();
+
+        return response()->json(['status' => 200]);
+
+    }
+
 }
