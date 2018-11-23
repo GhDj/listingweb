@@ -67,7 +67,7 @@ Succès : status = 200 , user { }
 - - - -
 
 ### Route 
-`/api/user/profile/update`
+`/api/user/profile/update/{id}`
 
 ### Description 
 Permettre à l'utilisateur de ce modifier ces coordonnées  
@@ -82,6 +82,7 @@ POST
 ? = Obligatoire en condition
 ```
 token ** (String)
+id !** (Int)
 first_name  (String)
 last_name  (String)
 password  (String)
@@ -100,6 +101,34 @@ Erreur : Token Incorrect/Introuvable  : status = 403
 Erreur : Utilisateur Introuvable : status = 404
 Erreur : Mot de Passe Incorrect : status = 300
 Erreur : Nouveau Mot de Passe Refusé : status = 301
+Succès : status = 200 , user { }
+```
+- - - -
+
+### Route 
+`/api/user/profile/show/{id}`
+
+### Description 
+Afficher les coordonnée d'un utilisateur)  
+
+### Méthode 
+POST
+
+### Inputs
+** = Obligatoire \
+( ) = Type \
+! = Paramètre d'URL \
+? = Obligatoire en condition
+```
+token ** (String)
+id !** (Int)
+```
+
+### Résultat
+
+```
+Erreur : Token Incorrect/Introuvable  : status = 403
+Erreur : Utilisateur Introuvable : status = 404
 Succès : status = 200 , user { }
 ```
 - - - -

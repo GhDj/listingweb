@@ -34,5 +34,10 @@ class Review extends Model {
 
     ];
 
+    public function reviewer(){
+
+        return $this->belongsTo('App\Modules\User\Models\User');
+    }
+
 
 }
