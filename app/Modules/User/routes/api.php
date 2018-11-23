@@ -5,6 +5,6 @@ Route::group(['module' => 'User', 'middleware' => ['api'], 'namespace' => 'App\M
     Route::resource('User', 'UserController');
     Route::post('/api/user/register', 'ApiController@handleUserRegister');
     Route::post('/api/user/login', 'ApiController@handleUserLogin');
-
-
+    Route::post('/api/user/profile/update/{id}', 'ApiController@handleUpdateUserProfile');
+    
 });
