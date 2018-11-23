@@ -39,5 +39,11 @@ class Report extends Model {
         return $this->hasMany('App\Modules\General\Models\Media','report_id');
     }
 
+    public function reporter(){
+
+        return $this->belongsTo('App\Modules\User\Models\User');
+    }
+
+
 
 }

@@ -31,6 +31,12 @@ use Illuminate\Database\Eloquent\Model;
         'price'
     ];
 
-}
+        public function medias(){
+
+            return $this->hasMany('App\Modules\General\Models\Media','product_id');
+        }
+
+
+    }
 
 

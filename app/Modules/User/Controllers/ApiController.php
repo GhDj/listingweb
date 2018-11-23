@@ -172,4 +172,26 @@ class ApiController extends Controller
 
     }
 
+    public function showUser(Request $request, $id){
+
+        if (!$request->has('token') or !checkApiToken($request->input('token')) or $request->getContentType() !== 'json') {
+            return response()->json(['status' => 403]);
+        }
+
+        if(
+        !isset($id)
+        )
+        {
+            return response()->json(['status' => 404]);
+        }
+
+        $user = User::find($id);
+
+        if($user){
+            return response()->json(['status' => 200, 'user' => $user->with('address')->with('roles')->first()]);
+        } else {
+            return response()->json(['status' => 404]);
+        }
+    }
+
 }

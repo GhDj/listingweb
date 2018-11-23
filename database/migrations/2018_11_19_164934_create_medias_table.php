@@ -28,6 +28,8 @@ class CreateMediasTable extends Migration
             $table->foreign('report_id')->references('id')->on('reports');
             $table->integer('post_id')->unsigned()->nullable();
             $table->foreign('post_id')->references('id')->on('posts');
+            $table->integer('product_id')->unsigned()->nullable();
+            $table->foreign('product_id')->references('id')->on('products');
             $table->timestamps();
         });
 

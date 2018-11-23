@@ -32,7 +32,8 @@ class Media extends Model {
         'equipment_id',
         'complex_id',
         'report_id',
-        'post_id'
+        'post_id',
+        'product_id'
     ];
 
 }
