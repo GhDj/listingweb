@@ -35,3 +35,15 @@ if (!function_exists('encryptAES')) {
         return base64_encode(openssl_encrypt($string, config('app.cipher'), config('api.encryptKey'), 0, config('api.encryptString')));
     }
 }
+
+if (!function_exists('transform64BitPicture')) {
+    /**
+     * @param string $base64
+     * @return string
+     */
+    function transform64BitPicture($base64)
+    {
+        return base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64));
+    }
+}
+

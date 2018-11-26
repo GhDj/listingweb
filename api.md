@@ -132,3 +132,31 @@ Erreur : Utilisateur Introuvable : status = 404
 Succès : status = 200 , user { }
 ```
 - - - -
+
+### Route 
+`/api/media/upload`
+
+### Description 
+Créer une image dans le Storage
+
+### Méthode 
+POST
+
+### Inputs
+** = Obligatoire \
+( ) = Type \
+! = Paramètre d'URL \
+? = Obligatoire en condition
+```
+token ** (String)
+picture ** (String)
+```
+
+### Résultat
+
+```
+Erreur : Token Incorrect/Introuvable  : status = 403
+Erreur : Paramètres Introuvables : status = 404
+Succès : status = 200, picture = (String)
+```
+- - - -
