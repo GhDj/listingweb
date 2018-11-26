@@ -4,7 +4,7 @@ namespace App\Modules\User\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use App\Modules\User\Models\User;
 class WebController extends Controller
 {
 
@@ -18,5 +18,23 @@ class WebController extends Controller
         return view("User::backOffice.dashboard");
     }
 
+    public function handleUserActivation($email , $activationCode){
+
+        $user = User::where('email', $email)->first();
+        if (!$user) {
+            return 'user not found !';
+        }
+        if($user->validation == $activationCode) {
+
+            $user->status = 1;
+            $user->validation = '';
+            $user->save();
+
+            return redirect()->route('showAdminDashboard'); //TODO modify redirect (to login)
+        }else {
+            return 'invalide link';
+        }
+
+    }
 
 }

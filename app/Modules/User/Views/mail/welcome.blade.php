@@ -1,7 +1,8 @@
-Hi,
+Hi {{ $user->first_name }},
 
-email : {{ $email }}
-password : {{ $password }}
-validationCode : {{ $validationCode }}
+Click the link below to activate your account :
+
+<a href="{{ $validationLink }}">Activate your account !</a>
+
 
 <!-- todo email template-->
