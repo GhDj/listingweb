@@ -19,8 +19,8 @@ class ApiController extends Controller
         }
 
         if(
-            !$request->has('first_name') or
-            !$request->has('last_name') or
+            !$request->has('firstName') or
+            !$request->has('lastName') or
             !$request->has('email') or
             !$request->has('password') or
             !$request->has('gender') or
@@ -54,8 +54,8 @@ class ApiController extends Controller
             $validation = str_random(30);
 
             $user =  User::create([
-                'first_name' => $request->input('first_name'),
-                'last_name' => $request->input('last_name'),
+                'first_name' => $request->input('firstName'),
+                'last_name' => $request->input('lastName'),
                 'email' => $request->input('email'),
                 'password' => bcrypt($request->input('password')),
                 'phone' => ($request->has('phone'))? $request->input('password') : null,
@@ -68,7 +68,7 @@ class ApiController extends Controller
 
              $user->assignRole($request->input('role'));
 
-             $content = ['email' => $user->email, 'password' => $user->password , 'validationCode' => $validation];
+             $content = ['user' => $user , 'validationLink' => URL('user/activation/'.$user->email.'/'.$validation)];
 
              Mail::send('User::mail.welcome', $content, function ($message) use ($user) {
              $message->to($user->email);
@@ -193,5 +193,6 @@ class ApiController extends Controller
             return response()->json(['status' => 404]);
         }
     }
+
 
 }
