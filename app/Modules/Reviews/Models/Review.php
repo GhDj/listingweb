@@ -37,5 +37,9 @@ class Review extends Model {
         return $this->belongsTo('App\Modules\User\Models\User');
     }
 
+     public function reviewed(){
+
+        return $this->morphTo();
+    }
 
 }

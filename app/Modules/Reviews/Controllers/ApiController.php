@@ -188,5 +188,22 @@ class ApiController extends Controller
          return response()->json(['status' => 200]);
     }
 
+    public function getReviews(Request $request , $userId){
+
+        if (!$request->has('token') or !checkApiToken($request->input('token')) 
+            or $request->getContentType() !== 'json') {
+            return response()->json(['status' => 403]);
+        }
+
+          $user = User::find($userId);
+          if(!$user)
+           {
+            return response()->json(['status' => 404]);
+           }
+
+           return response()->json(['status' => 200 , 'reviews' => $user->reviews()->with('reviewed')->get()]);
+
+    }
+
 
 }
