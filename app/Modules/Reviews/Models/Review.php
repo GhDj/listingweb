@@ -28,8 +28,6 @@ class Review extends Model {
     protected $fillable = [
         'note',
         'comment',
-        'reviewed_id',
-        'reviewed_type',
         'user_id'
 
     ];
