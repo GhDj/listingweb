@@ -7,5 +7,5 @@ Route::group(['module' => 'Reviews', 'middleware' => ['api'], 'namespace' => 'Ap
     Route::post('/api/wishlist/add/{userId}', 'ApiController@handleAddToWishlist');
     Route::post('/api/wishlist/delete/{userId}', 'ApiController@handleDeleteFromWishlist');
     Route::post('/api/review/add/{userId}', 'ApiController@handleAddReview');
-
+    Route::post('/api/review/all/{userId}', 'ApiController@getReviews'); 
 });

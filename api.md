@@ -283,3 +283,31 @@ Succès : status = 200
 ```
 - - - -
 
+### Route 
+`/api/review/all/{userId}`
+
+### Description 
+Afficher la list des avis d'un utilisateur
+
+### Méthode 
+POST
+
+### Inputs
+** = Obligatoire \
+( ) = Type \
+! = Paramètre d'URL \
+? = Obligatoire en condition
+```
+token ** (String)
+userId !** (Int)
+```
+
+### Résultat
+
+```
+Erreur : Token Incorrect/Introuvable  : status = 403
+Erreur : Utilisateur Introuvables : status = 404
+Succès : status = 200 , reviews { }
+```
+- - - -
+
