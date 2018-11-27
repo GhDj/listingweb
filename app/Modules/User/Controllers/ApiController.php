@@ -58,7 +58,7 @@ class ApiController extends Controller
                 'last_name' => $request->input('lastName'),
                 'email' => $request->input('email'),
                 'password' => bcrypt($request->input('password')),
-                'phone' => ($request->has('phone'))? $request->input('password') : null,
+                'phone' => ($request->has('phone'))? $request->input('phone') : null,
                 'gender' => $request->input('gender'),
                 'picture' => 'img/unknown.png',
                 'validation' => $validation,

@@ -18,8 +18,6 @@ class CreateShopsTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->float('price');
-            $table->integer('media_id')->unsigned();
-            $table->foreign('media_id')->references('id')->on('medias');
             $table->timestamps();
         });
 
@@ -28,7 +26,7 @@ class CreateShopsTable extends Migration
             $table->string('promo_code');
             $table->integer('status'); // 1 disponible | 2 used
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('medias');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

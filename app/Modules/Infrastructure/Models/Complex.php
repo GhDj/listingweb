@@ -52,12 +52,12 @@ class Complex extends Model {
 
     public function reviews(){
 
-        return $this->morphMany('App\Modules\Media\Reviews\Review','reviewed');
+        return $this->morphMany('App\Modules\Reviews\Models\Review','reviewed');
     }
 
     public function reports(){
 
-        return $this->morphMany('App\Modules\Media\Reviews\Report','reported');
+        return $this->morphMany('App\Modules\Reviews\Models\Report','reported');
     }
 
 
@@ -65,6 +65,11 @@ class Complex extends Model {
 
         return $this->hasOne('App\Modules\General\Models\Address', 'id', 'address_id');
     }
+    public function wishlists(){
+
+        return $this->morphMany('App\Modules\Reviews\Models\Wishlist','wished');
+    }
+
 
 }
 
