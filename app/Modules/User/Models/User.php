@@ -77,7 +77,7 @@ class User extends Authenticatable
     }
 
     public function reports(){
-        return $this->hasMany('App\Modules\Reviews\Models\Review','user_id');
+        return $this->hasMany('App\Modules\Reviews\Models\Report','user_id');
     }
 
     public function messages(){
@@ -86,6 +86,10 @@ class User extends Authenticatable
 
     public function notifications(){
         return $this->hasMany('App\Modules\General\Models\Notification','user_id','id');
+    }
+
+    public function wishlists(){
+        return $this->hasMany('App\Modules\Reviews\Models\Wishlist','user_id');
     }
 
 

@@ -63,13 +63,17 @@ class Terrain extends Model {
 
     public function reviews(){
 
-        return $this->morphMany('App\Modules\Media\Reviews\Review','reviewed');
+        return $this->morphMany('App\Modules\Reviews\Models\Review','reviewed');
     }
 
     public function reports(){
 
-        return $this->morphMany('App\Modules\Media\Reviews\Report','reported');
+        return $this->morphMany('App\Modules\Reviews\Models\Report','reported');
     }
 
+    public function wishlists(){
+
+        return $this->morphMany('App\Modules\Reviews\Models\Wishlist','wished');
+    }
 }
 

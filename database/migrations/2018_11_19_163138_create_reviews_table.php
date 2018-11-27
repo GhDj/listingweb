@@ -34,6 +34,15 @@ class CreateReviewsTable extends Migration
             $table->string('reported_type');
             $table->timestamps();
         });
+
+        Schema::create('wishlists', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('wished_id');
+            $table->string('wished_type');
+            $table->timestamps();
+        });
     }
 
     /**

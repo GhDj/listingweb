@@ -160,3 +160,93 @@ Erreur : Paramètres Introuvables : status = 404
 Succès : status = 200, picture = (String)
 ```
 - - - -
+
+
+### Route 
+`/api/wishlist/all/{userId}`
+
+### Description 
+Afficher la list des lieux favoris d'un utilisateur 
+
+### Méthode 
+POST
+
+### Inputs
+** = Obligatoire \
+( ) = Type \
+! = Paramètre d'URL \
+? = Obligatoire en condition
+```
+token ** (String)
+userId !** (Int)
+```
+
+### Résultat
+
+```
+Erreur : Token Incorrect/Introuvable  : status = 403
+Erreur : Paramètres Introuvables : status = 404
+Succès : status = 200, wishlist { }
+```
+- - - -
+
+### Route 
+`/api/wishlist/add/{userId}`
+
+### Description 
+L'utilisateur met un lieux dans sa list des favoris
+
+### Méthode 
+POST
+
+### Inputs
+** = Obligatoire \
+( ) = Type \
+! = Paramètre d'URL \
+? = Obligatoire en condition
+```
+token ** (String)
+userId !** (Int)
+id ** (Int)
+type ** (Int)
+```
+
+### Résultat
+
+```
+Erreur : Token Incorrect/Introuvable  : status = 403
+Erreur : Paramètres Introuvables : status = 404
+Erreur : Lieux Déja Dans La List : status = 405
+Succès : status = 200
+```
+- - - -
+
+### Route 
+`/api/wishlist/add/{userId}`
+
+### Description 
+L'utilisateur émet un lieux de sa list des favoris
+
+### Méthode 
+POST
+
+### Inputs
+** = Obligatoire \
+( ) = Type \
+! = Paramètre d'URL \
+? = Obligatoire en condition
+```
+token ** (String)
+userId !** (Int)
+id ** (Int)
+type ** (Int)
+```
+
+### Résultat
+
+```
+Erreur : Token Incorrect/Introuvable  : status = 403
+Erreur : Paramètres Introuvables : status = 404
+Succès : status = 200
+```
+- - - -
