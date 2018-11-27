@@ -250,3 +250,36 @@ Erreur : Paramètres Introuvables : status = 404
 Succès : status = 200
 ```
 - - - -
+
+### Route 
+`/api/review/add/{userId}`
+
+### Description 
+L'utilisateur ajout un note et/ou un commentaire sur un lieux ou equipement
+
+### Méthode 
+POST
+
+### Inputs
+** = Obligatoire \
+( ) = Type \
+! = Paramètre d'URL \
+? = Obligatoire en condition
+```
+token ** (String)
+userId !** (Int)
+id ** (Int)
+type ** (Int)
+note ** (Int)
+comment  (String)
+```
+
+### Résultat
+
+```
+Erreur : Token Incorrect/Introuvable  : status = 403
+Erreur : Paramètres Introuvables : status = 404
+Succès : status = 200
+```
+- - - -
+
