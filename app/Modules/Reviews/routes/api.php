@@ -10,4 +10,5 @@ Route::group(['module' => 'Reviews', 'middleware' => ['api'], 'namespace' => 'Ap
     Route::post('/api/review/all/{userId}', 'ApiController@getReviews'); 
     Route::post('/api/review/delete', 'ApiController@handleDeleteReview');
     Route::post('/api/report/add/{userId}', 'ApiController@handleAddReport');
+    Route::post('/api/reports/all/{userId}', 'ApiController@getReports');
 });
