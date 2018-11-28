@@ -228,6 +228,81 @@ class ApiController extends Controller
         return response()->json(['status' => 200]);
     }
 
+    public function handleAddReport(Request $request , $userId){
+
+        if (!$request->has('token') or !checkApiToken($request->input('token'))
+            or $request->getContentType() !== 'json') {
+            return response()->json(['status' => 403]);
+        }
+
+        $user = User::find($userId);
+        if(!$user)
+        {
+            return response()->json(['status' => 404]);
+        }
+
+        if(!$request->has('id') or !$request->has('type') or !$request->has('title'))
+        {
+            return response()->json(['status' => 404]);
+        }
+
+        if($request->input('type') == 1){
+
+            $complex = Complex::find($request->input('id'));
+
+            if(!$complex)
+            {
+                return response()->json(['status' => 404]);
+            }
+
+            $report = $complex->reports()->create([
+                'title' => $request->input('title'),
+                'description' => ($request->has('description')) ? $request->input('description') : null,
+                'user_id' => $userId
+            ]);
+
+
+        }elseif ($request->input('type') == 2){
+
+            $terrain = Terrain::find($request->input('id'));
+
+            if(!$terrain)
+            {
+                return response()->json(['status' => 404]);
+            }
+
+            $report = $terrain->reports()->create([
+                'title' => $request->input('title'),
+                'description' => ($request->has('description')) ? $request->input('description') : null,
+                'user_id' => $userId
+            ]);
+
+        }else{
+
+            $equipment = Equipment::find($request->input('id'));
+
+            if(!$equipment)
+            {
+                return response()->json(['status' => 404]);
+            }
+
+            $report = $equipment->reports()->create([
+                'title' => $request->input('title'),
+                'description' => ($request->has('description')) ? $request->input('description') : null,
+                'user_id' => $userId
+            ]);
+        }
+
+        if($request->has('link')){
+            $report->medias()->create([
+                'link' => $request->input('link'),
+                'type' => 4
+            ]);
+        }
+
+        return response()->json(['status' => 200]);
+    }
+
 
 
 
