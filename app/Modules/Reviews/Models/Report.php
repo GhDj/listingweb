@@ -44,6 +44,12 @@ class Report extends Model {
         return $this->belongsTo('App\Modules\User\Models\User');
     }
 
+    public function reported(){
+
+        return $this->morphTo();
+    }
+
+
 
 
 }
