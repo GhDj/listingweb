@@ -19,17 +19,17 @@ class CreateMediasTable extends Migration
             $table->integer('type'); // 1-complex gallery | 2-terrain gallery | 3-equipment gallery
             // 4-reports images | 5-post images | 7-ads banners | 8-products images
             $table->integer('terrain_id')->unsigned()->nullable();
-            $table->foreign('terrain_id')->references('id')->on('terrains');
+            $table->foreign('terrain_id')->references('id')->on('terrains')->onDelete('cascade');
             $table->integer('equipment_id')->unsigned()->nullable();
-            $table->foreign('equipment_id')->references('id')->on('equipments');
+            $table->foreign('equipment_id')->references('id')->on('equipments')->onDelete('cascade');
             $table->integer('complex_id')->unsigned()->nullable();
-            $table->foreign('complex_id')->references('id')->on('complexes');
+            $table->foreign('complex_id')->references('id')->on('complexes')->onDelete('cascade');
             $table->integer('report_id')->unsigned()->nullable();
-            $table->foreign('report_id')->references('id')->on('reports');
+            $table->foreign('report_id')->references('id')->on('reports')->onDelete('cascade');
             $table->integer('post_id')->unsigned()->nullable();
-            $table->foreign('post_id')->references('id')->on('posts');
+            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
             $table->integer('product_id')->unsigned()->nullable();
-            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();
         });
 

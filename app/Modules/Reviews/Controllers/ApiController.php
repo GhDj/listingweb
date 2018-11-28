@@ -5,6 +5,7 @@ namespace App\Modules\Reviews\Controllers;
 use App\Modules\Infrastructures\Models\Complex;
 use App\Modules\Infrastructures\Models\Terrain;
 use App\Modules\Infrastructures\Models\Equipment;
+use App\Modules\Reviews\Models\Report;
 use App\Modules\Reviews\Models\Review;
 use App\Modules\User\Models\User;
 use Illuminate\Http\Request;
@@ -322,5 +323,28 @@ class ApiController extends Controller
         }
 
         return response()->json(['status' => 200 , 'reports' => $user->reports()->with('reported')->with('medias')->get()]);
+    }
+
+    public function handleDeleteReport(Request $request){
+
+        if (!$request->has('token') or !checkApiToken($request->input('token')) or $request->getContentType() !== 'json') {
+            return response()->json(['status' => 403]);
+        }
+        if(!$request->has('id'))
+        {
+            return response()->json(['status' => 404]);
+        }
+
+        $report = Report::find($request->input('id'));
+
+        if(!$report)
+        {
+            return response()->json(['status' => 404]);
+        }
+
+        $report->delete();
+
+        return response()->json(['status' => 200]);
+
     }
 }
