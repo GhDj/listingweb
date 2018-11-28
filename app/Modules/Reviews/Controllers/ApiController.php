@@ -191,7 +191,7 @@ class ApiController extends Controller
 
     public function getReviews(Request $request , $userId){
 
-        if (!$request->has('token') or !checkApiToken($request->input('token')) 
+        if (!$request->has('token') or !checkApiToken($request->input('token'))
             or $request->getContentType() !== 'json') {
             return response()->json(['status' => 403]);
         }
@@ -293,17 +293,34 @@ class ApiController extends Controller
             ]);
         }
 
-        if($request->has('link')){
+        if($request->has('images')){
+
+            $images = $request->input('images');
+            foreach ($images as $image){
+
             $report->medias()->create([
-                'link' => $request->input('link'),
+                'link' => $image['link'],
                 'type' => 4
             ]);
+        }
         }
 
         return response()->json(['status' => 200]);
     }
 
+    public function getReports(Request $request , $userId){
 
+        if (!$request->has('token') or !checkApiToken($request->input('token'))
+            or $request->getContentType() !== 'json') {
+            return response()->json(['status' => 403]);
+        }
 
+        $user = User::find($userId);
+        if(!$user)
+        {
+            return response()->json(['status' => 404]);
+        }
 
+        return response()->json(['status' => 200 , 'reports' => $user->reports()->with('reported')->with('medias')->get()]);
+    }
 }
