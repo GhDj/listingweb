@@ -311,3 +311,31 @@ Succès : status = 200 , reviews { }
 ```
 - - - -
 
+### Route 
+`/api/review/delete`
+
+### Description 
+Permettre l'utilisateur a supprimer ces avis
+
+### Méthode 
+POST
+
+### Inputs
+** = Obligatoire \
+( ) = Type \
+! = Paramètre d'URL \
+? = Obligatoire en condition
+```
+token ** (String)
+id !** (Int)
+```
+
+### Résultat
+
+```
+Erreur : Token Incorrect/Introuvable  : status = 403
+Erreur : Utilisateur Introuvables : status = 404
+Succès : status = 200 
+```
+- - - -
+
