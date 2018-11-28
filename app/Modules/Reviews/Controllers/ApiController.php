@@ -5,6 +5,7 @@ namespace App\Modules\Reviews\Controllers;
 use App\Modules\Infrastructures\Models\Complex;
 use App\Modules\Infrastructures\Models\Terrain;
 use App\Modules\Infrastructures\Models\Equipment;
+use App\Modules\Reviews\Models\Review;
 use App\Modules\User\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -204,6 +205,30 @@ class ApiController extends Controller
            return response()->json(['status' => 200 , 'reviews' => $user->reviews()->with('reviewed')->get()]);
 
     }
+
+    public function handleDeleteReview(Request $request){
+
+        if (!$request->has('token') or !checkApiToken($request->input('token')) or $request->getContentType() !== 'json') {
+            return response()->json(['status' => 403]);
+        }
+        if(!$request->has('id'))
+        {
+            return response()->json(['status' => 404]);
+        }
+
+        $review = Review::find($request->input('id'));
+
+        if(!$review)
+        {
+            return response()->json(['status' => 404]);
+        }
+
+        $review->delete();
+
+        return response()->json(['status' => 200]);
+    }
+
+
 
 
 }
