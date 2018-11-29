@@ -327,7 +327,7 @@ POST
 ? = Obligatoire en condition
 ```
 token ** (String)
-id !** (Int)
+id ** (Int)
 ```
 
 ### Résultat
@@ -400,3 +400,33 @@ Erreur : Utilisateur Introuvables : status = 404
 Succès : status = 200 , reports { }
 ```
 - - - -
+
+
+### Route 
+`/api/report/delete`
+
+### Description 
+Permettre l'utilisateur a supprimer ces rapports
+
+### Méthode 
+POST
+
+### Inputs
+** = Obligatoire \
+( ) = Type \
+! = Paramètre d'URL \
+? = Obligatoire en condition
+```
+token ** (String)
+id ** (Int)
+```
+
+### Résultat
+
+```
+Erreur : Token Incorrect/Introuvable  : status = 403
+Erreur : Utilisateur Introuvables : status = 404
+Succès : status = 200 
+```
+- - - -
+
