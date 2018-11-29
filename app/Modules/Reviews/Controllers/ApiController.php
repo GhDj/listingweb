@@ -2,6 +2,7 @@
 
 namespace App\Modules\Reviews\Controllers;
 
+use App\Modules\Content\Models\Ad;
 use App\Modules\Infrastructures\Models\Complex;
 use App\Modules\Infrastructures\Models\Terrain;
 use App\Modules\Infrastructures\Models\Equipment;
@@ -346,5 +347,21 @@ class ApiController extends Controller
 
         return response()->json(['status' => 200]);
 
+    }
+
+    public function getAds(Request $request){
+
+        if (!$request->has('token') or !checkApiToken($request->input('token'))
+            or $request->getContentType() !== 'json') {
+            return response()->json(['status' => 403]);
+        }
+
+        $ads = Ad::where('status',1)->with('media');
+
+        if($request->has('number'))
+        {
+            return response()->json(['status' => 200 , 'ads' => $ads->take($request->input('number'))->get() ]);
+        }
+            return response()->json(['status' => 200 , 'ads' => $ads->get() ]);
     }
 }

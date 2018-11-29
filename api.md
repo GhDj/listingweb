@@ -430,3 +430,30 @@ Succès : status = 200
 ```
 - - - -
 
+### Route 
+`/api/ads/all/`
+
+### Description 
+Afficher un nombre bien spécifié des publicités
+
+### Méthode 
+POST
+
+### Inputs
+** = Obligatoire \
+( ) = Type \
+! = Paramètre d'URL \
+? = Obligatoire en condition
+```
+token ** (String)
+number  (Int)
+```
+
+### Résultat
+
+```
+Erreur : Token Incorrect/Introuvable  : status = 403
+Succès : status = 200 , ads { }
+```
+- - - -
+
