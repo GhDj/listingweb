@@ -4,4 +4,7 @@ Route::group(['module' => 'General', 'middleware' => ['web'], 'namespace' => 'Ap
 
     Route::resource('General', 'GeneralController');
 
+
+    Route::get('/index', 'WebController@showHome')->name('showHome');
+
 });

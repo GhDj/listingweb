@@ -9,6 +9,16 @@ class WebController extends Controller
 {
 
     /**
+    * Display Home Page
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function showHome()
+    {
+      return view('General::welcome');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
