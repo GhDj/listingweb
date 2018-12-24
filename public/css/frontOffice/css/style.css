@@ -4830,6 +4830,7 @@ footer.main-footer.fixed-footer {
 	text-align:left;
 	padding-right:16px;
 	position:relative;
+	list-style: none;
 }
 .footer-menu  li:before {
 	content:'';
@@ -5033,6 +5034,7 @@ footer.main-footer.fixed-footer {
 .footer-widget .widget-posts li {
 	padding: 13px 0;
 	margin-bottom:8px;
+	list-style: none;
 }
 .footer-widget .widget-posts-img {
 	float:left;
@@ -5133,6 +5135,7 @@ footer.main-footer.fixed-footer {
 	width:33.3%;
 	padding:25px 40px;
 	position:relative;
+	list-style: none;
 }
 .process-item {
 	float:left;

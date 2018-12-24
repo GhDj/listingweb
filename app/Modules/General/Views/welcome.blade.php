@@ -3,7 +3,9 @@
 
 @section('head')
 
-  @include('frontOffice.inc.head')
+  @include('frontOffice.inc.head', ['title' => 'Olympiade' ])
+
+
 
 @endsection
 
