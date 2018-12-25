@@ -3,7 +3,7 @@
 
 @section('head')
 
-  @include('frontOffice.inc.head', ['title' => 'Olympiade' ])
+  @include('frontOffice.inc.head', ['title' => 'Olympiade | Home Page' ])
 
 
 

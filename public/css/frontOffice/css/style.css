@@ -1450,6 +1450,32 @@ section.gray-section .section-separator {
 	display: block;
 }
 /*------ listing------------------------------------------------*/
+.search-item-1 ul li{
+
+	padding: 10px 15px;
+
+	margin-right: 10px;
+
+	/* margin-top: 15px; */
+
+	float: left;
+
+	margin-top: 55px;
+
+	background-color: #45C2FE;
+
+
+}
+
+.search-item-2 ul li {
+
+	display: block;
+
+	text-align: left;
+
+
+}
+
 .card-listing .geodir-category-listing {
 	overflow:hidden;
 	border-radius:10px;
@@ -1461,7 +1487,7 @@ section.gray-section .section-separator {
 .card-listing .geodir-category-content h3 {
 	float:left;
 	width:100%;
-	margin-bottom:10px;
+	/* margin-bottom:10px; */
 	text-align:left;
 	font-size:18px;
 	font-weight:600;
@@ -1566,9 +1592,9 @@ section.gray-section .section-separator {
 	padding:15px 0 ;
 	float:left;
 	width:100%;
-	margin-top:15px;
+	/* margin-top:15px; */
 	font-weight:500;
-	border-top:1px solid #eee;
+	/* border-top:1px solid #eee; */
 }
 .card-listing .geodir-category-location  a {
 	color: #999;
@@ -1615,7 +1641,7 @@ section.gray-section .section-separator {
 	color:#fff;
 	border-radius:4px;
 	z-index:5;
-	box-shadow:0px 0px 0px 7px rgba(255,255,255,0.4);
+	/* box-shadow:0px 0px 0px 7px rgba(255,255,255,0.4); */
 }
 .card-btn {
 	float:left;
@@ -1800,7 +1826,7 @@ section.gray-section .section-separator {
 	opacity:1;
 }
 .listsearch-options {
-	padding:50px 10px;
+	padding:20px 10px 50px;
 	background:#fff;
 	z-index:20;
 }
@@ -2070,7 +2096,7 @@ section.gray-section .section-separator {
 	overflow:hidden;
 }
 .listing-item.list-layout  .listing-geodir-category {
-	left:-100%;
+  left: -100%;
 	margin-left:20px;
 	top:20px;
 	z-index:100;
@@ -6423,7 +6449,7 @@ section.list-single-section {
     width: 100%;
     position: relative;
 	float:left;
-	height:500px;
+	height:752px;
 	top:0;
 }
 .absolute-main-search-input {
