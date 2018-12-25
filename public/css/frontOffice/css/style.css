@@ -1487,7 +1487,6 @@ section.gray-section .section-separator {
 .card-listing .geodir-category-content h3 {
 	float:left;
 	width:100%;
-	/* margin-bottom:10px; */
 	text-align:left;
 	font-size:18px;
 	font-weight:600;
@@ -1592,9 +1591,7 @@ section.gray-section .section-separator {
 	padding:15px 0 ;
 	float:left;
 	width:100%;
-	/* margin-top:15px; */
 	font-weight:500;
-	/* border-top:1px solid #eee; */
 }
 .card-listing .geodir-category-location  a {
 	color: #999;
@@ -1641,7 +1638,6 @@ section.gray-section .section-separator {
 	color:#fff;
 	border-radius:4px;
 	z-index:5;
-	/* box-shadow:0px 0px 0px 7px rgba(255,255,255,0.4); */
 }
 .card-btn {
 	float:left;
