@@ -1,12 +1,12 @@
 ## API
 
-### Route 
+### Route
 `/api/user/register`
 
-### Description 
+### Description
 L'utilisateur inscrit comme un professionnel ou comme un consultant
 
-### Méthode 
+### Méthode
 POST
 
 ### Inputs
@@ -22,7 +22,7 @@ email ** (String)
 password ** (String)
 gender ** (Char)
 role ** (String)
-address (Array) 
+address (Array)
 ```
 
 ### Résultat
@@ -35,13 +35,13 @@ Succès : status = 200
 ```
 - - - -
 
-### Route 
+### Route
 `/api/user/login`
 
-### Description 
+### Description
 Permettre à l'utilisateur de se connecter
 
-### Méthode 
+### Méthode
 POST
 
 ### Inputs
@@ -66,13 +66,13 @@ Succès : status = 200 , user { }
 ```
 - - - -
 
-### Route 
+### Route
 `/api/user/profile/update/{id}`
 
-### Description 
+### Description
 Permettre à l'utilisateur de ce modifier ces coordonnées  
 
-### Méthode 
+### Méthode
 POST
 
 ### Inputs
@@ -105,13 +105,13 @@ Succès : status = 200 , user { }
 ```
 - - - -
 
-### Route 
+### Route
 `/api/user/profile/show/{id}`
 
-### Description 
+### Description
 Afficher les coordonnée d'un utilisateur)  
 
-### Méthode 
+### Méthode
 POST
 
 ### Inputs
@@ -133,13 +133,13 @@ Succès : status = 200 , user { }
 ```
 - - - -
 
-### Route 
+### Route
 `/api/media/upload`
 
-### Description 
+### Description
 Créer une image dans le Storage
 
-### Méthode 
+### Méthode
 POST
 
 ### Inputs
@@ -162,13 +162,13 @@ Succès : status = 200, picture = (String)
 - - - -
 
 
-### Route 
+### Route
 `/api/wishlist/all/{userId}`
 
-### Description 
-Afficher la list des lieux favoris d'un utilisateur 
+### Description
+Afficher la list des lieux favoris d'un utilisateur
 
-### Méthode 
+### Méthode
 POST
 
 ### Inputs
@@ -190,13 +190,13 @@ Succès : status = 200, wishlist { }
 ```
 - - - -
 
-### Route 
+### Route
 `/api/wishlist/add/{userId}`
 
-### Description 
+### Description
 L'utilisateur met un lieux dans sa list des favoris
 
-### Méthode 
+### Méthode
 POST
 
 ### Inputs
@@ -221,13 +221,13 @@ Succès : status = 200
 ```
 - - - -
 
-### Route 
+### Route
 `/api/wishlist/add/{userId}`
 
-### Description 
+### Description
 L'utilisateur émet un lieux de sa list des favoris
 
-### Méthode 
+### Méthode
 POST
 
 ### Inputs
@@ -251,13 +251,13 @@ Succès : status = 200
 ```
 - - - -
 
-### Route 
+### Route
 `/api/review/add/{userId}`
 
-### Description 
+### Description
 L'utilisateur ajout un note et/ou un commentaire sur un lieux ou equipement
 
-### Méthode 
+### Méthode
 POST
 
 ### Inputs
@@ -283,13 +283,13 @@ Succès : status = 200
 ```
 - - - -
 
-### Route 
+### Route
 `/api/review/all/{userId}`
 
-### Description 
+### Description
 Afficher la list des avis d'un utilisateur
 
-### Méthode 
+### Méthode
 POST
 
 ### Inputs
@@ -311,13 +311,13 @@ Succès : status = 200 , reviews { }
 ```
 - - - -
 
-### Route 
+### Route
 `/api/review/delete`
 
-### Description 
+### Description
 Permettre l'utilisateur a supprimer ces avis
 
-### Méthode 
+### Méthode
 POST
 
 ### Inputs
@@ -335,18 +335,18 @@ id ** (Int)
 ```
 Erreur : Token Incorrect/Introuvable  : status = 403
 Erreur : Utilisateur Introuvables : status = 404
-Succès : status = 200 
+Succès : status = 200
 ```
 - - - -
 
 
-### Route 
+### Route
 `/api/report/add/{userId}`
 
-### Description 
+### Description
 L'utilisateur met un report sur un lieux ou equipement
 
-### Méthode 
+### Méthode
 POST
 
 ### Inputs
@@ -373,13 +373,13 @@ Succès : status = 200
 ```
 - - - -
 
-### Route 
+### Route
 `/api/reports/all/{userId}`
 
-### Description 
+### Description
 Afficher la list des rapports soumis par un utilisateur
 
-### Méthode 
+### Méthode
 POST
 
 ### Inputs
@@ -402,13 +402,13 @@ Succès : status = 200 , reports { }
 - - - -
 
 
-### Route 
+### Route
 `/api/report/delete`
 
-### Description 
+### Description
 Permettre l'utilisateur a supprimer ces rapports
 
-### Méthode 
+### Méthode
 POST
 
 ### Inputs
@@ -426,17 +426,17 @@ id ** (Int)
 ```
 Erreur : Token Incorrect/Introuvable  : status = 403
 Erreur : Utilisateur Introuvables : status = 404
-Succès : status = 200 
+Succès : status = 200
 ```
 - - - -
 
-### Route 
+### Route
 `/api/ads/all/`
 
-### Description 
+### Description
 Afficher un nombre bien spécifié des publicités
 
-### Méthode 
+### Méthode
 POST
 
 ### Inputs
@@ -456,4 +456,3 @@ Erreur : Token Incorrect/Introuvable  : status = 403
 Succès : status = 200 , ads { }
 ```
 - - - -
-

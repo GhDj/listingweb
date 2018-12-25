@@ -43,8 +43,11 @@ ul {
     margin:0px;
 }
 ul li {
-    list-style:inside disc;
+
     margin-bottom:10px;
+    margin-bottom: 10px;
+    list-style: none;
+    display: inline;
 }
 ol li {
     list-style:inside disc;

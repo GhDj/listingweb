@@ -18,5 +18,15 @@ class WebController extends Controller
         return view("Infrastructures::index");
     }
 
+    /**
+    * Display Search Page
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function showSearch()
+    {
+      return view('Infrastructures::Recherche.menuRecherche');
+    }
+
 
 }
