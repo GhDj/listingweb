@@ -4,8 +4,8 @@ Route::group(['module' => 'Infrastructures', 'middleware' => ['web'], 'namespace
 
     Route::resource('Infrastructures', 'InfrastructuresController');
 
-    Route::get('/search','WebController@showSearch')->name('showSearch');
+    Route::get('/search','WebController@showSearchPage')->name('showSearchPage');
 
-    Route::get('/stade','WebController@showStadeSearch')->name('showStadeSearch');
+    Route::get('/search/stade','WebController@showTerrainDetails')->name('showTerrainDetails');
 
 });

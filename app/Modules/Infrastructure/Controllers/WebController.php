@@ -23,9 +23,9 @@ class WebController extends Controller
     *
     * @return \Illuminate\Http\Response
     */
-    public function showSearch()
+    public function showSearchPage()
     {
-      return view('Infrastructure::Recherche.menuRecherche');
+      return view('Infrastructure::Recherche.searchPage');
     }
 
     /**
@@ -33,9 +33,9 @@ class WebController extends Controller
     *
     * @return \Illuminate\Http\Response
     */
-    public function showStadeSearch()
+    public function showTerrainDetails()
     {
-      return view('Infrastructure::Recherche.stadeRecherche');
+      return view('Infrastructure::Recherche.terrainDetails');
     }
 
 
