@@ -23,10 +23,22 @@ class WebController extends Controller
     *
     * @return \Illuminate\Http\Response
     */
-    public function showSearch()
+    public function showSearchPage()
     {
-      return view('Infrastructures::Recherche.menuRecherche');
+      return view('Infrastructure::Recherche.searchPage');
     }
+
+    /**
+    * Display Details Terrain Page
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function showTerrainDetails()
+    {
+      return view('Infrastructure::Recherche.terrainDetails');
+    }
+
+
 
 
 }

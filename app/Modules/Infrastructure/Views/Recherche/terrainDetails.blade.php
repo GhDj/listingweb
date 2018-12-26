@@ -87,7 +87,7 @@
     <!--  section end -->
 
     <div class="scroll-nav-wrapper fl-wrap">
-      <div class="container">
+      <div class="container" style="max-width:100%">
         <nav class="scroll-nav scroll-init">
           <ul>
             <li><a href="#sec2">Carte</a></li>
@@ -170,8 +170,8 @@
                   <div class="gallery-item">
                     <div class="grid-item-holder">
                       <div class="box-item">
-                        <img src="images/all/single/13.jpg" alt="">
-                        <a href="images/all/single/13.jpg" class="gal-link popup-image"><i class="fa fa-search"></i></a>
+                        <img src="{{asset('images/all/single/13.jpg')}}" alt="">
+                        <a href="{{asset('images/all/single/13.jpg')}}" class="gal-link popup-image"><i class="fa fa-search"></i></a>
                       </div>
                     </div>
                   </div>
@@ -180,8 +180,8 @@
                   <div class="gallery-item">
                     <div class="grid-item-holder">
                       <div class="box-item">
-                        <img src="images/all/single/14.jpg" alt="">
-                        <a href="images/all/single/14.jpg" class="gal-link popup-image"><i class="fa fa-search"></i></a>
+                        <img src="{{asset('images/all/single/14.jpg')}}" alt="">
+                        <a href="{{asset('images/all/single/14.jpg')}}" class="gal-link popup-image"><i class="fa fa-search"></i></a>
                       </div>
                     </div>
                   </div>
@@ -190,8 +190,8 @@
                   <div class="gallery-item">
                     <div class="grid-item-holder">
                       <div class="box-item">
-                        <img src="images/all/single/15.jpg" alt="">
-                        <a href="images/all/single/15.jpg" class="gal-link popup-image"><i class="fa fa-search"></i></a>
+                        <img src="{{asset('images/all/single/15.jpg')}}" alt="">
+                        <a href="{{asset('images/all/single/15.jpg')}}" class="gal-link popup-image"><i class="fa fa-search"></i></a>
                       </div>
                     </div>
                   </div>
