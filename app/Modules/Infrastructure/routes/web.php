@@ -6,4 +6,6 @@ Route::group(['module' => 'Infrastructures', 'middleware' => ['web'], 'namespace
 
     Route::get('/search','WebController@showSearch')->name('showSearch');
 
+    Route::get('/stade','WebController@showStadeSearch')->name('showStadeSearch');
+
 });

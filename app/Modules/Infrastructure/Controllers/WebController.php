@@ -28,5 +28,15 @@ class WebController extends Controller
       return view('Infrastructure::Recherche.menuRecherche');
     }
 
+    /**
+    * Display Search Stade Page
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function showStadeSearch()
+    {
+      return view('Infrastructure::Recherche.stadeRecherche');
+    }
+
 
 }
