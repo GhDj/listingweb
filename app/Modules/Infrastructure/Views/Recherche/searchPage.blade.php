@@ -90,7 +90,7 @@
 
                                   <div class="geodir-category-location"><a href="#0" class="map-item"><i class="fa fa-map-marker" aria-hidden="true"></i> 27th Brooklyn New York, NY 10065</a></div>
 
-                                  {{-- <p>Sed interdum metus at nisi tempor laoreet. Integer gravida orci a justo sodales, sed lobortis est placerat.</p> --}}
+
                                   <div class="geodir-category-options " >
 
 
@@ -105,11 +105,7 @@
                               </div>
                               <div class="geodir-category-content " style="width:30%">
 
-                                  {{-- <h3><a href="listing-single.html">Luxury Restourant</a></h3>
 
-                                  <div class="geodir-category-location"><a href="#0" class="map-item"><i class="fa fa-map-marker" aria-hidden="true"></i> 27th Brooklyn New York, NY 10065</a></div> --}}
-
-                                  {{-- <p>Sed interdum metus at nisi tempor laoreet. Integer gravida orci a justo sodales, sed lobortis est placerat.</p> --}}
                                   <div class="geodir-category-options " >
 
 
@@ -140,7 +136,7 @@
 
                                   <div class="geodir-category-location"><a href="#0" class="map-item"><i class="fa fa-map-marker" aria-hidden="true"></i> 27th Brooklyn New York, NY 10065</a></div>
 
-                                  {{-- <p>Sed interdum metus at nisi tempor laoreet. Integer gravida orci a justo sodales, sed lobortis est placerat.</p> --}}
+
                                   <div class="geodir-category-options " >
 
 
@@ -155,11 +151,6 @@
                               </div>
                               <div class="geodir-category-content " style="width:30%">
 
-                                  {{-- <h3><a href="listing-single.html">Luxury Restourant</a></h3>
-
-                                  <div class="geodir-category-location"><a href="#0" class="map-item"><i class="fa fa-map-marker" aria-hidden="true"></i> 27th Brooklyn New York, NY 10065</a></div> --}}
-
-                                  {{-- <p>Sed interdum metus at nisi tempor laoreet. Integer gravida orci a justo sodales, sed lobortis est placerat.</p> --}}
                                   <div class="geodir-category-options " >
 
 
@@ -191,7 +182,7 @@
 
                                   <div class="geodir-category-location"><a href="#0" class="map-item"><i class="fa fa-map-marker" aria-hidden="true"></i> 27th Brooklyn New York, NY 10065</a></div>
 
-                                  {{-- <p>Sed interdum metus at nisi tempor laoreet. Integer gravida orci a justo sodales, sed lobortis est placerat.</p> --}}
+
                                   <div class="geodir-category-options " >
 
 
@@ -206,11 +197,11 @@
                               </div>
                               <div class="geodir-category-content " style="width:30%">
 
-                                  {{-- <h3><a href="listing-single.html">Luxury Restourant</a></h3>
+
 
                                   <div class="geodir-category-location"><a href="#0" class="map-item"><i class="fa fa-map-marker" aria-hidden="true"></i> 27th Brooklyn New York, NY 10065</a></div> --}}
 
-                                  {{-- <p>Sed interdum metus at nisi tempor laoreet. Integer gravida orci a justo sodales, sed lobortis est placerat.</p> --}}
+                          
                                   <div class="geodir-category-options " >
 
 
@@ -241,7 +232,7 @@
 
                                   <div class="geodir-category-location"><a href="#0" class="map-item"><i class="fa fa-map-marker" aria-hidden="true"></i> 27th Brooklyn New York, NY 10065</a></div>
 
-                                  {{-- <p>Sed interdum metus at nisi tempor laoreet. Integer gravida orci a justo sodales, sed lobortis est placerat.</p> --}}
+
                                   <div class="geodir-category-options " >
 
 
@@ -256,11 +247,11 @@
                               </div>
                               <div class="geodir-category-content " style="width:30%">
 
-                                  {{-- <h3><a href="listing-single.html">Luxury Restourant</a></h3>
+
 
                                   <div class="geodir-category-location"><a href="#0" class="map-item"><i class="fa fa-map-marker" aria-hidden="true"></i> 27th Brooklyn New York, NY 10065</a></div> --}}
 
-                                  {{-- <p>Sed interdum metus at nisi tempor laoreet. Integer gravida orci a justo sodales, sed lobortis est placerat.</p> --}}
+
                                   <div class="geodir-category-options " >
 
 
@@ -292,7 +283,7 @@
 
                                   <div class="geodir-category-location"><a href="#0" class="map-item"><i class="fa fa-map-marker" aria-hidden="true"></i> 27th Brooklyn New York, NY 10065</a></div>
 
-                                  {{-- <p>Sed interdum metus at nisi tempor laoreet. Integer gravida orci a justo sodales, sed lobortis est placerat.</p> --}}
+
                                   <div class="geodir-category-options " >
 
 
@@ -307,11 +298,7 @@
                               </div>
                               <div class="geodir-category-content " style="width:30%">
 
-                                  {{-- <h3><a href="listing-single.html">Luxury Restourant</a></h3>
 
-                                  <div class="geodir-category-location"><a href="#0" class="map-item"><i class="fa fa-map-marker" aria-hidden="true"></i> 27th Brooklyn New York, NY 10065</a></div> --}}
-
-                                  {{-- <p>Sed interdum metus at nisi tempor laoreet. Integer gravida orci a justo sodales, sed lobortis est placerat.</p> --}}
                                   <div class="geodir-category-options " >
 
 
@@ -342,7 +329,7 @@
 
                                   <div class="geodir-category-location"><a href="#0" class="map-item"><i class="fa fa-map-marker" aria-hidden="true"></i> 27th Brooklyn New York, NY 10065</a></div>
 
-                                  {{-- <p>Sed interdum metus at nisi tempor laoreet. Integer gravida orci a justo sodales, sed lobortis est placerat.</p> --}}
+
                                   <div class="geodir-category-options " >
 
 
@@ -357,11 +344,7 @@
                               </div>
                               <div class="geodir-category-content " style="width:30%">
 
-                                  {{-- <h3><a href="listing-single.html">Luxury Restourant</a></h3>
 
-                                  <div class="geodir-category-location"><a href="#0" class="map-item"><i class="fa fa-map-marker" aria-hidden="true"></i> 27th Brooklyn New York, NY 10065</a></div> --}}
-
-                                  {{-- <p>Sed interdum metus at nisi tempor laoreet. Integer gravida orci a justo sodales, sed lobortis est placerat.</p> --}}
                                   <div class="geodir-category-options " >
 
 
