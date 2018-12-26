@@ -23,19 +23,9 @@ class WebController extends Controller
     *
     * @return \Illuminate\Http\Response
     */
-    public function showSearchPage()
+    public function showSearch()
     {
-      return view('Infrastructure::Recherche.searchPage');
-    }
-
-    /**
-    * Display Search Stade Page
-    *
-    * @return \Illuminate\Http\Response
-    */
-    public function showTerrainDetails()
-    {
-      return view('Infrastructure::Recherche.terrainDetails');
+      return view('Infrastructures::Recherche.menuRecherche');
     }
 
 
