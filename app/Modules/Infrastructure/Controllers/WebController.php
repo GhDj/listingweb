@@ -29,7 +29,7 @@ class WebController extends Controller
     }
 
     /**
-    * Display Search Stade Page
+    * Display Details Terrain Page
     *
     * @return \Illuminate\Http\Response
     */
@@ -37,6 +37,8 @@ class WebController extends Controller
     {
       return view('Infrastructure::Recherche.terrainDetails');
     }
+
+
 
 
 }
