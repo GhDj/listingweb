@@ -25,7 +25,7 @@ class WebController extends Controller
     */
     public function showSearch()
     {
-      return view('Infrastructures::Recherche.menuRecherche');
+      return view('Infrastructure::Recherche.menuRecherche');
     }
 
 
