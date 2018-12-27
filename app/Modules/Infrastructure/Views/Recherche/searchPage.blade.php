@@ -197,11 +197,6 @@
                               </div>
                               <div class="geodir-category-content " style="width:30%">
 
-
-
-                                  <div class="geodir-category-location"><a href="#0" class="map-item"><i class="fa fa-map-marker" aria-hidden="true"></i> 27th Brooklyn New York, NY 10065</a></div> --}}
-
-                          
                                   <div class="geodir-category-options " >
 
 
@@ -246,11 +241,6 @@
                                   </div>
                               </div>
                               <div class="geodir-category-content " style="width:30%">
-
-
-
-                                  <div class="geodir-category-location"><a href="#0" class="map-item"><i class="fa fa-map-marker" aria-hidden="true"></i> 27th Brooklyn New York, NY 10065</a></div> --}}
-
 
                                   <div class="geodir-category-options " >
 

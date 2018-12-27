@@ -38,6 +38,16 @@ class WebController extends Controller
       return view('Infrastructure::Recherche.terrainDetails');
     }
 
+    /**
+    * Display Details Club Page
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function showClubDetails()
+    {
+      return view('Infrastructure::Recherche.clubDetails');
+    }
+
 
 
 
