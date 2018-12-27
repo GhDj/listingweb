@@ -8,4 +8,6 @@ Route::group(['module' => 'Infrastructures', 'middleware' => ['web'], 'namespace
 
     Route::get('/search/terrain','WebController@showTerrainDetails')->name('showTerrainDetails');
 
+    Route::get('/search/club','WebController@showClubDetails')->name('showClubDetails');
+
 });
