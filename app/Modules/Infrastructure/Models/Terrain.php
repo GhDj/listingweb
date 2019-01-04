@@ -76,4 +76,3 @@ class Terrain extends Model {
         return $this->morphMany('App\Modules\Reviews\Models\Wishlist','wished');
     }
 }
-
