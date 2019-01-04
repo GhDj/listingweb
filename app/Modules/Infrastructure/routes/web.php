@@ -10,4 +10,6 @@ Route::group(['module' => 'Infrastructures', 'middleware' => ['web'], 'namespace
 
     Route::get('/search/club','WebController@showClubDetails')->name('showClubDetails');
 
+    Route::post('/search','WebController@handleSearchMaps')->name('handleSearchMaps');
+
 });

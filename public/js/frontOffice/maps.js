@@ -1,5 +1,7 @@
 (function ($) {
     "use strict";
+
+
     var markerIcon = {
         anchor: new google.maps.Point(22, 16),
         url: 'images/marker.png',
@@ -7,6 +9,8 @@
 
     function mainMap() {
         function locationData(locationURL, locationCategory, locationImg, locationTitle, locationAddress, locationPhone, locationStarRating, locationRevievsCounter) {
+
+
             return ('<div class="map-popup-wrap"><div class="map-popup"><div class="infoBox-close"><i class="fa fa-times"></i></div><div class="map-popup-category">' + locationCategory + '</div><a href="' + locationURL + '" class="listing-img-content fl-wrap"><img src="' + locationImg + '" alt=""></a> <div class="listing-content fl-wrap"><div class="card-popup-raining map-card-rainting" data-staRrating="' + locationStarRating + '"><span class="map-popup-reviews-count">( ' + locationRevievsCounter + ' reviews )</span></div><div class="listing-title fl-wrap"><h4><a href=' + locationURL + '>' + locationTitle + '</a></h4><span class="map-popup-location-info"><i class="fa fa-map-marker"></i>' + locationAddress + '</span><span class="map-popup-location-phone"><i class="fa fa-phone"></i>' + locationPhone + '</span></div></div></div></div>')
         }
         var locations = [
@@ -97,7 +101,7 @@
                     currentInfobox = marker.id;
                     var latLng = new google.maps.LatLng(locations[i][1], locations[i][2]);
                     map.panTo(latLng);
-                    map.panBy(0, -180);
+                    map.panBy(0, 30);
                     google.maps.event.addListener(ib, 'domready', function () {
                         $('.infoBox-close').click(function (e) {
                             e.preventDefault();
@@ -119,9 +123,9 @@
             map.setCenter(center);
         });
 
-        $('.nextmap-nav').click(function (e) {
+          $('.nextmap-nav').click(function (e) {
             e.preventDefault();
-            map.setZoom(15);
+            map.setZoom(9);
             var index = currentInfobox;
             if (index + 1 < allMarkers.length) {
                 google.maps.event.trigger(allMarkers[index + 1], 'click');
@@ -131,7 +135,7 @@
         });
         $('.prevmap-nav').click(function (e) {
             e.preventDefault();
-            map.setZoom(15);
+            map.setZoom(9);
             if (typeof (currentInfobox) == "undefined") {
                 google.maps.event.trigger(allMarkers[allMarkers.length - 1], 'click');
             } else {
@@ -145,7 +149,7 @@
         });
         $('.map-item').click(function (e) {
             e.preventDefault();
-     		map.setZoom(15);
+     		map.setZoom(9);
             var index = currentInfobox;
             var marker_index = parseInt($(this).attr('href').split('#')[1], 10);
             google.maps.event.trigger(allMarkers[marker_index], "click");
@@ -215,7 +219,7 @@
         });
         var markerIcon2 = {
             url: 'images/marker.png',
-        }		
+        }
         var marker = new google.maps.Marker({
             position: myLatLng,
             map: single_map,

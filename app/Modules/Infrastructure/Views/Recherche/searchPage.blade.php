@@ -36,19 +36,55 @@
 
                                   <!-- listsearch-input-wrap  -->
                                   <div class="listsearch-input-wrap fl-wrap">
+                                    <form action="{{ route('handleSearchMaps') }}" method="post">
+                                          {{ csrf_field() }}
                                       <div class="listsearch-input-item">
                                           <i class="mbri-key single-i"></i>
-                                          <input type="text" placeholder="Nom de stade" value=""/>
+                                          <input type="text" placeholder="Nom de stade" name="name" value=""/>
+                                      </div>
+                                      <div class="listsearch-input-item">
+                                            <select data-placeholder="All Sports" class="chosen-select" name="category" >
+                                                <option value="-1">All Categories</option>
+                                                @foreach ($categories as $categorie )
+                                                    <option value="{{$categorie->category}}">{{$categorie->category}}</option>
+                                                @endforeach
+                                          </select>
                                       </div>
                                       <div class="listsearch-input-item">
                                           <i class="mbri-key single-i"></i>
-                                          <input type="text" placeholder="Quel Sport" value=""/>
-                                      </div>
-                                      <div class="listsearch-input-item">
-                                          <i class="mbri-key single-i"></i>
-                                          <input type="text" placeholder="Ou" value=""/>
+                                          <input type="text" placeholder="Ou" value="" name="address" id="autocomplete-input"/>
                                       </div>
 
+                                      <div class="hidden-listing-filter fl-wrap">
+                                        <div class="distance-input fl-wrap">
+                                            <div class="distance-title"> Radius around selected destination <span></span> km</div>
+                                            <div class="distance-radius-wrap fl-wrap">
+                                                <input class="distance-radius rangeslider--horizontal" type="range" min="1" max="100" step="1" value="1" data-title="Radius around selected destination">
+                                            </div>
+                                        </div>
+                                        <!-- Checkboxes -->
+                                        <div class=" fl-wrap filter-tags">
+                                            <h4>Filter by Tags</h4>
+                                            <input id="check-aa" type="checkbox" name="check">
+                                            <label for="check-aa">Elevator in building</label>
+                                            <input id="check-b" type="checkbox" name="check">
+                                            <label for="check-b">Friendly workspace</label>
+                                            <input id="check-c" type="checkbox" name="check">
+                                            <label for="check-c">Instant Book</label>
+                                            <input id="check-d" type="checkbox" name="check">
+                                            <label for="check-d">Wireless Internet</label>
+                                        </div>
+                                    </div>
+                                    <!-- hidden-listing-filter end -->
+                                    <div class="more-filter-option">More Filters <span></span></div>
+
+                                    <div class="listsearch-input-item" style="margin-top:15px;">
+
+                                      <button class="button fs-map-btn">Update</button>
+
+                                    </div>
+
+                                    </form>
                                   </div>
                                   <!-- listsearch-input-wrap end -->
                               </div>
@@ -75,6 +111,10 @@
               <!-- list-main-wrap-->
               <div class="list-main-wrap fl-wrap card-listing">
                   <div class="container">
+
+                  @isset($results)
+                    @foreach ($results as $result)
+
                       <!-- listing-item -->
                       <div class="listing-item list-layout">
                           <article class="geodir-category-listing fl-wrap">
@@ -84,194 +124,11 @@
                                   <div class="list-post-counter"><span>4</span><i class="fa fa-heart"></i></div>
                               </div>
                               <div class="geodir-category-content fl-wrap" style="width:35%">
-                                  <a class="listing-geodir-category" href="listing.html">Restourants</a>
+                                  <a class="listing-geodir-category" href="listing.html">{{$result->category->category}}</a>
 
-                                  <h3><a href="listing-single.html">Luxury Restourant</a></h3>
+                                  <h3><a href="listing-single.html">{{$result->name}}</a></h3>
 
-                                  <div class="geodir-category-location"><a href="#0" class="map-item"><i class="fa fa-map-marker" aria-hidden="true"></i> 27th Brooklyn New York, NY 10065</a></div>
-
-
-                                  <div class="geodir-category-options " >
-
-
-                                      <div class="search-item-1">
-                                      <ul>
-                                        <li><a href="#">Test1</a></li>
-                                        <li>Test2</li>
-                                        <li>Test3</li>
-                                      </ul>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="geodir-category-content " style="width:30%">
-
-
-                                  <div class="geodir-category-options " >
-
-
-                                      <div class="search-item-2">
-                                      <ul>
-                                        <li>Ouverture</li>
-                                        <li>Fermeture</li>
-
-                                      </ul>
-                                      </div>
-                                  </div>
-                              </div>
-                          </article>
-                      </div>
-                      <!-- listing-item end-->
-                      <!-- listing-item -->
-                      <div class="listing-item list-layout">
-                          <article class="geodir-category-listing fl-wrap">
-                              <div class="geodir-category-img" style="width:35%">
-                                  <img src="images/all/1.jpg" alt="">
-                                  <div class="overlay"></div>
-                                  <div class="list-post-counter"><span>15</span><i class="fa fa-heart"></i></div>
-                              </div>
-                              <div class="geodir-category-content fl-wrap" style="width:35%">
-                                  <a class="listing-geodir-category" href="listing.html">Restourants</a>
-
-                                  <h3><a href="listing-single.html">Luxury Restourant</a></h3>
-
-                                  <div class="geodir-category-location"><a href="#0" class="map-item"><i class="fa fa-map-marker" aria-hidden="true"></i> 27th Brooklyn New York, NY 10065</a></div>
-
-
-                                  <div class="geodir-category-options " >
-
-
-                                      <div class="search-item-1">
-                                      <ul>
-                                        <li><a href="#">Test1</a></li>
-                                        <li>Test2</li>
-                                        <li>Test3</li>
-                                      </ul>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="geodir-category-content " style="width:30%">
-
-                                  <div class="geodir-category-options " >
-
-
-                                      <div class="search-item-2">
-                                      <ul>
-                                        <li>Ouverture</li>
-                                        <li>Fermeture</li>
-
-                                      </ul>
-                                      </div>
-                                  </div>
-                              </div>
-                          </article>
-                      </div>
-                      <!-- listing-item end-->
-                      <div class="clearfix"></div>
-                      <!-- listing-item -->
-                      <div class="listing-item list-layout">
-                          <article class="geodir-category-listing fl-wrap">
-                              <div class="geodir-category-img"style="width:35%">
-                                  <img src="images/all/4.jpg" alt="">
-                                  <div class="overlay"></div>
-                                  <div class="list-post-counter"><span>553</span><i class="fa fa-heart"></i></div>
-                              </div>
-                              <div class="geodir-category-content fl-wrap" style="width:35%">
-                                  <a class="listing-geodir-category" href="listing.html">Restourants</a>
-
-                                  <h3><a href="listing-single.html">Luxury Restourant</a></h3>
-
-                                  <div class="geodir-category-location"><a href="#0" class="map-item"><i class="fa fa-map-marker" aria-hidden="true"></i> 27th Brooklyn New York, NY 10065</a></div>
-
-
-                                  <div class="geodir-category-options " >
-
-
-                                      <div class=" search-item-1">
-                                      <ul>
-                                        <li><a href="#">Test1</a></li>
-                                        <li>Test2</li>
-                                        <li>Test3</li>
-                                      </ul>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="geodir-category-content " style="width:30%">
-
-                                  <div class="geodir-category-options " >
-
-
-                                      <div class="search-item-2">
-                                      <ul>
-                                        <li>Ouverture</li>
-                                        <li>Fermeture</li>
-
-                                      </ul>
-                                      </div>
-                                  </div>
-                              </div>
-                          </article>
-                      </div>
-                      <!-- listing-item end-->
-                      <!-- listing-item -->
-                      <div class="listing-item list-layout">
-                          <article class="geodir-category-listing fl-wrap">
-                              <div class="geodir-category-img" style="width:35%">
-                                  <img src="images/all/20.jpg" alt="">
-                                  <div class="overlay"></div>
-                                  <div class="list-post-counter"><span>47</span><i class="fa fa-heart"></i></div>
-                              </div>
-                              <div class="geodir-category-content fl-wrap" style="width:35%">
-                                  <a class="listing-geodir-category" href="listing.html">Restourants</a>
-
-                                  <h3><a href="listing-single.html">Luxury Restourant</a></h3>
-
-                                  <div class="geodir-category-location"><a href="#0" class="map-item"><i class="fa fa-map-marker" aria-hidden="true"></i> 27th Brooklyn New York, NY 10065</a></div>
-
-
-                                  <div class="geodir-category-options " >
-
-
-                                      <div class="search-item-1">
-                                      <ul>
-                                        <li><a href="#">Test1</a></li>
-                                        <li>Test2</li>
-                                        <li>Test3</li>
-                                      </ul>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="geodir-category-content " style="width:30%">
-
-                                  <div class="geodir-category-options " >
-
-
-                                      <div class="search-item-2">
-                                      <ul>
-                                        <li>Ouverture</li>
-                                        <li>Fermeture</li>
-
-                                      </ul>
-                                      </div>
-                                  </div>
-                              </div>
-                          </article>
-                      </div>
-                      <!-- listing-item end-->
-                      <div class="clearfix"></div>
-                      <!-- listing-item -->
-                      <div class="listing-item list-layout">
-                          <article class="geodir-category-listing fl-wrap">
-                              <div class="geodir-category-img" style="width:35%">
-                                  <img src="images/all/5.jpg" alt="">
-                                  <div class="overlay"></div>
-                                  <div class="list-post-counter"><span>3</span><i class="fa fa-heart"></i></div>
-                              </div>
-                              <div class="geodir-category-content fl-wrap" style="width:35%">
-                                  <a class="listing-geodir-category" href="listing.html">Restourants</a>
-
-                                  <h3><a href="listing-single.html">Luxury Restourant</a></h3>
-
-                                  <div class="geodir-category-location"><a href="#0" class="map-item"><i class="fa fa-map-marker" aria-hidden="true"></i> 27th Brooklyn New York, NY 10065</a></div>
+                                  <div class="geodir-category-location"><a href="#0" class="map-item"><i class="fa fa-map-marker" aria-hidden="true"></i> {{$result->complex->name}},{{$result->complex->address->city}},{{$result->complex->address->address}}</a></div>
 
 
                                   <div class="geodir-category-options " >
@@ -304,52 +161,10 @@
                           </article>
                       </div>
                       <!-- listing-item end-->
-                      <!-- listing-item -->
-                      <div class="listing-item list-layout">
-                          <article class="geodir-category-listing fl-wrap">
-                              <div class="geodir-category-img" style="width:35%">
-                                  <img src="images/all/23.jpg" alt="">
-                                  <div class="overlay"></div>
-                                  <div class="list-post-counter"><span>35</span><i class="fa fa-heart"></i></div>
-                              </div>
-                              <div class="geodir-category-content fl-wrap" style="width:35%">
-                                  <a class="listing-geodir-category" href="listing.html">Restourants</a>
 
-                                  <h3><a href="listing-single.html">Luxury Restourant</a></h3>
+                    @endforeach
 
-                                  <div class="geodir-category-location"><a href="#0" class="map-item"><i class="fa fa-map-marker" aria-hidden="true"></i> 27th Brooklyn New York, NY 10065</a></div>
-
-
-                                  <div class="geodir-category-options " >
-
-
-                                      <div class="search-item-1">
-                                      <ul>
-                                        <li><a href="#">Test1</a></li>
-                                        <li>Test2</li>
-                                        <li>Test3</li>
-                                      </ul>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="geodir-category-content " style="width:30%">
-
-
-                                  <div class="geodir-category-options " >
-
-
-                                      <div class="search-item-2">
-                                      <ul>
-                                        <li>Ouverture</li>
-                                        <li>Fermeture</li>
-
-                                      </ul>
-                                      </div>
-                                  </div>
-                              </div>
-                          </article>
-                      </div>
-                      <!-- listing-item end-->
+                  @endisset
                   </div>
                   <a class="load-more-button" href="#">Load more <i class="fa fa-circle-o-notch"></i> </a>
               </div>
