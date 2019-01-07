@@ -52,7 +52,7 @@ class InfrastruresSeeder extends Seeder
           ]);
 
           for($i=1;$i<=7;$i++){
-              $firstComplex->shedules()->create([
+              $firstComplex->schedules()->create([
                   'start_at' => '06:00:00',
                   'ends_at' => '18:30:00',
                   'day' => $i
@@ -72,7 +72,7 @@ class InfrastruresSeeder extends Seeder
           ]);
 
           for($i=1;$i<=7;$i++){
-              $secondComplex->shedules()->create([
+              $secondComplex->schedules()->create([
                   'start_at' => '08:00:00',
                   'ends_at' => '18:30:00',
                   'day' => $i
@@ -114,7 +114,7 @@ class InfrastruresSeeder extends Seeder
           ]);
 
           for($i=1;$i<=7;$i++){
-              $firstStadium->shedules()->create([
+              $firstStadium->schedules()->create([
                   'start_at' => '10:00:00',
                   'ends_at' => '18:30:00',
                   'day' => $i
@@ -132,7 +132,7 @@ class InfrastruresSeeder extends Seeder
           ]);
 
           for($i=1;$i<=7;$i++){
-              $secondStadium->shedules()->create([
+              $secondStadium->schedules()->create([
                   'start_at' => '10:00:00',
                   'ends_at' => '18:30:00',
                   'day' => $i
@@ -150,7 +150,7 @@ class InfrastruresSeeder extends Seeder
           ]);
 
           for($i=1;$i<=7;$i++){
-              $thirdStadium->shedules()->create([
+              $thirdStadium->schedules()->create([
                   'start_at' => '11:00:00',
                   'ends_at' => '18:30:00',
                   'day' => $i
@@ -192,7 +192,7 @@ class InfrastruresSeeder extends Seeder
            ]);
 
            for($i=1;$i<=7;$i++){
-               $fourthStadium->shedules()->create([
+               $fourthStadium->schedules()->create([
                    'start_at' => '12:00:00',
                    'ends_at' => '18:30:00',
                    'day' => $i
@@ -210,7 +210,7 @@ class InfrastruresSeeder extends Seeder
            ]);
 
            for($i=1;$i<=7;$i++){
-               $fifthStadium->shedules()->create([
+               $fifthStadium->schedules()->create([
                    'start_at' => '11:00:00',
                    'ends_at' => '18:30:00',
                    'day' => $i
@@ -227,7 +227,7 @@ class InfrastruresSeeder extends Seeder
            ]);
 
            for($i=1;$i<=7;$i++){
-               $sixthStadium->shedules()->create([
+               $sixthStadium->schedules()->create([
                    'start_at' => '11:00:00',
                    'ends_at' => '18:30:00',
                    'day' => $i
@@ -245,7 +245,7 @@ class InfrastruresSeeder extends Seeder
            ]);
 
            for($i=1;$i<=7;$i++){
-               $seventhStadium->shedules()->create([
+               $seventhStadium->schedules()->create([
                    'start_at' => '11:00:00',
                    'ends_at' => '18:30:00',
                    'day' => $i
@@ -274,7 +274,7 @@ class InfrastruresSeeder extends Seeder
            ]);
 
            for($i=1;$i<=7;$i++){
-               $thirdComplex->shedules()->create([
+               $thirdComplex->schedules()->create([
                    'start_at' => '06:00:00',
                    'ends_at' => '18:30:00',
                    'day' => $i
@@ -302,7 +302,7 @@ class InfrastruresSeeder extends Seeder
            ]);
 
            for($i=1;$i<=7;$i++){
-               $eighthStadium->shedules()->create([
+               $eighthStadium->schedules()->create([
                    'start_at' => '11:00:00',
                    'ends_at' => '18:30:00',
                    'day' => $i
@@ -331,7 +331,7 @@ class InfrastruresSeeder extends Seeder
            ]);
 
            for($i=1;$i<=7;$i++){
-               $fourthComplex->shedules()->create([
+               $fourthComplex->schedules()->create([
                    'start_at' => '11:00:00',
                    'ends_at' => '18:30:00',
                    'day' => $i
@@ -358,7 +358,7 @@ class InfrastruresSeeder extends Seeder
            ]);
 
            for($i=1;$i<=7;$i++){
-               $ninthStadium->shedules()->create([
+               $ninthStadium->schedules()->create([
                    'start_at' => '08:00:00',
                    'ends_at' => '18:30:00',
                    'day' => $i
@@ -389,7 +389,7 @@ class InfrastruresSeeder extends Seeder
            ]);
 
            for($i=1;$i<=7;$i++){
-               $fifthComplex->shedules()->create([
+               $fifthComplex->schedules()->create([
                    'start_at' => '11:00:00',
                    'ends_at' => '18:30:00',
                    'day' => $i
@@ -417,7 +417,7 @@ class InfrastruresSeeder extends Seeder
            ]);
 
            for($i=1;$i<=7;$i++){
-               $tenthStadium->shedules()->create([
+               $tenthStadium->schedules()->create([
                    'start_at' => '11:00:00',
                    'ends_at' => '18:30:00',
                    'day' => $i
@@ -451,7 +451,7 @@ class InfrastruresSeeder extends Seeder
               ]);
 
               for($i=1;$i<=7;$i++){
-                  $sixthComplex->shedules()->create([
+                  $sixthComplex->schedules()->create([
                       'start_at' => '11:00:00',
                       'ends_at' => '18:30:00',
                       'day' => $i
@@ -479,7 +479,7 @@ class InfrastruresSeeder extends Seeder
               ]);
 
               for($i=1;$i<=7;$i++){
-                  $ninthStadium->shedules()->create([
+                  $ninthStadium->schedules()->create([
                       'start_at' => '8:00:00',
                       'ends_at' => '18:30:00',
                       'day' => $i

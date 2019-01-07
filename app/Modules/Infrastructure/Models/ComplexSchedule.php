@@ -30,11 +30,11 @@ class ComplexSchedule extends Model {
            'start_at',
            'ends_at',
            'day',
-           'horaire_id',
-           'horaire_type'
+           'group_id',
+           'group_type'
        ];
 
-       public function time(){
+       public function group(){
            return $this->morphTo();
        }
 

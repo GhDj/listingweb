@@ -18,8 +18,8 @@ class CreateComplexSchedulesTable extends Migration
             $table->time('start_at')->nullable();
             $table->time('ends_at')->nullable();
             $table->integer('day');
-            $table->integer('time_id');
-            $table->string('time_type');
+            $table->integer('group_id');
+            $table->string('group_type');
             $table->timestamps();
         });
     }
