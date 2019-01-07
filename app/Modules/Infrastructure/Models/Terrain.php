@@ -75,4 +75,8 @@ class Terrain extends Model {
 
         return $this->morphMany('App\Modules\Reviews\Models\Wishlist','wished');
     }
+
+    public function schedules(){
+        return $this->morphMany('App\Modules\Infrastructure\Models\ComplexSchedule','group');
+    }
 }
