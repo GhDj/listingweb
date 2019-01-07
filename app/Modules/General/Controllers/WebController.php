@@ -21,8 +21,6 @@ class WebController extends Controller
     */
     public function showHome()
     {
-
-
       return view('General::welcome',[
         'results' => Terrain::All(),
         'categories' => Category::All()

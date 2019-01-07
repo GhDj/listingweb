@@ -2,10 +2,11 @@
 
 use Illuminate\Database\Seeder;
 use App\Modules\General\Models\Address;
-use App\Modules\Infrastructures\Models\Complex;
 use App\Modules\Infrastructures\Models\Terrain;
+use App\Modules\Infrastructures\Models\Complex;
 use App\Modules\Infrastructures\Models\Equipment;
 use App\Modules\Infrastructures\Models\Category;
+use App\Modules\Infrastructure\Models\ComplexSchedule;
 
 class InfrastruresSeeder extends Seeder
 {
@@ -16,7 +17,7 @@ class InfrastruresSeeder extends Seeder
      */
     public function run()
     {
-          $adresse1 = Address::Create([
+          $firstAddress = Address::Create([
             'city' => 'Boran/Oise' ,
             'postal_code' => '60820' ,
             'country' => 'france' ,
@@ -27,7 +28,7 @@ class InfrastruresSeeder extends Seeder
             'description' => 'SPORTFRANCE est composée d\'un effectif de 35 personnes sur un site de 25.000 m2 dont 5.518 m2 de bâtiments industriels et commerciaux, à BORAN SUR OISE en Picardie'
 
           ]);
-          $adresse2 = Address::Create([
+          $secondAddress = Address::Create([
             'city' => 'Saint-Yrieix-la-Perche' ,
             'postal_code' => '87500' ,
             'country' => 'france' ,
@@ -40,144 +41,218 @@ class InfrastruresSeeder extends Seeder
 
 
 
-          $complexe1 = Complex::Create([
+          $firstComplex = Complex::Create([
 
             'name' => 'sportfrance',
             'phone' => '0344219040' ,
             'email' => 'contact@sportfrance.com',
             'web_site' => 'http://www.sportfrance.com',
-            'address_id' => $adresse1->id
+            'address_id' => $firstAddress->id
 
           ]);
 
+          for($i=1;$i<=7;$i++){
+              $firstComplex->shedules()->create([
+                  'start_at' => '06:00:00',
+                  'ends_at' => '18:30:00',
+                  'day' => $i
+              ]);
+          }
 
 
-          $complexe2 = Complex::Create([
+
+          $secondComplex = Complex::Create([
 
             'name' => 'Villasport',
             'phone' => '0555586020' ,
             'email' => 'contact@villasport.com',
             'web_site' => 'http://villasport.fr/',
-            'address_id' => $adresse2->id
+            'address_id' => $secondAddress->id
 
           ]);
 
+          for($i=1;$i<=7;$i++){
+              $secondComplex->shedules()->create([
+                  'start_at' => '08:00:00',
+                  'ends_at' => '18:30:00',
+                  'day' => $i
+              ]);
+          }
 
 
-          $category1 = Category::Create([
+
+
+          $firstCategory = Category::Create([
 
             'category' => 'Terrains Multisports',
-            'complex_id' => $complexe1->id
+            'complex_id' => $firstComplex->id
 
           ]);
 
-          $category2 = Category::Create([
+          $secondCategory = Category::Create([
 
             'category' => 'Pisine',
-            'complex_id' => $complexe1->id
+            'complex_id' => $firstComplex->id
 
           ]);
 
-          $category3 = Category::Create([
+          $thirdCategory = Category::Create([
 
             'category' => 'Fitness',
-            'complex_id' => $complexe1->id
+            'complex_id' => $firstComplex->id
 
           ]);
 
-          $terrain1 = Terrain::Create([
+          $firstStadium = Terrain::Create([
 
             'name' => 'City Arena',
             'type' =>'MMMMM',
             'size' =>100,
-            'complex_id' => $complexe1->id,
-            'category_id' =>  $category1->id
+            'complex_id' => $firstComplex->id,
+            'category_id' =>  $firstCategory->id
 
           ]);
 
-          $terrain2 = Terrain::Create([
+          for($i=1;$i<=7;$i++){
+              $firstStadium->shedules()->create([
+                  'start_at' => '10:00:00',
+                  'ends_at' => '18:30:00',
+                  'day' => $i
+              ]);
+          }
+
+          $secondStadium = Terrain::Create([
 
             'name' => 'Terrains Multisports',
             'type' =>'MMMM',
             'size' =>200,
-            'complex_id' => $complexe1->id,
-            'category_id' =>  $category1->id
+            'complex_id' => $firstComplex->id,
+            'category_id' =>  $firstCategory->id
 
           ]);
-          $terrain3 = Terrain::Create([
+
+          for($i=1;$i<=7;$i++){
+              $secondStadium->shedules()->create([
+                  'start_at' => '10:00:00',
+                  'ends_at' => '18:30:00',
+                  'day' => $i
+              ]);
+          }
+
+          $thirdStadium = Terrain::Create([
 
             'name' => 'Terrains Futsal Hat Trick',
             'type' =>'MM',
             'size' =>300,
-            'complex_id' => $complexe1->id,
-            'category_id' =>  $category1->id
+            'complex_id' => $firstComplex->id,
+            'category_id' =>  $thirdCategory->id
 
           ]);
+
+          for($i=1;$i<=7;$i++){
+              $thirdStadium->shedules()->create([
+                  'start_at' => '11:00:00',
+                  'ends_at' => '18:30:00',
+                  'day' => $i
+              ]);
+          }
 
 
            // ** //
 
-           $category4 = Category::Create([
+           $fourthCategory = Category::Create([
 
              'category' => 'Espace Aquatique',
-             'complex_id' => $complexe2->id
+             'complex_id' => $secondComplex->id
 
            ]);
 
-           $category5 = Category::Create([
+           $fifthCategory = Category::Create([
 
              'category' => 'Espace Forme',
-             'complex_id' => $complexe2->id
+             'complex_id' => $secondComplex->id
 
            ]);
 
-           $category6 = Category::Create([
+           $sixthCategory = Category::Create([
 
              'category' => 'Espace Multisports',
-             'complex_id' => $complexe2->id
+             'complex_id' => $secondComplex->id
 
            ]);
 
-           $terrain4 = Terrain::Create([
+           $fourthStadium = Terrain::Create([
 
              'name' => 'Un bassin polyvalent de nage et d’activités',
              'type' =>'Les espaces intérieurs',
              'size' =>375,
-             'complex_id' => $complexe2->id,
-             'category_id' =>  $category4->id
+             'complex_id' => $secondComplex->id,
+             'category_id' =>  $fourthCategory->id
 
            ]);
 
-           $terrain5 = Terrain::Create([
+           for($i=1;$i<=7;$i++){
+               $fourthStadium->shedules()->create([
+                   'start_at' => '12:00:00',
+                   'ends_at' => '18:30:00',
+                   'day' => $i
+               ]);
+           }
+
+           $fifthStadium = Terrain::Create([
 
              'name' => 'Un bassin ludique de détente et de loisirs',
              'type' =>'Les espaces extérieurs',
              'size' =>203,
-             'complex_id' => $complexe2->id,
-             'category_id' =>  $category4->id
+             'complex_id' => $secondComplex->id,
+             'category_id' =>  $fourthCategory->id
 
            ]);
-           $terrain6 = Terrain::Create([
+
+           for($i=1;$i<=7;$i++){
+               $fifthStadium->shedules()->create([
+                   'start_at' => '11:00:00',
+                   'ends_at' => '18:30:00',
+                   'day' => $i
+               ]);
+           }
+           $sixthStadium = Terrain::Create([
 
              'name' => 'Salle cardio-training',
              'type' =>'M',
              'size' =>110,
-             'complex_id' => $complexe2->id,
-             'category_id' =>  $category5->id
+             'complex_id' => $secondComplex->id,
+             'category_id' =>  $fifthCategory->id
 
            ]);
 
-           $terrain7 = Terrain::Create([
+           for($i=1;$i<=7;$i++){
+               $sixthStadium->shedules()->create([
+                   'start_at' => '11:00:00',
+                   'ends_at' => '18:30:00',
+                   'day' => $i
+               ]);
+           }
+
+           $seventhStadium = Terrain::Create([
 
              'name' => 'une salle de gymnase',
              'type' =>'Au sous-sol',
              'size' =>1449,
-             'complex_id' => $complexe2->id,
-             'category_id' =>  $category6->id
+             'complex_id' => $secondComplex->id,
+             'category_id' =>  $sixthCategory->id
 
            ]);
 
-           $adresse3 = Address::Create([
+           for($i=1;$i<=7;$i++){
+               $seventhStadium->shedules()->create([
+                   'start_at' => '11:00:00',
+                   'ends_at' => '18:30:00',
+                   'day' => $i
+               ]);
+           }
+
+           $thirdAddress = Address::Create([
              'city' => 'Nantes' ,
              'postal_code' => '44100' ,
              'country' => 'france' ,
@@ -188,35 +263,53 @@ class InfrastruresSeeder extends Seeder
              'description' => 'NantesSport | votre complexe sports, fitness & piscine'
            ]);
 
-           $complexe3 = Complex::Create([
+           $thirdComplex = Complex::Create([
 
              'name' => 'NantesSport',
              'phone' => '0555586020' ,
              'email' => 'contact@NantesSport.com',
              'web_site' => 'http://NantesSport.fr/',
-             'address_id' => $adresse3->id
+             'address_id' => $thirdAddress->id
 
            ]);
 
+           for($i=1;$i<=7;$i++){
+               $thirdComplex->shedules()->create([
+                   'start_at' => '06:00:00',
+                   'ends_at' => '18:30:00',
+                   'day' => $i
+               ]);
+           }
 
-           $category7 = Category::Create([
+
+
+
+           $seventhCategory = Category::Create([
 
              'category' => 'Fitness',
-             'complex_id' => $complexe3->id
+             'complex_id' => $thirdComplex->id
 
            ]);
 
-           $terrain8 = Terrain::Create([
+           $eighthStadium = Terrain::Create([
 
              'name' => 'Terrains Football Nantes',
              'type' =>'MM',
              'size' =>300,
-             'complex_id' => $complexe3->id,
-             'category_id' =>  $category7->id
+             'complex_id' => $thirdComplex->id,
+             'category_id' =>  $seventhCategory->id
 
            ]);
 
-           $adresse4 = Address::Create([
+           for($i=1;$i<=7;$i++){
+               $eighthStadium->shedules()->create([
+                   'start_at' => '11:00:00',
+                   'ends_at' => '18:30:00',
+                   'day' => $i
+               ]);
+           }
+
+           $fourthAddress = Address::Create([
              'city' => 'Nantes' ,
              'postal_code' => '44300' ,
              'country' => 'france' ,
@@ -227,37 +320,54 @@ class InfrastruresSeeder extends Seeder
              'description' => 'NantesSport | votre complexe sports, fitness & piscine'
            ]);
 
-           $complexe4 = Complex::Create([
+           $fourthComplex = Complex::Create([
 
              'name' => 'Nantes Erdre',
              'phone' => '0555586020' ,
              'email' => 'contact@NantesSport.com',
              'web_site' => 'http://NantesErdre.fr/',
-             'address_id' => $adresse4->id
+             'address_id' => $fourthAddress->id
 
            ]);
 
+           for($i=1;$i<=7;$i++){
+               $fourthComplex->shedules()->create([
+                   'start_at' => '11:00:00',
+                   'ends_at' => '18:30:00',
+                   'day' => $i
+               ]);
+           }
 
-           $category8 = Category::Create([
+
+
+           $eighthCategory = Category::Create([
 
              'category' => 'Fitness',
-             'complex_id' => $complexe4->id
+             'complex_id' => $fourthComplex->id
 
            ]);
 
-           $terrain9 = Terrain::Create([
+           $ninthStadium = Terrain::Create([
 
              'name' => 'Terrains Football Nantes Erdre',
              'type' =>'MM',
              'size' =>300,
-             'complex_id' => $complexe4->id,
-             'category_id' =>  $category7->id
+             'complex_id' => $fourthComplex->id,
+             'category_id' =>  $seventhCategory->id
 
            ]);
 
+           for($i=1;$i<=7;$i++){
+               $ninthStadium->shedules()->create([
+                   'start_at' => '08:00:00',
+                   'ends_at' => '18:30:00',
+                   'day' => $i
+               ]);
+           }
+
            /******************/
 
-           $adresse5 = Address::Create([
+           $fifthAddress = Address::Create([
              'city' => 'Boran-sur-Oise' ,
              'postal_code' => '60820' ,
              'country' => 'france' ,
@@ -268,40 +378,58 @@ class InfrastruresSeeder extends Seeder
              'description' => 'BoranSport | votre complexe sports, fitness & piscine'
            ]);
 
-           $complexe5 = Complex::Create([
+           $fifthComplex = Complex::Create([
 
              'name' => 'BoranSport',
              'phone' => '0555586020' ,
              'email' => 'contact@NantesSport.com',
              'web_site' => 'http://NantesErdre.fr/',
-             'address_id' => $adresse5->id
+             'address_id' => $fifthAddress->id
 
            ]);
 
+           for($i=1;$i<=7;$i++){
+               $fifthComplex->shedules()->create([
+                   'start_at' => '11:00:00',
+                   'ends_at' => '18:30:00',
+                   'day' => $i
+               ]);
+           }
 
-           $category8 = Category::Create([
+
+
+
+           $eighthCategory = Category::Create([
 
              'category' => 'Football',
-             'complex_id' => $complexe5->id
+             'complex_id' => $fifthComplex->id
 
            ]);
 
-           $terrain9 = Terrain::Create([
+           $tenthStadium = Terrain::Create([
 
              'name' => 'Terrains Football BoranSport',
              'type' =>'MM',
              'size' =>300,
-             'complex_id' => $complexe5->id,
-             'category_id' =>  $category8->id
+             'complex_id' => $fifthComplex->id,
+             'category_id' =>  $eighthCategory->id
 
            ]);
+
+           for($i=1;$i<=7;$i++){
+               $tenthStadium->shedules()->create([
+                   'start_at' => '11:00:00',
+                   'ends_at' => '18:30:00',
+                   'day' => $i
+               ]);
+           }
 
 
               /************************/
 
 
 
-              $adresse6 = Address::Create([
+              $sixthAddress = Address::Create([
                 'city' => 'Saint-Yrieix-la-Perche' ,
                 'postal_code' => '87500' ,
                 'country' => 'france' ,
@@ -312,33 +440,52 @@ class InfrastruresSeeder extends Seeder
                 'description' => 'BoranSport | votre complexe sports, fitness & piscine'
               ]);
 
-              $complexe6 = Complex::Create([
+              $sixthComplex = Complex::Create([
 
                 'name' => 'SaintSport',
                 'phone' => '0555586020' ,
                 'email' => 'contact@SaintSport.com',
                 'web_site' => 'http://NantesErdre.fr/',
-                'address_id' => $adresse6->id
+                'address_id' => $sixthAddress->id
 
               ]);
 
+              for($i=1;$i<=7;$i++){
+                  $sixthComplex->shedules()->create([
+                      'start_at' => '11:00:00',
+                      'ends_at' => '18:30:00',
+                      'day' => $i
+                  ]);
+              }
 
-              $category9 = Category::Create([
+
+
+
+              $ninthCategory = Category::Create([
 
                 'category' => 'Football',
-                'complex_id' => $complexe6->id
+                'complex_id' => $sixthComplex->id
 
               ]);
 
-              $terrain9 = Terrain::Create([
+              $ninthStadium = Terrain::Create([
 
                 'name' => 'Terrains Football SaintSport',
                 'type' =>'MM',
                 'size' =>300,
-                'complex_id' => $complexe6->id,
-                'category_id' =>  $category9->id
+                'complex_id' => $sixthComplex->id,
+                'category_id' =>  $ninthCategory->id
 
               ]);
+
+              for($i=1;$i<=7;$i++){
+                  $ninthStadium->shedules()->create([
+                      'start_at' => '8:00:00',
+                      'ends_at' => '18:30:00',
+                      'day' => $i
+                  ]);
+              }
+
 
 
 

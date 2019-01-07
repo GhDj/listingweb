@@ -70,6 +70,7 @@ class Complex extends Model {
         return $this->morphMany('App\Modules\Reviews\Models\Wishlist','wished');
     }
 
-
+      public function shedules(){
+          return $this->morphMany('App\Modules\Infrastructure\Models\ComplexSchedule','time');
+      }
 }
-
