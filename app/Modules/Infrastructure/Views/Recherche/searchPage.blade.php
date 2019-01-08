@@ -153,7 +153,9 @@
                               <ul>
 
                                 @foreach ($result->schedules as $value)
-                                <li><span class="opening-hours-day">{{$value->day}} </span><span class="opening-hours-time">{{$value->start_at}} - {{$value->ends_at}}</span></li>
+
+
+                                <li><span class="opening-hours-day">{{$value->day}} </span><span class="opening-hours-time">{{$value->start_at->format('H:i')}} - {{$value->ends_at->format('H:i')}}</span></li>
                                 @endforeach
 
                               </ul>

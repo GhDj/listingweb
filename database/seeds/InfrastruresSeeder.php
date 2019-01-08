@@ -8,6 +8,8 @@ use App\Modules\Infrastructures\Models\Equipment;
 use App\Modules\Infrastructures\Models\Category;
 use App\Modules\Infrastructure\Models\ComplexSchedule;
 
+use Carbon\Carbon;
+
 class InfrastruresSeeder extends Seeder
 {
     /**
@@ -53,8 +55,8 @@ class InfrastruresSeeder extends Seeder
 
           for($i=1;$i<=7;$i++){
               $firstComplex->schedules()->create([
-                  'start_at' => '06:00:00',
-                  'ends_at' => '18:30:00',
+                  'start_at' => '2019-03-03 06:00:00',
+                  'ends_at' => '2019-03-03 18:30:00',
                   'day' => $i
               ]);
           }
@@ -73,8 +75,8 @@ class InfrastruresSeeder extends Seeder
 
           for($i=1;$i<=7;$i++){
               $secondComplex->schedules()->create([
-                  'start_at' => '08:00:00',
-                  'ends_at' => '18:30:00',
+                  'start_at' => '2019-03-03 08:00:00',
+                  'ends_at' => '2019-03-03 18:30:00',
                   'day' => $i
               ]);
           }
@@ -115,8 +117,8 @@ class InfrastruresSeeder extends Seeder
 
           for($i=1;$i<=7;$i++){
               $firstStadium->schedules()->create([
-                  'start_at' => '10:00:00',
-                  'ends_at' => '18:30:00',
+                  'start_at' => '2019-03-03 10:00:00',
+                  'ends_at' => '2019-03-03 18:30:00',
                   'day' => $i
               ]);
           }
@@ -133,8 +135,8 @@ class InfrastruresSeeder extends Seeder
 
           for($i=1;$i<=7;$i++){
               $secondStadium->schedules()->create([
-                  'start_at' => '10:00:00',
-                  'ends_at' => '18:30:00',
+                  'start_at' => '2019-03-03 10:00:00',
+                  'ends_at' => '2019-03-03 18:30:00',
                   'day' => $i
               ]);
           }
@@ -151,8 +153,8 @@ class InfrastruresSeeder extends Seeder
 
           for($i=1;$i<=7;$i++){
               $thirdStadium->schedules()->create([
-                  'start_at' => '11:00:00',
-                  'ends_at' => '18:30:00',
+                  'start_at' => '2019-03-03 11:00:00',
+                  'ends_at' => '2019-03-03 18:30:00',
                   'day' => $i
               ]);
           }
@@ -193,8 +195,8 @@ class InfrastruresSeeder extends Seeder
 
            for($i=1;$i<=7;$i++){
                $fourthStadium->schedules()->create([
-                   'start_at' => '12:00:00',
-                   'ends_at' => '18:30:00',
+                   'start_at' => '2019-03-03 12:00:00',
+                   'ends_at' => '2019-03-03 18:30:00',
                    'day' => $i
                ]);
            }
@@ -211,8 +213,8 @@ class InfrastruresSeeder extends Seeder
 
            for($i=1;$i<=7;$i++){
                $fifthStadium->schedules()->create([
-                   'start_at' => '11:00:00',
-                   'ends_at' => '18:30:00',
+                   'start_at' => '2019-03-03 11:00:00',
+                   'ends_at' => '2019-03-03 18:30:00',
                    'day' => $i
                ]);
            }
@@ -228,8 +230,8 @@ class InfrastruresSeeder extends Seeder
 
            for($i=1;$i<=7;$i++){
                $sixthStadium->schedules()->create([
-                   'start_at' => '11:00:00',
-                   'ends_at' => '18:30:00',
+                   'start_at' => '2019-03-03 11:00:00',
+                   'ends_at' => '2019-03-03 18:30:00',
                    'day' => $i
                ]);
            }
@@ -246,8 +248,8 @@ class InfrastruresSeeder extends Seeder
 
            for($i=1;$i<=7;$i++){
                $seventhStadium->schedules()->create([
-                   'start_at' => '11:00:00',
-                   'ends_at' => '18:30:00',
+                   'start_at' => '2019-03-03 11:00:00',
+                   'ends_at' => '2019-03-03 18:30:00',
                    'day' => $i
                ]);
            }
@@ -275,8 +277,8 @@ class InfrastruresSeeder extends Seeder
 
            for($i=1;$i<=7;$i++){
                $thirdComplex->schedules()->create([
-                   'start_at' => '06:00:00',
-                   'ends_at' => '18:30:00',
+                   'start_at' => '2019-03-03 06:00:00',
+                   'ends_at' => '2019-03-03 18:30:00',
                    'day' => $i
                ]);
            }
@@ -303,8 +305,8 @@ class InfrastruresSeeder extends Seeder
 
            for($i=1;$i<=7;$i++){
                $eighthStadium->schedules()->create([
-                   'start_at' => '11:00:00',
-                   'ends_at' => '18:30:00',
+                   'start_at' => '2019-03-03 11:00:00',
+                   'ends_at' => '2019-03-03 18:30:00',
                    'day' => $i
                ]);
            }
@@ -332,8 +334,8 @@ class InfrastruresSeeder extends Seeder
 
            for($i=1;$i<=7;$i++){
                $fourthComplex->schedules()->create([
-                   'start_at' => '11:00:00',
-                   'ends_at' => '18:30:00',
+                   'start_at' => '2019-03-03 11:00:00',
+                   'ends_at' => '2019-03-03 18:30:00',
                    'day' => $i
                ]);
            }
@@ -359,8 +361,8 @@ class InfrastruresSeeder extends Seeder
 
            for($i=1;$i<=7;$i++){
                $ninthStadium->schedules()->create([
-                   'start_at' => '08:00:00',
-                   'ends_at' => '18:30:00',
+                   'start_at' => '2019-03-03 08:00:00',
+                   'ends_at' => '2019-03-03 18:30:00',
                    'day' => $i
                ]);
            }
@@ -390,8 +392,8 @@ class InfrastruresSeeder extends Seeder
 
            for($i=1;$i<=7;$i++){
                $fifthComplex->schedules()->create([
-                   'start_at' => '11:00:00',
-                   'ends_at' => '18:30:00',
+                   'start_at' => '2019-03-03 11:00:00',
+                   'ends_at' => '2019-03-03 18:30:00',
                    'day' => $i
                ]);
            }
@@ -418,8 +420,8 @@ class InfrastruresSeeder extends Seeder
 
            for($i=1;$i<=7;$i++){
                $tenthStadium->schedules()->create([
-                   'start_at' => '11:00:00',
-                   'ends_at' => '18:30:00',
+                   'start_at' => '2019-03-03 11:00:00',
+                   'ends_at' => '2019-03-03 18:30:00',
                    'day' => $i
                ]);
            }
@@ -452,8 +454,8 @@ class InfrastruresSeeder extends Seeder
 
               for($i=1;$i<=7;$i++){
                   $sixthComplex->schedules()->create([
-                      'start_at' => '11:00:00',
-                      'ends_at' => '18:30:00',
+                      'start_at' => '2019-03-03 11:00:00',
+                      'ends_at' => '2019-03-03 18:30:00',
                       'day' => $i
                   ]);
               }
@@ -480,8 +482,8 @@ class InfrastruresSeeder extends Seeder
 
               for($i=1;$i<=7;$i++){
                   $ninthStadium->schedules()->create([
-                      'start_at' => '8:00:00',
-                      'ends_at' => '18:30:00',
+                      'start_at' => '2019-03-03 2019-03-03 8:00:00',
+                      'ends_at' => '2019-03-03 18:30:00',
                       'day' => $i
                   ]);
               }
