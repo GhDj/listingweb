@@ -4,6 +4,8 @@ namespace App\Modules\Infrastructure\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Carbon\Carbon;
+
 class ComplexSchedule extends Model {
 
     /**
@@ -21,10 +23,18 @@ class ComplexSchedule extends Model {
     protected $table = 'complex_schedules';
 
     /**
-     * The attributes that are mass assignable.
+     * The attributes that types date.
      *
      * @var array
      */
+
+     protected $dates = ['start_at','ends_at'];
+
+     /**
+      * The attributes that are mass assignable.
+      *
+      * @var array
+      */
 
        protected $fillable = [
            'start_at',
@@ -37,5 +47,10 @@ class ComplexSchedule extends Model {
        public function group(){
            return $this->morphTo();
        }
+
+       function getDayAttribute($numericDay){
+         $days = array('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche');
+         return $days[$numericDay - 1];
+     }
 
 }

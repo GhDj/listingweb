@@ -15,8 +15,8 @@ class CreateComplexSchedulesTable extends Migration
     {
         Schema::create('complex_schedules', function (Blueprint $table) {
             $table->increments('id');
-            $table->time('start_at')->nullable();
-            $table->time('ends_at')->nullable();
+            $table->datetime('start_at');
+            $table->datetime('ends_at');
             $table->integer('day');
             $table->integer('group_id');
             $table->string('group_type');

@@ -115,6 +115,7 @@
                   @isset($results)
                     @foreach ($results as $result)
 
+
                       <!-- listing-item -->
                       <div class="listing-item list-layout">
                           <article class="geodir-category-listing fl-wrap">
@@ -146,17 +147,22 @@
                               <div class="geodir-category-content " style="width:30%">
 
 
-                                  <div class="geodir-category-options " >
+                      <div class="geodir-category-options ">
+                          <div class="box-widget-item">
+                            <div class="opening-hours">
+                              <ul>
+
+                                @foreach ($result->schedules as $value)
 
 
-                                      <div class="search-item-2">
-                                      <ul>
-                                        <li>Ouverture</li>
-                                        <li>Fermeture</li>
+                                <li><span class="opening-hours-day">{{$value->day}} </span><span class="opening-hours-time">{{$value->start_at->format('H:i')}} - {{$value->ends_at->format('H:i')}}</span></li>
+                                @endforeach
 
-                                      </ul>
-                                      </div>
-                                  </div>
+                              </ul>
+
+                            </div>
+                          </div>
+                        </div>
                               </div>
                           </article>
                       </div>
