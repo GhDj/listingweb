@@ -127,7 +127,8 @@
                               <div class="geodir-category-content fl-wrap" style="width:35%">
                                   <a class="listing-geodir-category" href="listing.html">{{$result->category->category}}</a>
 
-                                  <h3><a href="listing-single.html">{{$result->name}}</a></h3>
+
+                                  <h3><a href="{{ route('showTerrainDetails',['id' => $result->id]) }}">{{$result->name}}</a></h3>
 
                                   <div class="geodir-category-location"><a href="#0" class="map-item"><i class="fa fa-map-marker" aria-hidden="true"></i> {{$result->complex->name}},{{$result->complex->address->city}},{{$result->complex->address->address}}</a></div>
 
@@ -152,10 +153,10 @@
                             <div class="opening-hours">
                               <ul>
 
-                                @foreach ($result->schedules as $value)
+                                @foreach ($result->schedules as $schedule)
 
 
-                                <li><span class="opening-hours-day">{{$value->day}} </span><span class="opening-hours-time">{{$value->start_at->format('H:i')}} - {{$value->ends_at->format('H:i')}}</span></li>
+                                <li><span class="opening-hours-day">{{$schedule->day}} </span><span class="opening-hours-time">{{$schedule->start_at->format('H:i')}} - {{$schedule->ends_at->format('H:i')}}</span></li>
                                 @endforeach
 
                               </ul>

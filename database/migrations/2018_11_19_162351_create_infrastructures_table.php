@@ -38,6 +38,7 @@ class CreateInfrastructuresTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('type');
+            $table->text('description');
             $table->float('size');
             $table->integer('complex_id')->unsigned();
             $table->foreign('complex_id')->references('id')->on('complexes');

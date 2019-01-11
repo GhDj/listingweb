@@ -22,11 +22,11 @@
         <div class="list-single-header-item">
           <div class="list-single-header-item-opt fl-wrap">
             <div class="list-single-header-cat fl-wrap">
-              <a href="#">Fitness</a>
+              <a href="#">{{  $result->category->category  }}</a>
               <span> Ouvert <i class="fa fa-check"></i></span>
             </div>
           </div>
-          <h2>Fitness</h2>
+          <h2>{{  $result->name  }}</h2>
 
           <div class="listing-rating card-popup-rainingvis" data-starrating2="5">
             <span>(8 reviews)</span>
@@ -37,9 +37,9 @@
             <div class="col-md-6">
               <div class="list-single-header-contacts fl-wrap">
                 <ul>
-                  <li><i class="fa fa-phone"></i><a href="#">+7(111)123456789</a></li>
-                  <li><i class="fa fa-map-marker"></i><a href="#">USA 27TH Brooklyn NY</a></li>
-                  <li><i class="fa fa-envelope-o"></i><a href="#">yourmail
+                  <li><i class="fa fa-phone"></i><a href="#">{{  $result->category->category  }}</a></li>
+                  <li><i class="fa fa-map-marker"></i><a href="#">{{  $result->complex->address->city  }},{{  $result->complex->address->country  }} </a></li>
+                  <li><i class="fa fa-envelope-o"></i><a href="#">{{  $result->complex->email  }}
                       <blade domain.com</a> </li>
                 </ul>
               </div>

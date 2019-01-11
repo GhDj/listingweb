@@ -54,4 +54,3 @@ class Equipment extends Model {
 
 
 }
-

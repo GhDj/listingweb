@@ -7,6 +7,10 @@ use App\Modules\Infrastructures\Models\Complex;
 use App\Modules\Infrastructures\Models\Equipment;
 use App\Modules\Infrastructures\Models\Category;
 use App\Modules\Infrastructure\Models\ComplexSchedule;
+use App\Modules\User\Models\User;
+use App\Modules\Reviews\Models\Review;
+
+use App\Modules\General\Models\Media;
 
 use Carbon\Carbon;
 
@@ -19,6 +23,15 @@ class InfrastruresSeeder extends Seeder
      */
     public function run()
     {
+
+
+          $frontFirstImagePath = 'img/1.jpg';
+          $frontSecondImagePath = 'img/2.jpg';
+          $frontThirdtPath = 'img/3.jpg';
+          $fronFourtPath = 'img/4.jpg';
+          $frontFifthPath = 'img/5.jpg';
+          $frontSixtPath = 'img/6.jpg';
+
           $firstAddress = Address::Create([
             'city' => 'Boran/Oise' ,
             'postal_code' => '60820' ,
@@ -55,8 +68,8 @@ class InfrastruresSeeder extends Seeder
 
           for($i=1;$i<=7;$i++){
               $firstComplex->schedules()->create([
-                  'start_at' => '2019-03-03 06:00:00',
-                  'ends_at' => '2019-03-03 18:30:00',
+                  'start_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 06:00:00'),
+                  'ends_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 18:30:00'),
                   'day' => $i
               ]);
           }
@@ -75,8 +88,8 @@ class InfrastruresSeeder extends Seeder
 
           for($i=1;$i<=7;$i++){
               $secondComplex->schedules()->create([
-                  'start_at' => '2019-03-03 08:00:00',
-                  'ends_at' => '2019-03-03 18:30:00',
+                  'start_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 08:00:00'),
+                  'ends_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 18:30:00'),
                   'day' => $i
               ]);
           }
@@ -110,15 +123,36 @@ class InfrastruresSeeder extends Seeder
             'name' => 'City Arena',
             'type' =>'MMMMM',
             'size' =>100,
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                              Consequuntur fuga perspiciatis deserunt dolor vero reprehenderit facilis,
+                              voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
+                              Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
             'complex_id' => $firstComplex->id,
             'category_id' =>  $firstCategory->id
 
           ]);
+  
+                  $firstfilename = 'frontImage1'.$firstStadium->id.'.jpg';
+                  $secondfilename = 'frontImage2'.$firstStadium->id.'.jpg';
+
+                  copy(public_path($frontFirstImagePath), public_path('storage/uploads/terrains/'.$firstfilename));
+                  copy(public_path($frontSecondImagePath), public_path('storage/uploads/terrains/'.$secondfilename));
+
+                  $firstimage = Media::create([
+                      'type' => '21',
+                      'link' => 'storage/uploads/terrains/'.$firstfilename,
+                      'terrain_id' => $firstStadium->id
+                  ]);
+                  $secondImage = Media::create([
+                      'type' => '21',
+                      'link' => 'storage/uploads/terrains/'.$secondfilename,
+                      'terrain_id' => $firstStadium->id
+                  ]);
 
           for($i=1;$i<=7;$i++){
               $firstStadium->schedules()->create([
-                  'start_at' => '2019-03-03 10:00:00',
-                  'ends_at' => '2019-03-03 18:30:00',
+                  'start_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 10:00:00'),
+                  'ends_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 18:30:00'),
                   'day' => $i
               ]);
           }
@@ -127,16 +161,38 @@ class InfrastruresSeeder extends Seeder
 
             'name' => 'Terrains Multisports',
             'type' =>'MMMM',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                              Consequuntur fuga perspiciatis deserunt dolor vero reprehenderit facilis,
+                              voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
+                              Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
             'size' =>200,
             'complex_id' => $firstComplex->id,
             'category_id' =>  $firstCategory->id
 
           ]);
 
+          $thirdtfilename = 'frontImage3'.$secondStadium->id.'.jpg';
+          $fourtfilename = 'frontImage4'.$secondStadium->id.'.jpg';
+
+          copy(public_path($frontThirdtPath), public_path('storage/uploads/terrains/'.$thirdtfilename));
+          copy(public_path($fronFourtPath), public_path('storage/uploads/terrains/'.$fourtfilename));
+
+          $thirdtImage = Media::create([
+              'type' => '21',
+              'link' => 'storage/uploads/terrains/'.$thirdtfilename,
+              'terrain_id' => $secondStadium->id
+          ]);
+          $fourtImage = Media::create([
+              'type' => '21',
+              'link' => 'storage/uploads/terrains/'.$fourtfilename,
+              'terrain_id' => $secondStadium->id
+          ]);
+
+
           for($i=1;$i<=7;$i++){
               $secondStadium->schedules()->create([
-                  'start_at' => '2019-03-03 10:00:00',
-                  'ends_at' => '2019-03-03 18:30:00',
+                  'start_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 10:00:00'),
+                  'ends_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 18:30:00'),
                   'day' => $i
               ]);
           }
@@ -145,16 +201,37 @@ class InfrastruresSeeder extends Seeder
 
             'name' => 'Terrains Futsal Hat Trick',
             'type' =>'MM',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                              Consequuntur fuga perspiciatis deserunt dolor vero reprehenderit facilis,
+                              voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
+                              Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
             'size' =>300,
             'complex_id' => $firstComplex->id,
             'category_id' =>  $thirdCategory->id
 
           ]);
 
+          $fifthfilename = 'frontImage5'.$thirdStadium->id.'.jpg';
+          $sixtfilename = 'frontImage6'.$thirdStadium->id.'.jpg';
+
+          copy(public_path($frontFifthPath), public_path('storage/uploads/terrains/'.$fifthfilename));
+          copy(public_path($frontSixtPath), public_path('storage/uploads/terrains/'.$sixtfilename));
+          $fifthImage = Media::create([
+              'type' => '21',
+              'link' => 'storage/uploads/terrains/'.$fifthfilename,
+              'terrain_id' => $thirdStadium->id
+          ]);
+          $sixtImage = Media::create([
+              'type' => '21',
+              'link' => 'storage/uploads/terrains/'.$sixtfilename,
+              'terrain_id' => $thirdStadium->id
+          ]);
+
+
           for($i=1;$i<=7;$i++){
               $thirdStadium->schedules()->create([
-                  'start_at' => '2019-03-03 11:00:00',
-                  'ends_at' => '2019-03-03 18:30:00',
+                  'start_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 11:00:00'),
+                  'ends_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 18:30:00'),
                   'day' => $i
               ]);
           }
@@ -188,15 +265,20 @@ class InfrastruresSeeder extends Seeder
              'name' => 'Un bassin polyvalent de nage et d’activités',
              'type' =>'Les espaces intérieurs',
              'size' =>375,
+             'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                               Consequuntur fuga perspiciatis deserunt dolor vero reprehenderit facilis,
+                               voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
+                               Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
              'complex_id' => $secondComplex->id,
              'category_id' =>  $fourthCategory->id
 
            ]);
 
+
            for($i=1;$i<=7;$i++){
                $fourthStadium->schedules()->create([
-                   'start_at' => '2019-03-03 12:00:00',
-                   'ends_at' => '2019-03-03 18:30:00',
+                   'start_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 12:00:00'),
+                   'ends_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 18:30:00'),
                    'day' => $i
                ]);
            }
@@ -205,6 +287,10 @@ class InfrastruresSeeder extends Seeder
 
              'name' => 'Un bassin ludique de détente et de loisirs',
              'type' =>'Les espaces extérieurs',
+             'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                               Consequuntur fuga perspiciatis deserunt dolor vero reprehenderit facilis,
+                               voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
+                               Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
              'size' =>203,
              'complex_id' => $secondComplex->id,
              'category_id' =>  $fourthCategory->id
@@ -213,8 +299,8 @@ class InfrastruresSeeder extends Seeder
 
            for($i=1;$i<=7;$i++){
                $fifthStadium->schedules()->create([
-                   'start_at' => '2019-03-03 11:00:00',
-                   'ends_at' => '2019-03-03 18:30:00',
+                   'start_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 11:00:00'),
+                   'ends_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 18:30:00'),
                    'day' => $i
                ]);
            }
@@ -222,6 +308,10 @@ class InfrastruresSeeder extends Seeder
 
              'name' => 'Salle cardio-training',
              'type' =>'M',
+             'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                               Consequuntur fuga perspiciatis deserunt dolor vero reprehenderit facilis,
+                               voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
+                               Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
              'size' =>110,
              'complex_id' => $secondComplex->id,
              'category_id' =>  $fifthCategory->id
@@ -230,8 +320,8 @@ class InfrastruresSeeder extends Seeder
 
            for($i=1;$i<=7;$i++){
                $sixthStadium->schedules()->create([
-                   'start_at' => '2019-03-03 11:00:00',
-                   'ends_at' => '2019-03-03 18:30:00',
+                   'start_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 11:00:00'),
+                   'ends_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 18:30:00'),
                    'day' => $i
                ]);
            }
@@ -240,6 +330,10 @@ class InfrastruresSeeder extends Seeder
 
              'name' => 'une salle de gymnase',
              'type' =>'Au sous-sol',
+             'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                               Consequuntur fuga perspiciatis deserunt dolor vero reprehenderit facilis,
+                               voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
+                               Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
              'size' =>1449,
              'complex_id' => $secondComplex->id,
              'category_id' =>  $sixthCategory->id
@@ -248,8 +342,8 @@ class InfrastruresSeeder extends Seeder
 
            for($i=1;$i<=7;$i++){
                $seventhStadium->schedules()->create([
-                   'start_at' => '2019-03-03 11:00:00',
-                   'ends_at' => '2019-03-03 18:30:00',
+                   'start_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 11:00:00'),
+                   'ends_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 18:30:00'),
                    'day' => $i
                ]);
            }
@@ -277,8 +371,8 @@ class InfrastruresSeeder extends Seeder
 
            for($i=1;$i<=7;$i++){
                $thirdComplex->schedules()->create([
-                   'start_at' => '2019-03-03 06:00:00',
-                   'ends_at' => '2019-03-03 18:30:00',
+                   'start_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 06:00:00'),
+                   'ends_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 18:30:00'),
                    'day' => $i
                ]);
            }
@@ -297,6 +391,10 @@ class InfrastruresSeeder extends Seeder
 
              'name' => 'Terrains Football Nantes',
              'type' =>'MM',
+             'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                               Consequuntur fuga perspiciatis deserunt dolor vero reprehenderit facilis,
+                               voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
+                               Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
              'size' =>300,
              'complex_id' => $thirdComplex->id,
              'category_id' =>  $seventhCategory->id
@@ -305,8 +403,8 @@ class InfrastruresSeeder extends Seeder
 
            for($i=1;$i<=7;$i++){
                $eighthStadium->schedules()->create([
-                   'start_at' => '2019-03-03 11:00:00',
-                   'ends_at' => '2019-03-03 18:30:00',
+                   'start_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 11:00:00'),
+                   'ends_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 18:30:00'),
                    'day' => $i
                ]);
            }
@@ -334,8 +432,8 @@ class InfrastruresSeeder extends Seeder
 
            for($i=1;$i<=7;$i++){
                $fourthComplex->schedules()->create([
-                   'start_at' => '2019-03-03 11:00:00',
-                   'ends_at' => '2019-03-03 18:30:00',
+                   'start_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 11:00:00'),
+                   'ends_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 18:30:00'),
                    'day' => $i
                ]);
            }
@@ -353,6 +451,10 @@ class InfrastruresSeeder extends Seeder
 
              'name' => 'Terrains Football Nantes Erdre',
              'type' =>'MM',
+             'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                               Consequuntur fuga perspiciatis deserunt dolor vero reprehenderit facilis,
+                               voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
+                               Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
              'size' =>300,
              'complex_id' => $fourthComplex->id,
              'category_id' =>  $seventhCategory->id
@@ -361,8 +463,8 @@ class InfrastruresSeeder extends Seeder
 
            for($i=1;$i<=7;$i++){
                $ninthStadium->schedules()->create([
-                   'start_at' => '2019-03-03 08:00:00',
-                   'ends_at' => '2019-03-03 18:30:00',
+                   'start_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 08:00:00'),
+                   'ends_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 18:30:00'),
                    'day' => $i
                ]);
            }
@@ -392,8 +494,8 @@ class InfrastruresSeeder extends Seeder
 
            for($i=1;$i<=7;$i++){
                $fifthComplex->schedules()->create([
-                   'start_at' => '2019-03-03 11:00:00',
-                   'ends_at' => '2019-03-03 18:30:00',
+                   'start_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 11:00:00'),
+                   'ends_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 18:30:00'),
                    'day' => $i
                ]);
            }
@@ -412,6 +514,10 @@ class InfrastruresSeeder extends Seeder
 
              'name' => 'Terrains Football BoranSport',
              'type' =>'MM',
+             'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                               Consequuntur fuga perspiciatis deserunt dolor vero reprehenderit facilis,
+                               voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
+                               Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
              'size' =>300,
              'complex_id' => $fifthComplex->id,
              'category_id' =>  $eighthCategory->id
@@ -420,8 +526,8 @@ class InfrastruresSeeder extends Seeder
 
            for($i=1;$i<=7;$i++){
                $tenthStadium->schedules()->create([
-                   'start_at' => '2019-03-03 11:00:00',
-                   'ends_at' => '2019-03-03 18:30:00',
+                   'start_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 11:00:00'),
+                   'ends_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 18:30:00'),
                    'day' => $i
                ]);
            }
@@ -454,8 +560,8 @@ class InfrastruresSeeder extends Seeder
 
               for($i=1;$i<=7;$i++){
                   $sixthComplex->schedules()->create([
-                      'start_at' => '2019-03-03 11:00:00',
-                      'ends_at' => '2019-03-03 18:30:00',
+                      'start_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 11:00:00'),
+                      'ends_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 18:30:00'),
                       'day' => $i
                   ]);
               }
@@ -474,6 +580,10 @@ class InfrastruresSeeder extends Seeder
 
                 'name' => 'Terrains Football SaintSport',
                 'type' =>'MM',
+                'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                  Consequuntur fuga perspiciatis deserunt dolor vero reprehenderit facilis,
+                                  voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
+                                  Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
                 'size' =>300,
                 'complex_id' => $sixthComplex->id,
                 'category_id' =>  $ninthCategory->id
@@ -482,8 +592,8 @@ class InfrastruresSeeder extends Seeder
 
               for($i=1;$i<=7;$i++){
                   $ninthStadium->schedules()->create([
-                      'start_at' => '2019-03-03 2019-03-03 8:00:00',
-                      'ends_at' => '2019-03-03 18:30:00',
+                      'start_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 8:00:00'),
+                      'ends_at' => Carbon::createFromFormat('Y-m-d H:i:s','2019-03-03 18:30:00'),
                       'day' => $i
                   ]);
               }

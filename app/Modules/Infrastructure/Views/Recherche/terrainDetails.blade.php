@@ -72,10 +72,7 @@
                 <div class="list-single-main-item-title fl-wrap">
                   <h3>Description</h3>
                 </div>
-                <p>Ut euismod ultricies sollicitudin. Curabitur sed dapibus nulla. Nulla eget iaculis lectus. Mauris ac maximus neque. Nam in mauris quis libero sodales eleifend. Morbi varius, nulla sit amet rutrum elementum, est elit finibus
-                  tellus, ut tristique elit risus at metus.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam erat
-                  volutpat. Curabitur convallis fringilla diam sed aliquam. Sed tempor iaculis massa faucibus feugiat. In fermentum facilisis massa, a consequat purus viverra.</p>
+                <p>{{ $result->description }}</p>
 
               </div>
 
@@ -111,65 +108,20 @@
                 <!-- gallery-items   -->
                 <div class="gallery-items grid-small-pad  list-single-gallery three-coulms lightgallery">
                   <!-- 1 -->
-                  <div class="gallery-item">
-                    <div class="grid-item-holder">
-                      <div class="box-item">
-                        <img src="{{asset('images/all/single/13.jpg')}}" alt="">
-                        <a href="{{asset('images/all/single/13.jpg')}}" class="gal-link popup-image"><i class="fa fa-search"></i></a>
+
+                  @foreach ($result->medias as $media)
+                    <div class="gallery-item">
+                      <div class="grid-item-holder">
+                        <div class="box-item">
+                          <img src="{{$media->link}}" alt="">
+                          <a href="{{$media->link}}" class="gal-link popup-image"><i class="fa fa-search"></i></a>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <!-- 1 end -->
-                  <!-- 2 -->
-                  <div class="gallery-item">
-                    <div class="grid-item-holder">
-                      <div class="box-item">
-                        <img src="{{asset('images/all/single/14.jpg')}}" alt="">
-                        <a href="{{asset('images/all/single/14.jpg')}}" class="gal-link popup-image"><i class="fa fa-search"></i></a>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- 2 end -->
-                  <!-- 3 -->
-                  <div class="gallery-item">
-                    <div class="grid-item-holder">
-                      <div class="box-item">
-                        <img src="{{asset('images/all/single/15.jpg')}}" alt="">
-                        <a href="{{asset('images/all/single/15.jpg')}}" class="gal-link popup-image"><i class="fa fa-search"></i></a>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- 3 end -->
-                  <!-- 4 -->
-                  <div class="gallery-item">
-                    <div class="grid-item-holder">
-                      <div class="box-item">
-                        <img src="images/all/single/16.jpg" alt="">
-                        <a href="images/all/single/16.jpg" class="gal-link popup-image"><i class="fa fa-search"></i></a>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- 4 end -->
-                  <!-- 5 -->
-                  <div class="gallery-item">
-                    <div class="grid-item-holder">
-                      <div class="box-item">
-                        <img src="images/all/single/17.jpg" alt="">
-                        <a href="images/all/single/17.jpg" class="gal-link popup-image"><i class="fa fa-search"></i></a>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- 5 end -->
-                  <!-- 7 -->
-                  <div class="gallery-item">
-                    <div class="grid-item-holder">
-                      <div class="box-item">
-                        <img src="images/all/single/18.jpg" alt="">
-                        <a href="images/all/single/18.jpg" class="gal-link popup-image"><i class="fa fa-search"></i></a>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- 7 end -->
+
+                  @endforeach
+
+
                 </div>
                 <div class="share-holder hid-share">
                   <div class="showshare"><span>Partager Vos Photos Et Gagner des recompenses </span><i class="fa fa-share"></i></div>
@@ -181,52 +133,29 @@
               <!-- list-single-main-item -->
               <div class="list-single-main-item fl-wrap" id="sec4">
                 <div class="list-single-main-item-title fl-wrap">
-                  <h3>Item Reviews - <span> 3 </span></h3>
+                  <h3><span> {{ $result->reviews->count() }} </span>  -  Commantaires  - </h3>
                 </div>
                 <div class="reviews-comments-wrap">
-                  <!-- reviews-comments-item -->
-                  <div class="reviews-comments-item">
-                    <div class="review-comments-avatar">
-                      <img src="images/avatar/1.jpg" alt="">
+
+                  @foreach ($result->reviews as $review)
+                    <!-- reviews-comments-item -->
+                    <div class="reviews-comments-item">
+                      <div class="review-comments-avatar">
+                        <img src="{{$review->reviewer->picture}}" alt="">
+                      </div>
+                      <div class="reviews-comments-item-text">
+                        <h4><a href="#">{{$review->reviewer->first_name}} {{$review->reviewer->last_name}}</a></h4>
+                        <div class="listing-rating card-popup-rainingvis" data-starrating2="{{ $review->note }}"> </div>
+                        <div class="clearfix"></div>
+                        <p>" {{ $review->comment }} "</p>
+                        <span class="reviews-comments-item-date"><i class="fa fa-calendar-check-o"></i>27 May 2018</span>
+                      </div>
                     </div>
-                    <div class="reviews-comments-item-text">
-                      <h4><a href="#">Jessie Manrty</a></h4>
-                      <div class="listing-rating card-popup-rainingvis" data-starrating2="5"> </div>
-                      <div class="clearfix"></div>
-                      <p>" Commodo est luctus eget. Proin in nunc laoreet justo volutpat blandit enim. Sem felis, ullamcorper vel aliquam non, varius eget justo. Duis quis nunc tellus sollicitudin mauris. "</p>
-                      <span class="reviews-comments-item-date"><i class="fa fa-calendar-check-o"></i>27 May 2018</span>
-                    </div>
-                  </div>
-                  <!--reviews-comments-item end-->
-                  <!-- reviews-comments-item -->
-                  <div class="reviews-comments-item">
-                    <div class="review-comments-avatar">
-                      <img src="images/avatar/2.jpg" alt="">
-                    </div>
-                    <div class="reviews-comments-item-text">
-                      <h4><a href="#">Mark Rose</a></h4>
-                      <div class="listing-rating card-popup-rainingvis" data-starrating2="4"> </div>
-                      <div class="clearfix"></div>
-                      <p>" Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis
-                        vitae, justo. Nullam dictum felis eu pede mollis pretium. "</p>
-                      <span class="reviews-comments-item-date"><i class="fa fa-calendar-check-o"></i>12 April 2018</span>
-                    </div>
-                  </div>
-                  <!--reviews-comments-item end-->
-                  <!-- reviews-comments-item -->
-                  <div class="reviews-comments-item">
-                    <div class="review-comments-avatar">
-                      <img src="images/avatar/3.jpg" alt="">
-                    </div>
-                    <div class="reviews-comments-item-text">
-                      <h4><a href="#">Adam Koncy</a></h4>
-                      <div class="listing-rating card-popup-rainingvis" data-starrating2="5"> </div>
-                      <div class="clearfix"></div>
-                      <p>" Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc posuere convallis purus non cursus. Cras metus neque, gravida sodales massa ut. "</p>
-                      <span class="reviews-comments-item-date"><i class="fa fa-calendar-check-o"></i>03 December 2017</span>
-                    </div>
-                  </div>
-                  <!--reviews-comments-item end-->
+                    <!--reviews-comments-item end-->
+
+                  @endforeach
+
+
                 </div>
               </div>
               <!-- list-single-main-item end -->
@@ -432,13 +361,10 @@
                   <div class="box-widget-content">
                     <span class="current-status"><i class="fa fa-clock-o"></i> Now Open</span>
                     <ul>
-                      <li><span class="opening-hours-day">Monday </span><span class="opening-hours-time">9 AM - 5 PM</span></li>
-                      <li><span class="opening-hours-day">Tuesday </span><span class="opening-hours-time">9 AM - 5 PM</span></li>
-                      <li><span class="opening-hours-day">Wednesday </span><span class="opening-hours-time">9 AM - 5 PM</span></li>
-                      <li><span class="opening-hours-day">Thursday </span><span class="opening-hours-time">9 AM - 5 PM</span></li>
-                      <li><span class="opening-hours-day">Friday </span><span class="opening-hours-time">9 AM - 5 PM</span></li>
-                      <li><span class="opening-hours-day">Saturday </span><span class="opening-hours-time">9 AM - 3 PM</span></li>
-                      <li><span class="opening-hours-day">Sunday </span><span class="opening-hours-time">Closed</span></li>
+                      @foreach ($result->schedules as $schedule)
+                      <li><span class="opening-hours-day">{{$schedule->day}} </span><span class="opening-hours-time">{{$schedule->start_at->format('H:i')}} - {{$schedule->ends_at->format('H:i')}}</span></li>
+                      @endforeach
+
                     </ul>
                   </div>
                 </div>
@@ -450,7 +376,7 @@
                 <div class="box-widget-item-header">
                   <h3>Weather in City : </h3>
                 </div>
-                <div id="weather-widget" class="gradient-bg" data-city="New York" data-country="USA"></div>
+                <div id="weather-widget" class="gradient-bg" data-city="{{$result->complex->address->city}}" data-country="{{$result->complex->address->country}}"></div>
               </div>
               <!--box-widget-item end -->
 
@@ -463,10 +389,10 @@
                   <div class="box-widget-content">
                     <div class="list-author-widget-contacts list-item-widget-contacts">
                       <ul>
-                        <li><span><i class="fa fa-map-marker"></i> Adress :</span> <a href="#">USA 27TH Brooklyn NY</a></li>
-                        <li><span><i class="fa fa-phone"></i> Phone :</span> <a href="#">+7(123)987654</a></li>
-                        <li><span><i class="fa fa-envelope-o"></i> Mail :</span> AlisaNoory</li>
-                        <li><span><i class="fa fa-globe"></i> Website :</span> <a href="#">themeforest.net</a></li>
+                        <li><span><i class="fa fa-map-marker"></i> Adress :</span> <a href="#">{{ $result->complex->address->address }}</a></li>
+                        <li><span><i class="fa fa-phone"></i> Phone :</span> <a href="#">{{ $result->complex->phone }}</a></li>
+                        <li><span><i class="fa fa-envelope-o"></i> Mail :</span> {{ $result->complex->email }}</li>
+                        <li><span><i class="fa fa-globe"></i> Website :</span> <a href="#">{{ $result->complex->web_site }}</a></li>
                       </ul>
                     </div>
                     <div class="list-widget-social">
