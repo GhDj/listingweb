@@ -29,6 +29,10 @@ class Equipment extends Model {
         'name',
         'description',
         'status',
+        'hauteur',
+        'longueur',
+        'largueur',
+        'speciality_id',
         'terrain_id'
     ];
 
@@ -52,5 +56,16 @@ class Equipment extends Model {
         return $this->morphMany('App\Modules\Reviews\Models\Report','reported');
     }
 
+    public function speciality(){
+
+        return $this->belongsTo('App\Modules\Infrastructures\Models\TerrainSpeciality');
+
+    }
+
+    public function GetSizeEquipement($id)
+    {
+       $equipment =   Equipment::find($id);
+       return  $equipment->longueur * $equipment->largueur;
+    }
 
 }

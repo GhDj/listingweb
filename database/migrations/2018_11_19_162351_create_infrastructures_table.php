@@ -34,12 +34,20 @@ class CreateInfrastructuresTable extends Migration
             $table->timestamps();
         });
 
+        Schema::create('terrain_specialities', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('speciality');
+            $table->timestamps();
+        });
+
         Schema::create('terrains', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('type');
             $table->text('description');
             $table->float('size');
+            $table->integer('speciality_id')->unsigned();
+            $table->foreign('speciality_id')->references('id')->on('terrain_specialities');
             $table->integer('complex_id')->unsigned();
             $table->foreign('complex_id')->references('id')->on('complexes');
             $table->integer('category_id')->unsigned();
@@ -51,20 +59,19 @@ class CreateInfrastructuresTable extends Migration
         Schema::create('equipments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('description');
+            $table->text('description');
+            $table->float('hauteur')->nullable();
+            $table->float('longueur')->nullable();
+            $table->float('largueur')->nullable();
             $table->string('status');
+            $table->integer('speciality_id')->unsigned();
+            $table->foreign('speciality_id')->references('id')->on('terrain_specialities');
             $table->integer('terrain_id')->unsigned();
             $table->foreign('terrain_id')->references('id')->on('terrains');
             $table->timestamps();
         });
 
-        Schema::create('terrain_specialities', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('speciality');
-            $table->integer('terrain_id')->unsigned();
-            $table->foreign('terrain_id')->references('id')->on('terrains');
-            $table->timestamps();
-        });
+
 
 
     }

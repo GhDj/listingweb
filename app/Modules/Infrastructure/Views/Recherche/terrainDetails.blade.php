@@ -81,23 +81,44 @@
                   <h3>Equipement Sportif</h3>
                 </div>
                 <div class="accordion">
-                  <a class="toggle act-accordion" href="#"> Stade <i class="fa fa-angle-down"></i></a>
-                  <div class="accordion-inner visible">
-                    <div class="list-single-main-item-title">
-                      <h4 style="color:gray">Déscription</h4>
-                    </div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam
-                      erat volutpat. Curabitur convallis fringilla diam sed aliquam. Sed tempor iaculis massa faucibus feugiat. In fermentum facilisis massa, a consequat purus viverra.</p>
-                  </div>
-                  <a class="toggle" href="#"> Gymnase <i class="fa fa-angle-down"></i></a>
-                  <div class="accordion-inner">
-                    <div class="list-single-main-item-title">
-                      <h4 style="color:gray">Déscription</h4>
-                    </div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam
-                      erat volutpat. Curabitur convallis fringilla diam sed aliquam. Sed tempor iaculis massa faucibus feugiat. In fermentum facilisis massa, a consequat purus viverra.</p>
-                  </div>
+                  @foreach ($result->equipments as $equipment)
+                    <a class="toggle act-accordion" href="#"> {{$equipment->name}} <i class="fa fa-angle-down"></i></a>
+                    <div class="accordion-inner visible">
+                      <div class="list-single-main-item-title">
+                        <h4 style="color:gray">Déscription</h4>
+                      </div>
 
+                      @foreach ($equipment->medias as $media)
+                        <div class="gallery-item" style="width:100%;margin-bottom:15px;">
+                          <div class="grid-item-holder">
+                            <div class="box-item">
+                              <img src="{{$media->link}}" alt="{{$media->link}}">
+                            </div>
+                          </div>
+                        </div>
+                      @endforeach
+
+                        <p>Hauteur :  - {{$equipment->hauteur}} m</p>
+                        <p>Longueur: - {{$equipment->longueur}} m</p>
+                        <p>Largueur: - {{$equipment->largueur}} m</p>
+                        <p>Surface: - {{$equipment->GetSizeEquipement($equipment->id)}} m²</p>
+
+                        <table id="clubs">
+                          <tr>
+                            <th>Type Activite</th>
+                            <th>Sport</th>
+                            <th>Niveau</th>
+                          </tr>
+
+                          <tr>
+                            <td>{{$equipment->speciality->speciality}}</td>
+                            <td>*************</td>
+                            <td>*************</td>
+                          </tr>
+                        </table>
+                        <p style="margin-top:25px">{{ $equipment->description }}</p>
+                    </div>
+                  @endforeach
                 </div>
               </div>
 
@@ -391,8 +412,8 @@
                       <ul>
                         <li><span><i class="fa fa-map-marker"></i> Adress :</span> <a href="#">{{ $result->complex->address->address }}</a></li>
                         <li><span><i class="fa fa-phone"></i> Phone :</span> <a href="#">{{ $result->complex->phone }}</a></li>
-                        <li><span><i class="fa fa-envelope-o"></i> Mail :</span> {{ $result->complex->email }}</li>
-                        <li><span><i class="fa fa-globe"></i> Website :</span> <a href="#">{{ $result->complex->web_site }}</a></li>
+                        <li><span><i class="fa fa-envelope-o"></i> Mail :</span> <a href="mailto:{{ $result->complex->email }}">{{ $result->complex->email }}</a></li>
+                        <li><span><i class="fa fa-globe"></i> Website :</span> <a href="{{ $result->complex->web_site }}" target="_blank">Visiter Notre Website</a></li>
                       </ul>
                     </div>
                     <div class="list-widget-social">
@@ -504,6 +525,22 @@
       '</div>' +
       '</div>';
   }
+</script>
+
+<script type="text/javascript">
+
+$(".accordion a.toggle").on("click", function (a) {
+    a.preventDefault();
+    $(".accordion a.toggle").removeClass("act-accordion");
+    $(this).addClass("act-accordion");
+    if ($(this).next('div.accordion-inner').is(':visible')) {
+        $(this).next('div.accordion-inner').slideUp();
+    } else {
+        $(".accordion a.toggle").next('div.accordion-inner').slideUp();
+        $(this).next('div.accordion-inner').slideToggle();
+    }
+});
+
 </script>
 
 

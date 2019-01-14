@@ -26,11 +26,19 @@ class TerrainSpeciality extends Model {
      * @var array
      */
     protected $fillable = [
-        'speciality',
-        'terrain_id'
+        'speciality'
     ];
 
 
+    public function terrains(){
 
+        return $this->hasMany('App\Modules\Infrastructures\Models\Terrain','speciality_id');
+
+    }
+
+    public function equipments(){
+
+        return $this->hasMany('App\Modules\Infrastructures\Models\Equipment','speciality_id');
+
+    }
 }
-
