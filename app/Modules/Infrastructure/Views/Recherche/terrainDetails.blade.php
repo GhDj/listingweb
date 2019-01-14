@@ -101,19 +101,19 @@
                         <p>Hauteur :  - {{$equipment->hauteur}} m</p>
                         <p>Longueur: - {{$equipment->longueur}} m</p>
                         <p>Largueur: - {{$equipment->largueur}} m</p>
-                        <p>Surface: - {{$equipment->GetSizeEquipement($equipment->id)}} m²</p>
+                        <p>Surface: - {{$equipment->getSizeEquipement($equipment->id)}} m²</p>
 
                         <table id="clubs">
                           <tr>
                             <th>Type Activite</th>
-                            <th>Sport</th>
+                            <th>Prescable</th>
                             <th>Niveau</th>
                           </tr>
 
                           <tr>
                             <td>{{$equipment->speciality->speciality}}</td>
-                            <td>*************</td>
-                            <td>*************</td>
+                            <td>Prescable</td>
+                            <td>Niveau</td>
                           </tr>
                         </table>
                         <p style="margin-top:25px">{{ $equipment->description }}</p>

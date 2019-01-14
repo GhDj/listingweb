@@ -62,7 +62,7 @@ class Equipment extends Model {
 
     }
 
-    public function GetSizeEquipement($id)
+    public function getSizeEquipement($id)
     {
        $equipment =   Equipment::find($id);
        return  $equipment->longueur * $equipment->largueur;
