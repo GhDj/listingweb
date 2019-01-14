@@ -30,6 +30,7 @@ class Terrain extends Model {
         'type',
         'size',
         'web_site',
+        'description',
         'complex_id',
         'category_id'
     ];

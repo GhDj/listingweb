@@ -92,6 +92,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Modules\Reviews\Models\Wishlist','user_id');
     }
 
+    function getPictureAttribute($picture){
+      return asset($picture);
+  }
+
 
 
 }

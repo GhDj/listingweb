@@ -38,9 +38,12 @@ class WebController extends Controller
     *
     * @return \Illuminate\Http\Response
     */
-    public function showTerrainDetails()
+    public function showTerrainDetails($id)
     {
-      return view('Infrastructure::Recherche.terrainDetails');
+
+        return view('Infrastructure::Recherche.terrainDetails',[
+        'result' => Terrain::find($id)
+      ]);
     }
 
     /**

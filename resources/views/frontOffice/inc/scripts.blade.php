@@ -7,8 +7,6 @@
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUk9fxzm6iDOe6UKvXAZVLOckLOMzHSpE&amp;libraries=places&amp;callback=initAutocomplete"></script>
 
-
-
 <script type="text/javascript" src="{{asset('js/frontOffice/map_infobox.js')}}"></script>
 
 <script type="text/javascript" src="{{asset('js/frontOffice/markerclusterer.js')}}"></script>

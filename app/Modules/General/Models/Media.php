@@ -36,4 +36,8 @@ class Media extends Model {
         'product_id'
     ];
 
+    function getLinkAttribute($link){
+      return asset($link);
+  }
+
 }
