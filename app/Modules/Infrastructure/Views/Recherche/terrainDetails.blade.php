@@ -62,7 +62,7 @@
                 </div>
                 <div class="team-holder fl-wrap">
                   <div class="map-container">
-                    <div id="singleMap" data-latitude="40.7427837" data-longitude="-73.11445617675781" data-mapTitle="Out Location"></div>
+                    <div id="singleMap" data-latitude="{{$result->complex->address->latitude}}" data-longitude="{{$result->complex->address->longitude}}" data-mapTitle="Notre Emplacement"></div>
                   </div>
                 </div>
               </div>
