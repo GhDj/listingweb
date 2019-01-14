@@ -260,13 +260,13 @@
             }]
         });
         var markerIcon2 = {
-            url: 'images/marker.png',
+            url: '{{asset('images/soccer.png')}}',
         }
         var marker = new google.maps.Marker({
             position: myLatLng,
             map: single_map,
             icon: markerIcon2,
-            title: 'Our Location'
+            title: 'Notre Emplacement'
         });
         var zoomControlDiv = document.createElement('div');
         var zoomControl = new ZoomControl(zoomControlDiv, single_map);
