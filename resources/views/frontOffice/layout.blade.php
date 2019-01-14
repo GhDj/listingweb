@@ -10,5 +10,6 @@
     @yield('footer')
 </div>
 @include('frontOffice.inc.scripts')
+@yield('scripts')
 </body>
 </html>

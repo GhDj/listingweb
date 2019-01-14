@@ -376,7 +376,7 @@
                 <div class="box-widget-item-header">
                   <h3>Weather in City : </h3>
                 </div>
-                <div id="weather-widget" class="gradient-bg" data-city="{{$result->complex->address->city}}" data-country="{{$result->complex->address->country}}"></div>
+                <div id="weather-widget" class="gradient-bg"></div>
               </div>
               <!--box-widget-item end -->
 
@@ -411,34 +411,33 @@
               <!--box-widget-item -->
               <div class="box-widget-item fl-wrap">
                 <div class="box-widget-item-header">
-                  <h3>More from this employer : </h3>
+                  <h3>Installation Proche : </h3>
                 </div>
                 <div class="box-widget widget-posts">
                   <div class="box-widget-content">
                     <ul>
                       <li class="clearfix">
-                        <a href="#" class="widget-posts-img"><img src="images/all/1.jpg" alt=""></a>
+                        <a href="#" class="widget-posts-img"><img src="{{asset('images/all/1.jpg')}}" alt=""></a>
                         <div class="widget-posts-descr">
                           <a href="#" title="">Cafe "Lollipop"</a>
                           <span class="widget-posts-date"><i class="fa fa-calendar-check-o"></i> 21 Mar 2017 </span>
                         </div>
                       </li>
                       <li class="clearfix">
-                        <a href="#" class="widget-posts-img"><img src="images/all/2.jpg" alt=""></a>
+                        <a href="#" class="widget-posts-img"><img src="{{asset('images/all/2.jpg')}}" alt=""></a>
                         <div class="widget-posts-descr">
                           <a href="#" title=""> Apartment in the Center</a>
                           <span class="widget-posts-date"><i class="fa fa-calendar-check-o"></i> 7 Mar 2017 </span>
                         </div>
                       </li>
                       <li class="clearfix">
-                        <a href="#" class="widget-posts-img"><img src="images/all/3.jpg" alt=""></a>
+                        <a href="#" class="widget-posts-img"><img src="{{asset('images/all/3.jpg')}}" alt=""></a>
                         <div class="widget-posts-descr">
                           <a href="#" title="">Event in City Mol</a>
                           <span class="widget-posts-date"><i class="fa fa-calendar-check-o"></i> 7 Mar 2017 </span>
                         </div>
                       </li>
                     </ul>
-                    <a class="widget-posts-link" href="#">See All Listing<span><i class="fa fa-angle-right"></i></span></a>
                   </div>
                 </div>
               </div>
@@ -465,5 +464,47 @@
 @section('footer')
 
   @include('frontOffice.inc.footer')
+
+@endsection
+
+@section('scripts')
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function() {
+    var lat = "{{$result->complex->address->latitude}}";
+
+    var lon = "{{$result->complex->address->longitude}}";
+    $.ajax({
+      url: 'http://api.openweathermap.org/data/2.5/weather?lat=' + lat + "&lon=" + lon + "&units=metric&lang=fr&APPID=c10bb3bd22f90d636baa008b1529ee25",
+      type: "GET",
+      dataType: "jsonp",
+      success: function(data) {
+        var widget = showResults(data);
+        $("#weather-widget").html(widget);
+
+      }
+
+    });
+
+  });
+
+  function showResults(data) {
+
+    var description = data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.substr(1);
+
+    return '<div class="flatWeatherPlugin sample">' +
+      '<h2>' + data.name + ', ' + data.sys.country + '</h2>' +
+      '<div class="wiToday">' +
+      '<div class="wiIconGroup">' +
+      '<div class="wi wi' + data.weather[0].id + '"></div>' +
+      '<p class="wiText">' + description + '</p>' +
+      '</div>' +
+      '<p class="wiTemperature">' + data.main.temp_min + '<sup>&deg;C</sup></p>' +
+      '</div>' +
+      '</div>';
+  }
+</script>
+
 
 @endsection

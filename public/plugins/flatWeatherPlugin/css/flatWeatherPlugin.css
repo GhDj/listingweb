@@ -71,12 +71,12 @@
 .flatWeatherPlugin .wiToday .wiIconGroup div.wi {
   font-size: 400%;
   line-height: 1.45em;
-  width: 100%;  
+  width: 100%;
 }
 
 .flatWeatherPlugin .wiToday .wiIconGroup div.wi:before {
   vertical-align: text-bottom;
-} 
+}
 
 .flatWeatherPlugin .clearfix:after {
   content: " ";

@@ -16,6 +16,7 @@
           <link type="text/css" rel="stylesheet" href="{{asset('css/frontOffice/css/style.css')}}">
           <link type="text/css" rel="stylesheet" href="{{asset('css/frontOffice/css/color.css')}}">
           <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
           <!--=============== favicons ===============-->
           <link rel="shortcut icon" href="{{asset('images/favicon.ico')}}">
 </head>

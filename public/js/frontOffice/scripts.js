@@ -532,39 +532,7 @@ function initCitybook() {
             epi.attr("type", "password");
         }
     });
-			var datacountryw =  $("#weather-widget").data("country"),
-				datacityw = $("#weather-widget").data("city");
-
-			var example = $("#weather-widget").flatWeatherPlugin({
-	            location: datacityw, //city and region *required
-	            country: datacountryw,         //country *required
-	            zmw : "02108.1.99999",
-	            api: "openweathermap",
-              apikey: "2f86620ebca459b024491a902ad6e6c3",
-	            // view : "full",
-	            // lang: "en", //default: en only openweathermap supports translation (see below for supported languages)
-	            // timeformat: "12", //"24" or "12" default: "12"
-	            // displayCityNameOnly : false, //default: false (true/false) if you want to display only city name
-	            // forecast: 5, //default: 5 (0 -5) how many days you want forecast
-	            // render: true, //default: true (true/false) if you want plugin to generate markup
-	            // loadingAnimation: true, //default: true (true/false) if you want plugin to show loading animation
-	            // units : "metric", //"metric" or "imperial" to overide units default: "auto"
-              //
-	            // lang: "FR",
-
-              location: "Waterloo, ON",
-	             country: "Canada",
-	            //translation strings, If you would like to use another language please replace these strings with your language
-	            // strings : { //strings for translation
-	            	// 	days: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
-	            	// 	min : "Min",
-	            	// 	max : "Max",
-	            	// 	direction :  ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW", "NNW"]
-	             // 	  },
-
-	        	// See readme for lang codes supported by each api
-			});
-    // Styles ------------------
+	    // Styles ------------------
     if ($("footer.main-footer").hasClass("fixed-footer")) {
         $('<div class="height-emulator fl-wrap"></div>').appendTo("#main");
     }
