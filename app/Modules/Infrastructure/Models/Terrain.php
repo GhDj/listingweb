@@ -31,6 +31,7 @@ class Terrain extends Model {
         'size',
         'web_site',
         'description',
+        'speciality_id',
         'complex_id',
         'category_id'
     ];
@@ -53,7 +54,7 @@ class Terrain extends Model {
 
     public function speciality(){
 
-        return $this->hasOne('App\Modules\Infrastructures\Models\TerrainSpeciality','terrain_id');
+        return $this->belongsTo('App\Modules\Infrastructures\Models\TerrainSpeciality');
 
     }
 
