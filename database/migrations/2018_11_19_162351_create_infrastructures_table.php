@@ -55,6 +55,25 @@ class CreateInfrastructuresTable extends Migration
             $table->timestamps();
         });
 
+        Schema::create('clubs', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->text('description');
+            $table->integer('terrain_id')->unsigned();
+            $table->foreign('terrain_id')->references('id')->on('terrains');
+            $table->timestamps();
+        });
+
+          Schema::create('teams', function (Blueprint $table) {
+              $table->increments('id');
+              $table->string('name');
+              $table->string('level');
+              $table->integer('speciality_id')->unsigned();
+              $table->foreign('speciality_id')->references('id')->on('terrain_specialities');
+              $table->integer('club_id')->unsigned();
+              $table->foreign('club_id')->references('id')->on('clubs');
+              $table->timestamps();
+          });
 
         Schema::create('equipments', function (Blueprint $table) {
             $table->increments('id');
@@ -88,5 +107,6 @@ class CreateInfrastructuresTable extends Migration
         Schema::dropIfExists('terrains');
         Schema::dropIfExists('equipements');
         Schema::dropIfExists('categories');
+        Schema::dropIfExists('clubs');
     }
 }

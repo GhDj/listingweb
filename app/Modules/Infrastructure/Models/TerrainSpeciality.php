@@ -41,4 +41,10 @@ class TerrainSpeciality extends Model {
         return $this->hasMany('App\Modules\Infrastructures\Models\Equipment','speciality_id');
 
     }
+
+    public function teams(){
+
+        return $this->hasMany('App\Modules\Infrastructure\Models\Team','speciality_id');
+
+    }
 }

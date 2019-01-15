@@ -33,7 +33,8 @@ class Media extends Model {
         'complex_id',
         'report_id',
         'post_id',
-        'product_id'
+        'product_id',
+        'team_id'
     ];
 
     function getLinkAttribute($link){
