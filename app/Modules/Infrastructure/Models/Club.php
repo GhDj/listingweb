@@ -38,7 +38,7 @@ class Club extends Model
 
       public function terrain(){
 
-          return $this->belongsTo('App\Modules\Infrastructures\Models\Complex');
+          return $this->belongsTo('App\Modules\Infrastructures\Models\Terrain');
       }
 
       public function teams()

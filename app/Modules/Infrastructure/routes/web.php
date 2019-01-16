@@ -8,7 +8,7 @@ Route::group(['module' => 'Infrastructures', 'middleware' => ['web'], 'namespace
 
     Route::get('/search/terrain/{id}','WebController@showTerrainDetails')->name('showTerrainDetails');
 
-    Route::get('/search/club','WebController@showClubDetails')->name('showClubDetails');
+    Route::get('/search/club/{id}','WebController@showClubDetails')->name('showClubDetails');
 
     Route::post('/search','WebController@handleSearchMaps')->name('handleSearchMaps');
 

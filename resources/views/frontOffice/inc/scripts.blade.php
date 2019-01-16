@@ -82,6 +82,13 @@
                $('#latitude').val(pos.lat());
                $('#longitude').val(pos.lng());
 
+               $('#autocomplete').val(results[0].formatted_address);
+
+               var pos = results[0].geometry.location;
+
+                 $('#latitudeClub').val(pos.lat());
+                 $('#longitudeClub').val(pos.lng());
+
 
                }
              }
