@@ -11,7 +11,6 @@ use  App\Modules\Infrastructures\Models\Complex;
 use  App\Modules\Infrastructures\Models\Category;
 use App\Modules\Infrastructures\Models\Club;
 use App\Modules\Infrastructure\Models\Team;
-use App\Modules\Infrastructures\Models\TerrainSpeciality;
 
 class WebController extends Controller
 {
@@ -141,8 +140,6 @@ class WebController extends Controller
                       $subQuery->havingRaw("distance <= ?", [10]);
                     });
               })->get();
-
-
 
 
 

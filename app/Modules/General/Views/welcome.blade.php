@@ -32,8 +32,7 @@
                       <!-- Map end -->
                       <div class="absolute-main-search-input">
                           <div class="container">
-                              <div class="main-search-input fl-wrap">
-                                <form  action="{{ route('handleSearchMaps') }}" method="post">
+                            <form  action="{{ route('handleSearchMaps') }}" method="post">
                                   {{ csrf_field() }}
 
                                   <input type="hidden" name="latitude" id="latitude">
