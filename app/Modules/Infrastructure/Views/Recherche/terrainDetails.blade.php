@@ -62,7 +62,7 @@
                 </div>
                 <div class="team-holder fl-wrap">
                   <div class="map-container">
-                    <div id="singleMap" data-latitude="{{$result->complex->address->latitude}}" data-longitude="{{$result->complex->address->longitude}}" data-mapTitle="Notre Emplacement"></div>
+                    <div id="singleMap" data-latitude="{{$terrain->complex->address->latitude}}" data-longitude="{{$terrain->complex->address->longitude}}" data-mapTitle="Notre Emplacement"></div>
                   </div>
                 </div>
               </div>
@@ -72,7 +72,7 @@
                 <div class="list-single-main-item-title fl-wrap">
                   <h3>Description</h3>
                 </div>
-                <p>{{ $result->description }}</p>
+                <p>{{ $terrain->description }}</p>
 
               </div>
 
@@ -81,7 +81,7 @@
                   <h3>Equipement Sportif</h3>
                 </div>
                 <div class="accordion">
-                  @foreach ($result->equipments as $equipment)
+                  @foreach ($terrain->equipments as $equipment)
                     <a class="toggle act-accordion" href="#"> {{$equipment->name}} <i class="fa fa-angle-down"></i></a>
                     <div class="accordion-inner visible">
                       <div class="list-single-main-item-title">
@@ -130,7 +130,7 @@
                 <div class="gallery-items grid-small-pad  list-single-gallery three-coulms lightgallery">
                   <!-- 1 -->
 
-                  @foreach ($result->medias as $media)
+                  @foreach ($terrain->medias as $media)
                     <div class="gallery-item">
                       <div class="grid-item-holder">
                         <div class="box-item">
@@ -154,11 +154,11 @@
               <!-- list-single-main-item -->
               <div class="list-single-main-item fl-wrap" id="sec4">
                 <div class="list-single-main-item-title fl-wrap">
-                  <h3><span> {{ $result->reviews->count() }} </span>  -  Commantaires  - </h3>
+                  <h3><span> {{ $terrain->reviews->count() }} </span>  -  Commantaires  - </h3>
                 </div>
                 <div class="reviews-comments-wrap">
 
-                  @foreach ($result->reviews as $review)
+                  @foreach ($terrain->reviews as $review)
                     <!-- reviews-comments-item -->
                     <div class="reviews-comments-item">
                       <div class="review-comments-avatar">
@@ -382,7 +382,7 @@
                   <div class="box-widget-content">
                     <span class="current-status"><i class="fa fa-clock-o"></i> Now Open</span>
                     <ul>
-                      @foreach ($result->schedules as $schedule)
+                      @foreach ($terrain->schedules as $schedule)
                       <li><span class="opening-hours-day">{{$schedule->day}} </span><span class="opening-hours-time">{{$schedule->start_at->format('H:i')}} - {{$schedule->ends_at->format('H:i')}}</span></li>
                       @endforeach
 
@@ -410,10 +410,10 @@
                   <div class="box-widget-content">
                     <div class="list-author-widget-contacts list-item-widget-contacts">
                       <ul>
-                        <li><span><i class="fa fa-map-marker"></i> Adress :</span> <a href="#">{{ $result->complex->address->address }}</a></li>
-                        <li><span><i class="fa fa-phone"></i> Phone :</span> <a href="#">{{ $result->complex->phone }}</a></li>
-                        <li><span><i class="fa fa-envelope-o"></i> Mail :</span> <a href="mailto:{{ $result->complex->email }}">{{ $result->complex->email }}</a></li>
-                        <li><span><i class="fa fa-globe"></i> Website :</span> <a href="{{ $result->complex->web_site }}" target="_blank">Visiter Notre Website</a></li>
+                        <li><span><i class="fa fa-map-marker"></i> Adress :</span> <a href="#">{{ $terrain->complex->address->address }}</a></li>
+                        <li><span><i class="fa fa-phone"></i> Phone :</span> <a href="#">{{ $terrain->complex->phone }}</a></li>
+                        <li><span><i class="fa fa-envelope-o"></i> Mail :</span> <a href="mailto:{{ $terrain->complex->email }}">{{ $terrain->complex->email }}</a></li>
+                        <li><span><i class="fa fa-globe"></i> Website :</span> <a href="{{ $terrain->complex->web_site }}" target="_blank">Visiter Notre Website</a></li>
                       </ul>
                     </div>
                     <div class="list-widget-social">
@@ -493,9 +493,9 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script type="text/javascript">
   $(document).ready(function() {
-    var lat = "{{$result->complex->address->latitude}}";
+    var lat = "{{$terrain->complex->address->latitude}}";
 
-    var lon = "{{$result->complex->address->longitude}}";
+    var lon = "{{$terrain->complex->address->longitude}}";
     $.ajax({
       url: 'http://api.openweathermap.org/data/2.5/weather?lat=' + lat + "&lon=" + lon + "&units=metric&lang=fr&APPID=c10bb3bd22f90d636baa008b1529ee25",
       type: "GET",

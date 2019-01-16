@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Input;
 use App\Modules\Infrastructures\Models\Terrain;
 use  App\Modules\Infrastructures\Models\Complex;
 use  App\Modules\Infrastructures\Models\Category;
+use App\Modules\Infrastructures\Models\Club;
+use App\Modules\Infrastructure\Models\Team;
 
 class WebController extends Controller
 {
@@ -42,7 +44,7 @@ class WebController extends Controller
     {
 
         return view('Infrastructure::Recherche.terrainDetails',[
-        'result' => Terrain::find($id)
+        'terrain' => Terrain::find($id)
       ]);
     }
 
@@ -51,9 +53,18 @@ class WebController extends Controller
     *
     * @return \Illuminate\Http\Response
     */
-    public function showClubDetails()
+    public function showClubDetails($id)
     {
-      return view('Infrastructure::Recherche.clubDetails');
+      $club = Club::find(1);
+
+      $specialitys = TerrainSpeciality::whereHas('teams.club', function ($query){
+                      $query->where('id',1);
+                })->get();
+
+      return view('Infrastructure::Recherche.clubDetails',[
+      'club' => $club,
+      'specialitys' => $specialitys
+    ]);
     }
 
     /**
@@ -132,18 +143,13 @@ class WebController extends Controller
 
 
 
-
-
               return View('Infrastructure::Recherche.searchPage',[
                    'results' => $results,
                    'categories' => Category::All()
                  ]);
 
+    }
 
-
-
-
-}
 
 
 
