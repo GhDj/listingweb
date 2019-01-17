@@ -32,36 +32,92 @@
                       <!-- Map end -->
                       <div class="absolute-main-search-input">
                           <div class="container">
-                            <form  action="{{ route('handleSearchMaps') }}" method="post">
-                                  {{ csrf_field() }}
+                            <div class="widget kopa-entry-list-widget">
 
-                                  <input type="hidden" name="latitude" id="latitude">
-
-                                  <input type="hidden" name="longitude" id="longitude">
-
-                                  <div class="main-search-input-item">
-                                      <input type="text" placeholder="Nom de Terrain" name="name"/>
-                                  </div>
-
-                                  <div class="main-search-input-item">
-                                      <select data-placeholder="All Sports" class="chosen-select" name="category" >
-                                          <option value="-1">All Categories</option>
-                                          @foreach ($categories as $categorie )
-                                              <option value="{{$categorie->category}}">{{$categorie->category}}</option>
-                                          @endforeach
-                                    </select>
-                                  </div>
-
-
-                                  <div class="main-search-input-item">
-                                      <input type="text" placeholder="Ou" name="address"  id="autocomplete-input" value=""/>
-                                  </div>
-
-
-                                  <button class="main-search-button" onclick="window.location.href='listing.html'">Search</button>
-
-                                  </form>
+                              <div class="list-container-2">
+                                  <ul class="tabs-2 clearfix">
+                                      <li class="active"><a href="#tab-1-1" style="color:black">Swimming</a></li>
+                                      <li><a href="#tab-1-2"  style="color:black">Football</a></li>
+                                  </ul><!--tabs-2-->
                               </div>
+                                <div class="tab-container-2">
+                                  <div class="tab-content-2" id="tab-1-1">
+                                      <ul class="kopa-entry-list clearfix">
+                                          <li>
+                                            <div class="main-search-input fl-wrap">
+                                              <form  action="{{ route('handleSearchMaps') }}" method="post">
+                                                {{ csrf_field() }}
+
+                                                <input type="hidden" name="latitude" id="latitude">
+
+                                                <input type="hidden" name="longitude" id="longitude">
+
+                                                <div class="main-search-input-item">
+                                                    <input type="text" placeholder="Nom de Terrain" name="name"/>
+                                                </div>
+
+                                                <div class="main-search-input-item">
+                                                    <select data-placeholder="All Sports" class="chosen-select" name="category" >
+                                                        <option value="-1">All Categories</option>
+                                                        @foreach ($categories as $categorie )
+                                                            <option value="{{$categorie->category}}">{{$categorie->category}}</option>
+                                                        @endforeach
+                                                  </select>
+                                                </div>
+
+
+                                                <div class="main-search-input-item">
+                                                    <input type="text" placeholder="Ou" name="address"  id="autocomplete-input" value=""/>
+                                                </div>
+
+
+                                                <button class="main-search-button" onclick="window.location.href='listing.html'">Search</button>
+
+                                                </form>
+                                            </div>
+                                          </li>
+                                      </ul>
+                                  </div><!--tab-content-2-->
+                                  <div class="tab-content-2" id="tab-1-2">
+                                      <ul class="kopa-entry-list clearfix">
+                                          <li>
+                                            <div class="main-search-input fl-wrap">
+                                              <form  action="{{ route('handleSearchClubs') }}" method="post">
+                                                {{ csrf_field() }}
+
+                                                <input type="hidden" name="latitudeClub" id="latitudeClub">
+
+                                                <input type="hidden" name="longitudeClub" id="longitudeClub">
+
+                                                <div class="main-search-input-item">
+                                                    <input type="text" placeholder="Nom de Club" name="name"/>
+                                                </div>
+
+                                                <div class="main-search-input-item">
+                                                    <select data-placeholder="All Sports" class="chosen-select" name="speciality" >
+                                                        <option value="-1">All Sports</option>
+                                                        @foreach ($sports as $sport )
+                                                            <option value="{{$sport->id}}">{{$sport->speciality}}</option>
+                                                        @endforeach
+                                                  </select>
+                                                </div>
+
+
+                                                <div class="main-search-input-item">
+                                                    <input type="text" placeholder="Ou" name="address"  id="autocomplete" value=""/>
+                                                </div>
+
+
+                                                <button class="main-search-button" onclick="window.location.href='listing.html'">Search</button>
+
+                                                </form>
+                                            </div>
+                                          </li>
+                                      </ul>
+                                  </div><!--tab-content-2-->
+                                </div>
+
+                            </div>
                           </div>
                       </div>
                       <!-- home-map end-->

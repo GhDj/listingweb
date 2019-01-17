@@ -1,4 +1,4 @@
-   <!--=============== scripts  ===============-->
+$club->terrain   <!--=============== scripts  ===============-->
 <script type="text/javascript" src="{{asset('js/frontOffice/jquery.min.js')}}"></script>
 
 <script type="text/javascript" src="{{asset('js/frontOffice/plugins.js')}}"></script>
@@ -31,15 +31,26 @@
 
 
             @isset($results)
-
-
-
             var locations = [
             @foreach ($results as $result)
                 [locationData('{{$result->web_site}}', '{{$result->category->category}}', 'images/all/8.jpg', '{{$result->name}}', '{{$result->complex->address->city}}','{{$result->complex->phone}}', "5", "27"), {{$result->complex->address->latitude}}, {{$result->complex->address->longitude}}, 0, markerIcon],
             @endforeach
             ];
+            @endisset
 
+            @isset($terrains)
+            var locations = [
+            @foreach ($terrains as $terrain)
+                [locationData('{{$terrain->web_site}}', '{{$terrain->category->category}}', 'images/all/8.jpg', '{{$terrain->name}}', '{{$terrain->complex->address->city}}','{{$terrain->complex->phone}}', "5", "27"), {{$terrain->complex->address->latitude}}, {{$terrain->complex->address->longitude}}, 0, markerIcon],
+            @endforeach
+            ];
+            @endisset
+            @isset($clubs)
+            var locations = [
+            @foreach ($clubs as $club)
+                [locationData('{{$club->terrain->web_site}}', '{{$club->terrain->category->category}}', 'images/all/8.jpg', '{{$club->name}}', '{{$club->terrain->complex->address->city}}','{{$club->terrain->complex->phone}}', "5", "27"), {{$club->terrain->complex->address->latitude}}, {{$club->terrain->complex->address->longitude}}, 0, markerIcon],
+            @endforeach
+            ];
             @endisset
 
         var map = new google.maps.Map(document.getElementById('map-main'), {

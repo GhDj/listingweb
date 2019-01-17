@@ -112,10 +112,8 @@
               <div class="list-main-wrap fl-wrap card-listing">
                   <div class="container">
 
-                  @isset($results)
-                    @foreach ($results as $result)
-
-
+                  @isset($terrains)
+                    @foreach ($terrains as $terrain)
                       <!-- listing-item -->
                       <div class="listing-item list-layout">
                           <article class="geodir-category-listing fl-wrap">
@@ -125,12 +123,12 @@
                                   <div class="list-post-counter"><span>4</span><i class="fa fa-heart"></i></div>
                               </div>
                               <div class="geodir-category-content fl-wrap" style="width:35%">
-                                  <a class="listing-geodir-category" href="listing.html">{{$result->category->category}}</a>
+                                  <a class="listing-geodir-category" href="listing.html">{{$terrain->category->category}}</a>
 
 
-                                  <h3><a href="{{ route('showTerrainDetails',['id' => $result->id]) }}">{{$result->name}}</a></h3>
+                                  <h3><a href="{{ route('showTerrainDetails',['id' => $terrain->id]) }}">{{$terrain->name}}</a></h3>
 
-                                  <div class="geodir-category-location"><a href="#0" class="map-item"><i class="fa fa-map-marker" aria-hidden="true"></i> {{$result->complex->name}},{{$result->complex->address->city}},{{$result->complex->address->address}}</a></div>
+                                  <div class="geodir-category-location"><a href="#0" class="map-item"><i class="fa fa-map-marker" aria-hidden="true"></i> {{$terrain->complex->name}},{{$terrain->complex->address->city}},{{$terrain->complex->address->address}}</a></div>
 
 
                                   <div class="geodir-category-options " >
@@ -153,7 +151,7 @@
                             <div class="opening-hours">
                               <ul>
 
-                                @foreach ($result->schedules as $schedule)
+                                @foreach ($terrain->schedules as $schedule)
 
 
                                 <li><span class="opening-hours-day">{{$schedule->day}} </span><span class="opening-hours-time">{{$schedule->start_at->format('H:i')}} - {{$schedule->ends_at->format('H:i')}}</span></li>
@@ -164,6 +162,52 @@
                             </div>
                           </div>
                         </div>
+                              </div>
+                          </article>
+                      </div>
+                      <!-- listing-item end-->
+
+                    @endforeach
+
+                  @endisset
+
+                  @isset($clubs)
+                    @foreach ($clubs as $club)
+                      <!-- listing-item -->
+                      <div class="listing-item list-layout">
+                          <article class="geodir-category-listing fl-wrap">
+                              <div class="geodir-category-img" style="width:35%">
+                             <img src="@if ($club->medias->count() > 0)
+                                      {{  $club->medias->first()->link}}
+                                      @else
+                                        images/all/9.jpg
+                                  @endif" alt="">
+                                  <div class="overlay"></div>
+                                  <div class="list-post-counter"><span>4</span><i class="fa fa-heart"></i></div>
+                              </div>
+                              <div class="geodir-category-content fl-wrap" style="width:35%">
+
+                                <a class="listing-geodir-category" href="listing.html">{{ucfirst($club->terrain->complex->name)}}</a>
+
+
+                                  <h3><a href="{{ route('showClubDetails',['id' => $club->id]) }}">{{$club->name}}</a></h3>
+
+                                  <div class="geodir-category-location"><a href="#0" class="map-item"><i class="fa fa-map-marker" aria-hidden="true"></i> {{$club->terrain->complex->name}},{{$club->terrain->complex->address->city}},{{$club->terrain->complex->address->address}}</a></div>
+
+
+                                  <div class="geodir-category-options " >
+
+
+                                      <div class="search-item-1">
+                                      <ul>
+                                        <li><a href="#">Test1</a></li>
+                                        <li>Test2</li>
+                                        <li>Test3</li>
+                                      </ul>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="geodir-category-content " style="width:30%">
                               </div>
                           </article>
                       </div>
