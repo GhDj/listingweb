@@ -36,8 +36,8 @@
 
                               <div class="list-container-2">
                                   <ul class="tabs-2 clearfix">
-                                      <li class="active"><a href="#tab-1-1" style="color:black">Swimming</a></li>
-                                      <li><a href="#tab-1-2"  style="color:black">Football</a></li>
+                                      <li class="active"><a href="#tab-1-1" style="color:black">Search Terrains</a></li>
+                                      <li><a href="#tab-1-2"  style="color:black">Search Clubs</a></li>
                                   </ul><!--tabs-2-->
                               </div>
                                 <div class="tab-container-2">
@@ -57,10 +57,10 @@
                                                 </div>
 
                                                 <div class="main-search-input-item">
-                                                    <select data-placeholder="All Sports" class="chosen-select" name="category" >
+                                                    <select data-placeholder="All Categories" class="chosen-select" name="category" >
                                                         <option value="-1">All Categories</option>
                                                         @foreach ($categories as $categorie )
-                                                            <option value="{{$categorie->category}}">{{$categorie->category}}</option>
+                                                            <option value="{{$categorie->id}}">{{$categorie->category}}</option>
                                                         @endforeach
                                                   </select>
                                                 </div>

@@ -481,8 +481,20 @@ function initCitybook() {
 	// click ------------------
     $(".more-filter-option").on("click", function () {
         $(".hidden-listing-filter").slideToggle(500);
+    if ($('#category').is(':disabled')) {
+          $('#category').prop('disabled', false).niceSelect('update');
+    }else {
+        $('#category').prop('disabled', true).niceSelect('update');
+    }
+    if ($('#speciality').is(':disabled')) {
+          $('#speciality').prop('disabled', false).niceSelect('update');
+    }else {
+        $('#speciality').prop('disabled', true).niceSelect('update');
+    }
         $(this).find("span").toggleClass("mfilopact");
     });
+
+
     $(".show-search-button").on("click", function () {
         $(".vis-header-search").slideToggle(500);
     });

@@ -13,4 +13,8 @@ Route::group(['module' => 'Infrastructures', 'middleware' => ['web'], 'namespace
     Route::post('/search','WebController@handleSearchMaps')->name('handleSearchMaps');
 
     Route::post('/searchClub','WebController@handleSearchClubs')->name('handleSearchClubs');
+
+    Route::post('/searchFilterTerrain','WebController@handleFilterSearchMaps')->name('handleFilterSearchMaps');
+    
+    Route::post('/searchFilterClub','WebController@handleFilterSearchClubs')->name('handleFilterSearchClubs');
 });

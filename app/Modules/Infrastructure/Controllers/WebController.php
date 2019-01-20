@@ -146,7 +146,8 @@ class WebController extends Controller
 
               return View('Infrastructure::Recherche.searchPage',[
                    'terrains' => $terrains,
-                   'categories' => Category::All()
+                   'categories' => Category::select('category')->groupBy('category')->get(),
+                   'sports' => TerrainSpeciality::All()
                  ]);
 
     }
@@ -215,7 +216,7 @@ class WebController extends Controller
               ->when(isset($data['name']), function ($query) use ($data){
                   $query->Where('name', 'LIKE', '%' .$data['name'] . '%');
               })
-              ->when(isset($data['speciality']) , function ($query) use ($data){
+              ->when(isset($data['speciality'])  and $data['speciality'] != -1 , function ($query) use ($data){
                   $query->whereHas('teams', function ($subQuery) use ($data) {
                       $subQuery->where('speciality_id', $data['speciality']);
                   });
@@ -230,13 +231,178 @@ class WebController extends Controller
 
               return View('Infrastructure::Recherche.searchPage',[
                    'clubs' => $clubs,
-                   'categories' => Category::All()
+                   'categories' => Category::select('category')->groupBy('category')->get(),
+                   'sports' => TerrainSpeciality::All()
                  ]);
 
     }
 
 
+public function handleFilterSearchMaps(Request $request)
+{
+      $data = Input::All();
 
+
+      if(isset($data['latitude']) and !empty($data['latitude'])){
+        $latitude = $data['latitude'];
+        $longitude = $data['longitude'];
+      } else {
+        if ($dataResponse = @file_get_contents("http://ip-api.com/json")) {
+            $json = json_decode($dataResponse, true);
+            $latitude = $json['lat'];
+            $longitude = $json['lon'];
+        } else {
+            $latitude = null;
+            $longitude = null;
+        }
+      }
+
+      if($latitude != null and $longitude != null){
+        $sqlDistance = DB::raw
+        ('
+        ( 6371 * acos
+            ( cos
+                ( radians
+                    (' . $latitude . ')
+                )
+            * cos
+                ( radians
+                    ( latitude )
+                )
+            * cos
+                ( radians
+                    ( longitude )
+                - radians
+                    (' . $longitude . ')
+                )
+            + sin
+                ( radians
+                    (' . $latitude  . ')
+                )
+            * sin
+                ( radians
+                    ( latitude )
+                )
+            )
+        )
+      ');
+      } else {
+        $sqlDistance = null;
+      }
+
+      $terrains = Terrain::select('terrains.*')
+        ->when(isset($data['name']), function ($query) use ($data){
+            $query->Where('name', 'LIKE', '%' .$data['name'] . '%');
+        })
+        ->when(isset($data['category']) and $data['category'] != -1, function ($query) use ($data){
+            $query->whereHas('category', function ($subQuery) use ($data) {
+                $subQuery->where('category', $data['category']);
+            });
+        })
+        ->when(isset($data['categories']), function ($query) use ($data){
+            $query->whereHas('category', function ($subQuery) use ($data) {
+                $subQuery->whereIn('category', $data['categories']);
+            });
+        })
+
+        ->when($sqlDistance != null, function ($query) use ($sqlDistance,$data){
+            $query->whereHas('complex.address', function ($subQuery) use ($sqlDistance,$data) {
+                $subQuery->addSelect(DB::raw("{$sqlDistance} AS distance"));
+                $subQuery->havingRaw("distance <= ?", [(int)$data['distance']]);
+              });
+        })->get();
+
+
+        return View('Infrastructure::Recherche.searchPage',[
+             'terrains' => $terrains,
+             'categories' => Category::select('category')->groupBy('category')->get(),
+             'sports' => TerrainSpeciality::All()
+           ]);
+
+}
+
+public function handleFilterSearchClubs(Request $request)
+{
+      $data = Input::All();
+
+      if(isset($data['latitudeClub']) and !empty($data['latitudeClub'])){
+        $latitude = $data['latitudeClub'];
+        $longitude = $data['longitudeClub'];
+      } else {
+        if ($dataResponse = @file_get_contents("http://ip-api.com/json")) {
+            $json = json_decode($dataResponse, true);
+            $latitude = $json['lat'];
+            $longitude = $json['lon'];
+        } else {
+            $latitude = null;
+            $longitude = null;
+        }
+      }
+
+      if($latitude != null and $longitude != null){
+        $sqlDistance = DB::raw
+        ('
+        ( 6371 * acos
+            ( cos
+                ( radians
+                    (' . $latitude . ')
+                )
+            * cos
+                ( radians
+                    ( latitude )
+                )
+            * cos
+                ( radians
+                    ( longitude )
+                - radians
+                    (' . $longitude . ')
+                )
+            + sin
+                ( radians
+                    (' . $latitude  . ')
+                )
+            * sin
+                ( radians
+                    ( latitude )
+                )
+            )
+        )
+      ');
+      } else {
+        $sqlDistance = null;
+      }
+
+          $clubs = Club::select('clubs.*')
+            ->when(isset($data['name']), function ($query) use ($data){
+                $query->Where('name', 'LIKE', '%' .$data['name'] . '%');
+            })
+            ->when(isset($data['speciality']) and $data['speciality'] != -1 , function ($query) use ($data){
+                $query->whereHas('teams', function ($subQuery) use ($data) {
+                    $subQuery->where('speciality_id', $data['speciality']);
+                });
+            })
+            ->when(isset($data['specialitys']) , function ($query) use ($data){
+                $query->whereHas('teams', function ($subQuery) use ($data) {
+                    $subQuery->whereIn('speciality_id', $data['specialitys']);
+                });
+            })
+            ->when($sqlDistance != null, function ($query) use ($sqlDistance,$data){
+                $query->whereHas('terrain.complex.address', function ($subQuery) use ($sqlDistance,$data) {
+                    $subQuery->addSelect(DB::raw("{$sqlDistance} AS distance"));
+                    $subQuery->havingRaw("distance <= ?", [(int)$data['distance']]);
+                  });
+            })
+        ->get();
+
+
+
+        return View('Infrastructure::Recherche.searchPage',[
+             'clubs' => $clubs,
+             'categories' => Category::select('category')->groupBy('category')->get(),
+             'sports' => TerrainSpeciality::All()
+           ]);
+
+}
 
 
 
