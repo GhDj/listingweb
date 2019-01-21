@@ -37,4 +37,14 @@ class WebController extends Controller
 
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function handleUserRegister(Request $request)
+    {
+          dd($request->All());
+    }
+
 }

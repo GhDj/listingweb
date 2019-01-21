@@ -1423,14 +1423,11 @@ section.gray-section .section-separator {
 	width:100%;
 	margin-top:20px;
 	margin-bottom:30px;
-	border-bottom:1px solid #eee;
 }
 .tabs-menu  li {
-	float:left;
 	margin-right:20px;
 }
 .tabs-menu  li a{
-	float:left;
 	padding:14px 35px;
  	font-weight:500;
 	color:#494949;
@@ -4029,9 +4026,9 @@ article .list-single-main-item {
 }
 .add-list-media-header {
 	float:left;
-	width:100%;
 	padding:15px 20px 3px;
 	background: #F8FBFE;
+	margin-left: 50px;
 	border:1px solid #eee;
 }
 .add-list-media-header span {

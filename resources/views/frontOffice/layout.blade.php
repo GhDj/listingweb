@@ -10,6 +10,7 @@
     @yield('footer')
 </div>
 @include('frontOffice.inc.scripts')
+@include('frontOffice.inc.modals.registerUser')
 @yield('scripts')
 </body>
 </html>

@@ -11,6 +11,14 @@ $club->terrain   <!--=============== scripts  ===============-->
 
 <script type="text/javascript" src="{{asset('js/frontOffice/markerclusterer.js')}}"></script>
 
+<script type="text/javascript" src="{{asset('js/frontOffice/jquery.mask.min.js')}}"></script>
+
+<script type="text/javascript">
+
+ $('#phone').mask('(000) 00 00 00');
+
+</script>
+
 <script type="text/javascript">
 
 (function ($) {
