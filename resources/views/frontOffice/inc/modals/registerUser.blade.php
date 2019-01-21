@@ -36,6 +36,18 @@
     white-space: nowrap;
     width: auto;
   }
+
+  .main-register-form input {
+    margin-bottom: 0;
+  }
+
+  .invalid-feedback strong{
+      color: red;
+  }
+
+  .form-group{
+    margin-bottom:20px;
+  }
 </style>
 
 <!--register form -->
@@ -89,7 +101,7 @@
                           <div class="col-md-4">
                             <div class="add-list-media-header">
                               <label class="radio inline">
-                                <input type="radio" name="type" value="2" checked>
+                                <input type="radio" name="role" value="2" checked>
                                 <span>Propriétaire</span>
                               </label>
                             </div>
@@ -99,7 +111,7 @@
                           <div class="col-md-4">
                             <div class="add-list-media-header">
                               <label class="radio inline">
-                                <input type="radio" name="type" value="4">
+                                <input type="radio" name="role" value="4">
                                 <span>Internaute</span>
                               </label>
                             </div>
@@ -107,15 +119,45 @@
                           <!--col end-->
 
                         </div>
+                <div class="form-group row">
+                          <label for="lastName" > Nom * </label>
+                      <div class="col-md-12">
+                              <input id="lastName" type="text" class="form-control{{ $errors->has('lastName') ? ' is-invalid' : '' }}" name="lastName" value="{{ old('lastName') }}"  autofocus>
+                            @if ($errors->has('lastName'))
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $errors->first('lastName') }}</strong>
+                                  </span>
+                              @endif
+                          </div>
+                </div>
+
+                <div class="form-group row">
+                          <label for="firstName" > Prénom * </label>
+                      <div class="col-md-12">
+                              <input id="firstName" type="text" class="form-control{{ $errors->has('firstName') ? ' is-invalid' : '' }}" name="firstName" value="{{ old('firstName') }}"  autofocus>
+                            @if ($errors->has('firstName'))
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $errors->first('firstName') }}</strong>
+                                  </span>
+                              @endif
+                          </div>
+                </div>
+
+                <div class="form-group row">
+                          <label for="phone" > Téléphone * </label>
+                      <div class="col-md-12">
+                              <input id="phone" type="text" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" value="{{ old('phone') }}" placeholder="590 xx xx xx"  autofocus>
+                            @if ($errors->has('phone'))
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $errors->first('phone') }}</strong>
+                                  </span>
+                              @endif
+                          </div>
+                </div>
 
 
-                  <label>Nom * </label>
-                  <input name="last_name" type="text" onClick="this.select()" value="">
-                  <label>Prénom *</label>
-                  <input name="first_name" type="text" onClick="this.select()" value="">
-                  <label>Téléphone  *</label>
-                  <input name="phone" type="text" onClick="this.select()" value="" id ="phone" placeholder="590 xx xx xx">
-                  <label>Téléphone  *</label>
+
+                  <label>Choisir Votre Sexe  *</label>
                   <div >
                         <select data-placeholder="Choisir Votre sexe" class="custom-select" name="gender" id="gender">
                             <option value="1">Homme</option>
@@ -124,10 +166,38 @@
 
                       </select>
                   </div>
-                  <label>Email  *</label>
-                  <input name="email" type="text" onClick="this.select()" value="">
-                  <label>Mot De Passe *</label>
-                  <input name="password" type="password" onClick="this.select()" value="">
+
+                  <div class="form-group row">
+                            <label for="lastName" > Email * </label>
+                        <div class="col-md-12">
+                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}"  autofocus>
+                              @if ($errors->has('email'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+                        </div>
+                  </div>
+
+                  <div class="form-group row">
+                            <label for="password" > Mot de passe * </label>
+                        <div class="col-md-12">
+                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" autofocus>
+                              @if ($errors->has('password'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                @endif
+                        </div>
+                  </div>
+
+                  <div class="form-group row">
+                          <label for="password_confirm">Veuillez Confirmez Votre Mode De Passe</label>
+                            <div class="col-md-12">
+                          <input id="password_confirm" type="password" name="password_confirmation" autofocus>
+                        </div>
+                  </div>
+
                   <button type="submit" class="log-submit-btn"><span>Register</span></button>
                 </form>
               </div>
