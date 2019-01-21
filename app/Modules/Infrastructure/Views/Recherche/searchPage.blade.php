@@ -46,7 +46,7 @@
                                               <li>
                                                 <!-- listsearch-input-wrap  -->
                                                 <div class="listsearch-input-wrap fl-wrap">
-                                                  <form action="{{ route('handleFilterSearchMaps') }}" method="post">
+                                                  <form action="{{ route('handleFilterMaps') }}" method="post">
                                                         {{ csrf_field() }}
 
                                                         <input type="hidden" name="latitude" id="latitude">
@@ -57,8 +57,8 @@
                                                         <input type="text" placeholder="Nom de stade" name="name" value="{{ old('name') }}"/>
                                                     </div>
                                                     <div class="listsearch-input-item">
-                                                          <select data-placeholder="All Categories" class="chosen-select" name="category" id="category" >
-                                                              <option value="-1">All Categories</option>
+                                                          <select data-placeholder="tous les categories" class="chosen-select" name="category" id="category" >
+                                                              <option value="-1">tous les categories</option>
                                                               @foreach ($categories as $categorie )
                                                                   <option value="{{$categorie->category}}">{{$categorie->category}}</option>
                                                               @endforeach
@@ -78,7 +78,7 @@
                                                       </div>
                                                       <!-- Checkboxes -->
                                                       <div class=" fl-wrap filter-tags">
-                                                          <h4>Filter by Category</h4>
+                                                          <h4>Filtrer par catégorie</h4>
                                                           @foreach ($categories as $categorie)
                                                             <input id="check-{{$categorie->category}}" type="checkbox" name="categories[]" value="{{$categorie->category}}">
                                                             <label for="check-{{$categorie->category}}">{{$categorie->category}}</label>
@@ -105,7 +105,7 @@
                                               <li>
                                                 <!-- listsearch-input-wrap  -->
                                                 <div class="listsearch-input-wrap fl-wrap">
-                                                  <form action="{{ route('handleFilterSearchClubs') }}" method="post">
+                                                  <form action="{{ route('handleFilterClubs') }}" method="post">
                                                         {{ csrf_field() }}
 
                                                         <input type="hidden" name="latitudeClub" id="latitudeClub">
@@ -116,8 +116,8 @@
                                                         <input type="text" placeholder="Nom de Club" name="name" value=""/>
                                                     </div>
                                                     <div class="listsearch-input-item">
-                                                          <select data-placeholder="All Sports" class="chosen-select" name="speciality" id="speciality" >
-                                                              <option value="-1">All Sports</option>
+                                                          <select data-placeholder="Tous les sports" class="chosen-select" name="speciality" id="speciality" >
+                                                              <option value="-1">Tous les sports</option>
                                                               @foreach ($sports as $sport )
                                                                   <option value="{{$sport->id}}">{{$sport->speciality}}</option>
                                                               @endforeach
@@ -137,7 +137,7 @@
                                                       </div>
                                                       <!-- Checkboxes -->
                                                       <div class=" fl-wrap filter-tags">
-                                                          <h4>Filter by Sports</h4>
+                                                          <h4>Filtrer par sport</h4>
                                                           @foreach ($sports as $sport)
                                                             <input id="check-{{$sport->id}}" type="checkbox" name="specialitys[]" value="{{$sport->id}}">
                                                             <label for="check-{{$sport->id}}">{{$sport->speciality}}</label>
@@ -227,8 +227,6 @@
                               <ul>
 
                                 @foreach ($terrain->schedules as $schedule)
-
-
                                 <li><span class="opening-hours-day">{{$schedule->day}} </span><span class="opening-hours-time">{{$schedule->start_at->format('H:i')}} - {{$schedule->ends_at->format('H:i')}}</span></li>
                                 @endforeach
 

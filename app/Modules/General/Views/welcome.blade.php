@@ -57,8 +57,8 @@
                                                 </div>
 
                                                 <div class="main-search-input-item">
-                                                    <select data-placeholder="All Categories" class="chosen-select" name="category" >
-                                                        <option value="-1">All Categories</option>
+                                                    <select data-placeholder="Tous les categories" class="chosen-select" name="category" >
+                                                        <option value="-1">Tous les categories</option>
                                                         @foreach ($categories as $categorie )
                                                             <option value="{{$categorie->id}}">{{$categorie->category}}</option>
                                                         @endforeach
@@ -94,8 +94,8 @@
                                                 </div>
 
                                                 <div class="main-search-input-item">
-                                                    <select data-placeholder="All Sports" class="chosen-select" name="speciality" >
-                                                        <option value="-1">All Sports</option>
+                                                    <select data-placeholder="Tous les sports" class="chosen-select" name="speciality" >
+                                                        <option value="-1">Tous les sports</option>
                                                         @foreach ($sports as $sport )
                                                             <option value="{{$sport->id}}">{{$sport->speciality}}</option>
                                                         @endforeach

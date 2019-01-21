@@ -238,7 +238,7 @@ class WebController extends Controller
     }
 
 
-public function handleFilterSearchMaps(Request $request)
+public function handleFilterMaps(Request $request)
 {
       $data = Input::All();
 
@@ -321,7 +321,7 @@ public function handleFilterSearchMaps(Request $request)
 
 }
 
-public function handleFilterSearchClubs(Request $request)
+public function handleFilterClubs(Request $request)
 {
       $data = Input::All();
 
