@@ -19,7 +19,8 @@
 
 
 @section('content')
-  
+
+
   <div id="wrapper">
               <!-- Content-->
               <div class="content">

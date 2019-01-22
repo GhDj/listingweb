@@ -12,7 +12,9 @@ $club->terrain   <!--=============== scripts  ===============-->
 <script type="text/javascript" src="{{asset('js/frontOffice/markerclusterer.js')}}"></script>
 
 <script type="text/javascript" src="{{asset('js/frontOffice/jquery.mask.min.js')}}"></script>
+<script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
 
+  {!! Toastr::message() !!}
 <script type="text/javascript">
 
  $('#phone').mask('00000000');
