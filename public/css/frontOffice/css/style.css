@@ -1386,7 +1386,6 @@ section.gray-section .section-separator {
 	z-index:1;
 }
 .custom-form .log-submit-btn {
-	float:left;
 	padding:13px 35px;
 	border:none;
 	border-radius:4px;
@@ -3385,6 +3384,7 @@ article .list-single-main-item {
 }
 .custom-form label {
 	float:left;
+	margin-left: 15px;
 	position:relative;
 	width:100%;
 	text-align:left;
@@ -3402,7 +3402,6 @@ article .list-single-main-item {
 	left:20px;
 }
 .custom-form button {
-	float:left;
 	outline:none;
 	border:none;
 	cursor:pointer;
@@ -4028,7 +4027,7 @@ article .list-single-main-item {
 	float:left;
 	padding:15px 20px 3px;
 	background: #F8FBFE;
-	margin-left: 50px;
+	margin-left: 35px;
 	border:1px solid #eee;
 }
 .add-list-media-header span {
