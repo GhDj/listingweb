@@ -62,7 +62,7 @@ class User extends Authenticatable
 
     public function assignRole($role){
         if(is_string($role)){
-            $role = Role::where('title',$role)->get();
+            $role = Role::where('id',$role)->get();
         }
         if(!$role) return false;
         $this->roles()->attach($role);
