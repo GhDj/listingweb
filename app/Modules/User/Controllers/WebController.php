@@ -56,6 +56,7 @@ class WebController extends Controller
           'lastName'   => 'required',
           'email'   => 'required|unique:users',
           'password'   => 'required|confirmed',
+          'gender' => 'required'
 
         ],
         [
@@ -65,6 +66,7 @@ class WebController extends Controller
               'email.unique'   => 'Email est déja existe',
               'password.required'   => 'Veuillez Saisie Mot de passe',
               'password.confirmed'   => 'Mot de passe Doit ètre Identique',
+              'gender.required'   => 'Genre de sexe est obligatoire'
 
         ]
           );
