@@ -33,6 +33,7 @@ class CreateUsersTable extends Migration
             $table->integer('promo_pts')->default(0);
             $table->integer('address_id')->unsigned();
             $table->foreign('address_id')->references('id')->on('addresses');
+            $table->rememberToken();
             $table->timestamps();
         });
 

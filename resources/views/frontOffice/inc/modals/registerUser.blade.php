@@ -73,10 +73,29 @@
             <div class="custom-form">
               <form method="post" name="registerform" action = {{ route('handleUserLogin') }}>
                   {{ csrf_field() }}
-                <label>Email * </label>
-                <input name="email" type="text" onClick="this.select()" value="">
-                <label>Mot De passe * </label>
-                <input name="password" type="password" onClick="this.select()" value="">
+                <div class="form-group row">
+                      <label for="mail" > Email * </label>
+                          <div class="col-md-12">
+                              <input id="mail" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}"  onClick="this.select()" required>
+                            @if ($errors->has('email'))
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $errors->first('email') }}</strong>
+                                  </span>
+                              @endif
+                          </div>
+                </div>
+
+                <div class="form-group row">
+                        <label for="pass" > Mot De passe * </label>
+                          <div class="col-md-12">
+                              <input id="pass" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password"   onClick="this.select()" required>
+                            @if ($errors->has('password'))
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $errors->first('password') }}</strong>
+                                  </span>
+                              @endif
+                          </div>
+                </div>
                 <button type="submit" class="log-submit-btn"><span>Identifier</span></button>
                 <div class="clearfix"></div>
                 <div class="filter-tags">
@@ -122,7 +141,7 @@
                 <div class="form-group row">
                           <label for="lastName" > Nom * </label>
                       <div class="col-md-12">
-                              <input id="lastName" type="text" class="form-control{{ $errors->has('lastName') ? ' is-invalid' : '' }}" name="lastName" value="{{ old('lastName') }}"  autofocus>
+                              <input id="lastName" type="text" class="form-control{{ $errors->has('lastName') ? ' is-invalid' : '' }}" name="lastName" value="{{ old('lastName') }}"   onClick="this.select()" required>
                             @if ($errors->has('lastName'))
                                   <span class="invalid-feedback" role="alert">
                                       <strong>{{ $errors->first('lastName') }}</strong>
@@ -134,7 +153,7 @@
                 <div class="form-group row">
                           <label for="firstName" > Prénom * </label>
                       <div class="col-md-12">
-                              <input id="firstName" type="text" class="form-control{{ $errors->has('firstName') ? ' is-invalid' : '' }}" name="firstName" value="{{ old('firstName') }}"  autofocus>
+                              <input id="firstName" type="text" class="form-control{{ $errors->has('firstName') ? ' is-invalid' : '' }}" name="firstName" value="{{ old('firstName') }}"   onClick="this.select()" required>
                             @if ($errors->has('firstName'))
                                   <span class="invalid-feedback" role="alert">
                                       <strong>{{ $errors->first('firstName') }}</strong>
@@ -146,7 +165,7 @@
                 <div class="form-group row">
                           <label for="phone" > Téléphone * </label>
                       <div class="col-md-12">
-                              <input id="phone" type="text" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" value="{{ old('phone') }}" placeholder="590 xx xx xx"  autofocus>
+                              <input id="phone" type="text" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" value="{{ old('phone') }}" placeholder="590 xx xx xx"   onClick="this.select()" required>
                             @if ($errors->has('phone'))
                                   <span class="invalid-feedback" role="alert">
                                       <strong>{{ $errors->first('phone') }}</strong>
@@ -170,7 +189,7 @@
                   <div class="form-group row">
                             <label for="lastName" > Email * </label>
                         <div class="col-md-12">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}"  autofocus>
+                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}"   onClick="this.select()" required>
                               @if ($errors->has('email'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('email') }}</strong>
@@ -182,7 +201,7 @@
                   <div class="form-group row">
                             <label for="password" > Mot de passe * </label>
                         <div class="col-md-12">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" autofocus>
+                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password"  onClick="this.select()" required>
                               @if ($errors->has('password'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('password') }}</strong>
@@ -194,7 +213,7 @@
                   <div class="form-group row">
                           <label for="password_confirm">Veuillez Confirmez Votre Mode De Passe</label>
                             <div class="col-md-12">
-                          <input id="password_confirm" type="password" name="password_confirmation" autofocus>
+                          <input id="password_confirm" type="password" name="password_confirmation"  onClick="this.select()" required>
                         </div>
                   </div>
 

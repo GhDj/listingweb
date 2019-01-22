@@ -7,8 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Modules\User\Models\User;
 use App\Modules\General\Models\Address;
 use UxWeb\SweetAlert\SweetAlert;
+use Auth;
 use Mail;
+use Alert;
 use Validate;
+
+use Toastr;
 
 class WebController extends Controller
 {
@@ -54,7 +58,7 @@ class WebController extends Controller
     $errors =  $this->validate($request,[
           'firstName'   => 'required',
           'lastName'   => 'required',
-          'email'   => 'required|unique:users',
+          'email'   => 'required|unique:users|email',
           'password'   => 'required|confirmed',
           'gender' => 'required'
 
@@ -64,6 +68,7 @@ class WebController extends Controller
               'lastName.required'   => 'Votre Prenom est Obligatoire',
               'email.required'   => 'Email est obligatoire',
               'email.unique'   => 'Email est déja existe',
+              'email.email'   => 'Le champ doit ètre de type email',
               'password.required'   => 'Veuillez Saisie Mot de passe',
               'password.confirmed'   => 'Mot de passe Doit ètre Identique',
               'gender.required'   => 'Genre de sexe est obligatoire'
@@ -114,11 +119,56 @@ class WebController extends Controller
          $message->subject('Bienvenue');
          });
 
-
-        SweetAlert::success('Bien !', 'Inscription a été effectué avec succès !')->persistent('Fermer');
+         Toastr::success('Inscription a été effectué avec succès !', 'Bien !', ["positionClass" => "toast-top-full-width","showDuration"=> "4000", "hideDuration"=> "1000", "timeOut"=> "300000"]);
 
         return back();
 
     }
+
+    public function handleUserLogin(Request $request){
+
+
+
+      		$errors = $this->validate($request,[
+      			'email' => 'required|email',
+      			'password' => 'required'
+
+      		],
+            [
+              'email.required'   => 'Email est obligatoire',
+              'email.email'   => 'Le champ doit ètre de type email',
+              'password.required'   => 'Veuillez Saisie Mot de passe'
+            ]
+        );
+
+    		    $email = $request->email;
+            $password = $request->password;
+
+            $credentials = [
+                'email' => $email,
+                'password' => $password,
+            ];
+
+            if (Auth::attempt($credentials)) {
+                $user = Auth::user();
+                Auth::login($user);
+                if ($user->status === 1) {
+                  if(checkProfessionnelRole($user)){
+                        return redirect()->route('showProfessionnelDashboard');
+                  }
+          				 if(checkInternauteRole($user)){
+                        return redirect()->route('showInternauteDashboard');
+                    }
+                }
+                else{
+                    Auth::logout();
+                    Toastr::error('Vérifiez Les données saisie!', 'Oops', ["positionClass" => "toast-top-full-width","showDuration"=> "4000", "hideDuration"=> "1000", "timeOut"=> "300000"]);
+                    return redirect()->route('showHome');
+                }
+            }
+            Toastr::error('Vérifiez Les données saisie!', 'Oops', ["positionClass" => "toast-top-full-width","showDuration"=> "4000", "hideDuration"=> "1000", "timeOut"=> "300000"]);
+
+            return back();
+        }
 
 }
