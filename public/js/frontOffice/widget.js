@@ -1,54 +1,57 @@
 /* =========================================================
 Tabs
 ============================================================ */
-jQuery(document).ready(function() {
+(function ($) {
 
-	if( jQuery(".tab-content-1").length > 0){
+	if( $(".tab-content-1").length > 0){
         //Default Action Product Tab
-        jQuery(".tab-content-1").hide(); //Hide all content
-        jQuery("ul.tabs-1 li:first").addClass("active").show(); //Activate first tab
-        jQuery(".tab-content-1:first").show(); //Show first tab content
+        $(".tab-content-1").hide(); //Hide all content
+        $("ul.tabs-1 li:first").addClass("active").show(); //Activate first tab
+        $(".tab-content-1:first").show(); //Show first tab content
         //On Click Event Product Tab
-        jQuery("ul.tabs-1 li").click(function() {
-            jQuery("ul.tabs-1 li").removeClass("active"); //Remove any "active" class
-            jQuery(this).addClass("active"); //Add "active" class to selected tab
-            jQuery(".tab-content-1").hide(); //Hide all tab content
-            var activeTab = jQuery(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
-            jQuery(activeTab).fadeIn(); //Fade in the active content
+        $("ul.tabs-1 li").click(function(e) {
+
+						e.preventDefault();
+						console.log('here');
+            $("ul.tabs-1 li").removeClass("active"); //Remove any "active" class
+            $(this).addClass("active"); //Add "active" class to selected tab
+            $(".tab-content-1").hide(); //Hide all tab content
+            var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
+            $(activeTab).fadeIn(); //Fade in the active content
             return false;
 
         });
     }
 
-	if( jQuery(".tab-content-2").length > 0){
+	if( $(".tab-content-2").length > 0){
         //Default Action Product Tab
-        jQuery(".tab-content-2").hide(); //Hide all content
-        jQuery("ul.tabs-2 li:first").addClass("active").show(); //Activate first tab
-        jQuery(".tab-content-2:first").show(); //Show first tab content
+        $(".tab-content-2").hide(); //Hide all content
+        $("ul.tabs-2 li:first").addClass("active").show(); //Activate first tab
+        $(".tab-content-2:first").show(); //Show first tab content
         //On Click Event Product Tab
-        jQuery("ul.tabs-2 li").click(function() {
-            jQuery("ul.tabs-2 li").removeClass("active"); //Remove any "active" class
-            jQuery(this).addClass("active"); //Add "active" class to selected tab
-            jQuery(".tab-content-2").hide(); //Hide all tab content
-            var activeTab = jQuery(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
-            jQuery(activeTab).fadeIn(); //Fade in the active content
+        $("ul.tabs-2 li").click(function() {
+            $("ul.tabs-2 li").removeClass("active"); //Remove any "active" class
+            $(this).addClass("active"); //Add "active" class to selected tab
+            $(".tab-content-2").hide(); //Hide all tab content
+            var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
+            $(activeTab).fadeIn(); //Fade in the active content
             return false;
 
         });
     }
 
-	if( jQuery(".tab-content-3").length > 0){
+	if( $(".tab-content-3").length > 0){
         //Default Action Product Tab
-        jQuery(".tab-content-3").hide(); //Hide all content
-        jQuery("ul.tabs-3 li:first").addClass("active").show(); //Activate first tab
-        jQuery(".tab-content-3:first").show(); //Show first tab content
+        $(".tab-content-3").hide(); //Hide all content
+        $("ul.tabs-3 li:first").addClass("active").show(); //Activate first tab
+        $(".tab-content-3:first").show(); //Show first tab content
         //On Click Event Product Tab
-        jQuery("ul.tabs-3 li").click(function() {
-            jQuery("ul.tabs-3 li").removeClass("active"); //Remove any "active" class
-            jQuery(this).addClass("active"); //Add "active" class to selected tab
-            jQuery(".tab-content-3").hide(); //Hide all tab content
-            var activeTab = jQuery(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
-            jQuery(activeTab).fadeIn(); //Fade in the active content
+        $("ul.tabs-3 li").click(function() {
+            $("ul.tabs-3 li").removeClass("active"); //Remove any "active" class
+            $(this).addClass("active"); //Add "active" class to selected tab
+            $(".tab-content-3").hide(); //Hide all tab content
+            var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
+            $(activeTab).fadeIn(); //Fade in the active content
             return false;
 
         });

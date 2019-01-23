@@ -20,6 +20,39 @@
 
 @section('content')
 
+<style media="screen">
+.list-container-4 {
+  position:absolute;
+  top:7px;
+  left:220px;
+}
+.list-container-4 .tabs-4 li {
+  list-style:none;
+  float:left;
+  margin:0;
+}
+.list-container-4 .tabs-4 li a {
+  color:#999;
+  font-size:15px;
+  font-family:'Rokkitt', serif;
+  text-transform:uppercase;
+  padding:0 15px;
+  margin-left: 30px;
+}
+.list-container-4 .tabs-4 li.active a,
+.list-container-4 .tabs-4 li:hover a {
+  color:#fff;
+}
+
+.chosen-select{
+  width: 96%;
+  display: block;
+  margin: 0px;
+  cursor: pointer;
+  height: 100%;
+ border:none;
+}
+</style>
 
   <div id="wrapper">
               <!-- Content-->
@@ -36,14 +69,14 @@
                           <div class="container">
                             <div class="widget kopa-entry-list-widget">
 
-                              <div class="list-container-2">
-                                  <ul class="tabs-2 clearfix">
+                              <div class="list-container-4">
+                                  <ul class="tabs-4 clearfix">
                                       <li class="active"><a href="#tab-1-1" style="color:black">Search Terrains</a></li>
                                       <li><a href="#tab-1-2"  style="color:black">Search Clubs</a></li>
                                   </ul><!--tabs-2-->
                               </div>
-                                <div class="tab-container-2">
-                                  <div class="tab-content-2" id="tab-1-1">
+                                <div class="tab-container-4">
+                                  <div class="tab-content-4" id="tab-1-1">
                                       <ul class="kopa-entry-list clearfix">
                                           <li>
                                             <div class="main-search-input fl-wrap">
@@ -80,7 +113,7 @@
                                           </li>
                                       </ul>
                                   </div><!--tab-content-2-->
-                                  <div class="tab-content-2" id="tab-1-2">
+                                  <div class="tab-content-4" id="tab-1-2">
                                       <ul class="kopa-entry-list clearfix">
                                           <li>
                                             <div class="main-search-input fl-wrap">
@@ -138,30 +171,27 @@
                           </div>
                           <!--process-wrap  -->
                           <div class="process-wrap fl-wrap">
-                              <ul>
+                            <ul>
                                   <li>
                                       <div class="process-item">
-                                          <span class="process-count">01 . </span>
                                           <div class="time-line-icon"><i class="fa fa-map-o"></i></div>
-                                          <h4> Find Interesting Place</h4>
-                                          <p>Proin dapibus nisl ornare diam varius tempus. Aenean a quam luctus, finibus tellus ut, convallis eros sollicitudin turpis.</p>
+                                          <h4><strong>{{$equipements->count()}}</strong> Equipements Sports</h4>
+                                          <p>Proin dapibus nisl ornare diam varius tempus. Aenean a quam luctus, finibus tellus ut, convallis eros sollicitudin turpis. </p>
                                       </div>
                                       <span class="pr-dec"></span>
                                   </li>
                                   <li>
                                       <div class="process-item">
-                                          <span class="process-count">02 .</span>
                                           <div class="time-line-icon"><i class="fa fa-envelope-open-o"></i></div>
-                                          <h4> Contact a Few Owners</h4>
-                                          <p>Faucibus ante, in porttitor tellus blandit et. Phasellus tincidunt metus lectus sollicitudin feugiat pharetra consectetur.</p>
+                                          <h4> <strong>{{$complexs->count()}}</strong> Complex</h4>
+                                          <p>Faucibus ante, in porttitor tellus blandit et. Phasellus tincidunt metus lectus sollicitudin feugiat pharetra consectetur .</p>
                                       </div>
                                       <span class="pr-dec"></span>
                                   </li>
                                   <li>
                                       <div class="process-item">
-                                          <span class="process-count">03 .</span>
                                           <div class="time-line-icon"><i class="fa fa-hand-peace-o"></i></div>
-                                          <h4> Make a Listing</h4>
+                                          <h4><strong>{{ $categories->count() }} </strong> ActivitÃ©s Et  <strong>{{ $sports->count() }} </strong> Sports</h4>
                                           <p>Maecenas pulvinar, risus in facilisis dignissim, quam nisi hendrerit nulla, id vestibulum metus nullam viverra porta.</p>
                                       </div>
                                   </li>
@@ -246,104 +276,39 @@
         </h3>
 
         <div class="list-container-2">
-            <ul class="tabs-2 clearfix">
-                <li class="active"><a href="#tab-2-1">Swimming</a></li>
-                <li><a href="#tab-2-2">Football</a></li>
-                <li><a href="#tab-2-3">Bascket</a></li>
-                <li><a href="#tab-2-4">Handball</a></li>
-                <li><a href="#tab-2-5">Teniss</a></li>
-
+            <ul class="tabs-2 clearfix" style="margin-left: 100px;">
+              @foreach ($sports as $sport)
+               <li class="sportChange"  data-sport ="{{$sport->id}}"><a href="#tab-2-{{$sport->id}}" >{{$sport->speciality}}</a></li>
+             @endforeach
             </ul><!--tabs-2-->
         </div>
-        <div class="tab-container-2">
-            <div class="tab-content-2" id="tab-2-1">
-                <ul class="kopa-entry-list clearfix">
-                    <li>
-                        <article class="entry-item">
-                            <div class="entry-thumb">
-                                <a href="#"><img src="{{asset('images/all/5.jpg')}}" alt="" /></a>
-                            </div>
-                            <div class="entry-content">
-                                <header>
-                                    <span class="entry-date"><span class="kopa-minus"></span>Swimming</span>
-                                    <h4 class="entry-title"><a href="#">Just test fot tab swimming</a></h4>
-                                </header>
-                            </div>
-                        </article>
-                    </li>
-                </ul>
-            </div><!--tab-content-2-->
-            <div class="tab-content-2" id="tab-2-2">
-                <ul class="kopa-entry-list clearfix">
-                  <li>
-                      <article class="entry-item">
-                          <div class="entry-thumb">
-                              <a href="#"><img src="{{asset('images/all/5.jpg')}}" alt="" /></a>
-                          </div>
-                          <div class="entry-content">
-                              <header>
-                                  <span class="entry-date"><span class="kopa-minus"></span>Football</span>
-                                  <h4 class="entry-title"><a href="#">Just test fot tab Football</a></h4>
-                              </header>
-                          </div>
-                      </article>
-                  </li>
-
-                </ul>
-            </div><!--tab-content-2-->
-            <div class="tab-content-2" id="tab-2-3">
-                <ul class="kopa-entry-list clearfix">
-                  <li>
-                      <article class="entry-item">
-                          <div class="entry-thumb">
-                              <a href="#"><img src="{{asset('images/all/5.jpg')}}" alt="" /></a>
-                          </div>
-                          <div class="entry-content">
-                              <header>
-                                  <span class="entry-date"><span class="kopa-minus"></span>Bascket</span>
-                                  <h4 class="entry-title"><a href="#">Just test fot tab Bascket</a></h4>
-                              </header>
-                          </div>
-                      </article>
-                  </li>
-
-                </ul>
-            </div><!--tab-content-2-->
-            <div class="tab-content-2" id="tab-2-4">
-                <ul class="kopa-entry-list clearfix">
-                  <li>
-                      <article class="entry-item">
-                          <div class="entry-thumb">
-                              <a href="#"><img src="{{asset('images/all/5.jpg')}}" alt="" /></a>
-                          </div>
-                          <div class="entry-content">
-                              <header>
-                                  <span class="entry-date"><span class="kopa-minus"></span>Handball</span>
-                                  <h4 class="entry-title"><a href="#">Just test fot tab Handball</a></h4>
-                              </header>
-                          </div>
-                      </article>
-                  </li>
+        <div class="tab-container-2" style="margin-left: 160px;">
+            <div class="tab-content-2">
+                <ul class="kopa-entry-list clearfix terrains">
+                    @foreach ($footballTerrains as $footballTerrain)
+                      <li>
 
 
-                </ul>
-            </div><!--tab-content-2-->
-            <div class="tab-content-2" id="tab-2-5">
-                <ul class="kopa-entry-list clearfix">
-                    <li>
-                        <article class="entry-item">
-                            <div class="entry-thumb">
-                                <a href="#"><img src="{{asset('images/all/5.jpg')}}" alt="" /></a>
-                            </div>
-                            <div class="entry-content">
-                                <header>
-                                    <span class="entry-date"><span class="kopa-minus"></span> Teniss</span>
-                                    <h4 class="entry-title"><a href="#">Just tab for test tennis</a></h4>
-                                </header>
-                            </div>
-                        </article>
-                    </li>
+                          <article class="entry-item">
+                              <div class="entry-thumb">
 
+                                  @if ($footballTerrain->medias->first() != null)
+                                          <a href="#" ><img src="{{$footballTerrain->medias->first()->link }}" alt="" /></a>
+                                    @else
+                                      <a href="#" ><img src="{{asset('images/all/5.jpg')}}" alt="" /></a>
+                                  @endif
+
+                              </div>
+                              <div class="entry-content">
+                                  <header>
+                                      <span class="entry-date"><span class="kopa-minus"></span>{{$footballTerrain->speciality->speciality}}</span>
+                                      <h4 class="entry-title"><a href="#">{{$footballTerrain->name}}</a></h4>
+                                  </header>
+                              </div>
+                          </article>
+
+                      </li>
+                    @endforeach
                 </ul>
             </div><!--tab-content-2-->
 
@@ -424,4 +389,88 @@
 
   @include('frontOffice.inc.footer')
 
+@endsection
+@section('scripts')
+
+
+
+  {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> --}}
+
+  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.js"> </script> --}}
+  <script type="text/javascript">
+
+			$(document).ready(function() {
+
+          $("ul.tabs-2 li:first").addClass("active");
+					$('.sportChange').click(function(){
+            jQuery("ul.tabs-2 li").removeClass("active");
+            jQuery(this).addClass("active");
+						// e.preventDefault();
+            var sport = $(this).data('sport');
+            console.log(sport);
+           $.get("{{ route('showHome')}}/sports/"+sport).done(function (res) {
+
+               $('.terrains').html(" ");
+               var speciality = res.sport.speciality;
+
+
+               if (res.status == 200) {
+                 $.each(res.terrains,function (i,v) {
+                   var link ="";
+                   if (v.medias.length > 0) {
+                      link = v.medias[0].link;
+                   }else {
+                      link = "{{asset('images/all/5.jpg')}}";
+                   }
+
+
+                  $('.terrains').append(`<li>` +
+                             '<article class="entry-item">'+
+                                 '<div class="entry-thumb">'+
+                                     '<a href="#"><img src="'+link+'" alt="" /></a>'+
+                                 '</div>'+
+                                 '<div class="entry-content">'+
+                                  '<header>'+
+                                      '<span class="entry-date"><span class="kopa-minus"></span>'+speciality+'</span>'+
+                                      '<h4 class="entry-title"><a href="#">'+v.name+'</a></h4>'+
+                                    '</header>'+
+                                '</div>'+
+                             '</article>'+
+                         '</li>'
+                 ).children(':last').hide().fadeIn(1000);
+                  });
+               }else {
+                   $('.terrains').append('<p> Pas Des Terrains Sous Ce Sport </p>');
+               }
+
+
+              });
+
+					});
+			 });
+
+</script>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+	if( $(".tab-content-4").length > 0){
+
+        $(".tab-content-4").hide();
+        $("ul.tabs-4 li:first").addClass("active").show();
+        $(".tab-content-4:first").show();
+       $("ul.tabs-4 li").click(function() {
+       $("ul.tabs-4 li").removeClass("active");
+       $(this).addClass("active");
+       $(".tab-content-4").hide();
+       var activeTab = $(this).find("a").attr("href");
+       $(activeTab).fadeIn();
+       return false;
+
+        });
+    }
+  });
+
+</script>
 @endsection

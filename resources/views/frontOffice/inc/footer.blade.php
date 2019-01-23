@@ -47,13 +47,13 @@
 
                         <div class="col-md-4">
                             <div class="footer-widget fl-wrap">
-                                <h3>Subscribe</h3>
+                                <h3>Enrigistrer</h3>
                                 <div class="subscribe-widget fl-wrap">
-                                    <p>Want to be notified when we launch a new template or an udpate. Just sign up and we'll send you a notification by email.</p>
+                                    <p>Vous souhaitez être averti lorsque nous lançons un nouveau modèle ou une mise à jour. Il suffit de vous inscrire et nous vous enverrons une notification par e-mail.</p>
                                     <div class="subcribe-form">
                                         <form id="subscribe">
                                             <input class="enteremail" name="email" id="subscribe-email" placeholder="Email" spellcheck="false" type="text">
-                                            <button type="submit" id="subscribe-button" class="subscribe-button"><i class="fa fa-rss"></i> Subscribe</button>
+                                            <button type="submit" id="subscribe-button" class="subscribe-button"><i class="fa fa-rss"></i> Enrigistrer</button>
                                             <label for="subscribe-email" class="subscribe-message"></label>
                                         </form>
                                     </div>
@@ -81,7 +81,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="copyright"> &#169; CityBook 2018 .  All rights reserved.</div>
+                                <div class="copyright"> &#169;  .  All rights reserved.</div>
                             </div>
                             <div class="col-md-4">
                                 <div class="footer-social">
