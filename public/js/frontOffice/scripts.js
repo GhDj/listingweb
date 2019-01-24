@@ -662,7 +662,7 @@ $.get("http://ipinfo.io", function (response) {
 }, "jsonp");
  });
     $('.quantity-item').each(function() {
-      var spinner = jQuery(this),
+      var spinner = $(this),
         input = spinner.find('input[type="text"]'),
         btnUp = spinner.find('.plus'),
         btnDown = spinner.find('.minus'),

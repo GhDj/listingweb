@@ -7,4 +7,6 @@ Route::group(['module' => 'General', 'middleware' => ['web'], 'namespace' => 'Ap
 
     Route::get('/index', 'WebController@showHome')->name('showHome');
 
+    Route::get('/index/sports/{sportId}', 'WebController@getTerrainsBySport');
+
 });

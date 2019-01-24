@@ -242,3 +242,33 @@ color: red;
   </div>
 </div>
 <!--register form end -->
+
+<script type="text/javascript">
+
+$(".tabs-menu a").on("click", function (a) {
+    a.preventDefault();
+    $(this).parent().addClass("current");
+    $(this).parent().siblings().removeClass("current");
+    var b = $(this).attr("href");
+    $(".tab-content").not(b).css("display", "none");
+    $(b).fadeIn();
+});
+
+</script>
+<script type="text/javascript">
+// modal ------------------
+var modal = {};
+modal.hide = function () {
+    $('.modal').fadeOut();
+    $("html, body").removeClass("hid-body");
+};
+$('.modal-open').on("click", function (e) {
+    e.preventDefault();
+    $('.modal').fadeIn();
+    $("html, body").addClass("hid-body");
+});
+$('.close-reg').on("click", function () {
+    modal.hide();
+});
+// click ------------------
+</script>

@@ -23,7 +23,7 @@
         });
         var markerIcon2 = {
             url: 'images/marker.png',
-        }		
+        }
         var marker = new google.maps.Marker({
             position: myLatLng,
 			draggable: true,
@@ -56,7 +56,7 @@
               google.maps.event.addListener(marker, 'dragend', function (event) {
                   document.getElementById("lat").value = event.latLng.lat();
                   document.getElementById("long").value = event.latLng.lng();
-              });		
+              });
     }
     var single_map = document.getElementById('singleMap');
     if (typeof (single_map) != 'undefined' && single_map != null) {

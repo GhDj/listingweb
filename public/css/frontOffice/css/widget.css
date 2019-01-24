@@ -954,45 +954,7 @@ Widget-area-3
 	margin:10px 0 0;
 }
 
-.list-container-1 ul {
-    margin: 0;
-	border-bottom:1px solid #dcdcdc;
-	padding-bottom:10px;
-}
-.list-container-1 ul li {
-    float: left;
-    list-style: none outside none;
-    margin: 0;
-    border:none;
-    padding:0;
-    box-sizing:border-box;
-    -moz-box-sizing:border-box;
-	-webkit-box-sizing:border-box;
-}
-.list-container-1 ul li a {
-    border-left:1px solid #666;
-    color: #575757;
-    display: block;
-    font-family:'Rokkitt', serif;
-    font-size: 15px;
-    text-align:center;
-	text-transform:uppercase;
-	padding:0 10px;
-	line-height:1;
-    outline:none;
-    transition: all 0.3s ease-in-out 0s;
-    -moz-transition: all 0.3s ease-in-out 0s;
-    -webkit-transition: all 0.3s ease-in-out 0s;
-}
-.list-container-1 ul li:first-child a {
-	border-left:none;
-	padding-left:0;
-}
-.list-container-1 ul li.active a,
-.list-container-1 ul li:hover a {
-    color: #e03d3d;
-    text-decoration: none;
-}
+
 .kopa-article-list-widget .tab-container-1 ul li:first-child {
 	border-top:none;
 }
@@ -1570,9 +1532,8 @@ Widget area 12
 .widget-area-12 .kopa-entry-list-widget .kopa-entry-list li {
 	list-style:none;
 	float:left;
-	padding-left:25px;
-	margin-left:25px;
-	width:162px;
+	margin-right:25px;
+	width:200px;
 }
 .widget-area-12 .kopa-entry-list-widget .kopa-entry-list li:first-child {
 	border-left:none;
@@ -1619,6 +1580,30 @@ Widget area 12
 .list-container-2 .tabs-2 li:hover a {
 	color:#fff;
 }
+
+.list-container-1 {
+	position:absolute;
+	top:7px;
+	left:220px;
+}
+.list-container-1 .tabs-1 li {
+	list-style:none;
+	float:left;
+	margin:0;
+}
+.list-container-1 .tabs-1 li a {
+	color:#999;
+	font-size:15px;
+	font-family:'Rokkitt', serif;
+	text-transform:uppercase;
+	padding:0 15px;
+  margin-left: 30px;
+}
+.list-container-1 .tabs-1 li.active a,
+.list-container-1 .tabs-1 li:hover a {
+	color:#fff;
+}
+
 
 .kopa-entry-list-widget {
 	position:relative;
