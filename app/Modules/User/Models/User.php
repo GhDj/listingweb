@@ -96,6 +96,14 @@ class User extends Authenticatable
       return asset($picture);
   }
 
+  public function favoritesTerrains(){
+      return $this->belongsToMany('App\Modules\Infrastructures\Models\Terrain', 'favorites', 'user_id', 'terrain_id')->withTimeStamps();
+  }
+
+  public function favoritesClubs(){
+      return $this->belongsToMany('App\Modules\Infrastructures\Models\Club', 'favorites', 'user_id', 'club_id')->withTimeStamps();
+  }
+
 
 
 }

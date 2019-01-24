@@ -43,6 +43,18 @@ class CreateReviewsTable extends Migration
             $table->string('wished_type');
             $table->timestamps();
         });
+
+        Schema::create('favorites', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('club_id')->unsigned()->nullable();
+            $table->foreign('club_id')->references('id')->on('clubs')->onDelete('cascade');
+            $table->integer('terrain_id')->unsigned()->nullable();
+            $table->foreign('terrain_id')->references('id')->on('terrains')->onDelete('cascade');
+            $table->timestamps();
+        });
+
     }
 
     /**
@@ -54,5 +66,6 @@ class CreateReviewsTable extends Migration
     {
         Schema::dropIfExists('reviews');
         Schema::dropIfExists('reports');
+        Schema::dropIfExists('favorites');
     }
 }
