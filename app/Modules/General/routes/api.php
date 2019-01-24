@@ -4,7 +4,7 @@ Route::group(['module' => 'General', 'middleware' => ['api'], 'namespace' => 'Ap
 
     Route::resource('General', 'GeneralController');
     Route::post('/api/media/upload', 'ApiController@handleUploadImage');
-    // Route::get('/api/sports/{sportId}', 'WebController@getTerrainsBySport')->name('getTerrainsBySport');
+  
 
 
 });

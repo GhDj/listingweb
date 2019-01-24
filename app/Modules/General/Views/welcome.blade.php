@@ -391,12 +391,6 @@
 
 @endsection
 @section('scripts')
-
-
-
-  {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> --}}
-
-  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.js"> </script> --}}
   <script type="text/javascript">
 
 			$(document).ready(function() {
@@ -405,9 +399,7 @@
 					$('.sportChange').click(function(){
             jQuery("ul.tabs-2 li").removeClass("active");
             jQuery(this).addClass("active");
-						// e.preventDefault();
             var sport = $(this).data('sport');
-            console.log(sport);
            $.get("{{ route('showHome')}}/sports/"+sport).done(function (res) {
 
                $('.terrains').html(" ");

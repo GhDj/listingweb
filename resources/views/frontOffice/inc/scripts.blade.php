@@ -11,7 +11,6 @@
 
 <script type="text/javascript" src="{{asset('js/frontOffice/markerclusterer.js')}}"></script>
 
-{{-- <script type="text/javascript" src="{{asset('js/frontOffice/jquery.mask.min.js')}}"></script> --}}
 <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
@@ -165,8 +164,6 @@ $(document).ready(function(){
                 icon: locations[i][4],
                 id: i
             });
-
-            // console.log(marker);
             allMarkers.push(marker);
             var ib = new InfoBox();
             google.maps.event.addListener(ib, "domready", function () {

@@ -12,7 +12,6 @@ Tabs
         $("ul.tabs-1 li").click(function(e) {
 
 						e.preventDefault();
-						console.log('here');
             $("ul.tabs-1 li").removeClass("active"); //Remove any "active" class
             $(this).addClass("active"); //Add "active" class to selected tab
             $(".tab-content-1").hide(); //Hide all tab content
