@@ -33,13 +33,14 @@ class WebController extends Controller
         'sports' => TerrainSpeciality::All(),
         'equipements' => Equipment::All(),
         'complexs' => Complex::All(),
-        'footballTerrains' => Terrain::where('speciality_id', 1)->with('medias')->get()
+        'footballTerrains' => Terrain::where('speciality_id', 1)->take(4)->with('medias')->get()
       ]);
     }
 
     public function getTerrainsBySport($sport)
 	  {
         $terrains = Terrain::where('speciality_id', $sport)
+        ->take(4)
          ->with('medias')
         ->get();
 

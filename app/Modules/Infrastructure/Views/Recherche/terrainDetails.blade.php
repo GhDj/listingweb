@@ -270,26 +270,28 @@
                 <!-- Add Review Box -->
                 <div id="add-review" class="add-review-box">
                   <!-- Review Comment -->
-                  <form class="add-comment custom-form">
+                  <form class="add-comment custom-form" action = "{{route('hundleUserReport',['terrain_id'=>$terrain->id])}}" method="post">
+
+                    {{ csrf_field() }}
                     <fieldset>
                       <div class="row">
                         <div class="col-md-12">
 
 
-                          <select data-placeholder="Categories" class="chosen-select">
-                            <option>Categories</option>
-                            <option>Problem 1</option>
-                            <option>Problem 2</option>
-                            <option>Problem 3</option>
-                            <option>Problem 4</option>
-                            <option>Problem 5</option>
+                          <select data-placeholder="Categories" class="chosen-select" name="title">
+                            <option value="">Categories</option>
+                            <option value="Problem 1" >Problem 1</option>
+                            <option value="Problem 2">Problem 2</option>
+                            <option value="Problem 3">Problem 3</option>
+                            <option value="Problem 4">Problem 4</option>
+                            <option value="Problem 5">Problem 5</option>
                           </select>
 
 
                         </div>
 
                       </div>
-                      <textarea cols="40" rows="3" placeholder="Signaler Un problem:"></textarea>
+                      <textarea cols="40" rows="3" placeholder="Signaler Un problem:" name="description"></textarea>
                     </fieldset>
                     <button class="btn  big-btn  color-bg flat-btn">Envoyer <i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                   </form>
@@ -490,7 +492,6 @@
 
 @section('scripts')
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script type="text/javascript">
   $(document).ready(function() {
     var lat = "{{$terrain->complex->address->latitude}}";
@@ -526,22 +527,5 @@
       '</div>';
   }
 </script>
-
-<script type="text/javascript">
-
-$(".accordion a.toggle").on("click", function (a) {
-    a.preventDefault();
-    $(".accordion a.toggle").removeClass("act-accordion");
-    $(this).addClass("act-accordion");
-    if ($(this).next('div.accordion-inner').is(':visible')) {
-        $(this).next('div.accordion-inner').slideUp();
-    } else {
-        $(".accordion a.toggle").next('div.accordion-inner').slideUp();
-        $(this).next('div.accordion-inner').slideToggle();
-    }
-});
-
-</script>
-
 
 @endsection
