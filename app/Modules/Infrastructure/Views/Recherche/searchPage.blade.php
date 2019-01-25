@@ -18,6 +18,42 @@
 
 
 @section('content')
+
+  <style media="screen">
+  .list-container-4 {
+    position:absolute;
+    top:7px;
+    left:220px;
+  }
+  .list-container-4 .tabs-4 li {
+    list-style:none;
+    float:left;
+    margin:0;
+  }
+  .list-container-4 .tabs-4 li a {
+    color:#999;
+    font-size:15px;
+    font-family:'Rokkitt', serif;
+    text-transform:uppercase;
+    padding:0 15px;
+    margin-left: 30px;
+  }
+  .list-container-4 .tabs-4 li.active a,
+  .list-container-4 .tabs-4 li:hover a {
+    color:#fff;
+  }
+  .custom-selec{
+    float: left;
+    border: 1px solid #eee;
+    background: #fff;
+    background: #f9f9f9;
+    width: 100%;
+    padding: 15px 20px 15px 20px;
+    border-radius: 6px;
+    -webkit-appearance: none
+
+  }
+  </style>
   <!-- wrapper -->
   <div id="wrapper">
       <div class="content">
@@ -34,14 +70,14 @@
                           <div class="listsearch-options fl-wrap" id="lisfw" >
                               <div class="container">
                                   <div class="widget kopa-entry-list-widget">
-                                    <div class="list-container-2">
-                                        <ul class="tabs-2 clearfix">
+                                    <div class="list-container-4">
+                                        <ul class="tabs-4 clearfix">
                                             <li class="active"><a href="#tab-1-6" style="color:black">Search Terrains</a></li>
                                             <li><a href="#tab-1-7"  style="color:black">Search Clubs</a></li>
                                         </ul><!--tabs-2-->
                                     </div>
-                                    <div class="tab-container-2">
-                                      <div class="tab-content-2" id="tab-1-6">
+                                    <div class="tab-container-4">
+                                      <div class="tab-content-4" id="tab-1-6">
                                           <ul class="kopa-entry-list clearfix">
                                               <li>
                                                 <!-- listsearch-input-wrap  -->
@@ -57,7 +93,7 @@
                                                         <input type="text" placeholder="Nom de stade" name="name" value="{{ old('name') }}"/>
                                                     </div>
                                                     <div class="listsearch-input-item">
-                                                          <select data-placeholder="tous les categories" class="chosen-select" name="category" id="category" >
+                                                          <select data-placeholder="tous les categories" class="custom-selec" name="category" id="category" >
                                                               <option value="-1">tous les categories</option>
                                                               @foreach ($categories as $categorie )
                                                                   <option value="{{$categorie->category}}">{{$categorie->category}}</option>
@@ -100,7 +136,7 @@
                                               </li>
                                           </ul>
                                       </div>
-                                      <div class="tab-content-2" id="tab-1-7">
+                                      <div class="tab-content-4" id="tab-1-7">
                                           <ul class="kopa-entry-list clearfix">
                                               <li>
                                                 <!-- listsearch-input-wrap  -->
@@ -116,7 +152,7 @@
                                                         <input type="text" placeholder="Nom de Club" name="name" value=""/>
                                                     </div>
                                                     <div class="listsearch-input-item">
-                                                          <select data-placeholder="Tous les sports" class="chosen-select" name="speciality" id="speciality" >
+                                                          <select data-placeholder="Tous les sports" class="custom-selec" name="speciality" id="speciality" >
                                                               <option value="-1">Tous les sports</option>
                                                               @foreach ($sports as $sport )
                                                                   <option value="{{$sport->id}}">{{$sport->speciality}}</option>
@@ -311,4 +347,29 @@
 
   @include('frontOffice.inc.footer')
 
+@endsection
+
+@section('scripts')
+  <script type="text/javascript">
+
+  $(document).ready(function() {
+
+  	if( $(".tab-content-4").length > 0){
+
+        $(".tab-content-4").hide();
+        $("ul.tabs-4 li:first").addClass("active").show();
+        $(".tab-content-4:first").show();
+         $("ul.tabs-4 li").click(function() {
+         $("ul.tabs-4 li").removeClass("active");
+         $(this).addClass("active");
+         $(".tab-content-4").hide();
+         var activeTab = $(this).find("a").attr("href");
+         $(activeTab).fadeIn();
+         return false;
+
+          });
+      }
+    });
+
+  </script>
 @endsection

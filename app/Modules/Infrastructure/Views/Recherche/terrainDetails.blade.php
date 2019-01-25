@@ -19,6 +19,7 @@
 
 
 @section('content')
+  @include('sweet::alert')
 <!-- wrapper -->
 <div id="wrapper">
   <!--  content  -->

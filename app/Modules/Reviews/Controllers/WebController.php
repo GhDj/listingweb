@@ -9,6 +9,7 @@ use App\Modules\Reviews\Models\Report;
 use App\Modules\Infrastructures\Models\Terrain;
 use Validator;
 use Toastr;
+use UxWeb\SweetAlert\SweetAlert;
 
 class WebController extends Controller
 {
@@ -26,33 +27,35 @@ class WebController extends Controller
 
     public function hundleUserReport(Request $request,$terrain_id)
     {
+
           $validate = Validator::make($request->All(),[
             'title' => "required",
             'description' => "required",
             ]);
 
             if ($validate->fails()) {
-              Toastr::error('Vérifier que tous les champs sont remplis !', 'Oops', ["positionClass" => "toast-top-full-width","showDuration"=> "4000", "hideDuration"=> "1000", "timeOut"=> "300000"]);
+              SweetAlert::error('Oops', 'Vérifier que tous les champs sont remplis ! !')->persistent('Fermer');
               return back();
             }
 
             $user = User::find(1); // TODO: Change To Auth
-            $report = new Report();
             $terrain = Terrain::find($terrain_id);
 
-            $report->title = $request->input('title');
-            $report->description = $request->input('description');
-            $report->reported_id = $terrain->id;
-            $report->user_id = $user->id;
-            $terrain->reports()->save($report);
-            $report->save();
+            if (empty($terrain)) {
+              SweetAlert::error('Oops', 'Ce Terrain n\'existe pas ! !')->persistent('Fermer');
+              return back();
+            }
 
-          if (!$report) {
-            Toastr::error('Il semble qu\'il y ait un problème !', 'Oops', ["positionClass" => "toast-top-full-width","showDuration"=> "4000", "hideDuration"=> "1000", "timeOut"=> "300000"]);
-          }
+            $report = $terrain->reports()->create(['title' => $request->input('title'),
+                                                   'description' => $request->input('description'),
+                                                   'reported_id' => $terrain->id,
+                                                   'user_id' => $user->id
+                                              ]);
+            if (!$report) {
+            SweetAlert::error('Oops !', 'Un error se produit lors de l\'envoi de votre rapport !')->persistent('Fermer');
+            }
 
-            Toastr::success('Votre Report a été envoyé avec succès !', 'Bien !', ["positionClass" => "toast-top-full-width","showDuration"=> "4000", "hideDuration"=> "1000", "timeOut"=> "300000"]);
-
+            SweetAlert::success('Bien !', 'Votre Report a été envoyé avec succès !')->persistent('Fermer');
             return back();
     }
 
