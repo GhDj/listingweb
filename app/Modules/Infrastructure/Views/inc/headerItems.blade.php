@@ -38,7 +38,7 @@
               @endisset
               @isset($club)
                 <a href="#">{{  $club->terrain->category->category  }}</a>
-        
+
               @endisset
             </div>
           </div>
