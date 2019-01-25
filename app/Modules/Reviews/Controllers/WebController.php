@@ -8,8 +8,10 @@ use App\Modules\User\Models\User;
 use App\Modules\Reviews\Models\Report;
 use App\Modules\Infrastructures\Models\Terrain;
 use Validator;
+use Toastr;
 use UxWeb\SweetAlert\SweetAlert;
-
+use Image;
+use App\Modules\General\Models\Media;
 class WebController extends Controller
 {
 
@@ -56,6 +58,89 @@ class WebController extends Controller
 
             SweetAlert::success('Bien !', 'Votre Report a été envoyé avec succès !')->persistent('Fermer');
             return back();
+    }
+
+    public function hundleUserReviews(Request $request,$terrain_id)
+    {
+
+
+            $validator = Validator::make($request->All(),[
+                "rating" => "required",
+                "comment" => "required",
+                "image"  => 'mimes:jpeg,jpg,png | max:1000'
+            ],
+            [
+              "rating.required" => "Veuillez choisir votre rating pour ce terrain ",
+              "comment.required" =>  "Champ commantire est obligatoire",
+              "image.mimes" => 'Choisir un format validé Pour l\'image ',
+              "image.max" => 'Champ image est obligatoire',
+
+            ]  );
+
+            if ($validator->fails()) {
+                 $error = $validator->errors()->first();
+                 SweetAlert::error('Oops !', $error)->persistent('Fermer');
+                 return back();
+              }
+
+           $user = User::find(1); // TODO: Change To Auth
+           $terrain = Terrain::find($terrain_id);
+
+           if (empty($terrain)) {
+             SweetAlert::error('Oops', 'Ce Terrain n\'existe pas ! !')->persistent('Fermer');
+             return back();
+           }
+           $ratingValue = 0;
+
+
+
+           switch ($request->input('rating'))
+             {
+            case 1:
+             $ratingValue = 5;
+             break;
+
+            case 2:
+             $ratingValue = 4;
+             break;
+
+            case 3:
+             $ratingValue = 3;
+             break;
+
+            case 4:
+             $ratingValue = 2;
+             break;
+
+            case 5:
+             $ratingValue = 1;
+             break;
+             }
+           $review = $terrain->reviews()->create(['note' => $ratingValue,
+                                                  'comment' => $request->input('comment'),
+                                                  'user_id' => $user->id
+                                             ]);
+
+          if (isset($request->image)) {
+            $image = $request->image;
+
+            $photo = 'review-' . str_random(5) . '-' . time() . '.' . $image->getClientOriginalExtension();
+            $fullImagePath = public_path('storage/uploads/reviews/' . $photo);
+            Image::make($image->getRealPath())->save($fullImagePath);
+            $imagePath = asset('/').'storage/uploads/reviews/' . $photo;
+
+            $media = Media::create([
+                'link' => $imagePath,
+                'review_id' => $review->id,
+                'type' => 2
+            ]);
+          }
+
+
+            Toastr::success('Votre commantaire a été ajouter avec succès !', 'Bien !', ["positionClass" => "toast-top-full-width","showDuration"=> "4000", "hideDuration"=> "1000", "timeOut"=> "300000"]);
+            return back();
+
+
     }
 
 }

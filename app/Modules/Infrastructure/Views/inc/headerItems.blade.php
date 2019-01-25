@@ -1,20 +1,31 @@
 <section class="list-single-section" data-scrollax-parent="true" id="sec1">
     <div class="slideshow-container" data-scrollax="properties: { translateY: '200px' }">
-      <!-- slideshow-item -->
-      <div class="slideshow-item">
-        <div class="bg" data-bg="images/bg/36.jpg"></div>
-      </div>
-      <!--  slideshow-item end  -->
-      <!-- slideshow-item -->
-      <div class="slideshow-item">
-        <div class="bg" data-bg="images/bg/37.jpg"></div>
-      </div>
-      <!--  slideshow-item end  -->
-      <!-- slideshow-item -->
-      <div class="slideshow-item">
-        <div class="bg" data-bg="images/bg/38.jpg"></div>
-      </div>
-      <!--  slideshow-item end  -->
+      @isset($terrain)
+        @foreach ($terrain->medias as $media)
+
+          <!-- slideshow-item -->
+          <div class="slideshow-item">
+            <div class="bg" data-bg="{{$media->link}}"></div>
+          </div>
+          <!--  slideshow-item end  -->
+
+        @endforeach
+      @endisset
+
+      @isset($club)
+        @foreach ($club->medias as $media)
+
+          <!-- slideshow-item -->
+          <div class="slideshow-item">
+            <div class="bg" data-bg="{{$club->link}}"></div>
+          </div>
+          <!--  slideshow-item end  -->
+
+        @endforeach
+      @endisset
+
+
+
     </div>
     <div class="overlay"></div>
     <div class="list-single-header absolute-header fl-wrap">
@@ -24,11 +35,10 @@
             <div class="list-single-header-cat fl-wrap">
               @isset($terrain)
                 <a href="#">{{  $terrain->category->category  }}</a>
-                <span> Ouvert <i class="fa fa-check"></i></span>
               @endisset
               @isset($club)
                 <a href="#">{{  $club->terrain->category->category  }}</a>
-                <span> Ouvert <i class="fa fa-check"></i></span>
+
               @endisset
             </div>
           </div>

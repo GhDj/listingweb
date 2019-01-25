@@ -19,7 +19,18 @@
 
 
 @section('content')
-  @include('sweet::alert')
+@include('sweet::alert')
+<style media="screen">
+.leave-rating label {
+    font-size: 14px;
+    float: right;
+    letter-spacing: 4px;
+    color: #FACC39;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 15px;
+}
+</style>
 <!-- wrapper -->
 <div id="wrapper">
   <!--  content  -->
@@ -170,7 +181,7 @@
                         <div class="listing-rating card-popup-rainingvis" data-starrating2="{{ $review->note }}"> </div>
                         <div class="clearfix"></div>
                         <p>" {{ $review->comment }} "</p>
-                        <span class="reviews-comments-item-date"><i class="fa fa-calendar-check-o"></i>27 May 2018</span>
+                        <span class="reviews-comments-item-date"><i class="fa fa-calendar-check-o"></i>{{$review->updated_at->diffForHumans()}}</span>
                       </div>
                     </div>
                     <!--reviews-comments-item end-->
@@ -188,71 +199,32 @@
                 </div>
                 <!-- Add Review Box -->
                 <div id="add-review" class="add-review-box">
-                  <div class="leave-rating-wrap">
-                    <span class="leave-rating-title">Avis 1 : </span>
-                    <div class="leave-rating">
-                      <input type="radio" name="rating" id="rating-1" value="1" />
-                      <label for="rating-1" class="fa fa-star-o"></label>
-                      <input type="radio" name="rating" id="rating-2" value="2" />
-                      <label for="rating-2" class="fa fa-star-o"></label>
-                      <input type="radio" name="rating" id="rating-3" value="3" />
-                      <label for="rating-3" class="fa fa-star-o"></label>
-                      <input type="radio" name="rating" id="rating-4" value="4" />
-                      <label for="rating-4" class="fa fa-star-o"></label>
-                      <input type="radio" name="rating" id="rating-5" value="5" />
-                      <label for="rating-5" class="fa fa-star-o"></label>
-                    </div>
-                  </div>
-                  <div class="leave-rating-wrap">
-                    <span class="leave-rating-title">Avis 2 : </span>
-                    <div class="leave-rating">
-                      <input type="radio" name="rating" id="rating-1" value="1" />
-                      <label for="rating-1" class="fa fa-star-o"></label>
-                      <input type="radio" name="rating" id="rating-2" value="2" />
-                      <label for="rating-2" class="fa fa-star-o"></label>
-                      <input type="radio" name="rating" id="rating-3" value="3" />
-                      <label for="rating-3" class="fa fa-star-o"></label>
-                      <input type="radio" name="rating" id="rating-4" value="4" />
-                      <label for="rating-4" class="fa fa-star-o"></label>
-                      <input type="radio" name="rating" id="rating-5" value="5" />
-                      <label for="rating-5" class="fa fa-star-o"></label>
-                    </div>
-                  </div>
-                  <div class="leave-rating-wrap">
-                    <span class="leave-rating-title">Avis 3 : </span>
-                    <div class="leave-rating">
-                      <input type="radio" name="rating" id="rating-1" value="1" />
-                      <label for="rating-1" class="fa fa-star-o"></label>
-                      <input type="radio" name="rating" id="rating-2" value="2" />
-                      <label for="rating-2" class="fa fa-star-o"></label>
-                      <input type="radio" name="rating" id="rating-3" value="3" />
-                      <label for="rating-3" class="fa fa-star-o"></label>
-                      <input type="radio" name="rating" id="rating-4" value="4" />
-                      <label for="rating-4" class="fa fa-star-o"></label>
-                      <input type="radio" name="rating" id="rating-5" value="5" />
-                      <label for="rating-5" class="fa fa-star-o"></label>
-                    </div>
-                  </div>
                   <!-- Review Comment -->
-                  <form class="add-comment custom-form">
-                    <fieldset>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <label><i class="fa fa-user-o"></i></label>
-                          <input type="text" placeholder="Your Name *" value="" />
-                        </div>
-                        <div class="col-md-6">
-                          <label><i class="fa fa-envelope-o"></i> </label>
-                          <input type="text" placeholder="Email Address*" value="" />
-                        </div>
+                  <form class="add-comment custom-form" action = "{{ route('hundleUserReviews',['terrain_id'=>$terrain->id])}}" method="post" enctype="multipart/form-data">
+                      {{ csrf_field() }}
+                    <div class="leave-rating-wrap">
+                      <span class="leave-rating-title">Avis 1 : </span>
+                      <div class="leave-rating">
+                        <input type="radio" name="rating" id="rating-1" value="1" />
+                        <label for="rating-1" class="fa fa-star-o"></label>
+                        <input type="radio" name="rating" id="rating-2" value="2" />
+                        <label for="rating-2" class="fa fa-star-o"></label>
+                        <input type="radio" name="rating" id="rating-3" value="3" />
+                        <label for="rating-3" class="fa fa-star-o"></label>
+                        <input type="radio" name="rating" id="rating-4" value="4" />
+                        <label for="rating-4" class="fa fa-star-o"></label>
+                        <input type="radio" name="rating" id="rating-5" value="5" />
+                        <label for="rating-5" class="fa fa-star-o"></label>
                       </div>
+                    </div>
+                    <fieldset>
 
-                      <textarea cols="40" rows="3" placeholder="Your Review:"></textarea>
+                      <textarea cols="40" rows="3" placeholder="Your Review:" name="comment"></textarea>
 
                       <div class="change-photo-btn">
                         <div class="photoUpload">
                           <span><i class="fa fa-upload"></i> Ajouter Photo</span>
-                          <input type="file" class="upload">
+                          <input type="file" class="upload" name="image">
                         </div>
                       </div>
                     </fieldset>
@@ -379,7 +351,7 @@
               <!--box-widget-item -->
               <div class="box-widget-item fl-wrap">
                 <div class="box-widget-item-header">
-                  <h3>Working Hours : </h3>
+                  <h3>Heures d'Ouverture : </h3>
                 </div>
                 <div class="box-widget opening-hours">
                   <div class="box-widget-content">
