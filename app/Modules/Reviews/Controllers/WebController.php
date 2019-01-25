@@ -8,7 +8,6 @@ use App\Modules\User\Models\User;
 use App\Modules\Reviews\Models\Report;
 use App\Modules\Infrastructures\Models\Terrain;
 use Validator;
-use Toastr;
 use UxWeb\SweetAlert\SweetAlert;
 
 class WebController extends Controller
