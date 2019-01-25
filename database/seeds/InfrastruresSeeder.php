@@ -32,7 +32,13 @@ class InfrastruresSeeder extends Seeder
                           'speciality' => 'Handball'
                         ]);
 
-          $frontFirstImagePath = 'img/1.jpg';
+      $thirdSpeciality  = TerrainSpeciality::Create([
+              'speciality' => 'Nataion'
+            ]);
+      $fourthSpeciality  = TerrainSpeciality::Create([
+              'speciality' => 'Gym'
+              ]);
+      $frontFirstImagePath = 'img/1.jpg';
           $frontSecondImagePath = 'img/2.jpg';
           $frontThirdtPath = 'img/3.jpg';
           $fronFourtPath = 'img/4.jpg';
@@ -280,7 +286,7 @@ class InfrastruresSeeder extends Seeder
                                voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
                                Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
              'complex_id' => $secondComplex->id,
-             'speciality_id' => $firstSpeciality->id,
+             'speciality_id' => $thirdSpeciality->id,
              'category_id' =>  $fourthCategory->id
 
            ]);
@@ -304,7 +310,7 @@ class InfrastruresSeeder extends Seeder
                                Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
              'size' =>203,
              'complex_id' => $secondComplex->id,
-             'speciality_id' => $firstSpeciality->id,
+             'speciality_id' => $thirdSpeciality->id,
              'category_id' =>  $fourthCategory->id
 
            ]);
@@ -326,7 +332,7 @@ class InfrastruresSeeder extends Seeder
                                Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
              'size' =>110,
              'complex_id' => $secondComplex->id,
-             'speciality_id' => $firstSpeciality->id,
+             'speciality_id' => $fourthSpeciality->id,
              'category_id' =>  $fifthCategory->id
 
            ]);
@@ -349,7 +355,7 @@ class InfrastruresSeeder extends Seeder
                                Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
              'size' =>1449,
              'complex_id' => $secondComplex->id,
-             'speciality_id' => $firstSpeciality->id,
+             'speciality_id' => $fourthSpeciality->id,
              'category_id' =>  $sixthCategory->id
 
            ]);
@@ -603,7 +609,7 @@ class InfrastruresSeeder extends Seeder
                                   Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
                 'size' =>300,
                 'complex_id' => $sixthComplex->id,
-                'speciality_id' => $firstSpeciality->id,
+                'speciality_id' => $secondSpeciality->id,
                 'category_id' =>  $ninthCategory->id
 
               ]);

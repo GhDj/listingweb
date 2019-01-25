@@ -22,6 +22,11 @@
           <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
 
 
+          <link rel="stylesheet" type="text/css" href="{{ asset ('plugins') }}/sweetalert/sweetalert.css">
+          <link rel="stylesheet" type="text/css" href="{{ asset ('plugins') }}/sweetalert/swal-forms.css">
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.29.2/sweetalert2.all.js"></script>
+
           <!--=============== favicons ===============-->
           <link rel="shortcut icon" href="{{asset('images/favicon.ico')}}">
 </head>
