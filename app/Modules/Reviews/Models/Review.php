@@ -32,6 +32,11 @@ class Review extends Model {
 
     ];
 
+    public function medias()
+    {
+        return $this->hasMany('App\Modules\General\Models\Media','review_id');
+    }
+
     public function reviewer(){
 
         return $this->belongsTo('App\Modules\User\Models\User','user_id');

@@ -3130,6 +3130,7 @@ article .list-single-main-item {
     color: #FACC39;
     cursor: pointer;
     transition: 0.3s;
+		width: 15px;
 }
 .leave-rating label:hover:before  , .leave-rating label.selected:before {
     content: "\f005";

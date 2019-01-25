@@ -18,6 +18,8 @@ class CreateMediasTable extends Migration
             $table->string('link');
             $table->integer('type'); // 1-complex gallery | 2-terrain gallery | 3-equipment gallery
             // 4-reports images | 5-post images | 7-ads banners | 8-products images
+            $table->integer('review_id')->unsigned()->nullable();
+            $table->foreign('review_id')->references('id')->on('reviews')->onDelete('cascade');
             $table->integer('team_id')->unsigned()->nullable();
             $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');
             $table->integer('club_id')->unsigned()->nullable();
