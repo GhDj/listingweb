@@ -33,6 +33,8 @@
         <div class="list-single-header-item">
           <div class="list-single-header-item-opt fl-wrap">
             <div class="list-single-header-cat fl-wrap">
+
+
               @isset($terrain)
                 <a href="#">{{  $terrain->category->category  }}</a>
               @endisset
@@ -81,9 +83,33 @@
             </div>
             <div class="col-md-6">
               <div class="fl-wrap list-single-header-column">
-                <span class="viewed-counter"><i class="fa fa-heart"></i>Favorie</span>
+                @isset($terrain)
+                <span class="viewed-counter wichlist" id ="terrain{{$terrain->id}}" data-terrain = "{{ $terrain->id }}"><span>
+                  @if (is_null(App\Modules\User\Models\User::find(1)->wishlists->where('wished_id',$terrain->id)->where('wished_type','App\Modules\Infrastructures\Models\Terrain')->first()))
+                    <img src="{{asset('img/unlike.png')}}" alt="">
+                      @else
+                    <img src="{{asset('img/like.png')}}" alt="">
+                  @endif
+
+
+                </span> Favorie</span>
                 <span class="viewed-counter"><i class="fa fa-share-alt"></i> Partager </span>
                 <span class="viewed-counter"><i class="fa fa-location-arrow"></i>Y aller </span>
+                @endisset
+
+                @isset($club)
+                <span class="viewed-counter wichlist" id ="club{{$club->id}}" data-club = "{{ $club->id }}"><span>
+
+                  @if (is_null(App\Modules\User\Models\User::find(1)->wishlists->where('wished_id',$club->id)->where('wished_type','App\Modules\Infrastructures\Models\Club')->first()))
+                    <img src="{{asset('img/unlike.png')}}" alt="">
+                      @else
+                    <img src="{{asset('img/like.png')}}" alt="">
+                  @endif
+
+                </span> Favorie</span>
+                <span class="viewed-counter wichlist" ata-club = "{{ $club->id }}"> Partager </span>
+                <span class="viewed-counter"><i class="fa fa-location-arrow"></i>Y aller </span>
+                @endisset
 
               </div>
             </div>

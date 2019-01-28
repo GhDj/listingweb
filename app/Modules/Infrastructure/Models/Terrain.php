@@ -67,6 +67,7 @@ class Terrain extends Model {
 
         return $this->morphMany('App\Modules\Reviews\Models\Review','reviewed');
     }
+    
 
     public function reports(){
 

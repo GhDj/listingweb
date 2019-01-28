@@ -262,3 +262,42 @@
   @include('frontOffice.inc.footer')
 
 @endsection
+
+@section('scripts')
+
+  <script type="text/javascript">
+
+  $(document).ready(function() {
+
+
+      $('.wichlist').click(function(){
+        var id = "";
+
+        var terrainId = $(this).data('terrain');
+        var clubId =  $(this).data('club');
+
+        if (terrainId != null) {
+          id = terrainId;
+          type = "terrain";
+
+        }
+        if (clubId) {
+          id = clubId;
+          type = "club";
+        }
+       $.get("{{ route('showHome')}}/userWichlistTerrain/"+type+"/"+id).done(function (res) {
+            if (res.status == "added") {
+                $('#'+res.type+res.id+'>span').html('<img id="theImg" src="{{asset('img/like.png')}}" />');
+            }
+            if (res.status == "deleted") {
+                $('#'+res.type+res.id+'>span').html('<img id="theImg" src="{{asset('img/unlike.png')}}" />');
+              }
+
+          });
+
+      });
+   });
+
+  </script>
+
+@endsection

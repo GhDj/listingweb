@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\User\Models\User;
 use App\Modules\Reviews\Models\Report;
+use App\Modules\Reviews\Models\Wishlist;
 use App\Modules\Infrastructures\Models\Terrain;
+use App\Modules\Infrastructures\Models\Club;
 use Validator;
 use Toastr;
 use UxWeb\SweetAlert\SweetAlert;
@@ -28,7 +30,7 @@ class WebController extends Controller
 
     public function hundleUserReport(Request $request,$terrain_id)
     {
-
+          dd($terrain_id);
           $validate = Validator::make($request->All(),[
             'title' => "required",
             'description' => "required",
@@ -142,5 +144,46 @@ class WebController extends Controller
 
 
     }
+
+    public function hundleUserWichlist($type,$id)
+    {
+      $user = User::find(1);
+
+      switch ($type)
+      	{
+            case 'terrain':
+            	$terrain = Terrain::find($id);
+            	$test = $user->wishlists->where('wished_id', $id)->where('wished_type', 'App\Modules\Infrastructures\Models\Terrain')->first();
+            	if ($test)
+            		{
+            		$wishlist = Wishlist::where('user_id', $user->id)->where('wished_id', $id)->where('wished_type', 'App\Modules\Infrastructures\Models\Terrain')->delete();
+            		return Response()->json(['status' => 'deleted', "id" => $id, 'type' => $type]);
+            		}
+            	  else
+            		{
+            		$terrain->wishlists()->create(['user_id' => $user->id]);
+            		return Response()->json(['status' => 'added', 'id' => $id, 'type' => $type]);
+            		}
+
+            	break;
+
+              case 'club':
+              	$terrain = Club::find($id);
+              	$test = $user->wishlists->where('wished_id', $id)->where('wished_type', 'App\Modules\Infrastructures\Models\Club')->first();
+              	if ($test)
+              		{
+              		$wishlist = Wishlist::where('user_id', $user->id)->where('wished_id', $id)->where('wished_type', 'App\Modules\Infrastructures\Models\Club')->delete();
+              		return Response()->json(['status' => 'deleted', 'id' => $id, 'type' => $type]);
+              		}
+              	  else
+              		{
+              		$terrain->wishlists()->create(['user_id' => $user->id]);
+              		return Response()->json(['status' => 'added', 'id' => $id, 'type' => $type]);
+              		}
+
+              	break;
+      	}
+
+      }
 
 }
