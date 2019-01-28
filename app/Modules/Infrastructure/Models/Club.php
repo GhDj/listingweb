@@ -46,5 +46,11 @@ class Club extends Model
           return $this->hasMany('App\Modules\Infrastructure\Models\Team','club_id');
       }
 
+      public function wishlists(){
+
+          return $this->morphMany('App\Modules\Reviews\Models\Wishlist','wished');
+      }
+
+
 
 }

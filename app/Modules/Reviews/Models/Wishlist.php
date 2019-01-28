@@ -33,4 +33,8 @@ class Wishlist extends Model {
         return $this->belongsTo('App\Modules\User\Models\User');
     }
 
+    public function wished(){
+
+       return $this->morphTo();
+   }
 }
