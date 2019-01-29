@@ -7,6 +7,19 @@
 
 
                 <div class="show-reg-form modal-open"><i class="fa fa-sign-in"></i>Connecter</div>
+                <div class="header-user-menu">
+                    <div class="header-user-name">
+                        <span><img src="{{asset('images/avatar/4.jpg')}}" alt=""></span>
+                        Hello , Alisa
+                    </div>
+                    <ul>
+                        <li><a href="dashboard-myprofile.html"> Edit profile</a></li>
+                        <li><a href="dashboard-add-listing.html"> Add Listing</a></li>
+                        <li><a href="dashboard-bookings.html">  Bookings  </a></li>
+                        <li><a href="dashboard-review.html"> Reviews </a></li>
+                        <li><a href="#">Log Out</a></li>
+                    </ul>
+                </div>
                 <!-- nav-button-wrap-->
                 <div class="nav-button-wrap color-bg">
                     <div class="nav-button">

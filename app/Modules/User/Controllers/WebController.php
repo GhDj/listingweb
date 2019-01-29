@@ -171,4 +171,29 @@ class WebController extends Controller
             return back();
         }
 
+    public function showUserDashboard() {
+        return view ('User::frontOffice.userDashboard');
+    }
+
+    public function  showUserProfile() {
+        return view ('User::frontOffice.userProfile');
+    }
+
+    public function  showUserMessage() {
+        return view ('User::frontOffice.userMessage');
+    }
+
+    public function  showUserPassword() {
+        return view ('User::frontOffice.userChangePassword');
+    }
+
+    public function  showUserListing() {
+        return view ('User::frontOffice.userListing');
+    }
+
+    public function  showUserAddTerrain() {
+        return view ('User::frontOffice.userAddTerrain');
+    }
+
+
 }
