@@ -29,7 +29,7 @@
                         <div class="profile-edit-wrap">
                             <div class="profile-edit-page-header">
                                 <h2>Messages </h2>
-                                <div class="breadcrumbs"><a href="#">Home</a><a href="#">Dasboard</a><span>Messages</span></div>
+                                <div class="breadcrumbs"><a href="#">Accueil</a><a href="#">Profile</a><span>Messages</span></div>
                             </div>
                             <div class="row">
                               @include('User::frontOffice.inc.asideProfile')

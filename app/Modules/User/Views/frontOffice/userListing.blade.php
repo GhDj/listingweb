@@ -30,7 +30,7 @@
                     <div class="profile-edit-wrap">
                         <div class="profile-edit-page-header">
                             <h2>Listings </h2>
-                            <div class="breadcrumbs"><a href="#">Home</a><a href="#">Dasboard</a><span>Listings</span></div>
+                            <div class="breadcrumbs"><a href="#">Accueil</a><a href="#">Profile</a><span>lists</span></div>
                         </div>
                         <div class="row">
                           @include('User::frontOffice.inc.asideProfile')

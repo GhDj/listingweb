@@ -28,8 +28,8 @@
                           <!-- profile-edit-wrap -->
                           <div class="profile-edit-wrap">
                               <div class="profile-edit-page-header">
-                                  <h2>Change Password</h2>
-                                  <div class="breadcrumbs"><a href="#">Home</a><a href="#">Dasboard</a><span>Change Password</span></div>
+                                  <h2>Changer Votre mot de passe</h2>
+                                  <div class="breadcrumbs"><a href="#">Accueil</a><a href="#">Dasboard</a><span>Changer Votre mot de passe</span></div>
                               </div>
                               <div class="row">
                                   @include('User::frontOffice.inc.asideProfile')
@@ -37,7 +37,7 @@
                                       <!-- profile-edit-container-->
                                       <div class="profile-edit-container">
                                           <div class="profile-edit-header fl-wrap" style="margin-top:30px">
-                                              <h4>Change Password</h4>
+                                              <h4>Changer votre mot de passe</h4>
                                           </div>
                                           <div class="custom-form no-icons">
                                               <div class="pass-input-wrap fl-wrap">

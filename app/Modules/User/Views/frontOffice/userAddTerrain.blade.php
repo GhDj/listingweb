@@ -29,7 +29,7 @@
                 <div class="profile-edit-wrap">
                     <div class="profile-edit-page-header">
                         <h2>Add Listing</h2>
-                        <div class="breadcrumbs"><a href="#">Home</a><a href="#">Dasboard</a><span>Add Listing</span></div>
+                        <div class="breadcrumbs"><a href="#">Home</a><a href="#">Profile</a><span>Ajouter Un terrain</span></div>
                     </div>
                     <div class="row">
                       @include('User::frontOffice.inc.asideProfile')
