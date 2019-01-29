@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return redirect()->route('showHome');
 });
+Route::get('/test', function()
+{
+
+  return view('User::frontOffice.userAddTerrain');
+
+});
