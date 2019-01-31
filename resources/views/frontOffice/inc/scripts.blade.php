@@ -24,7 +24,7 @@
 
 </script>
 
-@if($errors->count() > 0)
+@if($errors->count() > 0 and !Auth::check())
 <script>
 
 $(document).ready(function(){

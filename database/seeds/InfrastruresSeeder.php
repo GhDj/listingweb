@@ -75,7 +75,8 @@ class InfrastruresSeeder extends Seeder
             'phone' => '0344219040' ,
             'email' => 'contact@sportfrance.com',
             'web_site' => 'http://www.sportfrance.com',
-            'address_id' => $firstAddress->id
+            'address_id' => $firstAddress->id,
+            'user_id' => User::find(1)->id
 
           ]);
 
@@ -95,7 +96,8 @@ class InfrastruresSeeder extends Seeder
             'phone' => '0555586020' ,
             'email' => 'contact@villasport.com',
             'web_site' => 'http://villasport.fr/',
-            'address_id' => $secondAddress->id
+            'address_id' => $secondAddress->id,
+            'user_id' => User::find(1)->id
 
           ]);
 
@@ -385,7 +387,8 @@ class InfrastruresSeeder extends Seeder
              'phone' => '0555586020' ,
              'email' => 'contact@NantesSport.com',
              'web_site' => 'http://NantesSport.fr/',
-             'address_id' => $thirdAddress->id
+             'address_id' => $thirdAddress->id,
+             'user_id' => User::find(1)->id
 
            ]);
 
@@ -447,7 +450,8 @@ class InfrastruresSeeder extends Seeder
              'phone' => '0555586020' ,
              'email' => 'contact@NantesSport.com',
              'web_site' => 'http://NantesErdre.fr/',
-             'address_id' => $fourthAddress->id
+             'address_id' => $fourthAddress->id,
+             'user_id' => User::find(1)->id
 
            ]);
 
@@ -510,7 +514,8 @@ class InfrastruresSeeder extends Seeder
              'phone' => '0555586020' ,
              'email' => 'contact@NantesSport.com',
              'web_site' => 'http://NantesErdre.fr/',
-             'address_id' => $fifthAddress->id
+             'address_id' => $fifthAddress->id,
+             'user_id' => User::find(1)->id
 
            ]);
 
@@ -577,7 +582,8 @@ class InfrastruresSeeder extends Seeder
                 'phone' => '0555586020' ,
                 'email' => 'contact@SaintSport.com',
                 'web_site' => 'http://NantesErdre.fr/',
-                'address_id' => $sixthAddress->id
+                'address_id' => $sixthAddress->id,
+                'user_id' => User::find(1)->id
 
               ]);
 

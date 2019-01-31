@@ -104,6 +104,10 @@ class User extends Authenticatable
       return $this->belongsToMany('App\Modules\Infrastructures\Models\Club', 'favorites', 'user_id', 'club_id')->withTimeStamps();
   }
 
+  public function complexes(){
+      return $this->hasMany('App\Modules\Infrastructures\Models\Complex','user_id');
+  }
+
 
 
 }

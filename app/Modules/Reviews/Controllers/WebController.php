@@ -14,6 +14,7 @@ use Toastr;
 use UxWeb\SweetAlert\SweetAlert;
 use Image;
 use App\Modules\General\Models\Media;
+use Auth;
 class WebController extends Controller
 {
 
@@ -30,7 +31,7 @@ class WebController extends Controller
 
     public function hundleUserReport(Request $request,$terrain_id)
     {
-          dd($terrain_id);
+
           $validate = Validator::make($request->All(),[
             'title' => "required",
             'description' => "required",
@@ -41,7 +42,7 @@ class WebController extends Controller
               return back();
             }
 
-            $user = User::find(1); // TODO: Change To Auth
+            $user = Auth::user();
             $terrain = Terrain::find($terrain_id);
 
             if (empty($terrain)) {
@@ -85,7 +86,7 @@ class WebController extends Controller
                  return back();
               }
 
-           $user = User::find(1); // TODO: Change To Auth
+           $user = Auth::user();
            $terrain = Terrain::find($terrain_id);
 
            if (empty($terrain)) {
@@ -147,7 +148,7 @@ class WebController extends Controller
 
     public function hundleUserWichlist($type,$id)
     {
-      $user = User::find(1);
+     $user = Auth::user();
 
       switch ($type)
       	{

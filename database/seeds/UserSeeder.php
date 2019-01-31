@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
         'description' => '75007 Paris, France'
 
       ]);
-        $firstUser = User::create([
+        $owner = User::create([
             'first_name' => 'Mohamed',
             'last_name' => 'Barhoumi',
             'email' => 'test@test.fr',
@@ -40,9 +40,9 @@ class UserSeeder extends Seeder
             'address_id' => $firstAddress->id
         ]);
 
-        $firstUser->roles()->attach(4);
+        $owner->roles()->attach(2);
 
-        $user = User::create([
+        $manager = User::create([
           'first_name' => 'zac',
           'last_name' => 'zac',
           'email' => 'zac@test.fr',
@@ -55,7 +55,23 @@ class UserSeeder extends Seeder
           'address_id' => $firstAddress->id
         ]);
 
-        $firstUser->roles()->attach(4);
+        $manager->roles()->attach(3);
+
+        $user = User::create([
+            'first_name' => 'Mohamed',
+            'last_name' => 'Barhoumi',
+            'email' => 'med@test.fr',
+            'password' => bcrypt('123456'),
+            'gender' => 1,
+            'validation' => 1,
+            'phone' => Null,
+            'promo_pts' => 10,
+            'picture' => config('app.seed_path_img').'img\unknown.png',
+            'address_id' => $firstAddress->id
+        ]);
+
+        $user->roles()->attach(4);
+
 
   }
 }

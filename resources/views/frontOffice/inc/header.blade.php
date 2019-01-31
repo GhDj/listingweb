@@ -5,21 +5,29 @@
                     <a href="index.html"><img src="{{asset('images/logo.png')}}" alt=""></a>
                 </div>
 
+                @if (Auth::check() and Auth::user()->status == 1)
+                  <div class="header-user-menu">
+                      <div class="header-user-name">
+                        @if (Auth::user()->picture != null)
+                            <span><img src="{{asset(Auth::user()->picture)}}" alt=""></span>
+                            @else
+                              <span><img src="{{asset('img/unknown.png')}}" alt=""></span>
+                        @endif
 
-                <div class="show-reg-form modal-open"><i class="fa fa-sign-in"></i>Connecter</div>
-                <div class="header-user-menu">
-                    <div class="header-user-name">
-                        <span><img src="{{asset('images/avatar/4.jpg')}}" alt=""></span>
-                        Hello , Alisa
-                    </div>
-                    <ul>
-                        <li><a href="dashboard-myprofile.html"> Edit profile</a></li>
-                        <li><a href="dashboard-add-listing.html"> Add Listing</a></li>
-                        <li><a href="dashboard-bookings.html">  Bookings  </a></li>
-                        <li><a href="dashboard-review.html"> Reviews </a></li>
-                        <li><a href="#">Log Out</a></li>
-                    </ul>
-                </div>
+                          Hello , {{Auth::user()->first_name}} {{ Auth::user()->last_name}}
+                      </div>
+                      <ul>
+                          <li><a href="{{route('showUserDashboard')}}"> Edit profile</a></li>
+                          <li><a href="#"> Add Listing</a></li>
+                          <li><a href="#"> Reviews </a></li>
+                          <li><a href="{{route('handleLogout')}}">Log Out</a></li>
+                      </ul>
+                  </div>
+                  @else
+                    <div class="show-reg-form modal-open"><i class="fa fa-sign-in"></i>Connecter</div>
+
+                @endif
+
                 <!-- nav-button-wrap-->
                 <div class="nav-button-wrap color-bg">
                     <div class="nav-button">

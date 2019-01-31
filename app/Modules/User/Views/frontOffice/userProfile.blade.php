@@ -17,6 +17,22 @@
 @endsection
 @section('content')
 
+  <style media="screen">
+  .add-list-media-header {
+  margin-bottom: 15px;
+  padding: 15px 20px 3px;
+  margin-left: 35px;
+  width: auto;
+}
+
+.custom-form input[type="text"],.custom-form input[type=email]{
+
+  padding: 15px 20px 15px 20px;
+
+}
+
+  </style>
+
   <!-- wrapper -->
       <div id="wrapper">
           <!--content -->
@@ -40,89 +56,114 @@
                                           <h4>My Account</h4>
                                       </div>
                                       <div class="custom-form">
-                                          <label>Your Name <i class="fa fa-user-o"></i></label>
-                                          <input type="text" placeholder="AlisaNoory" value=""/>
-                                          <label>Email Address<i class="fa fa-envelope-o"></i>  </label>
-                                          <input type="text" placeholder="AlisaNoory@domain.com" value=""/>
-                                          <label>Phone<i class="fa fa-phone"></i>  </label>
-                                          <input type="text" placeholder="+7(123)987654" value=""/>
-                                          <label> Adress <i class="fa fa-map-marker"></i>  </label>
-                                          <input type="text" placeholder="USA 27TH Brooklyn NY" value=""/>
-                                          <label> Website <i class="fa fa-globe"></i>  </label>
-                                          <input type="text" placeholder="themeforest.net" value=""/>
-                                          <label> Notes</label>
-                                          <textarea cols="40" rows="3" placeholder="About Me"></textarea>
-                                      </div>
-                                  </div>
-                                  <!-- profile-edit-container end-->
-                                  <!-- profile-edit-container-->
-                                  <div class="profile-edit-container add-list-container">
-                                      <div class="profile-edit-header fl-wrap">
-                                          <h4>Tariff plan</h4>
-                                      </div>
-                                      <div class="custom-form">
-                                          <div class="row">
-                                              <!--col -->
-                                              <div class="col-md-4">
-                                                  <div class="add-list-media-header">
-                                                      <label class="radio inline">
-                                                      <input type="radio" name="gender">
-                                                      <span>Basic 99$</span>
-                                                      </label>
-                                                  </div>
-                                              </div>
-                                              <!--col end-->
-                                              <!--col -->
-                                              <div class="col-md-4">
-                                                  <div class="add-list-media-header">
-                                                      <label class="radio inline">
-                                                      <input type="radio" name="gender"  checked>
-                                                      <span>Extended 99$</span>
-                                                      </label>
-                                                  </div>
-                                              </div>
-                                              <!--col end-->
-                                              <!--col -->
-                                              <div class="col-md-4">
-                                                  <div class="add-list-media-header">
-                                                      <label class="radio inline">
-                                                      <input type="radio" name="gender">
-                                                      <span>Professional 149$</span>
-                                                      </label>
-                                                  </div>
-                                              </div>
-                                              <!--col end-->
+                                        <form action="{{route('handleUpdateUserProfile')}}"  method="post">
+
+                                          {{ csrf_field() }}
+
+                                          <div class="form-group row">
+                                            <label for ="first_name">Prénom * </label>
+                                            <div class="col-md-12">
+                                              <input id="first_name" type="text" class="form-control{{ $errors->has('first_name') ? ' is-invalid' : '' }}" name="first_name" value="{{Auth::user()->first_name}}" />
+                                              @if ($errors->has('first_name'))
+                                              <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('first_name') }}</strong>
+                                              </span>
+                                              @endif
+                                            </div>
                                           </div>
+                                          <div class="form-group row">
+                                            <label for ="last_name">Nom * </label>
+                                            <div class="col-md-12">
+                                              <input id="last_name" type="text" class="form-control{{ $errors->has('last_name') ? ' is-invalid' : '' }}" name="last_name" value="{{Auth::user()->last_name}}" />
+                                              @if ($errors->has('last_name'))
+                                              <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('last_name') }}</strong>
+                                              </span>
+                                              @endif
+                                            </div>
+                                          </div>
+                                          <div class="form-group row">
+                                            <label for ="mail">Email Address * </label>
+                                            <div class="col-md-12">
+                                              <input id="mail" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{Auth::user()->email}}" />
+                                              @if ($errors->has('email'))
+                                              <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('email') }}</strong>
+                                              </span>
+                                              @endif
+                                            </div>
+                                          </div>
+
+                                          <div class="form-group row">
+                                            <label for ="phone">Téléphone * </label>
+                                            <div class="col-md-12">
+                                              <input id="phone" type="text" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" value="{{Auth::user()->phone}}" />
+                                              @if ($errors->has('phone'))
+                                              <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('phone') }}</strong>
+                                              </span>
+                                              @endif
+                                            </div>
+                                          </div>
+
+                                          <div class="form-group row">
+                                            <label for ="ad">Adresse * </label>
+                                            <div class="col-md-12">
+                                              <input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{Auth::user()->address->address}}" />
+                                              @if ($errors->has('address'))
+                                              <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('address') }}</strong>
+                                              </span>
+                                              @endif
+                                            </div>
+                                          </div>
+
+                                          <label> Genre </label>
+                                              <div style="margin-left:70px;">
+                                                <label class="radio">
+                                                <input type="radio" name="gender" value="1"
+
+                                                      @if (Auth::user()->gender == 1)
+                                                        checked
+                                                      @endif
+
+                                                > <span>Homme</span> </label>
+                                                <label class="radio">
+                                                <input type="radio" name="gender"  value="2"
+
+                                                @if (Auth::user()->gender == 2)
+                                                  checked
+                                                @endif
+
+                                                > <span>Femme</span> </label>
+                                              </div>
+                                                <button class="btn  big-btn  color-bg flat-btn">Save Changes<i class="fa fa-angle-right"></i></button>
+                                        </form>
                                       </div>
                                   </div>
-                                  <!-- profile-edit-container end-->
-                                  <!-- profile-edit-container-->
-                                  <div class="profile-edit-container">
-                                      <div class="profile-edit-header fl-wrap" style="margin-top:30px">
-                                          <h4>My Socials</h4>
-                                      </div>
-                                      <div class="custom-form">
-                                          <label>Facebook <i class="fa fa-facebook"></i></label>
-                                          <input type="text" placeholder="https://www.facebook.com/" value=""/>
-                                          <label>Twitter<i class="fa fa-twitter"></i>  </label>
-                                          <input type="text" placeholder="https://twitter.com/" value=""/>
-                                          <label>Vkontakte<i class="fa fa-vk"></i>  </label>
-                                          <input type="text" placeholder="vk.com" value=""/>
-                                          <label> Whatsapp <i class="fa fa-whatsapp"></i>  </label>
-                                          <input type="text" placeholder="https://www.whatsapp.com" value=""/>
-                                          <button class="btn  big-btn  color-bg flat-btn">Save Changes<i class="fa fa-angle-right"></i></button>
-                                      </div>
-                                  </div>
-                                  <!-- profile-edit-container end-->
                               </div>
                               <div class="col-md-2">
                                   <div class="edit-profile-photo fl-wrap">
-                                      <img src="images/avatar/4.jpg" class="respimg" alt="">
+                                    @if (Auth::user()->picture != null)
+                                        <img src="{{asset(Auth::user()->picture)}}" class="respimg" alt="">
+                                        @else
+                                          <img src="{{asset('img/unknown.png')}}" class="respimg" alt="">
+                                    @endif
                                       <div class="change-photo-btn">
-                                          <div class="photoUpload">
+
+                                        <form action="{{route('handleUpdateUserProfilePicture')}}" enctype="multipart/form-data" id = "avatarForm" method="post">
+                                          {{ csrf_field() }}
+                                          <div class="photoUpload" style="width:180px">
                                               <span><i class="fa fa-upload"></i> Upload Photo</span>
-                                              <input type="file" class="upload">
+                                              <input type="file" name="avatar" class="upload" id= "avatar">
                                           </div>
+                                          @if ($errors->has('avatar'))
+                                          <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('avatar') }}</strong>
+                                          </span>
+                                          @endif
+                                        </form>
+
                                       </div>
                                   </div>
                               </div>
@@ -133,7 +174,7 @@
                   <!--container end -->
               </section>
               <!-- section end -->
-
+                  <div class="limit-box fl-wrap"></div>
           </div>
       </div>
   <!-- wrapper end -->
@@ -142,5 +183,14 @@
 @section('footer')
 
   @include('frontOffice.inc.footer')
+
+@endsection
+
+@section('scripts')
+  <script type="text/javascript">
+document.getElementById("avatar").onchange = function() {
+ document.getElementById("avatarForm").submit();
+};
+  </script>
 
 @endsection
