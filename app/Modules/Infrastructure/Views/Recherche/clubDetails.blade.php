@@ -272,7 +272,6 @@
       $('.wichlist').click(function(e){
         e.preventDefault();
         var id = "";
-        console.log($(this).data('club'));
         var terrainId = $(this).data('terrain');
         var clubId =  $(this).data('club');
 

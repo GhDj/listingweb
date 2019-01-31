@@ -76,7 +76,9 @@
                                             </div>
                                           @endforeach
 
+                                          {{$terrains->links()}}
                                           @endisset
+
 
 
 
@@ -103,7 +105,7 @@
                                             </div>
                                             </div>
                                           @endforeach
-
+                                          {{$clubs->links()}}
                                         @endisset
 
 

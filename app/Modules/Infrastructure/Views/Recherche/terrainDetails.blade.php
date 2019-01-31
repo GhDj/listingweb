@@ -522,7 +522,7 @@
 
        $.get("{{ route('showHome')}}/userWichlist/"+type+"/"+id).done(function (res) {
 
-          console.log(res);
+        
             if (res.status == "added") {
                 $('#'+res.type+res.id+'>span').html('<img id="theImg" src="{{asset('img/like.png')}}" />');
             }

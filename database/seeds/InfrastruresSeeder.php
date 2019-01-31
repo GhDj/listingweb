@@ -76,7 +76,7 @@ class InfrastruresSeeder extends Seeder
             'email' => 'contact@sportfrance.com',
             'web_site' => 'http://www.sportfrance.com',
             'address_id' => $firstAddress->id,
-            'user_id' => User::find(1)->id
+            'user_id' => 1
 
           ]);
 
@@ -97,7 +97,7 @@ class InfrastruresSeeder extends Seeder
             'email' => 'contact@villasport.com',
             'web_site' => 'http://villasport.fr/',
             'address_id' => $secondAddress->id,
-            'user_id' => User::find(1)->id
+            'user_id' => 1
 
           ]);
 
@@ -388,7 +388,7 @@ class InfrastruresSeeder extends Seeder
              'email' => 'contact@NantesSport.com',
              'web_site' => 'http://NantesSport.fr/',
              'address_id' => $thirdAddress->id,
-             'user_id' => User::find(1)->id
+             'user_id' => 1
 
            ]);
 
@@ -451,7 +451,7 @@ class InfrastruresSeeder extends Seeder
              'email' => 'contact@NantesSport.com',
              'web_site' => 'http://NantesErdre.fr/',
              'address_id' => $fourthAddress->id,
-             'user_id' => User::find(1)->id
+             'user_id' => 1
 
            ]);
 
@@ -515,7 +515,7 @@ class InfrastruresSeeder extends Seeder
              'email' => 'contact@NantesSport.com',
              'web_site' => 'http://NantesErdre.fr/',
              'address_id' => $fifthAddress->id,
-             'user_id' => User::find(1)->id
+             'user_id' => 1
 
            ]);
 
@@ -583,7 +583,7 @@ class InfrastruresSeeder extends Seeder
                 'email' => 'contact@SaintSport.com',
                 'web_site' => 'http://NantesErdre.fr/',
                 'address_id' => $sixthAddress->id,
-                'user_id' => User::find(1)->id
+                'user_id' => 1
 
               ]);
 
