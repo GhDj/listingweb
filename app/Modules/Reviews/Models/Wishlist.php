@@ -30,7 +30,7 @@ class Wishlist extends Model {
 
     public function wisher(){
 
-        return $this->belongsTo('App\Modules\User\Models\User');
+        return $this->belongsTo('App\Modules\User\Models\User','user_id');
     }
 
     public function wished(){

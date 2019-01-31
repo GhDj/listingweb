@@ -269,10 +269,9 @@
 
   $(document).ready(function() {
 
-
-      $('.wichlist').click(function(){
+      $('.wichlist').click(function(e){
+        e.preventDefault();
         var id = "";
-
         var terrainId = $(this).data('terrain');
         var clubId =  $(this).data('club');
 
@@ -285,7 +284,7 @@
           id = clubId;
           type = "club";
         }
-       $.get("{{ route('showHome')}}/userWichlistTerrain/"+type+"/"+id).done(function (res) {
+       $.get("{{ route('showHome')}}/userWichlist/"+type+"/"+id).done(function (res) {
             if (res.status == "added") {
                 $('#'+res.type+res.id+'>span').html('<img id="theImg" src="{{asset('img/like.png')}}" />');
             }

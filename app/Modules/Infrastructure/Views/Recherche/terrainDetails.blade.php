@@ -503,7 +503,8 @@
   $(document).ready(function() {
 
 
-      $('.wichlist').click(function(){
+      $('.wichlist').click(function(e){
+        e.preventDefault();
         var id = "";
 
         var terrainId = $(this).data('terrain');
@@ -521,7 +522,7 @@
 
        $.get("{{ route('showHome')}}/userWichlist/"+type+"/"+id).done(function (res) {
 
-          console.log(res.type+res.id);
+        
             if (res.status == "added") {
                 $('#'+res.type+res.id+'>span').html('<img id="theImg" src="{{asset('img/like.png')}}" />');
             }

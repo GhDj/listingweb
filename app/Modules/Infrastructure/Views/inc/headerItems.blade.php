@@ -85,7 +85,7 @@
               <div class="fl-wrap list-single-header-column">
                 @isset($terrain)
                 <span class="viewed-counter wichlist" id ="terrain{{$terrain->id}}" data-terrain = "{{ $terrain->id }}"><span>
-                  @if (is_null(App\Modules\User\Models\User::find(1)->wishlists->where('wished_id',$terrain->id)->where('wished_type','App\Modules\Infrastructures\Models\Terrain')->first()))
+                  @if (is_null(Auth::user()->wishlists->where('wished_id',$terrain->id)->where('wished_type','App\Modules\Infrastructures\Models\Terrain')->first()))
                     <img src="{{asset('img/unlike.png')}}" alt="">
                       @else
                     <img src="{{asset('img/like.png')}}" alt="">
@@ -100,7 +100,7 @@
                 @isset($club)
                 <span class="viewed-counter wichlist" id ="club{{$club->id}}" data-club = "{{ $club->id }}"><span>
 
-                  @if (is_null(App\Modules\User\Models\User::find(1)->wishlists->where('wished_id',$club->id)->where('wished_type','App\Modules\Infrastructures\Models\Club')->first()))
+                  @if (is_null(Auth::user()->wishlists->where('wished_id',$club->id)->where('wished_type','App\Modules\Infrastructures\Models\Club')->first()))
                     <img src="{{asset('img/unlike.png')}}" alt="">
                       @else
                     <img src="{{asset('img/like.png')}}" alt="">

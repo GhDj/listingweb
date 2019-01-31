@@ -30,7 +30,8 @@ class Complex extends Model {
         'phone',
         'email',
         'web_site',
-        'address_id'
+        'address_id',
+        'user_id'
     ];
 
     public function medias()
@@ -73,4 +74,8 @@ class Complex extends Model {
     public function schedules(){
           return $this->morphMany('App\Modules\Infrastructure\Models\ComplexSchedule','group');
       }
+
+      public function owner(){
+            return $this->belongsTo('App\Modules\User\Models\User');
+        }
 }

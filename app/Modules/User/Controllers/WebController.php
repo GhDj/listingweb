@@ -11,6 +11,9 @@ use Auth;
 use Mail;
 use Alert;
 use Validate;
+use App\Modules\Infrastructures\Models\Terrain;
+use App\Modules\Infrastructures\Models\Club;
+use Hash;
 
 use Toastr;
 
@@ -152,17 +155,14 @@ class WebController extends Controller
             if (Auth::attempt($credentials)) {
                 $user = Auth::user();
                 Auth::login($user);
-                if ($user->status === 1) {
-                  if(checkProfessionnelRole($user)){
-                        return redirect()->route('showProfessionnelDashboard');
-                  }
-          				 if(checkInternauteRole($user)){
-                        return redirect()->route('showInternauteDashboard');
-                    }
+                if ($user->status == 1) {
+
+                  return redirect()->route('showUserDashboard');
+
                 }
                 else{
                     Auth::logout();
-                    Toastr::error('Vérifiez Les données saisie!', 'Oops', ["positionClass" => "toast-top-full-width","showDuration"=> "4000", "hideDuration"=> "1000", "timeOut"=> "300000"]);
+                    Toastr::error('Votre compte est suspendu !', 'Oops', ["positionClass" => "toast-top-full-width","showDuration"=> "4000", "hideDuration"=> "1000", "timeOut"=> "300000"]);
                     return redirect()->route('showHome');
                 }
             }
@@ -171,8 +171,128 @@ class WebController extends Controller
             return back();
         }
 
+        public function handleLogout(){
+         Auth::logout();
+         return redirect(route('showHome'));
+     }
+
+     public function handleUpdateUserProfile(Request $request){
+
+        $user = Auth::user();
+
+        $this->validate($request, [
+            'email' => 'required|email|unique:users,email,'.$user->id,
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'gender' => 'required',
+        ],
+            [
+                'email.email' => 'Veuillez saisir un email valide',
+                'email.required' => 'Le champ email est obligatoire',
+                'email.unique' => 'L\'email indiqué est déjà utilisé',
+                'first_name.required' => 'Le champ Prénom est obligatoire',
+                'last_name.required' => 'Le champ Nom est obligatoire',
+                'phone.required' => 'Le champ Téléphone est obligatoire',
+                'address.required' => 'Le champ Addresse est obligatoire',
+                'gender.required' => 'Le champ Genre est obligatoire',
+            ]);
+
+        $user->update([
+            'first_name' => ($request->first_name) ? $request->first_name : $user->first_name,
+            'last_name' => ($request->last_name) ? $request->last_name : $user->last_name,
+            'email' => ($request->email)? $request->email:$user->email,
+            'phone'  => ($request->phone)? $request->phone:$user->phone,
+            'gender' => ($request->gender) ? $request->gender:$user->gender,
+            'address' => ($request->address) ? $request->address : $user->address,
+
+        ]);
+
+        SweetAlert::success('Bien !', 'Profil Modifié avec succés !')->persistent('Fermer');
+        return redirect()->route('showUserProfile');
+
+    }
+
+    public function handleUpdateUserProfilePicture(Request $request){
+
+            $user = Auth::user();
+            $this->validate($request, [
+        	    	'avatar' => 'image|mimes:jpeg,bmp,png',
+        		],
+
+            [
+              'avatar.image' => 'Le champ doit d\'ètre de Type Image',
+              'avatar.mimes' => 'L\'extension d\'image aloué:peg,bmp,png  ',
+            ]
+
+          );
+            $file = $request->avatar;
+            $imagePath = 'storage/uploads/avatar/';
+            $filename = 'avatar' . $user->id . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path($imagePath), $filename);
+            $user->update([
+           'picture' => $imagePath . '' . $filename
+            ]);
+
+    SweetAlert::success('Bien !', 'Image De Profil Modifié avec succés !')->persistent('Fermer');
+    return redirect()->route('showUserProfile');
+
+}
+
+    public function handleUpdateUserPassword(Request $request)
+    {
+
+        $user = Auth::user();
+
+        $errors =  $this->validate($request,[
+            'oldPassword'   => 'required',
+            'password'   => 'required|confirmed'
+
+          ],
+          [
+                'oldPassword.required'   => 'Le champ Actuelle Mot de passe est obligatoire',
+                'password.required'   => 'Le champ mot de passe est obligatoire',
+                'password.confirmed'   => 'Mot de passe Doit ètre Identique'
+          ]
+            );
+
+
+
+            if (!(Hash::check($request->oldPassword, $user->password))) {
+              SweetAlert::error('Oops !', 'Votre mot de passe actuel ne correspond pas au mot de passe que vous avez fourni. Veuillez réessayer. !')->persistent('Fermer');
+              return redirect()->route('showUserPassword');
+            }
+              if(strcmp($request->oldPassword, $request->password == 0)){
+                SweetAlert::error('Oops !', 'Le nouveau mot de passe ne peut pas être identique à votre mot de passe actuel. Veuillez choisir un mot de passe différent. !')->persistent('Fermer');
+                return redirect()->route('showUserPassword');
+              }
+
+            $user->password = bcrypt($request->password);
+            $user->save();
+            SweetAlert::success('Bien !', 'Mot de passe modifié avec succès. !')->persistent('Fermer');
+            return redirect()->route('showUserPassword');
+
+    }
+
+
     public function showUserDashboard() {
-        return view ('User::frontOffice.userDashboard');
+      $terrains = Terrain::whereHas('complex', function ($subQuery) {
+                    $subQuery->where('user_id', Auth::user()->id);
+                  })
+                  ->with('wishlists')
+                  ->get();
+
+      $clubs = Club::whereHas('terrain.complex', function ($subQuery) {
+                  $subQuery->where('user_id', Auth::user()->id);
+              })
+              ->with('wishlists')
+              ->get();
+        return view ('User::frontOffice.userDashboard',[
+
+          'terrains' => $terrains,
+          'clubs' => $clubs
+        ]);
     }
 
     public function  showUserProfile() {
@@ -187,8 +307,28 @@ class WebController extends Controller
         return view ('User::frontOffice.userChangePassword');
     }
 
-    public function  showUserListing() {
-        return view ('User::frontOffice.userListing');
+    public function  showUserListingTerrain() {
+
+      $terrains = Terrain::whereHas('complex', function ($subQuery) {
+                    $subQuery->where('user_id', Auth::user()->id);
+                  })->paginate(5);
+        return view ('User::frontOffice.userListing',
+          [
+            'terrains' => $terrains
+          ]
+      );
+    }
+
+    public function  showUserListingClub() {
+      $clubs = Club::whereHas('terrain.complex', function ($subQuery) {
+                    $subQuery->where('user_id', Auth::user()->id);
+                  })->paginate(5);
+
+        return view ('User::frontOffice.userListing',
+          [
+            'clubs' => $clubs
+          ]
+      );
     }
 
     public function  showUserAddTerrain() {
