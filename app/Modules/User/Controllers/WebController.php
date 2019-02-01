@@ -65,7 +65,6 @@ class WebController extends Controller
           'lastName'   => 'required',
           'email'   => 'required|unique:users|email',
           'password'   => 'required|confirmed',
-          'gender' => 'required'
 
         ],
         [
@@ -76,7 +75,6 @@ class WebController extends Controller
               'email.email'   => 'Le champ doit ètre de type email',
               'password.required'   => 'Veuillez Saisie Mot de passe',
               'password.confirmed'   => 'Mot de passe Doit ètre Identique',
-              'gender.required'   => 'Genre de sexe est obligatoire'
 
         ]
           );
@@ -108,8 +106,9 @@ class WebController extends Controller
           'email' => $request->input('email'),
           'password' => bcrypt($request->input('password')),
           'phone' => ($request->has('phone'))? $request->input('phone') : null,
-          'gender' => $request->input('gender'),
+          'gender' => ($request->input('gender'))? $request->input('phone') : 1,
           'picture' => 'img/unknown.png',
+          'status' => 1,
           'validation' => $validation,
           'address_id' => $userAddress->id
 
@@ -117,12 +116,12 @@ class WebController extends Controller
 
          $user->assignRole($request->input('role'));
 
-         $content = ['user' => $user , 'validationLink' => URL('user/activation/'.$user->email.'/'.$validation)];
-
-         Mail::send('User::mail.welcome', $content, function ($message) use ($user) {
-         $message->to($user->email);
-         $message->subject('Bienvenue');
-         });
+         // $content = ['user' => $user , 'validationLink' => URL('user/activation/'.$user->email.'/'.$validation)];
+         //
+         // Mail::send('User::mail.welcome', $content, function ($message) use ($user) {
+         // $message->to($user->email);
+         // $message->subject('Bienvenue');
+         // });
 
          Toastr::success('Inscription a été effectué avec succès !', 'Bien !', ["positionClass" => "toast-top-full-width","showDuration"=> "4000", "hideDuration"=> "1000", "timeOut"=> "300000"]);
 

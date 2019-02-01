@@ -2,7 +2,7 @@
 <header class="main-header dark-header fs-header sticky">
             <div class="header-inner">
                 <div class="logo-holder">
-                    <a href="index.html"><img src="{{asset('images/logo.png')}}" alt=""></a>
+                    <a href="{{route('showHome')}}"><img src="{{asset('images/logo.png')}}" alt=""></a>
                 </div>
 
                 @if (Auth::check() and Auth::user()->status == 1)
@@ -14,14 +14,16 @@
                               <span><img src="{{asset('img/unknown.png')}}" alt=""></span>
                         @endif
 
-                          Hello , {{Auth::user()->first_name}} {{ Auth::user()->last_name}}
+                          Salut , {{Auth::user()->first_name}} {{ Auth::user()->last_name}}
                       </div>
                       <ul>
                           <li><a href="{{route('showUserDashboard')}}">Profile</a></li>
                           @if (checkProfessionnelRole(Auth::user()))
+                             <li><a href="{{route('showUserListingTerrain')}}"> Mes Terrains</a></li>
+                             <li><a href="{{route('showUserListingClub')}}"> Mes Clubs</a></li>
                               <li><a href="{{route('showUserAddComplex')}}"> Ajouter complex</a></li>
                           @endif
-                            <li><a href="{{route('handleLogout')}}">Log Out</a></li>
+                            <li><a href="{{route('handleLogout')}}">Déconnecter</a></li>
                       </ul>
                   </div>
                   @else
@@ -41,16 +43,16 @@
                     <nav>
                         <ul>
                             <li>
-                                <a href="#" class="act-link">Home <i class="fa fa-caret-down"></i></a>
+                                <a href="#" class="act-link">Accueil <i class="fa fa-caret-down"></i></a>
                                 <!--second level -->
                                 <ul>
-                                    <li><a href="index.html">Exemple</a></li>
+                                    <li><a href="{{route('showHome')}}">Accueil</a></li>
 
                                 </ul>
                                 <!--second level end-->
                             </li>
                             <li>
-                                <a href="#">Listings <i class="fa fa-caret-down"></i></a>
+                                <a href="#">Clubs <i class="fa fa-caret-down"></i></a>
                                 <!--second level -->
                                 <ul>
                                     <li><a href="listing.html">Exemple</a></li>

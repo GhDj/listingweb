@@ -41,7 +41,7 @@
                 <!-- profile-edit-wrap -->
                 <div class="profile-edit-wrap">
                     <div class="profile-edit-page-header">
-                        <h2>Add Listing</h2>
+                        <h2>Ajouter Un Complex</h2>
                         <div class="breadcrumbs"><a href="#">Home</a><a href="#">Profile</a><span>Ajouter Un Complex</span></div>
                     </div>
                     <div class="row">
@@ -68,7 +68,7 @@
                                     </div>
 
 
-                                    <label>Category Disponible</label>
+                                    <label>Categories Disponible</label>
                                     <div class=" fl-wrap filter-tags">
 
                                         @foreach ($categories as $categorie)

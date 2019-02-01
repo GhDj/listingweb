@@ -41,7 +41,7 @@
                                         <!-- dashboard-list end-->
                                         <div class="dashboard-list">
                                             <div class="dashboard-message">
-                                                <span class="new-dashboard-item">New</span>
+                                                <span class="new-dashboard-item">Nouveau message</span>
                                                 <div class="dashboard-message-avatar">
                                                     <img src="images/avatar/3.jpg" alt="">
                                                 </div>
@@ -56,7 +56,7 @@
                                         <!-- dashboard-list end-->
                                         <div class="dashboard-list">
                                             <div class="dashboard-message">
-                                                <span class="new-dashboard-item">New</span>
+                                                <span class="new-dashboard-item">Nouveau message</span>
                                                 <div class="dashboard-message-avatar">
                                                     <img src="images/avatar/avatar-bg.png" alt="">
                                                 </div>

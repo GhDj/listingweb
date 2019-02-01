@@ -154,7 +154,7 @@
                                         <form action="{{route('handleUpdateUserProfilePicture')}}" enctype="multipart/form-data" id = "avatarForm" method="post">
                                           {{ csrf_field() }}
                                           <div class="photoUpload" style="width:180px">
-                                              <span><i class="fa fa-upload"></i> Upload Photo</span>
+                                              <span><i class="fa fa-upload"></i> Changer votre Photo</span>
                                               <input type="file" name="avatar" class="upload" id= "avatar">
                                           </div>
                                           @if ($errors->has('avatar'))
