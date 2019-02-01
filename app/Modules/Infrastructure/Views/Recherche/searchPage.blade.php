@@ -72,8 +72,8 @@
                                   <div class="widget kopa-entry-list-widget">
                                     <div class="list-container-4">
                                         <ul class="tabs-4 clearfix">
-                                            <li class="active"><a href="#tab-1-6" style="color:black">Search Terrains</a></li>
-                                            <li><a href="#tab-1-7"  style="color:black">Search Clubs</a></li>
+                                            <li class="active"><a href="#tab-1-6" style="color:black">Chercher un Terrain</a></li>
+                                            <li><a href="#tab-1-7"  style="color:black">Chercher un Club</a></li>
                                         </ul><!--tabs-2-->
                                     </div>
                                     <div class="tab-container-4">
@@ -122,11 +122,11 @@
                                                       </div>
                                                   </div>
                                                   <!-- hidden-listing-filter end -->
-                                                  <div class="more-filter-option">More Filters <span></span></div>
+                                                  <div class="more-filter-option">Recherche avancée <span></span></div>
 
                                                   <div class="listsearch-input-item" style="margin-top:15px;">
 
-                                                  <button class="button fs-map-btn">Update</button>
+                                                  <button class="button fs-map-btn">Rechercher</button>
 
                                                   </div>
 
@@ -181,11 +181,11 @@
                                                       </div>
                                                   </div>
                                                   <!-- hidden-listing-filter end -->
-                                                  <div class="more-filter-option">More Filters <span></span></div>
+                                                  <div class="more-filter-option">Recherche avancée <span></span></div>
 
                                                   <div class="listsearch-input-item" style="margin-top:15px;">
 
-                                                  <button class="button fs-map-btn">Update</button>
+                                                  <button class="button fs-map-btn">Rechercher</button>
 
                                                   </div>
 

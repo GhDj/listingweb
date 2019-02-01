@@ -163,23 +163,23 @@
                   <span class="current-status">Sports</span>
                   <ul>
                     <li class="clearfix">
-                      <a href="#" class="widget-posts-img"><img src="{{asset('images/all/single/13.jpg')}}" alt=""></a>
+                      <a href="#" class="widget-posts-img"><img src="{{asset('images/unkown.jpg')}}" alt=""></a>
                       <div class="widget-posts-descr">
-                        <a href="#" title="">Cafe "Lollipop"</a>
+                        <a href="#" title="">Clubs</a>
                         <span class="widget-posts-date"><i class="fa fa-calendar-check-o"></i> 21 Mar 2017 </span>
                       </div>
                     </li>
                     <li class="clearfix">
-                      <a href="#" class="widget-posts-img"><img src="{{asset('images/all/single/14.jpg')}}" alt=""></a>
+                      <a href="#" class="widget-posts-img"><img src="{{asset('images/unkown.jpg')}}" alt=""></a>
                       <div class="widget-posts-descr">
-                        <a href="#" title=""> Apartment in the Center</a>
+                        <a href="#" title="">Clubs</a>
                         <span class="widget-posts-date"><i class="fa fa-calendar-check-o"></i> 7 Mar 2017 </span>
                       </div>
                     </li>
                     <li class="clearfix">
-                      <a href="#" class="widget-posts-img"><img src="{{asset('images/all/single/15.jpg')}}" alt=""></a>
+                      <a href="#" class="widget-posts-img"><img src="{{asset('images/unkown.jpg')}}" alt=""></a>
                       <div class="widget-posts-descr">
-                        <a href="#" title="">Event in City Mol</a>
+                        <a href="#" title="">Clubs</a>
                         <span class="widget-posts-date"><i class="fa fa-calendar-check-o"></i> 7 Mar 2017 </span>
                       </div>
                     </li>

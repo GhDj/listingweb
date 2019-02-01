@@ -29,15 +29,22 @@
                     <!-- profile-edit-wrap -->
                     <div class="profile-edit-wrap">
                         <div class="profile-edit-page-header">
-                            <h2>Listings </h2>
-                            <div class="breadcrumbs"><a href="#">Accueil</a><a href="#">Profile</a><span>lists</span></div>
+                          @isset($userTerrains)
+                            <h2>List de votre Terrain </h2>
+                            <div class="breadcrumbs"><a href="#">Accueil</a><a href="#">Profile</a><span>Votre Terrains</span></div>
+                            @endisset
+                            @isset($userClubs)
+                              <h2>List de votre Clubs </h2>
+                              <div class="breadcrumbs"><a href="#">Accueil</a><a href="#">Profile</a><span>Votre Clubs</span></div>
+                            @endisset
+
                         </div>
                         <div class="row">
                           @include('User::frontOffice.inc.asideProfile')
                             <div class="col-md-9">
                                 <div class="dashboard-list-box fl-wrap">
                                     <div class="dashboard-header fl-wrap">
-                                        <h3>Indox</h3>
+
                                         @isset($userTerrains)
                                           <h3>Terrains</h3>
                                             @endisset

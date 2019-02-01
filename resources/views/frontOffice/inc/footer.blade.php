@@ -3,7 +3,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="footer-widget fl-wrap">
-                                <h3>About Us</h3>
+                                <h3>À propos de nous</h3>
                                 <div class="footer-contacts-widget fl-wrap">
                                     <p>In ut odio libero, at vulputate urna. Nulla tristique mi a massa convallis cursus. Nulla eu mi magna. Etiam suscipit commodo gravida. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam. </p>
                                     <ul  class="footer-contacts fl-wrap">
@@ -16,7 +16,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="footer-widget fl-wrap">
-                                <h3>Our Last News</h3>
+                                <h3>Nos dernières nouvelles</h3>
                                 <div class="widget-posts fl-wrap">
                                     <ul>
                                         <li class="clearfix">
@@ -47,7 +47,7 @@
 
                         <div class="col-md-4">
                             <div class="footer-widget fl-wrap">
-                                <h3>Enrigistrer</h3>
+                                <h3>Enregistrer</h3>
                                 <div class="subscribe-widget fl-wrap">
                                     <p>Vous souhaitez être averti lorsque nous lançons un nouveau modèle ou une mise à jour. Il suffit de vous inscrire et nous vous enverrons une notification par e-mail.</p>
                                     <div class="subcribe-form">
@@ -81,7 +81,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="copyright"> &#169;  .  All rights reserved.</div>
+                                <div class="copyright"> &#169;  .  Tous les droits sont réservés.</div>
                             </div>
                             <div class="col-md-4">
                                 <div class="footer-social">

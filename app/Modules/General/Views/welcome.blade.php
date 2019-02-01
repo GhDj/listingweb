@@ -71,8 +71,8 @@
 
                               <div class="list-container-4">
                                   <ul class="tabs-4 clearfix">
-                                      <li class="active"><a href="#tab-1-1" style="color:black">Search Terrains</a></li>
-                                      <li><a href="#tab-1-2"  style="color:black">Search Clubs</a></li>
+                                      <li class="active"><a href="#tab-1-1" style="color:black">Chercher Un terrain</a></li>
+                                      <li><a href="#tab-1-2"  style="color:black">Chercher Un Club</a></li>
                                   </ul><!--tabs-2-->
                               </div>
                                 <div class="tab-container-4">
@@ -164,10 +164,10 @@
                   <section>
                       <div class="container">
                           <div class="section-title">
-                              <h2>How it works</h2>
-                              <div class="section-subtitle">Discover & Connect </div>
+                              <h2>Olympiade Sport</h2>
+                              <div class="section-subtitle">Olympiade Sport</div>
                               <span class="section-separator"></span>
-                              <p>Explore some of the best tips from around the world.</p>
+                              <p>Le seul .</p>
                           </div>
                           <!--process-wrap  -->
                           <div class="process-wrap fl-wrap">
@@ -207,10 +207,10 @@
                   <section id="sec2">
                       <div class="container">
                           <div class="section-title">
-                              <h2>Featured Categories</h2>
+                              <h2>Notre Application</h2>
                               <div class="section-subtitle">Catalog of Categories</div>
                               <span class="section-separator"></span>
-                              <p>Explore some of the best tips from around the city from our partners and friends.</p>
+                              <p>Découvrez les terrains et clubs situés à la France .</p>
                           </div>
                           <!-- portfolio start -->
                           <div class="gallery-items fl-wrap mr-bot spad">
@@ -218,11 +218,11 @@
                               <div class="gallery-item">
                                   <div class="grid-item-holder">
                                       <div class="listing-item-grid">
-                                          <img  src="{{asset('images/all/1.jpg')}}"   alt="">
-                                          <div class="listing-counter"><span>10 </span> Locations</div>
+                                          <img  src="{{asset('images/unkown.jpg')}}"   alt="">
+                                          <div class="listing-counter"><span>10 </span> Clubs</div>
                                           <div class="listing-item-cat">
-                                              <h3><a href="listing.html">Conference and Event</a></h3>
-                                              <p>Constant care and attention to the patients makes good record</p>
+                                              <h3><a href="listing.html">Club</a></h3>
+                                              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod te</p>
                                           </div>
                                       </div>
                                   </div>
@@ -240,11 +240,11 @@
                               <div class="gallery-item">
                                   <div class="grid-item-holder">
                                       <div class="listing-item-grid">
-                                          <img  src="images/all/5.jpg"   alt="">
-                                          <div class="listing-counter"><span>15 </span> Locations</div>
+                                          <img  src="images/unkown.jpg"   alt="">
+                                          <div class="listing-counter"><span>15 </span> Terrain</div>
                                           <div class="listing-item-cat">
-                                              <h3><a href="listing.html">Shop - Store</a></h3>
-                                              <p>Constant care and attention to the patients makes good record</p>
+                                              <h3><a href="listing.html">Terrain</a></h3>
+                                              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod te</p>
                                           </div>
                                       </div>
                                   </div>
@@ -327,10 +327,10 @@
                   <section id="sec2">
                       <div class="container">
                           <div class="section-title">
-                              <h2>Featured Categories</h2>
+                              <h2>Olympiade</h2>
                               <div class="section-subtitle">Catalog of Categories</div>
                               <span class="section-separator"></span>
-                              <p>Explore some of the best tips from around the city from our partners and friends.</p>
+                              <p>Découvrez les terrains et clubs situés à la France .</p>
                           </div>
                           <!-- portfolio start -->
                           <div class="gallery-items fl-wrap mr-bot spad">
@@ -338,11 +338,11 @@
                               <div class="gallery-item">
                                   <div class="grid-item-holder">
                                       <div class="listing-item-grid">
-                                          <img  src="images/all/1.jpg"   alt="">
-                                          <div class="listing-counter"><span>10 </span> Locations</div>
+                                          <img  src="images/unkown.jpg"   alt="">
+                                          <div class="listing-counter"><span>10 </span> Clubs</div>
                                           <div class="listing-item-cat">
-                                              <h3><a href="listing.html">Conference and Event</a></h3>
-                                              <p>Constant care and attention to the patients makes good record</p>
+                                              <h3><a href="listing.html">Terrain</a></h3>
+                                              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod te</p>
                                           </div>
                                       </div>
                                   </div>
@@ -364,7 +364,7 @@
                                           <div class="listing-counter"><span>15 </span> Locations</div>
                                           <div class="listing-item-cat">
                                               <h3><a href="listing.html">Shop - Store</a></h3>
-                                              <p>Constant care and attention to the patients makes good record</p>
+                                              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod te</p>
                                           </div>
                                       </div>
                                   </div>

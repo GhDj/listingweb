@@ -29,7 +29,7 @@
             @endif
 
             <!-- user-profile-menu end-->
-            <a href="#" class="log-out-btn">Log Out</a>
+            <a href="{{route('handleLogout')}}" class="log-out-btn">Déconnecter</a>
         </div>
     </div>
 </div>

@@ -66,7 +66,7 @@
         <div class="row">
           <div class="col-md-8">
             <div class="list-single-main-wrapper fl-wrap" id="sec2">
-              <div class="breadcrumbs gradient-bg  fl-wrap"><a href="#">Home</a><a href="#">Listings</a><span>Stade</span></div>
+              <div class="breadcrumbs gradient-bg  fl-wrap"><a href="#">Accueil</a><a href="#">List</a><span>Terrain</span></div>
               <!-- list-single-main-item -->
               <div class="list-single-main-item fl-wrap" id="sec2">
                 <div class="list-single-main-item-title fl-wrap">
@@ -370,7 +370,7 @@
               <!--box-widget-item -->
               <div class="box-widget-item fl-wrap">
                 <div class="box-widget-item-header">
-                  <h3>Weather in City : </h3>
+                  <h3>Météo : </h3>
                 </div>
                 <div id="weather-widget" class="gradient-bg"></div>
               </div>
@@ -385,10 +385,10 @@
                   <div class="box-widget-content">
                     <div class="list-author-widget-contacts list-item-widget-contacts">
                       <ul>
-                        <li><span><i class="fa fa-map-marker"></i> Adress :</span> <a href="#">{{ $terrain->complex->address->address }}</a></li>
-                        <li><span><i class="fa fa-phone"></i> Phone :</span> <a href="#">{{ $terrain->complex->phone }}</a></li>
-                        <li><span><i class="fa fa-envelope-o"></i> Mail :</span> <a href="mailto:{{ $terrain->complex->email }}">{{ $terrain->complex->email }}</a></li>
-                        <li><span><i class="fa fa-globe"></i> Website :</span> <a href="{{ $terrain->complex->web_site }}" target="_blank">Visiter Notre Website</a></li>
+                        <li><span><i class="fa fa-map-marker"></i> Addresse :</span> <a href="#">{{ $terrain->complex->address->address }}</a></li>
+                        <li><span><i class="fa fa-phone"></i> Téléphone :</span> <a href="#">{{ $terrain->complex->phone }}</a></li>
+                        <li><span><i class="fa fa-envelope-o"></i> Email :</span> <a href="mailto:{{ $terrain->complex->email }}">{{ $terrain->complex->email }}</a></li>
+                        <li><span><i class="fa fa-globe"></i> Site Web :</span> <a href="{{ $terrain->complex->web_site }}" target="_blank">Visiter Notre Website</a></li>
                       </ul>
                     </div>
                     <div class="list-widget-social">
@@ -407,29 +407,29 @@
               <!--box-widget-item -->
               <div class="box-widget-item fl-wrap">
                 <div class="box-widget-item-header">
-                  <h3>Installation Proche : </h3>
+                  <h3>Clubs: </h3>
                 </div>
                 <div class="box-widget widget-posts">
                   <div class="box-widget-content">
                     <ul>
                       <li class="clearfix">
-                        <a href="#" class="widget-posts-img"><img src="{{asset('images/all/1.jpg')}}" alt=""></a>
+                        <a href="#" class="widget-posts-img"><img src="{{asset('images/unkown.jpg')}}" alt=""></a>
                         <div class="widget-posts-descr">
-                          <a href="#" title="">Cafe "Lollipop"</a>
+                          <a href="#" title="">Equipe 1</a>
                           <span class="widget-posts-date"><i class="fa fa-calendar-check-o"></i> 21 Mar 2017 </span>
                         </div>
                       </li>
                       <li class="clearfix">
-                        <a href="#" class="widget-posts-img"><img src="{{asset('images/all/2.jpg')}}" alt=""></a>
+                        <a href="#" class="widget-posts-img"><img src="{{asset('images/unkown.jpg')}}" alt=""></a>
                         <div class="widget-posts-descr">
-                          <a href="#" title=""> Apartment in the Center</a>
+                          <a href="#" title=""> Equipe 2</a>
                           <span class="widget-posts-date"><i class="fa fa-calendar-check-o"></i> 7 Mar 2017 </span>
                         </div>
                       </li>
                       <li class="clearfix">
-                        <a href="#" class="widget-posts-img"><img src="{{asset('images/all/3.jpg')}}" alt=""></a>
+                        <a href="#" class="widget-posts-img"><img src="{{asset('images/unkown.jpg')}}" alt=""></a>
                         <div class="widget-posts-descr">
-                          <a href="#" title="">Event in City Mol</a>
+                          <a href="#" title=""> Equipe 3</a>
                           <span class="widget-posts-date"><i class="fa fa-calendar-check-o"></i> 7 Mar 2017 </span>
                         </div>
                       </li>
@@ -522,7 +522,7 @@
 
        $.get("{{ route('showHome')}}/userWichlist/"+type+"/"+id).done(function (res) {
 
-        
+
             if (res.status == "added") {
                 $('#'+res.type+res.id+'>span').html('<img id="theImg" src="{{asset('img/like.png')}}" />');
             }

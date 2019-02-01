@@ -177,30 +177,6 @@ color: red;
                   </div>
 
                   <div class="form-group row">
-                    <label for="phone"> Téléphone * </label>
-                    <div class="col-md-12">
-                      <input id="phone" type="text" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" value="{{ old('phone') }}" placeholder="590 xx xx xx" onClick="this.select()" required>
-                      @if ($errors->has('phone'))
-                      <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('phone') }}</strong>
-                      </span>
-                      @endif
-                    </div>
-                  </div>
-
-                  <div class="form-group row">
-                    <<label>Choisir Votre Sexe *</label>
-                      <div class="col-md-12">
-                        <select data-placeholder="Choisir Votre sexe" class="custom-select" name="gender" id="gender">
-                          <option value="1">Homme</option>
-                          <option value="2">Femme</option>
-                          <option value="-1">Autre</option>
-
-                        </select>
-                      </div>
-                  </div>
-
-                  <div class="form-group row">
                     <label for="lastName"> Email * </label>
                     <div class="col-md-12">
                       <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" onClick="this.select()" required>
@@ -231,7 +207,7 @@ color: red;
                     </div>
                   </div>
 
-                  <button type="submit" class="log-submit-btn"><span>Register</span></button>
+                  <button type="submit" class="log-submit-btn"><span>Enregistrer</span></button>
                 </form>
               </div>
             </div>
