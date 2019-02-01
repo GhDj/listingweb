@@ -3630,7 +3630,17 @@ article .list-single-main-item {
 	float:left;
 	margin-bottom:30px;
 }
+#singleComplexMap {
+	width:100%;
+	position:relative;
+	height:300px;
+	float:left;
+	margin-bottom:30px;
+}
 .box-widget #singleMap {
+	margin-bottom:10px;
+}
+.box-widget #singleComplexMap {
 	margin-bottom:10px;
 }
 .mapzoom-in  , .mapzoom-out{
@@ -3648,6 +3658,10 @@ article .list-single-main-item {
 	-webkit-transform: translate3d(0,0,0);
 }
 #singleMap  .mapzoom-in , #singleMap .mapzoom-out , .home-map .mapzoom-in , .home-map .mapzoom-out , .fw-map .mapzoom-in  ,  .fw-map .mapzoom-out {
+	position:absolute;
+	right:20px;
+}
+#singleComplexMap  .mapzoom-in , #singleComplexMap .mapzoom-out , .home-map .mapzoom-in , .home-map .mapzoom-out , .fw-map .mapzoom-in  ,  .fw-map .mapzoom-out {
 	position:absolute;
 	right:20px;
 }

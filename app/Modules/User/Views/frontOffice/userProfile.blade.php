@@ -137,7 +137,7 @@
 
                                                 > <span>Femme</span> </label>
                                               </div>
-                                                <button class="btn  big-btn  color-bg flat-btn">Save Changes<i class="fa fa-angle-right"></i></button>
+                                                <button class="btn  big-btn  color-bg flat-btn">Enregistrer<i class="fa fa-angle-right"></i></button>
                                         </form>
                                       </div>
                                   </div>

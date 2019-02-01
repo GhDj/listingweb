@@ -57,7 +57,7 @@
                                     <div class="statistic-item-wrap">
                                     <div class="statistic-item gradient-bg fl-wrap">
 
-                                          <div class="statistic-item-numder">{{$terrains->count()}}</div>
+                                          <div class="statistic-item-numder">{{$userTerrains->count()}}</div>
                                           <h5>Terrains</h5>
                                       </div>
                                       </div>
@@ -65,7 +65,7 @@
                                       <div class="statistic-item-wrap">
                                       <div class="statistic-item gradient-bg fl-wrap">
 
-                                            <div class="statistic-item-numder">{{$clubs->count()}}</div>
+                                            <div class="statistic-item-numder">{{$userClubs->count()}}</div>
                                             <h5>Clubs</h5>
                                         </div>
                                         </div>
@@ -146,7 +146,7 @@
                               @endif
 
                               @if (checkProfessionnelRole(Auth::user()))
-                              @foreach ($terrains as $terrain)
+                              @foreach ($userTerrains as $terrain)
                                 @foreach ($terrain->wishlists as $wishlist)
 
                                   <div class="dashboard-list">
@@ -164,7 +164,7 @@
                                 @endforeach
                               @endforeach
 
-                              @foreach ($clubs as $club)
+                              @foreach ($userClubs as $club)
                                 @foreach ($club->wishlists as $wishlist)
 
                                   <div class="dashboard-list">
@@ -185,7 +185,7 @@
                               <!-- dashboard-list end-->
                               <!-- dashboard-list end-->
 
-                              @foreach ($terrains as $terrain)
+                              @foreach ($userTerrains as $terrain)
                                 @foreach ($terrain->reviews as $review)
 
                                   <div class="dashboard-list">
