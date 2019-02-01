@@ -35,7 +35,7 @@
                           <div class="profile-edit-wrap">
                               <div class="profile-edit-page-header">
                                   <h2>Changer Votre mot de passe</h2>
-                                  <div class="breadcrumbs"><a href="#">Accueil</a><a href="#">Dasboard</a><span>Changer Votre mot de passe</span></div>
+                                  <div class="breadcrumbs"><a href="#">Accueil</a><a href="#">Profile</a><span>Changer Votre mot de passe</span></div>
                               </div>
                               <div class="row">
                                   @include('User::frontOffice.inc.asideProfile')

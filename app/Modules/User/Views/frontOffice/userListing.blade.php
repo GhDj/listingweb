@@ -38,10 +38,10 @@
                                 <div class="dashboard-list-box fl-wrap">
                                     <div class="dashboard-header fl-wrap">
                                         <h3>Indox</h3>
-                                        @isset($terrains)
+                                        @isset($userTerrains)
                                           <h3>Terrains</h3>
                                             @endisset
-                                      @isset($clubs)
+                                      @isset($userClubs)
                                         <h3>Clubs</h3>
                                       @endisset
 
@@ -51,9 +51,9 @@
 
 
 
-                                      @isset($terrains)
+                                      @isset($userTerrains)
 
-                                          @foreach ($terrains as $terrain)
+                                          @foreach ($userTerrains as $terrain)
                                             <div class="dashboard-list">
                                             <div class="dashboard-message">
                                                 <div class="dashboard-listing-table-image">
@@ -76,14 +76,14 @@
                                             </div>
                                           @endforeach
 
-                                          {{$terrains->links()}}
+                                          {{$userTerrains->links()}}
                                           @endisset
 
 
 
 
-                                        @isset($clubs)
-                                          @foreach ($clubs as $club)
+                                        @isset($userClubs)
+                                          @foreach ($userClubs as $club)
                                             <div class="dashboard-list">
                                             <div class="dashboard-message">
                                                 <div class="dashboard-listing-table-image">
@@ -105,7 +105,7 @@
                                             </div>
                                             </div>
                                           @endforeach
-                                          {{$clubs->links()}}
+                                          {{$userClubs->links()}}
                                         @endisset
 
 

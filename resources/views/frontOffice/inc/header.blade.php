@@ -17,10 +17,11 @@
                           Hello , {{Auth::user()->first_name}} {{ Auth::user()->last_name}}
                       </div>
                       <ul>
-                          <li><a href="{{route('showUserDashboard')}}"> Edit profile</a></li>
-                          <li><a href="#"> Add Listing</a></li>
-                          <li><a href="#"> Reviews </a></li>
-                          <li><a href="{{route('handleLogout')}}">Log Out</a></li>
+                          <li><a href="{{route('showUserDashboard')}}">Profile</a></li>
+                          @if (checkProfessionnelRole(Auth::user()))
+                              <li><a href="{{route('showUserAddComplex')}}"> Ajouter complex</a></li>
+                          @endif
+                            <li><a href="{{route('handleLogout')}}">Log Out</a></li>
                       </ul>
                   </div>
                   @else

@@ -13,6 +13,8 @@ use Alert;
 use Validate;
 use App\Modules\Infrastructures\Models\Terrain;
 use App\Modules\Infrastructures\Models\Club;
+use App\Modules\Infrastructures\Models\Category;
+use App\Modules\Infrastructures\Models\Complex;
 use Hash;
 
 use Toastr;
@@ -277,21 +279,21 @@ class WebController extends Controller
 
 
     public function showUserDashboard() {
-      $terrains = Terrain::whereHas('complex', function ($subQuery) {
+      $userTerrains = Terrain::whereHas('complex', function ($subQuery) {
                     $subQuery->where('user_id', Auth::user()->id);
                   })
                   ->with('wishlists')
                   ->get();
 
-      $clubs = Club::whereHas('terrain.complex', function ($subQuery) {
+      $userClubs = Club::whereHas('terrain.complex', function ($subQuery) {
                   $subQuery->where('user_id', Auth::user()->id);
               })
               ->with('wishlists')
               ->get();
         return view ('User::frontOffice.userDashboard',[
 
-          'terrains' => $terrains,
-          'clubs' => $clubs
+          'userTerrains' => $userTerrains,
+          'userClubs' => $userClubs
         ]);
     }
 
@@ -309,30 +311,111 @@ class WebController extends Controller
 
     public function  showUserListingTerrain() {
 
-      $terrains = Terrain::whereHas('complex', function ($subQuery) {
+      $userTerrains = Terrain::whereHas('complex', function ($subQuery) {
                     $subQuery->where('user_id', Auth::user()->id);
                   })->paginate(5);
         return view ('User::frontOffice.userListing',
           [
-            'terrains' => $terrains
+            'userTerrains' => $userTerrains
           ]
       );
     }
 
     public function  showUserListingClub() {
-      $clubs = Club::whereHas('terrain.complex', function ($subQuery) {
+      $userClubs = Club::whereHas('terrain.complex', function ($subQuery) {
                     $subQuery->where('user_id', Auth::user()->id);
                   })->paginate(5);
 
         return view ('User::frontOffice.userListing',
           [
-            'clubs' => $clubs
+            'userClubs' => $userClubs
           ]
       );
     }
-
+    public function showUserAddComplex()
+    {
+        return view ('User::frontOffice.userAddComplex',
+          [
+            'categories' => Category::select('category')->groupBy('category')->get()
+          ]
+      );
+    }
     public function  showUserAddTerrain() {
         return view ('User::frontOffice.userAddTerrain');
+    }
+
+    public function hundleUserAddComplex(Request $request)
+    {
+
+        $user = Auth::user();
+        $this->validate($request,[
+          "address" =>       "required",
+          "latitude" =>      "required",
+          "longitude" =>     "required",
+          "city" =>          "required",
+          "postal_code"=>    "required",
+          "locality"=>       "required",
+          "name"=>           "required",
+          "categories" =>    "required",
+          "phone" =>         "required",
+          "email" =>         "required|email",
+          "web_site" =>      "required"
+        ],
+        [
+          "address.required" =>"Le champ adresse est obligatoire",
+          "latitude.required" =>"Le champ latitude  est obligatoire",
+          "longitude.required" =>"Le champ longitude est obligatoire",
+          'city.required' =>"Le champ Ville est obligatoire",
+          'postal_code' =>"Le champ code postal  est obligatoire",
+          "locality.required" => "Le champ localité est obligatoire",
+          "name.required" => "Le champ nom de complex est obligatoire",
+          "phone.required" =>"Le champ phone  est obligatoire",
+          "email.required" =>"Le champ email",
+          "email.email" =>"Le champ doit ètre email",
+          "web_site.required" =>"Le champ Site Web est est obligatoire",
+
+        ]
+      );
+
+        $address = Address::Create([
+        'city' => $request->city ,
+        'postal_code' => $request->postal_code ,
+        'country' => $request->country ,
+        'locality' => $request->locality ,
+        'address' => $request->adresse ,
+        'latitude' => $request->latitude,
+        'longitude' =>$request->longitude ,
+        'description' => $request->description ,
+      ]);
+      $complex =  Complex::Create([
+          'name' => $request->name,
+          'phone' => $request->phone ,
+          'email' => $request->email,
+          'web_site' => $request->web_site,
+          'address_id' => $address->id,
+          'user_id' => $user->id
+        ]);
+
+        foreach ($request->categories as $categorie) {
+          Category::create([
+            "category" => $categorie,
+            "complex_id" => $complex->id
+          ]);
+        }
+        if ($request->otherCategories) {
+          $otherCategories = explode(',', $request->otherCategories);
+          foreach ($otherCategories as  $otherCategorie) {
+
+            Category::create([
+              "category" => $otherCategorie,
+              "complex_id" => $complex->id
+            ]);
+          }
+        }
+
+      SweetAlert::success('Bien !', 'Complex ajouté avec succès. !')->persistent('Fermer');
+      return redirect()->route('showUserAddComplex');
+
     }
 
 
