@@ -17,4 +17,6 @@ Route::group(['module' => 'Infrastructures', 'middleware' => ['web'], 'namespace
     Route::post('/searchFilterTerrain','WebController@handleFilterMaps')->name('handleFilterMaps');
 
     Route::post('/searchFilterClub','WebController@handleFilterClubs')->name('handleFilterClubs');
+
+    Route::get('index/category/{complex}','WebController@hundleGetCategory')->name('hundleGetCategory');
 });

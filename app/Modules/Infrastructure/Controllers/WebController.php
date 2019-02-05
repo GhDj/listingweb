@@ -404,6 +404,17 @@ public function handleFilterClubs(Request $request)
 
 }
 
+public function hundleGetCategory($id)
+{
+      $complex = Complex::find($id);
+
+      if (!$complex) {
+        return response()->json(['status'=>404]);
+      }
+
+      return response()->json(['status'=>200,'categories'=>$complex->categories]);
+}
+
 
 
 

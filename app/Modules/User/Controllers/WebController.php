@@ -15,6 +15,11 @@ use App\Modules\Infrastructures\Models\Terrain;
 use App\Modules\Infrastructures\Models\Club;
 use App\Modules\Infrastructures\Models\Category;
 use App\Modules\Infrastructures\Models\Complex;
+use App\Modules\Infrastructures\Models\TerrainSpeciality;
+use App\Modules\General\Models\Media;
+
+use Carbon\Carbon;
+
 use Hash;
 
 use Toastr;
@@ -340,7 +345,18 @@ class WebController extends Controller
       );
     }
     public function  showUserAddTerrain() {
-        return view ('User::frontOffice.userAddTerrain');
+      $user = Auth::user();
+      $complexes = $user->complexes()->get();
+      if (!$complexes) {
+        SweetAlert::success('Opps !', 'Veuillez Ajouter Un complexe. !')->persistent('Fermer');
+        return redirect()->route('showUserAddComplex');
+      }
+        return view ('User::frontOffice.userAddTerrain',
+        [
+            'specialities' => TerrainSpeciality::All(),
+            'complexes' => $complexes
+        ]
+      );
     }
 
     public function hundleUserAddComplex(Request $request)
@@ -415,6 +431,79 @@ class WebController extends Controller
       SweetAlert::success('Bien !', 'Complex ajouté avec succès. !')->persistent('Fermer');
       return redirect()->route('showUserAddComplex');
 
+    }
+
+    public function hundleUserAddTerrain(Request $request)
+    {
+      $user = Auth::user();
+      $this->validate($request,[
+        "name"=>             "required",
+        "complex_id" =>      "required",
+        "category_id" =>     "required",
+        "speciality_id" =>   "required",
+        "description"=>      "required",
+        "type"=>             "required|between:0,9999",
+        "size"=>             "required",
+        'images' =>           "required",
+        'images.*' =>         "image|mimes:jpeg,png,jpg,gif,svg"
+      ],
+      [
+        'name' =>            'Le champ Nom de terrain est  obligatoire',
+        'complex_id' =>      'Le champ Complexe de terrain est  obligatoire',
+        'category_id' =>     'Le champ Categorie de terrain est  obligatoire',
+        'speciality_id' =>   'Le champ speciality de terrain est  obligatoire',
+        "description" =>     'Le champ Description de terrain est  obligatoire',
+        "typ.required" =>     'Le champ Type de terrain est  obligatoire',
+        "type.between" =>     'Format Invalide de cjhamp Type',
+        'images.required' => 'Le champ Image de terrain est  obligatoire',
+        'images.image' =>    'Le champ doit ètre de type image',
+        'images.mimes' =>    'Le champ doit ètre de type image: peg,png,jpg,gif,svg',
+      ]
+    );
+
+    $terrain = Terrain::create([
+
+      "name"=>             $request->name,
+      "complex_id" =>      $request->complex_id,
+      "category_id" =>     $request->category_id,
+      "speciality_id" =>   $request->speciality_id,
+      "description"=>      $request->description,
+      "size"=>             $request->size,
+      "type" =>            $request->type
+    ]);
+
+
+        $imagePath = 'storage/uploads/terrains/';
+        foreach ($request->images as $image) {
+          $filename = 'terrain-'.$terrain->id .'-'. str_random(5) . '-' . time() . '.' . $image->getClientOriginalExtension();
+          $image->move(public_path($imagePath), $filename);
+
+          Media::create([
+
+            'type' => 1,
+            'link' => $imagePath . '' . $filename,
+            'terrain_id' => $terrain->id
+          ]);
+        }
+
+        foreach ($request->sessionDay as $key => $sessionDay) {
+
+          $sessionStartTime = $request->sessionStartTime[$key];
+          $sessionEndTime = $request->sessionEndTime[$key];
+           $sessionStartDate[] = date('Y-m-d H:i:s', strtotime("$sessionDay $sessionStartTime"));
+           $sessionEndDate[] = date('Y-m-d H:i:s', strtotime("$sessionDay $sessionEndTime"));
+            $dayofweek[] = date('w', strtotime($sessionDay));
+
+          $terrain->schedules()->create([
+              'start_at' => $sessionStartDate[$key],
+              'ends_at' => $sessionEndDate[$key],
+              'day' => $dayofweek[$key]
+          ]);
+
+        }
+
+        SweetAlert::success('Bien !', 'Terrain ajouté avec succès. !')->persistent('Fermer');
+        return redirect()->route('showUserAddTerrain');
     }
 
 
