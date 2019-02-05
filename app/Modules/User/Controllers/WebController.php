@@ -17,6 +17,7 @@ use App\Modules\Infrastructures\Models\Category;
 use App\Modules\Infrastructures\Models\Complex;
 use App\Modules\Infrastructures\Models\TerrainSpeciality;
 use App\Modules\General\Models\Media;
+use App\Modules\Infrastructures\Models\Equipment;
 
 use Carbon\Carbon;
 
@@ -347,8 +348,8 @@ class WebController extends Controller
     public function  showUserAddTerrain() {
       $user = Auth::user();
       $complexes = $user->complexes()->get();
-      if (!$complexes) {
-        SweetAlert::success('Opps !', 'Veuillez Ajouter Un complexe. !')->persistent('Fermer');
+      if (empty($complexes)) {
+        SweetAlert::error('Opps !', 'Veuillez Ajouter Un complexe. !')->persistent('Fermer');
         return redirect()->route('showUserAddComplex');
       }
         return view ('User::frontOffice.userAddTerrain',
@@ -442,8 +443,8 @@ class WebController extends Controller
         "category_id" =>     "required",
         "speciality_id" =>   "required",
         "description"=>      "required",
-        "type"=>             "required|between:0,9999",
-        "size"=>             "required",
+        "size"=>             "required|between:0,9999",
+        "type"=>             "required",
         'images' =>           "required",
         'images.*' =>         "image|mimes:jpeg,png,jpg,gif,svg"
       ],
@@ -453,8 +454,9 @@ class WebController extends Controller
         'category_id' =>     'Le champ Categorie de terrain est  obligatoire',
         'speciality_id' =>   'Le champ speciality de terrain est  obligatoire',
         "description" =>     'Le champ Description de terrain est  obligatoire',
-        "typ.required" =>     'Le champ Type de terrain est  obligatoire',
-        "type.between" =>     'Format Invalide de cjhamp Type',
+        "size.required" =>   'Le champ Size de terrain est  obligatoire',
+        "size.between" =>    'Format Invalide de champ Type',
+        "type.required" =>   'Le champ Type de terrain est  obligatoire',
         'images.required' => 'Le champ Image de terrain est  obligatoire',
         'images.image' =>    'Le champ doit ètre de type image',
         'images.mimes' =>    'Le champ doit ètre de type image: peg,png,jpg,gif,svg',
@@ -506,5 +508,78 @@ class WebController extends Controller
         return redirect()->route('showUserAddTerrain');
     }
 
+    public function showUserAddEquipement()
+    {
+        $user = Auth::user();
+      $userTerrains =  Terrain::whereHas('complex', function ($subQuery) {
+                      $subQuery->where('user_id', Auth::user()->id);
+                    })->get();
+
+      if(empty($userTerrains)){
+        weetAlert::error('Opps !', 'Veuillez Ajouter Un Terrain. !')->persistent('Fermer');
+        return redirect()->route('showUserAddTerrain');
+      }
+
+          return view ('User::frontOffice.userAddEquipement',
+          [   'specialities' => TerrainSpeciality::All(),
+              'terrains' => $userTerrains
+          ]
+        );
+    }
+
+    public function hundleUserAddEquipement(Request $request)
+    {
+      $user = Auth::user();
+
+      $this->validate($request,[
+        "name"=>              "required",
+        "description"=>       "required",
+        "terrain_id" =>       "required",
+        "speciality_id" =>    "required",
+        "hauteur"=>           "required|between:0,9999",
+        'longueur' =>         "required|between:0,9999",
+        'largueur' =>         "required|between:0,9999"
+      ],
+      [
+        'name' =>            'Le champ Nom de terrain est  obligatoire',
+        'terrain_id' =>      'Le champ Terrain est  obligatoire',
+        'speciality_id' =>   'Le champ speciality d\'equipement est  obligatoire',
+        "description" =>     'Le champ Description d\'equipement est  obligatoire',
+        "hauteur.required" =>   'Le champ Hauteur  est  obligatoire',
+        "hauteur.between" =>    'Format Invalide de champ Type',
+        "longueur.required" =>   'Le champ Longueur  est  obligatoire',
+        "longueur.between" =>    'Format Invalide de champ Type',
+        "largueur.required" =>   'Le champ Largueur  est  obligatoire',
+        "largueur.between" =>    'Format Invalide de champ Type'
+      ]
+    );
+
+      $equipment = Equipment::create([
+        'name' => $request->name,
+        'description' => $request->description,
+        'status' => 'Verif',
+        'hauteur' => $request->hauteur,
+        'longueur' => $request->longueur,
+        'largueur' => $request->largueur,
+        'speciality_id' => $request->speciality_id,
+        'terrain_id' => $request->terrain_id
+      ]);
+
+      $imagePath = 'storage/uploads/equipements/';
+      foreach ($request->images as $image) {
+        $filename = 'equipement-'.$equipment->id .'-'. str_random(5) . '-' . time() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path($imagePath), $filename);
+
+        Media::create([
+
+          'type' => 1,
+          'link' => $imagePath . '' . $filename,
+          'equipment_id' => $equipment->id
+        ]);
+      }
+
+      SweetAlert::success('Bien !', 'Equipement ajouté avec succès. !')->persistent('Fermer');
+      return redirect()->route('showUserAddEquipement');
+    }
 
 }

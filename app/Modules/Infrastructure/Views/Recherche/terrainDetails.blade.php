@@ -100,15 +100,15 @@
                         <h4 style="color:gray">Déscription</h4>
                       </div>
 
-                      @foreach ($equipment->medias as $media)
+
                         <div class="gallery-item" style="width:100%;margin-bottom:15px;">
                           <div class="grid-item-holder">
                             <div class="box-item">
-                              <img src="{{$media->link}}" alt="{{$media->link}}">
+                              <img src="{{$equipment->medias->first()->link}}" alt="{{$equipment->medias->first()->link}}">
                             </div>
                           </div>
                         </div>
-                      @endforeach
+
 
                         <p>Hauteur :  - {{$equipment->hauteur}} m</p>
                         <p>Longueur: - {{$equipment->longueur}} m</p>

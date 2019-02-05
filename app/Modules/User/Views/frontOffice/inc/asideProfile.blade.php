@@ -23,6 +23,7 @@
                       <li><a href="#"><i class="fa fa-comments-o"></i>Les Avis </a></li>
                       <li><a href="{{route('showUserAddComplex')}}" class="user-profile-act"><i class="fa fa-plus-square-o"></i> Ajouter Des Complexes</a></li>
                       <li><a href="{{route('showUserAddTerrain')}}" class="user-profile-act"><i class="fa fa-plus-square-o"></i> Ajouter Des Terrains</a></li>
+                      <li><a href="{{route('showUserAddEquipement')}}" class="user-profile-act"><i class="fa fa-plus-square-o"></i> Ajouter Des Equipments</a></li>
                   </ul>
               </div>
 
