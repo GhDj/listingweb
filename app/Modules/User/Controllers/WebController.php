@@ -49,8 +49,8 @@ class WebController extends Controller
             $user->status = 1;
             $user->validation = '';
             $user->save();
-
-            return redirect()->route('showAdminDashboard'); //TODO modify redirect (to login)
+            Toastr::success('Vérification a été effectué avec succès !', 'Bien !', ["positionClass" => "toast-top-full-width","showDuration"=> "4000", "hideDuration"=> "1000", "timeOut"=> "300000"]);
+            return redirect()->route('showHome'); //TODO modify redirect (to login)
         }else {
             return 'invalide link';
         }
@@ -122,12 +122,12 @@ class WebController extends Controller
 
          $user->assignRole($request->input('role'));
 
-         // $content = ['user' => $user , 'validationLink' => URL('user/activation/'.$user->email.'/'.$validation)];
-         //
-         // Mail::send('User::mail.welcome', $content, function ($message) use ($user) {
-         // $message->to($user->email);
-         // $message->subject('Bienvenue');
-         // });
+         $content = ['user' => $user , 'validationLink' => URL('user/activation/'.$user->email.'/'.$validation)];
+
+         Mail::send('User::mail.welcome', $content, function ($message) use ($user) {
+         $message->to($user->email);
+         $message->subject('Bienvenue');
+         });
 
          Toastr::success('Inscription a été effectué avec succès !', 'Bien !', ["positionClass" => "toast-top-full-width","showDuration"=> "4000", "hideDuration"=> "1000", "timeOut"=> "300000"]);
 
@@ -538,7 +538,9 @@ class WebController extends Controller
         "speciality_id" =>    "required",
         "hauteur"=>           "required|between:0,9999",
         'longueur' =>         "required|between:0,9999",
-        'largueur' =>         "required|between:0,9999"
+        'largueur' =>         "required|between:0,9999",
+        'images' =>           "required",
+        'images.*' =>         "image|mimes:jpeg,png,jpg,gif,svg"
       ],
       [
         'name' =>            'Le champ Nom de terrain est  obligatoire',
@@ -550,7 +552,9 @@ class WebController extends Controller
         "longueur.required" =>   'Le champ Longueur  est  obligatoire',
         "longueur.between" =>    'Format Invalide de champ Type',
         "largueur.required" =>   'Le champ Largueur  est  obligatoire',
-        "largueur.between" =>    'Format Invalide de champ Type'
+        "largueur.between" =>    'Format Invalide de champ Type',
+        'images.image' =>    'Le champ doit ètre de type image',
+        'images.mimes' =>    'Le champ doit ètre de type image: peg,png,jpg,gif,svg',
       ]
     );
 
@@ -582,4 +586,66 @@ class WebController extends Controller
       return redirect()->route('showUserAddEquipement');
     }
 
+    public function showUserAddClub()
+    {
+      $user = Auth::user();
+    $userTerrains =  Terrain::whereHas('complex', function ($subQuery) {
+                    $subQuery->where('user_id', Auth::user()->id);
+                  })->get();
+
+    if(empty($userTerrains)){
+      weetAlert::error('Opps !', 'Veuillez Ajouter Un Terrain. !')->persistent('Fermer');
+      return redirect()->route('showUserAddTerrain');
+    }
+
+        return view ('User::frontOffice.userAddClub',
+        [
+            'terrains' => $userTerrains
+        ]
+      );
+    }
+
+    public function hundleUserAddClub(Request $request)
+    {
+      $user = Auth::user();
+
+      $this->validate($request,[
+        "name"=>              "required",
+        "description"=>       "required",
+        "terrain_id" =>       "required",
+        'images' =>           "required",
+        'images.*' =>         "image|mimes:jpeg,png,jpg,gif,svg"
+      ],
+      [
+        'name' =>            'Le champ Nom de terrain est  obligatoire',
+        'terrain_id' =>      'Le champ Terrain est  obligatoire',
+        "description" =>     'Le champ Description d\'equipement est  obligatoire',
+        'images.image' =>    'Le champ doit ètre de type image',
+        'images.mimes' =>    'Le champ doit ètre de type image: peg,png,jpg,gif,svg',
+      ]
+    );
+
+      $club = Club::create([
+        'name' => $request->name,
+        'description' => $request->description,
+        'terrain_id' => $request->terrain_id
+      ]);
+
+      $imagePath = 'storage/uploads/clubs/';
+      foreach ($request->images as $image) {
+        $filename = 'club-'.$club->id .'-'. str_random(5) . '-' . time() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path($imagePath), $filename);
+
+        Media::create([
+
+          'type' => 1,
+          'link' => $imagePath . '' . $filename,
+          'club_id' => $club->id
+        ]);
+      }
+
+      SweetAlert::success('Bien !', 'Club ajouté avec succès. !')->persistent('Fermer');
+      return redirect()->route('showUserAddEquipement');
+
+}
 }
