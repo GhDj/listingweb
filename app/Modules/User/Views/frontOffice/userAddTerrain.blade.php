@@ -50,7 +50,7 @@
                 <!-- profile-edit-wrap -->
                 <div class="profile-edit-wrap">
                     <div class="profile-edit-page-header">
-                        <h2>Ajouter Un terrain<</h2>
+                        <h2>Ajouter Un terrain</h2>
                         <div class="breadcrumbs"><a href="#">Accueil</a><a href="#">Profile</a><span>Ajouter Un terrain</span></div>
                     </div>
                     <div class="row">
