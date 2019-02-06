@@ -76,7 +76,7 @@
                 <h3>Description</h3>
               </div>
 
-            <p>{{ $club->description}}</p>
+            <p>{{ $clubDetail->description}}</p>
             </div>
             <!-- list-single-main-item end -->
 
@@ -90,7 +90,7 @@
                     <div class="box-widget result">
                       <div class="box-widget-content">
                         <ul>
-                          @foreach (getTeams($club->id,$speciality->id,$speciality) as $teams)
+                          @foreach (getTeams($clubDetail->id,$speciality->id,$speciality) as $teams)
 
                             @foreach ($teams as $team)
 
@@ -127,9 +127,7 @@
                       <div class="box-widget result">
                         <div class="box-widget-content" style="padding:10px 30px">
                           <ul>
-                            <li><span class="club-name"style="margin-left:3%">Type </span><span class="club-level" style="margin-right:8%">Time</span></li>
-                            <li><span class="club-name">Equipe 2 </span><span class="club-level">Niveau 2</span></li>
-                            <li><span class="club-name">Nombres d'équipe </span><span class="club-level">{{$club->teams->count()}}</span></li>
+                            <li><span class="club-name">Nombres d'équipe </span><span class="club-level">{{$clubDetail->teams->count()}}</span></li>
                             <li><span class="club-name"> Nombres de Sports </span><span class="club-level">{{$specialitys->count()}}</span></li>
 
                           </ul>
@@ -142,12 +140,12 @@
                   <span class="current-status">Equipes</span>
                   <ul>
 
-                    @foreach ($club->teams as $team)
+                    @foreach ($clubDetail->teams as $team)
 
                       <li class="clearfix">
-                        @foreach ($team->medias as $media)
-                          <a href="#" class="widget-posts-img"><img src="{{ $media->link }}" alt=""></a>
-                        @endforeach
+
+                          <a href="#" class="widget-posts-img"><img src="{{ $team->medias()->first()->link }}" alt=""></a>
+
 
                         <div class="widget-posts-descr">
                           <a href="#" title="">{{ $team->name }}</a>
@@ -202,7 +200,7 @@
                       <div class="col-md-24">
                         <!-- 1 -->
 
-                        @foreach ($club->medias as $media)
+                        @foreach ($clubDetail->medias as $media)
 
                           <div class="gallery-item">
                            <div class="grid-item-holder">

@@ -25,6 +25,8 @@
                       <li><a href="{{route('showUserAddTerrain')}}" class="user-profile-act"><i class="fa fa-plus-square-o"></i> Ajouter Des Terrains</a></li>
                       <li><a href="{{route('showUserAddEquipement')}}" class="user-profile-act"><i class="fa fa-plus-square-o"></i> Ajouter Des Equipments</a></li>
                       <li><a href="{{route('showUserAddClub')}}" class="user-profile-act"><i class="fa fa-plus-square-o"></i> Ajouter Des Clubs</a></li>
+                      <li><a href="{{route('showUserAddTeam')}}" class="user-profile-act"><i class="fa fa-plus-square-o"></i> Ajouter Des Equipe</a></li>
+
                   </ul>
               </div>
 

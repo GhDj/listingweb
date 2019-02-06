@@ -49,6 +49,9 @@ class Team extends Model
 
   }
 
-
+  function getLevelAttribute($level){
+    $teamLevel = array('Devision 1', 'Devision 2', 'Devision 3');
+    return $teamLevel[$level-1];
+  }
 
 }

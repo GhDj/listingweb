@@ -284,23 +284,21 @@
 
                   <table id="clubs">
                     <tr>
-                      <th>Club Nice</th>
+                      <th>Nom Equipe</th>
+                      <th>Nom Club</th>
                       <th>Sport</th>
                       <th>Niveau</th>
                     </tr>
-
-                    <tr>
-                      <td>*************</td>
-                      <td>*************</td>
-                      <td>*************</td>
-                    </tr>
-
-                    <tr>
-                      <td>*************</td>
-                      <td>*************</td>
-                      <td>*************</td>
-                    </tr>
-
+                    @foreach ($terrain->clubs as $teamClubs)
+                      @foreach ($teamClubs->teams as $team)
+                        <tr>
+                        <td>{{$team->name}}</td>
+                        <td>{{$team->club->name}}</td>
+                        <td>{{$team->speciality->speciality}}</td>
+                        <td>{{$team->level}}</td>
+                        </tr>
+                      @endforeach
+                    @endforeach
 
                   </table>
                 </div>
