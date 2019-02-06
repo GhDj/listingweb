@@ -42,10 +42,14 @@ class WebController extends Controller
     * @return \Illuminate\Http\Response
     */
     public function showTerrainDetails($id)
-    {
-
+    {   $terrain =  Terrain::find($id);
+        $starsTerrain = 0;
+        if (!empty($terrain->reviews)) {
+          $starsTerrain = $terrain->reviews->avg('note');
+        }
         return view('Infrastructure::Recherche.terrainDetails',[
-        'terrain' => Terrain::find($id)
+        'terrain' => $terrain,
+        'starsTerrain' => $starsTerrain
       ]);
     }
 
@@ -57,14 +61,18 @@ class WebController extends Controller
     public function showClubDetails($id)
     {
       $club = Club::find($id);
-
+      $starsClub = 0;
+      if (!empty($club->reviews)) {
+        $starsClub = $club->reviews->avg('note');
+      }
       $specialitys = TerrainSpeciality::whereHas('teams.club', function ($query) use ($id){
                       $query->where('id',$id);
                 })->get();
 
       return view('Infrastructure::Recherche.clubDetails',[
-      'club' => $club,
-      'specialitys' => $specialitys
+      'clubDetail' => $club,
+      'specialitys' => $specialitys,
+      'starsClub' => $starsClub
     ]);
     }
 

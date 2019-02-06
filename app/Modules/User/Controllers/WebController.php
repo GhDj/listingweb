@@ -18,6 +18,7 @@ use App\Modules\Infrastructures\Models\Complex;
 use App\Modules\Infrastructures\Models\TerrainSpeciality;
 use App\Modules\General\Models\Media;
 use App\Modules\Infrastructures\Models\Equipment;
+use App\Modules\Infrastructure\Models\Team;
 
 use Carbon\Carbon;
 
@@ -648,4 +649,63 @@ class WebController extends Controller
       return redirect()->route('showUserAddEquipement');
 
 }
+
+public function showUserAddTeam()
+{
+    $user = Auth::user();
+    $userClubs = Club::whereHas('terrain.complex', function ($subQuery) use ($user){
+                $subQuery->where('user_id', $user->id);
+            })->get();
+      if (empty($userClubs)) {
+      weetAlert::error('Opps !', 'Veuillez Ajouter Un Terrain. !')->persistent('Fermer');
+      return redirect()->route('showUserAddTerrain');
+    }
+    return view ('User::frontOffice.userAddTeam',
+    [   'specialities' => TerrainSpeciality::All(),
+        'clubs' => $userClubs
+    ]
+  );
+
+}
+public function hundleUserAddTeam(Request $request)
+{
+  $user = Auth::user();
+  $this->validate($request,[
+    "name"=>              "required",
+    "club_id"=>           "required",
+    "speciality_id" =>    "required",
+    'images' =>           "required",
+    'images.*' =>         "image|mimes:jpeg,png,jpg,gif,svg"
+  ],
+  [
+    'name' =>            'Le champ Nom de terrain est  obligatoire',
+    'club_id' =>          'Le champ Club est  obligatoire',
+    "speciality_id" =>    'Le champ Spécialité est  obligatoire',
+    'images.image' =>    'Le champ doit ètre de type image',
+    'images.mimes' =>    'Le champ doit ètre de type image: peg,png,jpg,gif,svg',
+  ]
+);
+
+    $team = Team::create([
+      "name"=>              $request->name,
+      "level" =>            $request->level,
+      "club_id"=>           $request->club_id,
+      "speciality_id" =>    $request->speciality_id,
+    ]);
+
+    $imagePath = 'storage/uploads/teams/';
+    foreach ($request->images as $image) {
+      $filename = 'team-'.$team->id .'-'. str_random(5) . '-' . time() . '.' . $image->getClientOriginalExtension();
+      $image->move(public_path($imagePath), $filename);
+
+      Media::create([
+        'type' => 1,
+        'link' => $imagePath . '' . $filename,
+        'team_id' => $team->id
+      ]);
+    }
+
+    SweetAlert::success('Bien !', 'Equipe ajouté avec succès. !')->persistent('Fermer');
+    return redirect()->route('showUserAddTeam');
+  }
 }

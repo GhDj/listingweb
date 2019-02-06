@@ -90,21 +90,21 @@ class ClubSeeder extends Seeder
                           ]);
            $firstEquipe = Team::Create([
                              'name' => 'equipe 1',
-                             'level' => 'level 1',
+                             'level' => '1',
                              'speciality_id' => TerrainSpeciality::find(1)->id,
                              'club_id' => $firstClub->id
            ]);
 
            $secondEquipe = Team::Create([
                              'name' => 'equipe 2',
-                             'level' => 'level 2',
+                             'level' => '2',
                              'speciality_id' => TerrainSpeciality::find(1)->id,
                              'club_id' => $firstClub->id
            ]);
 
            $thirdEquipe = Team::Create([
                              'name' => 'equipe 3',
-                             'level' => 'level 2',
+                             'level' => '3',
                              'speciality_id' => TerrainSpeciality::find(2)->id,
                              'club_id' => $firstClub->id
            ]);
