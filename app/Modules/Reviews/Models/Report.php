@@ -41,7 +41,7 @@ class Report extends Model {
 
     public function reporter(){
 
-        return $this->belongsTo('App\Modules\User\Models\User');
+        return $this->belongsTo('App\Modules\User\Models\User','user_id');
     }
 
     public function reported(){

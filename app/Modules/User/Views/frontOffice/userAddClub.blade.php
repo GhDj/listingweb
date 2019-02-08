@@ -18,7 +18,7 @@
 
 @section('content')
 
-  {{-- {{dd($errors)}} --}}
+
   <style media="screen">
     .chosen{
       width: 100%;

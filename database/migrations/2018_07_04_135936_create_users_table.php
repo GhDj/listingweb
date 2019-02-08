@@ -24,14 +24,16 @@ class CreateUsersTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->unique();
-            $table->string('password', 60);
+            $table->string('password', 60)->nullable();
             $table->integer('phone')->nullable();
-            $table->char('gender', 1); //1 - homme / 2 - femme
-            $table->integer('status')->default(0); //0 - inactive / 1 - active
+            $table->char('gender', 1)->nullable(); //1 - homme / 2 - femme
+            $table->integer('status')->default(0); // 0 mail invalide / 1 mail valid profile to complet / 2 OK / 3 banned
             $table->string('picture')->nullable();
             $table->string('validation')->nullable();
             $table->integer('promo_pts')->default(0);
-            $table->integer('address_id')->unsigned();
+            $table->string('provider')->nullable();
+            $table->string('provider_id')->nullable()->unique();
+            $table->integer('address_id')->unsigned()->nullable();
             $table->foreign('address_id')->references('id')->on('addresses');
             $table->rememberToken();
             $table->timestamps();

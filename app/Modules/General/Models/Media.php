@@ -28,6 +28,7 @@ class Media extends Model {
     protected $fillable = [
         'type',
         'link',
+        'review_id',
         'terrain_id',
         'equipment_id',
         'complex_id',

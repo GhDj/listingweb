@@ -51,7 +51,7 @@ $(document).ready(function(){
               }
 
 
-
+    
               @isset($results)
               var locations = [
               @foreach ($results as $result)
@@ -96,7 +96,11 @@ $(document).ready(function(){
           var map = new google.maps.Map(document.getElementById('map-main'), {
               zoom: 6,
               scrollwheel: false,
-              center: new google.maps.LatLng(46.360364,2.281369),
+              center: @if (isset($latitude) && isset($longitude))
+              new google.maps.LatLng({{$latitude}},{{$longitude}})
+              @else
+              new google.maps.LatLng(46.360364,2.281369)
+              @endif,
               mapTypeId: google.maps.MapTypeId.ROADMAP,
               zoomControl: false,
               mapTypeControl: false,
@@ -117,7 +121,6 @@ $(document).ready(function(){
           });
 
           var geocoder = new google.maps.Geocoder();
-
            google.maps.event.addListener(map, 'click', function(event) {
              geocoder.geocode({
                'latLng': event.latLng
@@ -178,7 +181,7 @@ $(document).ready(function(){
 
 
           for (i = 0; i < locations.length; i++) {
-              marker = new google.maps.Marker({
+            marker = new google.maps.Marker({
                   position: new google.maps.LatLng(locations[i][1], locations[i][2]),
                   icon: locations[i][4],
                   id: i

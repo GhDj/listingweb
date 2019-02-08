@@ -19,6 +19,7 @@ use App\Modules\Infrastructures\Models\TerrainSpeciality;
 use App\Modules\General\Models\Media;
 use App\Modules\Infrastructures\Models\Equipment;
 use App\Modules\Infrastructure\Models\Team;
+use Laravel\Socialite\Facades\Socialite;
 
 use Carbon\Carbon;
 
@@ -47,7 +48,7 @@ class WebController extends Controller
         }
         if($user->validation == $activationCode) {
 
-            $user->status = 1;
+            $user->status = 2;
             $user->validation = '';
             $user->save();
             Toastr::success('Vérification a été effectué avec succès !', 'Bien !', ["positionClass" => "toast-top-full-width","showDuration"=> "4000", "hideDuration"=> "1000", "timeOut"=> "300000"]);
@@ -57,6 +58,137 @@ class WebController extends Controller
         }
 
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function handleSocialRedirect($provider)
+  {
+      return Socialite::driver($provider)->redirect();
+  }
+
+  public function handleSocialCallback($provider)
+{
+    $providerData = Socialite::driver($provider)->stateless()->user();
+
+    $user = User::where('provider_id', '=', $providerData->id)
+        ->orWhere('email', '=', $providerData->email)
+        ->first();
+
+    if (!$user) {
+
+        if ($providerData->name == null) {
+            $name = strtok($providerData->email, '@');
+        } else {
+
+            $name = explode(" ",$providerData->name);
+            $firstName = $name[0];
+            $lastName = $name[1];
+        }
+
+        $imagePath = 'storage/uploads/avatar/'.$providerData->id.'-'.time().'.png';
+        file_put_contents($imagePath, file_get_contents($providerData->avatar));
+
+        $user = User::create([
+            'provider_id' => $providerData->id,
+            'provider' => $provider,
+            'email' => $providerData->email,
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'picture' => $imagePath,
+            'status' => 1,
+        ]);
+
+        Auth::login($user);
+        Toastr::error('profile to complete !');
+        return redirect(route('showUserCompleteProfile'));
+    }
+
+    if ($user->status === 0) {
+        // todo update mail to verified
+    } elseif ($user->status === 1) {
+        Auth::login($user);
+        Toastr::error('profile to complete !');
+        return redirect(route('showUserCompleteProfile'));
+    } elseif ($user->status === 3) {
+        Auth::logout();
+        Toastr::error('Votre compte est désactivé !');
+        return back();
+    }
+
+    Auth::login($user);
+return redirect()->route('showUserDashboard');
+}
+
+public function showUserCompleteProfile(){
+        if (!Auth::user()) {
+            // todo toast
+            return redirect(route('showHome'));
+        }
+
+        if(Auth::user() and Auth::user()->status === 2){
+            return redirect(route('showHome')); // todo middleware ?
+        }
+
+        return view('User::frontOffice.lastStep', [
+
+        ]);
+    }
+    public function handleUserCompleteProfile(Request $request){
+
+      if (!Auth::user()) {
+         // todo toast
+         return redirect(route('showHome'));
+     }
+
+      $user = User::find(Auth::user()->id);
+
+
+       $this->validate($request, [
+           'email' => 'required|email|unique:users,email,'.$user->id,
+           'firstName' => 'required',
+           'lastName' => 'required',
+           'gender' => 'required',
+           'address' => 'required',
+           'password'   => 'required|confirmed',
+       ],
+           [
+               'email.email' => 'Veuillez saisir un email valide',
+               'email.required' => 'Le champ email est obligatoire',
+               'email.unique' => 'L\'email indiqué est déjà utilisé',
+               'firstName.required' => 'Le champ Prénom est obligatoire',
+               'lastName.required' => 'Le champ Nom est obligatoire',
+               'address' => 'Le Address Nom est obligatoire',
+               'gender.required' => 'Le champ Genre est obligatoire',
+               'password.required'   => 'Veuillez Saisie Mot de passe',
+               'password.confirmed'   => 'Mot de passe Doit ètre Identique',
+           ]);
+
+           $address = Address::Create([
+             'city' => $request->city ,
+             'postal_code' => $request->code ,
+             'country' => $request->country ,
+             'locality' => $request->city ,
+             'address' => $request->address ,
+             'latitude' =>  $request->latitude,
+             'longitude' =>  $request->longitude ,
+             'description' => $request->address
+
+           ]);
+           $user->first_name  = $request->firstName;
+           $user->last_name = $request->lastName;
+           $user->email = $request->email;
+           $user->gender = $request->gender;
+           $user->password =  bcrypt($request->password);
+           $user->address_id = $address->id;
+           $user->status = 2;
+
+           $user->save();
+           return redirect()->route('showUserDashboard');
+   }
+
 
     /**
      * Display a listing of the resource.
@@ -102,25 +234,23 @@ class WebController extends Controller
           'address' =>  null,
           'latitude' => $latitude ,
           'longitude' => $longitude,
-          'description' => null
+          'description' => null,
       ]);
 
       $validation = str_random(30);
-
-      $user =  User::create([
+      $user = User::create([
           'first_name' => $request->input('firstName'),
           'last_name' => $request->input('lastName'),
-          'email' => $request->input('email'),
-          'password' => bcrypt($request->input('password')),
-          'phone' => ($request->has('phone'))? $request->input('phone') : null,
-          'gender' => ($request->input('gender'))? $request->input('phone') : 1,
-          'picture' => 'img/unknown.png',
-          'status' => 1,
+          'email' =>  $request->input('email'),
+          'password' =>  bcrypt($request->input('password')),
+          'gender' =>  ($request->input('gender'))? $request->input('gender') : 1,
           'validation' => $validation,
+          'status' => 0,
+          'phone' => ($request->has('phone'))? $request->input('phone') : null,
+          'promo_pts' => 0,
+          'picture' => 'img/unknown.png',
           'address_id' => $userAddress->id
-
       ]);
-
          $user->assignRole($request->input('role'));
 
          $content = ['user' => $user , 'validationLink' => URL('user/activation/'.$user->email.'/'.$validation)];
@@ -162,20 +292,21 @@ class WebController extends Controller
 
             if (Auth::attempt($credentials)) {
                 $user = Auth::user();
-                Auth::login($user);
-                if ($user->status == 1) {
-
-                  return redirect()->route('showUserDashboard');
-
+              if ($user->status == 0) {
+                  Toastr::error('Vérifiez d\'abord votre email !');
+                  return back();
                 }
-                else{
+                elseif ($user->status == 3) {
                     Auth::logout();
-                    Toastr::error('Votre compte est suspendu !', 'Oops', ["positionClass" => "toast-top-full-width","showDuration"=> "4000", "hideDuration"=> "1000", "timeOut"=> "300000"]);
-                    return redirect()->route('showHome');
+                    Toastr::error('Votre Account est désactivé !');
+                    return back();
+                }else {
+                  Auth::login($user);
+                  return redirect()->route('showUserDashboard');
                 }
             }
-            Toastr::error('Vérifiez Les données saisie!', 'Oops', ["positionClass" => "toast-top-full-width","showDuration"=> "4000", "hideDuration"=> "1000", "timeOut"=> "300000"]);
 
+            Toastr::error('Vérifiez Les données saisie!', 'Oops', ["positionClass" => "toast-top-full-width","showDuration"=> "4000", "hideDuration"=> "1000", "timeOut"=> "300000"]);
             return back();
         }
 
@@ -214,6 +345,7 @@ class WebController extends Controller
             'phone'  => ($request->phone)? $request->phone:$user->phone,
             'gender' => ($request->gender) ? $request->gender:$user->gender,
             'address' => ($request->address) ? $request->address : $user->address,
+            'status' => 2
 
         ]);
 

@@ -43,6 +43,10 @@ class WebController extends Controller
     */
     public function showTerrainDetails($id)
     {   $terrain =  Terrain::find($id);
+      if (!$terrain) {
+        weetAlert::error('Opps !', 'Terrain Introuvable. !')->persistent('Fermer');
+        return redirect()->route('showHome');
+      }
         $starsTerrain = 0;
         if (!empty($terrain->reviews)) {
           $starsTerrain = $terrain->reviews->avg('note');
@@ -61,6 +65,10 @@ class WebController extends Controller
     public function showClubDetails($id)
     {
       $club = Club::find($id);
+      if (!$club) {
+        weetAlert::error('Opps !', 'Club Introuvable. !')->persistent('Fermer');
+        return redirect()->route('showHome');
+      }
       $starsClub = 0;
       if (!empty($club->reviews)) {
         $starsClub = $club->reviews->avg('note');
@@ -85,7 +93,6 @@ class WebController extends Controller
     {
 
             $data = Input::All();
-
 
             if(isset($data['latitude']) and !empty($data['latitude'])){
               $latitude = $data['latitude'];
@@ -155,7 +162,10 @@ class WebController extends Controller
               return View('Infrastructure::Recherche.searchPage',[
                    'terrains' => $terrains,
                    'categories' => Category::select('category')->groupBy('category')->get(),
-                   'sports' => TerrainSpeciality::All()
+                   'sports' => TerrainSpeciality::All(),
+                   'latitude' => $data['latitude'],
+                   'longitude' => $data['longitude'],
+                   'address' =>   $data['address'],
                  ]);
 
     }
@@ -240,7 +250,10 @@ class WebController extends Controller
               return View('Infrastructure::Recherche.searchPage',[
                    'clubs' => $clubs,
                    'categories' => Category::select('category')->groupBy('category')->get(),
-                   'sports' => TerrainSpeciality::All()
+                   'sports' => TerrainSpeciality::All(),
+                   'latitude' => $data['latitudeClub'],
+                   'longitude' => $data['latitudeClub'],
+                   'address' =>   $data['address'],
                  ]);
 
     }
@@ -249,7 +262,6 @@ class WebController extends Controller
 public function handleFilterMaps(Request $request)
 {
       $data = Input::All();
-
 
       if(isset($data['latitude']) and !empty($data['latitude'])){
         $latitude = $data['latitude'];
@@ -324,7 +336,11 @@ public function handleFilterMaps(Request $request)
         return View('Infrastructure::Recherche.searchPage',[
              'terrains' => $terrains,
              'categories' => Category::select('category')->groupBy('category')->get(),
-             'sports' => TerrainSpeciality::All()
+             'sports' => TerrainSpeciality::All(),
+             'latitude' => $data['latitude'],
+             'longitude' => $data['longitude'],
+             'address' =>   $data['address'],
+             'oldCategories'  => $data['categories']
            ]);
 
 }
@@ -407,7 +423,10 @@ public function handleFilterClubs(Request $request)
         return View('Infrastructure::Recherche.searchPage',[
              'clubs' => $clubs,
              'categories' => Category::select('category')->groupBy('category')->get(),
-             'sports' => TerrainSpeciality::All()
+             'sports' => TerrainSpeciality::All(),
+             'latitude' => $data['latitudeClub'],
+             'longitude' => $data['longitudeClub'],
+             'address' =>   $data['address'],
            ]);
 
 }

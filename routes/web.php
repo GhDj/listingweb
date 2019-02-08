@@ -14,9 +14,9 @@
 Route::get('/', function () {
     return redirect()->route('showHome');
 });
-Route::get('/test', function()
+Route::get('med', function()
 {
 
-  return view('User::frontOffice.userAddTerrain');
+  return view ('User::frontOffice.lastStep');
 
 });

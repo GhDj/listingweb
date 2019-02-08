@@ -5,7 +5,7 @@
                     <a href="{{route('showHome')}}"><img src="{{asset('images/logo.png')}}" alt=""></a>
                 </div>
 
-                @if (Auth::check() and Auth::user()->status == 1)
+                @if (Auth::check() and Auth::user()->status == 2)
                   <div class="header-user-menu">
                       <div class="header-user-name">
                         @if (Auth::user()->picture != null)
