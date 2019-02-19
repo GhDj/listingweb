@@ -34,54 +34,49 @@
         <div class="list-single-header-item">
           <div class="list-single-header-item-opt fl-wrap">
             <div class="list-single-header-cat fl-wrap">
-
-
-          @isset($terrain)
-                <a href="#">{{  $terrain->category->category  }}</a>
-          @endisset
-          @isset($clubDetail)
-                <a href="#">{{  $clubDetail->terrain->category->category  }}</a>
-          @endisset
+                @isset($terrain)
+                      <a href="#">{{  $terrain->category->category  }}</a>
+                @endisset
+                @isset($clubDetail)
+                      <a href="#">{{  $clubDetail->terrain->category->category  }}</a>
+                @endisset
             </div>
           </div>
-          @isset($terrain)
-            <h2>{{  $terrain->name  }}</h2>
-          @endisset
-          @isset($clubDetail)
-            <h2>{{  $clubDetail->name  }}</h2>
-          @endisset
+            @isset($terrain)
+              <h2>{{  $terrain->name  }}</h2>
+            @endisset
+            @isset($clubDetail)
+              <h2>{{  $clubDetail->name  }}</h2>
+            @endisset
 
           @isset($starsTerrain)
               <div class="listing-rating card-popup-rainingvis" data-starrating2="{{$starsTerrain}}">
+                @if (!empty($terrain->reviews))
+                    <span>{{$terrain->reviews->count()}} reviews</span>
+                    @else
+                    <span>Aucune review</span>
+                @endif
+              </div>
           @endisset
+
 
           @isset($starsClub)
               <div class="listing-rating card-popup-rainingvis" data-starrating2="{{$starsClub}}">
-          @endisset
-
-
-            @isset($terrain)
-              @if (!empty($terrain->reviews))
-                  <span>{{$terrain->reviews->count()}} reviews</span>
-                  @else
-                  <span>Aucune review</span>
-              @endif
-            @endisset
-
-            @isset($clubDetail)
               @if (!empty($clubDetail->reviews))
                   <span>{{$clubDetail->reviews->count()}} reviews</span>
                   @else
                     <span>Aucune review</span>
               @endif
+            </div>
             @endisset
-          </div>
+
+
           @isset($terrain)
-            <div class="list-post-counter single-list-post-counter"><span>{{$terrain->wishlists->count()}}</span><i class="fa fa-heart"></i></div>
+            <div id="favorieTerrains" class="list-post-counter single-list-post-counter"><span>{{$terrain->wishlists->count()}}</span><i class="fa fa-heart"></i></div>
           @endisset
 
           @isset($clubDetail)
-            <div class="list-post-counter single-list-post-counter"><span>{{$clubDetail->wishlists->count()}}</span><i class="fa fa-heart"></i></div>
+            <div id="favorieClubs" class="list-post-counter single-list-post-counter"><span>{{$clubDetail->wishlists->count()}}</span><i class="fa fa-heart"></i></div>
           @endisset
 
           <div class="clearfix"></div>
@@ -112,7 +107,7 @@
             <div class="col-md-6">
               <div class="fl-wrap list-single-header-column">
                 @isset($terrain)
-                @if (Auth::check() and Auth::user()->status == 1)
+                @if (Auth::check() and Auth::user()->status == 2)
 
                   <span class="viewed-counter wichlist" id ="terrain{{$terrain->id}}" data-terrain = "{{ $terrain->id }}"><span>
                     @if (is_null(Auth::user()->wishlists->where('wished_id',$terrain->id)->where('wished_type','App\Modules\Infrastructures\Models\Terrain')->first()))
@@ -128,7 +123,7 @@
                 @endisset
 
                 @isset($clubDetail)
-                  @if (Auth::check() and Auth::user()->status == 1)
+                  @if (Auth::check() and Auth::user()->status == 2)
                     <span class="viewed-counter wichlist" id ="club{{$clubDetail->id}}" data-club = "{{ $clubDetail->id }}"><span>
                   @if (is_null(Auth::user()->wishlists->where('wished_id',$clubDetail->id)->where('wished_type','App\Modules\Infrastructures\Models\Club')->first()))
                     <img src="{{asset('img/unlike.png')}}" alt="">

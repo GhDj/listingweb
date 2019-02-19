@@ -693,11 +693,51 @@ $.get("http://ipinfo.io", function (response) {
       });
     });
  function initAutocomplete() {
+   var city, street, place, state, code, country = ' ';
             var input = document.getElementById('autocomplete-input');
             var autocomplete = new google.maps.places.Autocomplete(input);
             autocomplete.addListener('place_changed', function() {
-              var place = autocomplete.getPlace();
-              if (!place.geometry) {
+              var placeUser = autocomplete.getPlace();
+              var lat = placeUser.geometry.location.lat();
+              var lng = placeUser.geometry.location.lng();
+
+
+
+                  for (var i = 0; i < placeUser.address_components.length; i++) {
+                   var addressType = placeUser.address_components[i]["types"][0];
+
+
+                   switch(addressType){
+                                   case 'route' :
+                                   street =   placeUser.address_components[i]['long_name'];
+
+                                       break;
+                                   case 'administrative_area_level_1' :
+                                      place =   placeUser.address_components[i]['long_name'];
+                                       break;
+                                   case 'locality' :
+
+                                    city =   placeUser.address_components[i]['long_name'];
+                                       break;
+                                       case 'postal_code':
+                                       code =   placeUser.address_components[i]['long_name'];
+                                         break;
+                                   case 'country' :
+                                        country =   placeUser.address_components[i]['long_name'];
+                                       break;
+                               }
+
+
+                 }
+
+                 document.getElementById('city').value = city;
+                 document.getElementById('country').value = country;
+                 document.getElementById('code').value = code;
+                 document.getElementById('street').value = street;
+                  document.getElementById('locality').value = city;
+                 document.getElementById('latitude').value = lat;
+                 document.getElementById('longitude').value = lng;
+              if (!placeUser.geometry) {
                 window.alert("No details available for input: '" + place.name + "'");
                 return;
               }

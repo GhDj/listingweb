@@ -181,6 +181,10 @@
                         <div class="listing-rating card-popup-rainingvis" data-starrating2="{{ $review->note }}"> </div>
                         <div class="clearfix"></div>
                         <p>" {{ $review->comment }} "</p>
+                        @if ($review->medias->count()>0)
+                          <img src="{{$review->medias->first()->link}}" alt="" style="float: right; width: 50%;">
+                        @endif
+
                         <span class="reviews-comments-item-date"><i class="fa fa-calendar-check-o"></i>{{$review->updated_at->diffForHumans()}}</span>
                       </div>
                     </div>
@@ -272,6 +276,43 @@
                 <!-- Add Review Box / End -->
               </div>
               <!-- list-single-main-item end -->
+              @if (Auth::user())
+                @if (checkProfessionnelRole(Auth::user()))
+
+                  <!-- list-single-main-item -->
+                  <div class="list-single-main-item fl-wrap" id="sec4">
+                    <div class="list-single-main-item-title fl-wrap">
+                      <h3><span> {{ $terrain->reports->count() }} </span>  -  Report  - </h3>
+                    </div>
+                    <div class="reviews-comments-wrap">
+
+                      @foreach ($terrain->reports as $report)
+                        <!-- reviews-comments-item -->
+                        <div class="reviews-comments-item">
+                          <div class="review-comments-avatar">
+                            <img src="{{$report->reporter->picture}}" alt="">
+                          </div>
+                          <div class="reviews-comments-item-text">
+                            <h4><a href="#">{{$review->reviewer->first_name}} {{$review->reviewer->last_name}}</a></h4>
+
+                            <div class="clearfix"></div>
+                            <p>" {{ $report->title }} "</p>
+                            <p>" {{ $report->description }} "</p>
+                            <span class="reviews-comments-item-date"><i class="fa fa-calendar-check-o"></i>{{$review->updated_at->diffForHumans()}}</span>
+                          </div>
+                        </div>
+                        <!--reviews-comments-item end-->
+
+                      @endforeach
+
+
+                    </div>
+                  </div>
+                  <!-- list-single-main-item end -->
+
+                @endif
+              @endif
+
 
               <!-- list-single-main-item -->
               <div class="list-single-main-item fl-wrap" id="sec9">
@@ -520,7 +561,8 @@
 
        $.get("{{ route('showHome')}}/userWichlist/"+type+"/"+id).done(function (res) {
 
-
+          $('#favorieTerrains span').html(res.favorieTerrains);
+          $('#favorieClubs span').html(res.favorieClubs);
             if (res.status == "added") {
                 $('#'+res.type+res.id+'>span').html('<img id="theImg" src="{{asset('img/like.png')}}" />');
             }

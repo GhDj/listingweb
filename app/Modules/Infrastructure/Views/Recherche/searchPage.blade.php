@@ -18,7 +18,6 @@
 
 
 @section('content')
-
   <style media="screen">
   .list-container-4 {
     position:absolute;
@@ -85,9 +84,9 @@
                                                   <form action="{{ route('handleFilterMaps') }}" method="post">
                                                         {{ csrf_field() }}
 
-                                                        <input type="hidden" name="latitude" id="latitude">
+                                                        <input type="hidden" name="latitude" id="latitude" value="{{$latitude}}">
 
-                                                        <input type="hidden" name="longitude" id="longitude">
+                                                        <input type="hidden" name="longitude" id="longitude" value="{{$longitude}}">
                                                     <div class="listsearch-input-item">
                                                         <i class="mbri-key single-i"></i>
                                                         <input type="text" placeholder="Nom de stade" name="name" value="{{ old('name') }}"/>
@@ -102,7 +101,7 @@
                                                     </div>
                                                     <div class="listsearch-input-item">
                                                         <i class="mbri-key single-i"></i>
-                                                        <input type="text" placeholder="Ou" value="{{ old('address') }}" name="address" id="autocomplete-input" />
+                                                        <input type="text" placeholder="Ou"  name="address" id="autocomplete-input" value="{{$address}}" />
                                                     </div>
 
                                                     <div class="hidden-listing-filter fl-wrap">
@@ -116,7 +115,13 @@
                                                       <div class=" fl-wrap filter-tags">
                                                           <h4>Filtrer par catégorie</h4>
                                                           @foreach ($categories as $categorie)
-                                                            <input id="check-{{$categorie->category}}" type="checkbox" name="categories[]" value="{{$categorie->category}}">
+                                                            <input id="check-{{$categorie->category}}" type="checkbox" name="categories[]" value="{{$categorie->category}}"
+                                                          @isset($oldCategories)
+                                                            @if (in_array($categorie->category,$oldCategories))
+                                                              checked
+                                                            @endif
+                                                          @endisset
+                                                          >
                                                             <label for="check-{{$categorie->category}}">{{$categorie->category}}</label>
                                                           @endforeach
                                                       </div>
@@ -144,9 +149,9 @@
                                                   <form action="{{ route('handleFilterClubs') }}" method="post">
                                                         {{ csrf_field() }}
 
-                                                        <input type="hidden" name="latitudeClub" id="latitudeClub">
+                                                        <input type="hidden" name="latitudeClub" id="latitudeClub" value="{{$latitude}}">
 
-                                                        <input type="hidden" name="longitudeClub" id="longitudeClub">
+                                                        <input type="hidden" name="longitudeClub" id="longitudeClub" value="{{$longitude}}">
                                                     <div class="listsearch-input-item">
                                                         <i class="mbri-key single-i"></i>
                                                         <input type="text" placeholder="Nom de Club" name="name" value=""/>
@@ -161,7 +166,7 @@
                                                     </div>
                                                     <div class="listsearch-input-item">
                                                         <i class="mbri-key single-i"></i>
-                                                        <input type="text" placeholder="Ou" value="" name="address" id="autocomplete"/>
+                                                        <input type="text" placeholder="Ou" name="address" id="autocomplete" value="{{$address}}"/>
                                                     </div>
 
                                                     <div class="hidden-listing-filter fl-wrap">
@@ -224,14 +229,22 @@
                   <div class="container">
 
                   @isset($terrains)
+
+                  @if ($terrains->count() > 0)
                     @foreach ($terrains as $terrain)
                       <!-- listing-item -->
                       <div class="listing-item list-layout">
                           <article class="geodir-category-listing fl-wrap">
                               <div class="geodir-category-img" style="width:35%">
-                                  <img src="images/all/8.jpg" alt="">
+
+                                <img src="@if ($terrain->medias->count() > 0)
+                                         {{  $terrain->medias->first()->link}}
+                                         @else
+                                           images/unkown.jpg
+                                     @endif" alt="">
+
                                   <div class="overlay"></div>
-                                  <div class="list-post-counter"><span>4</span><i class="fa fa-heart"></i></div>
+                                  <div class="list-post-counter"><span>{{$terrain->wishlists->count()}}</span><i class="fa fa-heart"></i></div>
                               </div>
                               <div class="geodir-category-content fl-wrap" style="width:35%">
                                   <a class="listing-geodir-category" href="listing.html">{{$terrain->category->category}}</a>
@@ -277,10 +290,23 @@
                       <!-- listing-item end-->
 
                     @endforeach
+                  @else
+                    <div class="listing-item list-layout">
+                        <article class="geodir-category-listing fl-wrap" >
+
+
+                            <h1 style="color:#2F3B59;font-size: 20px;">Aucune Resultat Trouvé</h1>
+                        </article>
+                      </div>
+
+                  @endif
 
                   @endisset
 
                   @isset($clubs)
+                    @if ($clubs->count() > 0)
+
+
                     @foreach ($clubs as $club)
                       <!-- listing-item -->
                       <div class="listing-item list-layout">
@@ -289,10 +315,10 @@
                              <img src="@if ($club->medias->count() > 0)
                                       {{  $club->medias->first()->link}}
                                       @else
-                                        images/all/9.jpg
+                                        images/unkown.jpg
                                   @endif" alt="">
                                   <div class="overlay"></div>
-                                  <div class="list-post-counter"><span>4</span><i class="fa fa-heart"></i></div>
+                                  <div class="list-post-counter"><span>{{$terrain->wishlists->count()}}</span><i class="fa fa-heart"></i></div>
                               </div>
                               <div class="geodir-category-content fl-wrap" style="width:35%">
 
@@ -323,10 +349,19 @@
                       <!-- listing-item end-->
 
                     @endforeach
+                    @else
+                      <div class="listing-item list-layout">
+                          <article class="geodir-category-listing fl-wrap" >
 
+
+                              <h1 style="color:#2F3B59;font-size: 20px;">Aucune Resultat Trouvé</h1>
+                          </article>
+                        </div>
+
+                    @endif
                   @endisset
                   </div>
-                  <a class="load-more-button" href="#">Load more <i class="fa fa-circle-o-notch"></i> </a>
+
               </div>
               <!-- list-main-wrap end-->
           </div>

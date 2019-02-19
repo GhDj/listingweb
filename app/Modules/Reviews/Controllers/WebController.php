@@ -137,6 +137,8 @@ class WebController extends Controller
                 'review_id' => $review->id,
                 'type' => 2
             ]);
+
+            dd($review->id);
           }
 
 
@@ -158,12 +160,13 @@ class WebController extends Controller
             	if ($test)
             		{
             		$wishlist = Wishlist::where('user_id', $user->id)->where('wished_id', $id)->where('wished_type', 'App\Modules\Infrastructures\Models\Terrain')->delete();
-            		return Response()->json(['status' => 'deleted', "id" => $id, 'type' => $type]);
+                $favorieTerrains = $wishlist - 1;
+            		return Response()->json(['status' => 'deleted', "id" => $id, 'type' => $type , 'favorieTerrains'=>$favorieTerrains]);
             		}
             	  else
             		{
             		$terrain->wishlists()->create(['user_id' => $user->id]);
-            		return Response()->json(['status' => 'added', 'id' => $id, 'type' => $type]);
+            		return Response()->json(['status' => 'added', 'id' => $id, 'type' => $type, 'favorieTerrains'=>$terrain->wishlists->count()]);
             		}
 
             	break;
@@ -174,12 +177,12 @@ class WebController extends Controller
               	if ($test)
               		{
               		$wishlist = Wishlist::where('user_id', $user->id)->where('wished_id', $id)->where('wished_type', 'App\Modules\Infrastructures\Models\Club')->delete();
-              		return Response()->json(['status' => 'deleted', 'id' => $id, 'type' => $type]);
+              		return Response()->json(['status' => 'deleted', 'id' => $id, 'type' => $type,'favorieClubs'=>$club->wishlists->count()]);
               		}
               	  else
               		{
               		$terrain->wishlists()->create(['user_id' => $user->id]);
-              		return Response()->json(['status' => 'added', 'id' => $id, 'type' => $type]);
+              		return Response()->json(['status' => 'added', 'id' => $id, 'type' => $type,'favorieClubs'=>$club->wishlists->count()]);
               		}
 
               	break;

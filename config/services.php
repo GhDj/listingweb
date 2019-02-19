@@ -34,5 +34,16 @@ return [
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
+    'facebook' => [
+      'client_id' => '1986859941412226',
+      'client_secret' => 'f96bfc46d061187bbfcb0e2ce579b456',
+      'redirect' => 'http://localhost/olympiade-sports-web/public/user/social/facebook/callback',
+  ],
+
+  'google' => [
+      'client_id' => '949293573898-ufje7v1v157mo1e8rqqjjlilvotku4j1.apps.googleusercontent.com',
+      'client_secret' => 'yNElY5JwKBwD_5wQOIcM1LhQ',
+      'redirect' => 'http://localhost/olympiade-sports-web/public/user/social/google/callback',
+  ],
 
 ];
