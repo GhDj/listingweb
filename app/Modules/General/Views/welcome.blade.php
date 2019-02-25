@@ -30,6 +30,12 @@
   list-style:none;
   float:left;
   margin:0;
+    height: 30px;
+    border-radius: 6px;
+}
+li.active
+{
+    background: #46b6ff;
 }
 .list-container-4 .tabs-4 li a {
   color:#999;
@@ -42,6 +48,11 @@
 .list-container-4 .tabs-4 li.active a,
 .list-container-4 .tabs-4 li:hover a {
   color:#fff;
+
+}
+.list-container-4 .tabs-4 li.active a
+{
+    vertical-align: -webkit-baseline-middle;
 }
 
 .chosen-select{

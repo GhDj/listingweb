@@ -447,6 +447,11 @@ public function showUserCompleteProfile(){
         return view ('User::frontOffice.userChangePassword');
     }
 
+    function showUserLogin()
+    {
+        return redirect(route('showHome'));
+    }
+
     public function  showUserListingTerrain() {
 
       $userTerrains = Terrain::whereHas('complex', function ($subQuery) {
