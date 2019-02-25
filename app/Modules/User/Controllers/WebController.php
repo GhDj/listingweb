@@ -302,6 +302,7 @@ public function showUserCompleteProfile(){
                     return back();
                 }else {
                   Auth::login($user);
+                //  return "ok";
                   return redirect()->route('showUserDashboard');
                 }
             }
@@ -844,5 +845,9 @@ public function hundleUserAddTeam(Request $request)
 
     SweetAlert::success('Bien !', 'Equipe ajouté avec succès. !')->persistent('Fermer');
     return redirect()->route('showUserAddTeam');
+  }
+  public function showTest()
+  {
+      return Auth::user();
   }
 }

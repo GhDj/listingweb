@@ -11,9 +11,10 @@ Route::group(['module' => 'User', 'middleware' => ['web'], 'namespace' => 'App\M
     Route::post('/user/login', 'WebController@handleUserLogin')->name('handleUserLogin');
     Route::get('/user/logout','WebController@handleLogout')->name('handleLogout');
     Route::get('/user/login','WebController@showUserLogin')->name('login');
-  
+    Route::get('/test','WebController@showTest')->name('test');
 
 });
+
 Route::group(['module' => 'User', 'middleware' => ['auth'], 'namespace' => 'App\Modules\User\Controllers'], function() {
 
 
