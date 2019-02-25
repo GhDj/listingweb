@@ -4,9 +4,16 @@
 /storage/*.key
 /vendor
 /.idea
+/.vscode
 /.vagrant
 Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
 .env
+.env.example
+.eslintrc.js
+.php_cs_dist.php
+.stylelintrc.json
+captainhook.json
+/node_modules
