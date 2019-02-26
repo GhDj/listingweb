@@ -1,3 +1,4 @@
+<a class="to-top"><i class="fa fa-angle-up"></i></a>
  <!--=============== scripts  ===============-->
 
 

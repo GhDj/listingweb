@@ -340,7 +340,7 @@ public function handleFilterMaps(Request $request)
              'latitude' => $data['latitude'],
              'longitude' => $data['longitude'],
              'address' =>   $data['address'],
-             'oldCategories'  => $data['categories']
+             'oldCategories'  => isset($data['categories']) ? $data['categories'] : null
            ]);
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Modules\General\Controllers;
 
+use App\Modules\Content\Models\Post;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
@@ -27,12 +28,14 @@ class WebController extends Controller
     */
     public function showHome()
     {
+
       return view('General::welcome',[
         'results' => Terrain::All(),
         'categories' => Category::All(),
         'sports' => TerrainSpeciality::All(),
         'equipements' => Equipment::All(),
         'complexs' => Complex::All(),
+        'posts'=>Post::OrderBy('id')->limit(3)->get(),
         'footballTerrains' => Terrain::where('speciality_id', 1)->take(4)->with('medias')->get()
       ]);
     }
@@ -55,15 +58,19 @@ class WebController extends Controller
       		}
   	}
 
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function showContact()
     {
-        return view("General::index");
+        return view('General::contact');
+    }
+
+    public function handlePageNotFound()
+    {
+        return view('General::404');
+    }
+
+    public function showFaq()
+    {
+        return view('General::faq');
     }
 
 }
