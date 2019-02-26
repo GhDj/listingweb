@@ -5,15 +5,13 @@
 
   @include('frontOffice.inc.head', ['title' => 'Olympiade | Home Page' ])
 
-
-
 @endsection
 
 
 
 @section('header')
 
-  @include('frontOffice.inc.header')
+    @include('frontOffice.inc.header',['activatedLink'=>['home'=>'act-link','contact'=>'','faq'=>'']])
 
 @endsection
 
@@ -158,6 +156,42 @@
                       <!-- home-map end-->
                   </div>
                   <!-- home-map end -->
+
+                  <!--section -->
+                  <section id="sec2">
+                      <div class="container">
+                          <div class="section-title">
+                              <h2>Catégories</h2>
+                              <div class="section-subtitle">Catalogue de Catégories</div>
+                              <span class="section-separator"></span>
+                              <p>.</p>
+                          </div>
+                          <!-- portfolio start -->
+                          <div class="gallery-items fl-wrap mr-bot spad">
+
+                              @foreach($categories as $category)
+                                  <!-- gallery-item-->
+                              <div class="gallery-item">
+                                  <div class="grid-item-holder">
+                                      <div class="listing-item-grid">
+                                          <img  src="images/all/1.jpg"   alt="">
+                                          <div class="listing-counter"><span>{{count($category->terrains)}} </span> Terrains</div>
+                                          <div class="listing-item-cat">
+                                              <h3><a href="#">{{$category->category}}</a></h3>
+                                              <p></p>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <!-- gallery-item end-->
+                              @endforeach
+                          </div>
+                          <!-- portfolio end -->
+                      <!--    <a href="listing.html" class="btn  big-btn circle-btn dec-btn  color-bg flat-btn">View All<i class="fa fa-eye"></i></a>-->
+                      </div>
+                  </section>
+
+                  <!-- section end -->
 
                   <!--section -->
 
@@ -375,6 +409,45 @@
                       </div>
                   </section>
                   <!-- section end -->
+
+
+                  <section>
+                      <div class="container">
+                          <div class="section-title">
+                              <h2>Tips & Articles</h2>
+                              <div class="section-subtitle">From the blog.</div>
+                              <span class="section-separator"></span>
+                              <p>Browse the latest articles from our blog.</p>
+                          </div>
+                          <div class="row home-posts">
+                              @foreach($posts as $post)
+                                  <div class="col-md-4">
+                                      <article class="card-post">
+                                          <div class="card-post-img fl-wrap">
+                                              <a href="blog-single.html"><img src="images/all/15.jpg"   alt=""></a>
+                                          </div>
+                                          <div class="card-post-content fl-wrap">
+                                              <h3><a href="blog-single.html">{{$post->title}}</a></h3>
+                                              <p>{{$post->content}}</p>
+                                              <div class="post-author"><a href="#"><img src="images/avatar/4.jpg" alt=""><span>Par , {{$post->user->first_name}} {{$post->user->last_name}}</span></a></div>
+                                              <div class="post-opt">
+                                                  <ul>
+                                                      <li><i class="fa fa-calendar-check-o"></i> <span>{{\Carbon\Carbon::parse($post->created_at)->format('dd/mm/Y')}}</span></li>
+                                                      <li><i class="fa fa-eye"></i> <span>264</span></li>
+                                                      <li><i class="fa fa-tags"></i> <a href="#">Photography</a>  </li>
+                                                  </ul>
+                                              </div>
+                                          </div>
+                                      </article>
+                                  </div>
+                              @endforeach
+                          </div>
+                          <a href="#" class="btn  big-btn circle-btn  dec-btn color-bg flat-btn">Lis tout<i class="fa fa-eye"></i></a>
+                      </div>
+                  </section>
+                  <!-- section end -->
+
+
 
               </div>
               <!-- Content end -->

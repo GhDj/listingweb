@@ -14,6 +14,7 @@
 Route::get('/', function () {
     return redirect()->route('showHome');
 });
+
 Route::get('med', function()
 {
 
