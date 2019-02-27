@@ -15,7 +15,7 @@ Route::group(['module' => 'User', 'middleware' => ['web'], 'namespace' => 'App\M
 
 });
 
-Route::group(['module' => 'User', 'middleware' => ['auth'], 'namespace' => 'App\Modules\User\Controllers'], function() {
+Route::group(['module' => 'User', 'middleware' => ['userAccess'], 'namespace' => 'App\Modules\User\Controllers'], function() {
 
 
 
