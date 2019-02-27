@@ -12,7 +12,7 @@
 
 @section('header')
 
-  @include('frontOffice.inc.header')
+    @include('frontOffice.inc.header',['activatedLink'=>['home'=>'','contact'=>'','faq'=>'','profile'=>'act-link']])
 
 @endsection
 @section('content')
@@ -29,7 +29,7 @@
                   <div class="profile-edit-wrap">
                       <div class="profile-edit-page-header">
                           <h2>User Profile</h2>
-                          <div class="breadcrumbs"><a href="#">Accueil</a><span>Profile</span></div>
+                          <div class="breadcrumbs"><a href="{{route('showHome')}}">Accueil</a><span>Profile</span></div>
                       </div>
                       <div class="row">
                         @include('User::frontOffice.inc.asideProfile')

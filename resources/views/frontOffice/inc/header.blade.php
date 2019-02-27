@@ -30,7 +30,7 @@
                           Salut , {{Auth::user()->first_name}} {{ Auth::user()->last_name}}
                       </div>
                       <ul>
-                          <li><a href="{{route('showUserDashboard')}}">Profile</a></li>
+                          <li><a href="{{route('showUserDashboard')}}" class="{{$activatedLink['profile']}}">Profile</a></li>
                           @if (checkProfessionnelRole(Auth::user()))
                              <li><a href="{{route('showUserListingTerrain')}}"> Mes Terrains</a></li>
                              <li><a href="{{route('showUserListingClub')}}"> Mes Clubs</a></li>
@@ -67,33 +67,6 @@
                                 <a href="{{route('showContact')}}" class="{{$activatedLink['contact']}}">Contact</a>
                             </li>
 
-                            <li>
-                                <a href="#">Clubs <i class="fa fa-caret-down"></i></a>
-                                <!--second level -->
-                                <ul>
-                                    <li><a href="listing.html">Exemple</a></li>
-                                    <li>
-                                        <a href="#">Exemple 2 <i class="fa fa-caret-down"></i></a>
-                                        <!--third  level  -->
-                                        <ul>
-                                            <li><a href="listing-single.html">Exzmple 1</a></li>
-                                        </ul>
-                                        <!--third  level end-->
-                                    </li>
-                                </ul>
-                                <!--second level end-->
-                            </li>
-                            <li>
-                                <a href="blog.html">Terrains </a>
-                            </li>
-                            <li>
-                                <a href="#">Complex <i class="fa fa-caret-down"></i></a>
-                                <!--second level -->
-                                <ul>
-                                    <li><a href="about.html">Exmple</a></li>
-                                </ul>
-                                <!--second level end-->
-                            </li>
                         </ul>
                     </nav>
                 </div>

@@ -418,6 +418,7 @@ public function showUserCompleteProfile(){
 
 
     public function showUserDashboard() {
+
       $userTerrains = Terrain::whereHas('complex', function ($subQuery) {
                     $subQuery->where('user_id', Auth::user()->id);
                   })

@@ -29,4 +29,10 @@
 
           <!--=============== favicons ===============-->
           <link rel="shortcut icon" href="{{asset('images/favicon.ico')}}">
+    <style>
+        a.act-link
+        {
+            color:#4DB7FE!important;
+        }
+    </style>
 </head>
