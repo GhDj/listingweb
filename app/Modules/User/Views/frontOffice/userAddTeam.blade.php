@@ -12,7 +12,7 @@
 
 @section('header')
 
-  @include('frontOffice.inc.header')
+    @include('frontOffice.inc.header',['activatedLink'=>['home'=>'','contact'=>'','faq'=>'','profile'=>'act-link']])
 
 @endsection
 
