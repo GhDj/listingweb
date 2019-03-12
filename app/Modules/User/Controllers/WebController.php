@@ -293,8 +293,10 @@ public function showUserCompleteProfile(){
             if (Auth::attempt($credentials)) {
                 $user = Auth::user();
               if ($user->status == 0) {
-                  Toastr::error('Vérifiez d\'abord votre email !');
-                  return back();
+
+                  Auth::logout();
+                  Toastr::error('Vous devez valider votre email !');
+                 return redirect()->route("showHome");
                 }
                 elseif ($user->status == 3) {
                     Auth::logout();
@@ -439,10 +441,6 @@ public function showUserCompleteProfile(){
 
     public function  showUserProfile() {
         return view ('User::frontOffice.userProfile');
-    }
-
-    public function  showUserMessage() {
-        return view ('User::frontOffice.userMessage');
     }
 
     public function  showUserPassword() {
@@ -847,6 +845,13 @@ public function hundleUserAddTeam(Request $request)
     SweetAlert::success('Bien !', 'Equipe ajouté avec succès. !')->persistent('Fermer');
     return redirect()->route('showUserAddTeam');
   }
+
+    public function showFavoriteList()
+    {
+        return Auth::user()->wishlists()->get();
+        //    return Auth::user()->favoritesClubs;
+    }
+
   public function showTest()
   {
       return Auth::user();

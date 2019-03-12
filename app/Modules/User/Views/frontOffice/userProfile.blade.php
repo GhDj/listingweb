@@ -107,7 +107,7 @@
                                           </div>
 
                                           <div class="form-group row">
-                                            <label for ="ad">Adresse * </label>
+                                            <label for ="ad">Ville actuelle * </label>
                                             <div class="col-md-12">
                                               <input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{Auth::user()->address->address}}" />
                                               @if ($errors->has('address'))

@@ -163,9 +163,10 @@ class WebController extends Controller
                    'terrains' => $terrains,
                    'categories' => Category::select('category')->groupBy('category')->get(),
                    'sports' => TerrainSpeciality::All(),
-                   'latitude' => $data['latitude'],
-                   'longitude' => $data['longitude'],
-                   'address' =>   $data['address'],
+                  'latitude' => (isset($data['latitude'])) ? $data['latitude'] : null,
+                  'longitude' => (isset($data['longitude'])) ? $data['longitude'] : null,
+                  'address' =>   (isset($data['address'])) ? $data['address'] : null,
+
                  ]);
 
     }
@@ -251,9 +252,9 @@ class WebController extends Controller
                    'clubs' => $clubs,
                    'categories' => Category::select('category')->groupBy('category')->get(),
                    'sports' => TerrainSpeciality::All(),
-                   'latitude' => $data['latitudeClub'],
-                   'longitude' => $data['latitudeClub'],
-                   'address' =>   $data['address'],
+                   'latitude' => (isset($data['latitudeClub'])) ? $data['latitudeClub'] : null,
+                   'longitude' => (isset($data['latitudeClub'])) ? $data['latitudeClub'] : null,
+                   'address' =>   (isset($data['address'])) ? $data['address'] : null,
                  ]);
 
     }

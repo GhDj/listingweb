@@ -99,7 +99,10 @@ li.active
                                                 <div class="main-search-input-item">
                                                     <input type="text" placeholder="Nom de Terrain" name="name"/>
                                                 </div>
-
+                                                  <div class="main-search-input-item location" id="autocomplete-container">
+                                                      <input type="text" placeholder="Location" id="autocomplete-input" value="" autocomplete="off">
+                                                      <a href="#" class="get_current_location" data-input=""><i class="fa fa-dot-circle-o"></i></a>
+                                                  </div>
                                                 <div class="main-search-input-item">
                                                     <select data-placeholder="Tous les categories" class="chosen-select" name="category" >
                                                         <option value="-1">Tous les categories</option>
@@ -110,12 +113,7 @@ li.active
                                                 </div>
 
 
-                                                <div class="main-search-input-item">
-                                                    <input type="text" placeholder="Ou" name="address"  id="autocomplete-input" value=""/>
-                                                </div>
-
-
-                                                <button class="main-search-button" onclick="window.location.href='listing.html'">Search</button>
+                                                <button class="main-search-button" type="submit">Chercher</button>
 
                                                 </form>
                                             </div>
@@ -129,13 +127,17 @@ li.active
                                               <form  action="{{ route('handleSearchClubs') }}" method="post">
                                                 {{ csrf_field() }}
 
-                                                <input type="hidden" name="latitudeClub" id="latitudeClub">
+                                                  <input type="hidden" name="latitude" id="latitude_club">
 
-                                                <input type="hidden" name="longitudeClub" id="longitudeClub">
+                                                  <input type="hidden" name="longitude" id="longitude_club">
 
-                                                <div class="main-search-input-item">
-                                                    <input type="text" placeholder="Nom de Club" name="name"/>
-                                                </div>
+                                                  <div class="main-search-input-item">
+                                                      <input type="text" placeholder="Nom de club" name="name"/>
+                                                  </div>
+                                                  <div class="main-search-input-item location" id="autocomplete-container">
+                                                      <input type="text" placeholder="Location" id="autocomplete-input-club" value="" autocomplete="off">
+                                                      <a href="#" data-input="-club" class="get_current_location"><i class="fa fa-dot-circle-o"></i></a>
+                                                  </div>
 
                                                 <div class="main-search-input-item">
                                                     <select data-placeholder="Tous les sports" class="chosen-select" name="speciality" >
@@ -145,12 +147,6 @@ li.active
                                                         @endforeach
                                                   </select>
                                                 </div>
-
-
-                                                <div class="main-search-input-item">
-                                                    <input type="text" placeholder="Ou" name="address"  id="autocomplete" value=""/>
-                                                </div>
-
 
                                                 <button class="main-search-button" onclick="window.location.href='listing.html'">Search</button>
 
@@ -547,6 +543,13 @@ $(document).ready(function() {
         });
     }
   });
+
+</script>
+<script>
+    $(".get_current_location").click(function()
+    {
+        getCurrentLocation($(this).attr("data-input"));
+    })
 
 </script>
 @endsection
