@@ -65,7 +65,7 @@
                                     <h4>Informations</h4>
                                 </div>
                                 <div class="custom-form">
-                                    <label>Nom de Club</i></label>
+                                    <label>Nom de l'équipe</i></label>
                                     <input type="text" name="name" required value=""/>
                                     @if ($errors->has('name'))
                                     <span class="invalid-feedback" role="alert">
@@ -76,7 +76,7 @@
                                       <div class="col-md-4">
                                           <label>Club</label>
                                           <select  class="chosen" id="club" name="club_id">
-                                              <option value="-1">Votre Terrain</option>
+                                              <option value="-1">Votre Club</option>
                                               <@foreach ($clubs as $club)
                                                 <option value="{{$club->id}}">{{$club->name}}</option>
                                               @endforeach

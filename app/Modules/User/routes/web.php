@@ -21,10 +21,10 @@ Route::group(['module' => 'User', 'middleware' => ['userAccess'], 'namespace' =>
 
     Route::get('/user/complete', 'WebController@showUserCompleteProfile')->name('showUserCompleteProfile');
     Route::post('/user/complete', 'WebController@handleUserCompleteProfile')->name('handleUserCompleteProfile');
-
+    Route::get('/user/favoriteList','WebController@showFavoriteList')->name('showFavoriteList');
     Route::get('/user/dashboard','WebController@showUserDashboard')->name('showUserDashboard');
     Route::get('/user/profile','WebController@showUserProfile')->name('showUserProfile');
-    Route::get('/user/message','WebController@showUserMessage')->name('showUserMessage');
+
     Route::get('/user/password','WebController@showUserPassword')->name('showUserPassword');
     Route::get('/user/listing/terrain','WebController@showUserListingTerrain')->name('showUserListingTerrain');
     Route::get('/user/listing/club','WebController@showUserListingClub')->name('showUserListingClub');

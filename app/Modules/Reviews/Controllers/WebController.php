@@ -172,7 +172,7 @@ class WebController extends Controller
             	break;
 
               case 'club':
-              	$terrain = Club::find($id);
+              	$club = Club::find($id);
               	$test = $user->wishlists->where('wished_id', $id)->where('wished_type', 'App\Modules\Infrastructures\Models\Club')->first();
               	if ($test)
               		{
@@ -181,7 +181,7 @@ class WebController extends Controller
               		}
               	  else
               		{
-              		$terrain->wishlists()->create(['user_id' => $user->id]);
+              		$club->wishlists()->create(['user_id' => $user->id]);
               		return Response()->json(['status' => 'added', 'id' => $id, 'type' => $type,'favorieClubs'=>$club->wishlists->count()]);
               		}
 
