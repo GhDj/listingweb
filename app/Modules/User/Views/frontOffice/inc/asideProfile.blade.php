@@ -3,13 +3,13 @@
         <div class="user-profile-menu-wrap fl-wrap">
             <!-- user-profile-menu-->
             <div class="user-profile-menu">
-                <h3>Main</h3>
+
                 <ul>
-                  <li><a href="{{route('showUserDashboard')}}"><i class="fa fa-gears"></i>Profile</a></li>
+                  <li><a href="{{route('showUserDashboard')}}"><i class="fa fa-gears"></i>Mon profil</a></li>
                     @if (!checkProfessionnelRole(Auth::user()))
-                    <li> <a href="{{route('showFavoriteList')}}"><i class="fa fa-gears"></i>Favorite list</a></li>
+                    <li> <a href="{{route('showFavoriteList')}}"><i class="fa fa-gears"></i>Mes favoris <span>{{count(Auth::user()->wishlists)}}</span> </a></li>
                     @endif
-                    <li><a href="{{route('showUserProfile')}}"><i class="fa fa-user-o"></i> Modifié Votre Profile</a></li>
+                    <li><a href="{{route('showUserProfile')}}"><i class="fa fa-user-o"></i>Mes infos</a></li>
                     <li><a href="{{route('showUserPassword')}}"><i class="fa fa-unlock-alt"></i>Changer Votre Mot de Passe</a></li>
                 </ul>
             </div>

@@ -542,7 +542,6 @@
 
   $(document).ready(function() {
 
-
       $('.wichlist').click(function(e){
         e.preventDefault();
         var id = "";

@@ -79,7 +79,7 @@
                                     <div class="statistic-item gradient-bg fl-wrap">
                                         <i class="fa fa-comments-o"></i>
                                           <div class="statistic-item-numder">{{Auth::user()->reviews->count()}}</div>
-                                          <h5>Total Commantaires</h5>
+                                          <h5>Total Commentaires</h5>
                                       </div>
                                       </div>
                                   <!-- statistic-item-wrap end-->
@@ -108,7 +108,7 @@
                                   @foreach (Auth::user()->wishlists as $wishlist)
                                     <div class="dashboard-list">
                                         <div class="dashboard-message">
-                                            <span class="new-dashboard-item"><i class="fa fa-times"></i></span>
+                                            <span id ="terrain{{$wishlist->wished->id}}" data-terrain = "{{ $wishlist->wished->id }}"  title="Supprimer?" class="wichlist new-dashboard-item"><i  class="fa fa-times"></i></span>
 
                                             <div class="dashboard-message-text">
 
@@ -223,3 +223,36 @@
   @include('frontOffice.inc.footer')
 
 @endsection
+
+@section('scripts')
+    <script>
+        $('.wichlist').click(function(e){
+            e.preventDefault();
+            var id = "";
+
+            var terrainId = $(this).data('terrain');
+            var clubId =  $(this).data('club');
+
+            if (terrainId != null) {
+                id = terrainId;
+                type = "terrain";
+
+            }
+            if (clubId) {
+                id = clubId;
+                type = "club";
+            }
+
+            var toRemove=$(this);
+
+            $.get("{{ route('showHome')}}/userWichlist/"+type+"/"+id).done(function (res) {
+
+                toRemove.parent().parent().remove();
+                console.log("Res :"+JSON.stringify(res));
+
+
+            });
+
+        });
+    </script>
+    @endsection
