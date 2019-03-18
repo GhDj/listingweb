@@ -326,9 +326,9 @@ public function showUserCompleteProfile(){
             'email' => 'required|email|unique:users,email,'.$user->id,
             'first_name' => 'required',
             'last_name' => 'required',
-            'phone' => 'required',
-            'address' => 'required',
-            'gender' => 'required',
+            'phone' => '',
+            'address' => '',
+
         ],
             [
                 'email.email' => 'Veuillez saisir un email valide',
@@ -336,9 +336,7 @@ public function showUserCompleteProfile(){
                 'email.unique' => 'L\'email indiqué est déjà utilisé',
                 'first_name.required' => 'Le champ Prénom est obligatoire',
                 'last_name.required' => 'Le champ Nom est obligatoire',
-                'phone.required' => 'Le champ Téléphone est obligatoire',
-                'address.required' => 'Le champ Addresse est obligatoire',
-                'gender.required' => 'Le champ Genre est obligatoire',
+
             ]);
 
         $user->update([
@@ -848,7 +846,8 @@ public function hundleUserAddTeam(Request $request)
 
     public function showFavoriteList()
     {
-        return Auth::user()->wishlists()->get();
+        return view('User::frontOffice.Sportif.favoritList',['whishList'=>Auth::user()->wishlists()->get()]);
+
         //    return Auth::user()->favoritesClubs;
     }
 

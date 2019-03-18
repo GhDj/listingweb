@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('last_name');
             $table->string('email')->unique();
             $table->string('password', 60)->nullable();
-            $table->integer('phone')->nullable();
+            $table->string('phone')->nullable();
             $table->char('gender', 1)->nullable(); //1 - homme / 2 - femme
             $table->integer('status')->default(0); // 0 mail invalide / 1 mail valid profile to complet / 2 OK / 3 banned
             $table->string('picture')->nullable();

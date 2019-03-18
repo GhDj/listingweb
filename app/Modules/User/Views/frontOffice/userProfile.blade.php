@@ -24,14 +24,34 @@
   margin-left: 35px;
   width: auto;
 }
+  .country-list
+  {
+      z-index: 9999999!important;
+      display: none;
 
+  }
+  #tel_int:focus
+  {
+      position: initial;
+  }
 .custom-form input[type="text"],.custom-form input[type=email]{
 
   padding: 15px 20px 15px 20px;
 
 }
-
+  .intl-tel-input.allow-dropdown
+  {
+      float:left;
+  }
+  .intl-tel-input{
+      width: 100%;
+  }
+  .iti-arrow
+  {
+      display:none;
+  }
   </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/15.0.1/css/intlTelInput.css"/>
 
   <!-- wrapper -->
       <div id="wrapper">
@@ -56,7 +76,7 @@
                                           <h4>My Account</h4>
                                       </div>
                                       <div class="custom-form">
-                                        <form action="{{route('handleUpdateUserProfile')}}"  method="post">
+                                        <form action="{{route('handleUpdateUserProfile')}}"  id="user_information_form" method="post">
 
                                           {{ csrf_field() }}
 
@@ -97,7 +117,11 @@
                                           <div class="form-group row">
                                             <label for ="phone">Téléphone * </label>
                                             <div class="col-md-12">
-                                              <input id="phone" type="text" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" value="{{Auth::user()->phone}}" />
+                                                <input type="tel" id="tel_int" name="phone" class="pull-left form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}"  />
+                                                <input id="code_tel_int"  type="hidden" name="code_tel"/>
+                                                <input name="mobile" type="hidden" id="my_mobile"/>
+                                                <input type="hidden" name="pays" id="my_pays"/>
+
                                               @if ($errors->has('phone'))
                                               <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('phone') }}</strong>
@@ -109,7 +133,7 @@
                                           <div class="form-group row">
                                             <label for ="ad">Ville actuelle * </label>
                                             <div class="col-md-12">
-                                              <input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{Auth::user()->address->address}}" />
+                                              <input id="autocomplete-input" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{Auth::user()->address->address}}" />
                                               @if ($errors->has('address'))
                                               <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('address') }}</strong>
@@ -178,7 +202,10 @@
           </div>
       </div>
   <!-- wrapper end -->
+<script>
 
+
+</script>
 @endsection
 @section('footer')
 
@@ -187,10 +214,54 @@
 @endsection
 
 @section('scripts')
+
+    <script src="{{ asset ('plugins/intlTelInput')}}/intlTelInput.js"></script>
   <script type="text/javascript">
 document.getElementById("avatar").onchange = function() {
  document.getElementById("avatarForm").submit();
 };
+
+var input = document.getElementById('autocomplete-input');
+var autocomplete = new google.maps.places.Autocomplete(input);
+autocomplete.addListener('place_changed', function () {
+
+    initAutoCompleteInput(autocomplete, "");
+
+});
+$("#tel_int").intlTelInput(
+    {
+        utilsScript:'{{asset('plugins/intlTelInput/utils.js')}}',
+        separateDialCode: false
+    }
+);
+
+$("#tel_int").intlTelInput("setNumber", "{{Auth::user()->phone}}");
+$("#tel_int").intlTelInput("setCountry",'fr');
+function valideTel() {
+    if($("#tel_int").val().length>0)
+    {
+    var result = true;
+    if (!$("#tel_int").intlTelInput("isValidNumber")) {
+        $("#tel_int").focus();
+        $("#tel_int").css('border-color','red');
+        console.log("nop");
+        result = false;
+    }
+    else {
+        var countryData = $("#tel_int").intlTelInput("getSelectedCountryData");
+        $("#code_tel_int").val(countryData.dialCode);
+        $("#my_mobile").val($("#tel_int").intlTelInput("getNumber"));
+        $("#my_pays").val(countryData.name);
+    }
+    }
+    return result;
+}
+
+var form=document.getElementById("user_information_form");
+$(document).ready(function()
+{
+    form.onsubmit=valideTel;
+});
   </script>
 
 @endsection
