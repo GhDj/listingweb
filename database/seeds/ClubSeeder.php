@@ -2,11 +2,11 @@
 
 use Illuminate\Database\Seeder;
 
-use App\Modules\Infrastructures\Models\Terrain;
+use App\Modules\Complex\Models\Terrain;
 
-use App\Modules\Infrastructures\Models\TerrainSpeciality;
+use App\Modules\Complex\Models\TerrainSpeciality;
 
-use App\Modules\Infrastructures\Models\Club;
+use App\Modules\Complex\Models\Club;
 
 use App\Modules\Infrastructure\Models\Team;
 

@@ -1,48 +1,37 @@
-<header class="main-header">
+<div class="main-header">
+    <div class="logo">
+        <img src="{{ asset('images/logo.png') }}" alt="">
+    </div>
 
-    <!-- Logo -->
-    <a href="" class="logo" style="min-height: 52px;">
-        <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>B</b>PL</span>
-        <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>Blue</b>PL</span>
-    </a>
+    <div class="menu-toggle">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
 
-    <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top">
-        <!-- Sidebar toggle button-->
-        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-            <span class="sr-only">Toggle navigation</span>
-        </a>
-        <!-- Navbar Right Menu -->
-        <div class="navbar-custom-menu">
-            <ul class="nav navbar-nav">
-                <!-- User Account: style can be found in dropdown.less -->
-                <li class="dropdown user user-menu">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="{{ asset('img/unknown.png') }}" class="user-image" alt="User Image">
-                        <span class="hidden-xs"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <!-- User image -->
-                        <li class="user-header">
-                            <img src="{{ asset('img/unknown.png') }}" class="img-circle" alt="User Image">
-                            <p>
-                                <small>Member depuis </small>
-                            </p>
-                        </li>
-                        <!-- Menu Body -->
+    <div class="d-flex align-items-center">
+    </div>
 
-                        <!-- Menu Footer-->
-                        <li class="user-footer">
-                            <div class="pull-right">
-                                <a href="" class="btn btn-default btn-flat">Déconnexion</a>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+    <div style="margin: auto"></div>
+
+    <div class="header-part-right">
+        <!-- Full screen toggle -->
+        <i class="i-Full-Screen header-icon d-none d-sm-inline-block" data-fullscreen></i>
+        <!-- Grid menu Dropdown -->
+
+        <!-- User avatar dropdown -->
+        <div class="dropdown">
+            <div  class="user col align-self-end">
+                <img src="{{ asset('img/admin.png') }}" id="userDropdown" alt="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                    <div class="dropdown-header">
+                        <i class="i-Lock-User mr-1"></i> Administrateur
+                    </div>
+                    <a class="dropdown-item" href="{{route('handleLogout')}}">Déconnexion</a>
+                </div>
+            </div>
         </div>
+    </div>
 
-    </nav>
-</header>
+</div>

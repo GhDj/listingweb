@@ -7,15 +7,15 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
 
-use App\Modules\Infrastructures\Models\Terrain;
+use App\Modules\Complex\Models\Terrain;
 
-use App\Modules\Infrastructures\Models\Complex;
+use App\Modules\Complex\Models\Complex;
 
-use App\Modules\Infrastructures\Models\Category;
+use App\Modules\Complex\Models\Category;
 
-use App\Modules\Infrastructures\Models\TerrainSpeciality;
+use App\Modules\Complex\Models\TerrainSpeciality;
 
-use App\Modules\Infrastructures\Models\Equipment;
+use App\Modules\Complex\Models\Equipment;
 
 
 class WebController extends Controller
@@ -33,8 +33,7 @@ class WebController extends Controller
         'results' => Terrain::All(),
         'categories' => Category::All(),
         'sports' => TerrainSpeciality::All(),
-        'equipements' => Equipment::All(),
-        'complexs' => Complex::All(),
+        'complex' => Complex::All(),
         'posts'=>Post::OrderBy('id')->limit(3)->get(),
         'footballTerrains' => Terrain::where('speciality_id', 1)->take(4)->with('medias')->get()
       ]);

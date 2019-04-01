@@ -1,13 +1,14 @@
-<!DOCTYPE html>
-<html>
+<html lang="en">
 @yield('head')
-<body class="online-course-2x skin-green">
+<body>
 @include('sweet::alert')
-<div class="wrapper">
+<div class="app-admin-wrap">
     @yield('header')
     @yield('sidebar')
+    <div class="main-content-wrap sidenav-open d-flex flex-column">
     @yield('content')
-    @yield('footer')
+    @include('backOffice.inc.footer')
+    </div>
 </div>
 @include('backOffice.inc.scripts')
 </body>

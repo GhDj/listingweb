@@ -3,9 +3,9 @@
 namespace App\Modules\Reviews\Controllers;
 
 use App\Modules\Content\Models\Ad;
-use App\Modules\Infrastructures\Models\Complex;
-use App\Modules\Infrastructures\Models\Terrain;
-use App\Modules\Infrastructures\Models\Equipment;
+use App\Modules\Complex\Models\Complex;
+use App\Modules\Complex\Models\Terrain;
+use App\Modules\Complex\Models\Equipment;
 use App\Modules\Reviews\Models\Report;
 use App\Modules\Reviews\Models\Review;
 use App\Modules\User\Models\User;

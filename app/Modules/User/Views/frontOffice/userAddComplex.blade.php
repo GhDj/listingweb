@@ -55,7 +55,7 @@
                                   <form class="" action="{{route('hundleUserAddComplex')}}" method="post">
                                     {{ csrf_field() }}
                                     <div class="form-group row">
-                                      <label>Nom de complexe <i class="fa fa-briefcase"></i></label>
+                                      <label>Nom de Complex <i class="fa fa-briefcase"></i></label>
                                       <div class="col-md-12">
                                         <input type="text" name="name"  value=""/>
                                         @if ($errors->has('name'))
@@ -84,8 +84,9 @@
                                     <div id="keywordRdvBlk"  class="input-group in-step1"></div>
 
                                     <input type="hidden" class="form-control" id = "otherCategorie" name="otherCategories"  />
-                                    </div>
-                                </div>
+
+
+
 
                             <!-- profile-edit-container end-->
                             <!-- profile-edit-container-->

@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 
 use App\Modules\Reviews\Models\Review;
-use App\Modules\Infrastructures\Models\Terrain;
+use App\Modules\Complex\Models\Terrain;
 
 use App\Modules\User\Models\User;
 

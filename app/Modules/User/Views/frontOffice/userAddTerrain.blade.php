@@ -77,8 +77,8 @@
                                           <label>Complex</label>
                                           <select  class="chosen" id="complex" name="complex_id">
                                               <option value="-1">Votre complex</option>
-                                              <@foreach ($complexes as $complexe)
-                                                <option value="{{$complexe->id}}">{{$complexe->name}}</option>
+                                              <@foreach ($Complexs as $Complex)
+                                                <option value="{{$Complex->id}}">{{$Complex->name}}</option>
                                               @endforeach
                                               @if ($errors->has('complex_id'))
                                               <span class="invalid-feedback" role="alert">
@@ -124,11 +124,24 @@
                                       <strong>{{ $errors->first('type') }}</strong>
                                     </span>
                                     @endif
-                                    <label>Terrain size </label>
-                                    <input type="number" name="size" value="" required min="1" max="9999">
-                                    @if ($errors->has('size'))
-                                    <span class="invalid-feedback" role="alert">
-                                      <strong>{{ $errors->first('size') }}</strong>
+                                    <label>Hauteur: </label>
+                                    <input type="number" name="hauteur" value="" required min="1" max="9999">
+                                    @if ($errors->has('hauteur'))
+                                        <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $errors->first('hauteur') }}</strong>
+                                    </span>
+                                    @endif<label>Longueur </label>
+                                    <input type="number" name="longueur" value="" required min="1" max="9999">
+                                    @if ($errors->has('longueur'))
+                                        <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $errors->first('longueur') }}</strong>
+                                    </span>
+                                    @endif
+                                    <label>largueur </label>
+                                    <input type="number" name="largueur" value="" required min="1" max="9999">
+                                    @if ($errors->has('largueur'))
+                                        <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $errors->first('largueur') }}</strong>
                                     </span>
                                     @endif
                                     <label>Description</label>
