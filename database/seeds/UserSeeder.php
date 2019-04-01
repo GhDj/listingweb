@@ -37,7 +37,7 @@ class UserSeeder extends Seeder
             'status' => 2,
             'phone' => Null,
             'promo_pts' => 10,
-            'picture' => config('app.seed_path_img').'img\unknown.png',
+            'picture' => config('app.seed_path_img').'img/unknown.png',
             'address_id' => $firstAddress->id
         ]);
 
@@ -53,7 +53,7 @@ class UserSeeder extends Seeder
           'status' => 2,
           'phone' => Null,
           'promo_pts' => 10,
-          'picture' => config('app.seed_path_img').'img\unknown.png',
+          'picture' => config('app.seed_path_img').'img/unknown.png',
           'address_id' => $firstAddress->id
         ]);
 
@@ -69,12 +69,27 @@ class UserSeeder extends Seeder
             'status' => 2,
             'phone' => Null,
             'promo_pts' => 10,
-            'picture' => config('app.seed_path_img').'img\unknown.png',
+            'picture' => config('app.seed_path_img').'img/unknown.png',
             'address_id' => $firstAddress->id
         ]);
 
         $user->roles()->attach(4);
 
 
-  }
+        $user=User::create([
+            'first_name' => 'Admin',
+            'last_name' => 'Admin',
+            'email' => 'admin@olympiade.fr',
+            'password' => bcrypt('123456'),
+            'gender' => 1,
+            'validation' => 1,
+            'status' => 2,
+            'phone' => null,
+            'promo_pts' => 10,
+            'picture' => 'admin.png',
+            'address_id' => null
+        ]);
+        $user->roles()->attach(1);
+
+    }
 }

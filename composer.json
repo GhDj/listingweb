@@ -36,7 +36,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"/Applications/XAMPP/xamppfiles/htdocs/projects/time-for-life-web/app/Modules/General/routes/web.php
+            "Tests\\": "tests/"
         }
     },
     "extra": {

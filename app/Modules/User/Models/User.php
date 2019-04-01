@@ -97,15 +97,15 @@ class User extends Authenticatable
   }
 
   public function favoritesTerrains(){
-      return $this->belongsToMany('App\Modules\Infrastructures\Models\Terrain', 'favorites', 'user_id', 'terrain_id')->withTimeStamps();
+      return $this->belongsToMany('App\Modules\Complex\Models\Terrain', 'favorites', 'user_id', 'terrain_id')->withTimeStamps();
   }
 
   public function favoritesClubs(){
-      return $this->belongsToMany('App\Modules\Infrastructures\Models\Club', 'favorites', 'user_id', 'club_id')->withTimeStamps();
+      return $this->belongsToMany('App\Modules\Complex\Models\Club', 'favorites', 'user_id', 'club_id')->withTimeStamps();
   }
 
-  public function complexes(){
-      return $this->hasMany('App\Modules\Infrastructures\Models\Complex','user_id');
+  public function Complexs(){
+      return $this->hasMany('App\Modules\Complex\Models\Complex','user_id');
   }
 
 

@@ -1,38 +1,19 @@
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{{ $title ?? '' }} | Tableau de Bord</title>
-    <meta name="author" content="BluePen Labs">
-    <meta name="generator" content="BluePen Labs">
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="{{ asset('plugins/bootstrap/bootstrap.css') }}">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ asset('icons/fontawesome.css') }}">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="{{ asset('icons/ionicons.css') }}">
-    <!-- jvectormap -->
-    <link rel="stylesheet" href="{{ asset('plugins/jvector/jvector.css') }}">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('css/backOffice/main.css') }}">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-         folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="{{ asset('css/backOffice/skins.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- CSRF Token -->
+    <title>{{ config('app.name') }} - Administration - {{ $title }}</title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900" rel="stylesheet">
+    <script src="{{ asset('plugins') }}/jquery/jquery-v4.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="{{ asset ('plugins/sweetalert/sweetalert.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset ('plugins/sweetalert/swal-forms.css') }}">
-    <script type="text/javascript" src="{{ asset ('plugins/sweetalert/sweetalert.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/backOffice') }}/style.css">
+    <link rel="stylesheet" href="{{ asset('plugins') }}/perfect-scrollbar/perfect-scrollbar.css">
 
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <!-- jQuery 3 -->
-    <script type="text/javascript" src="{{ asset('plugins/jquery/jquery.js') }}"></script>
-    <!-- Bootstrap 3.3.7 -->
-    <script type="text/javascript" src="{{ asset('plugins/bootstrap/bootstrap.js') }}"></script>
-    <!-- Google Font -->
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet" type="text/css" href="{{ asset('plugins/select-chosen') }}/select-chosen.css" />
+    <script src="{{ asset('plugins') }}/full-calendar/lib/moment.min.js"></script>
+    <!-- sweet alert -->
+    <link rel="stylesheet" href="{{asset('plugins/sweetalert')}}/sweetalert.css"/>
+    <script src="{{asset('plugins/sweetalert')}}/sweetalert.min.js"></script>
 </head>

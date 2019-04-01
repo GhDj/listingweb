@@ -48,8 +48,8 @@
                                     <div class="statistic-item-wrap">
                                     <div class="statistic-item gradient-bg fl-wrap">
                                         <i class="fa fa-map-marker"></i>
-                                          <div class="statistic-item-numder">{{Auth::user()->complexes->count()}}</div>
-                                          <h5>Complexe</h5>
+                                          <div class="statistic-item-numder">{{Auth::user()->Complexs->count()}}</div>
+                                          <h5>Complex</h5>
                                       </div>
                                       </div>
                                   <!-- statistic-item-wrap end-->
@@ -112,10 +112,10 @@
 
                                             <div class="dashboard-message-text">
 
-                                          @if ($wishlist->wished_type == "App\Modules\Infrastructures\Models\Terrain")
+                                          @if ($wishlist->wished_type == "App\Modules\Complex\Models\Terrain")
                                             <p><i class="fa fa-heart"></i>vous avez aimé <a href="{{route('showTerrainDetails',$wishlist->wished->id)}}">{{$wishlist->wished->name}}</a> listing!</p>
                                           @endif
-                                          @if ($wishlist->wished_type == "App\Modules\Infrastructures\Models\Club")
+                                          @if ($wishlist->wished_type == "App\Modules\Complex\Models\Club")
                                             <p><i class="fa fa-heart"></i>vous avez aimé <a href="{{route('showClubDetails',$wishlist->wished->id)}}">{{$wishlist->wished->name}}</a> listing!</p>
                                           @endif
 
@@ -132,10 +132,10 @@
                                           <span class="new-dashboard-item"><i class="fa fa-times"></i></span>
 
                                           <div class="dashboard-message-text">
-                                              @if ($review->reviewed_type == "App\Modules\Infrastructures\Models\Terrain")
+                                              @if ($review->reviewed_type == "App\Modules\Complex\Models\Terrain")
                                               <p><i class="fa fa-comments-o"></i> Vous Avez commenté sur <a href="{{route('showTerrainDetails',$review->reviewed->id)}}">{{$review->reviewed->name}}</a> </p>
                                             @endif
-                                            @if ($review->reviewed_type ==  "App\Modules\Infrastructures\Models\Club")
+                                            @if ($review->reviewed_type ==  "App\Modules\Complex\Models\Club")
                                               <p><i class="fa fa-heart"></i>vous avez aimé <a href="{{route('showClubDetails',$review->reviewed->id)}}">{{$review->reviewed->name}}</a> listing!</p>
                                             @endif
 

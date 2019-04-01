@@ -11,16 +11,16 @@ use Auth;
 use Mail;
 use Alert;
 use Validate;
-use App\Modules\Infrastructures\Models\Terrain;
-use App\Modules\Infrastructures\Models\Club;
-use App\Modules\Infrastructures\Models\Category;
-use App\Modules\Infrastructures\Models\Complex;
-use App\Modules\Infrastructures\Models\TerrainSpeciality;
+use App\Modules\Complex\Models\Terrain;
+use App\Modules\Complex\Models\Club;
+use App\Modules\Complex\Models\Category;
+use App\Modules\Complex\Models\Complex;
+use App\Modules\Complex\Models\TerrainSpeciality;
 use App\Modules\General\Models\Media;
-use App\Modules\Infrastructures\Models\Equipment;
+use App\Modules\Complex\Models\Equipment;
 use App\Modules\Infrastructure\Models\Team;
 use Laravel\Socialite\Facades\Socialite;
-
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Carbon\Carbon;
 
 use Hash;
@@ -30,6 +30,8 @@ use Toastr;
 class WebController extends Controller
 {
 
+    use AuthenticatesUsers;
+
     /**
      * Display a listing of the resource.
      *
@@ -37,23 +39,25 @@ class WebController extends Controller
      */
     public function showAdminDashboard()
     {
-        return view("User::backOffice.dashboard");
+
+            return view("User::backOffice.dashboard");
     }
 
-    public function handleUserActivation($email , $activationCode){
+    public function handleUserActivation($email, $activationCode)
+    {
 
         $user = User::where('email', $email)->first();
         if (!$user) {
             return 'user not found !';
         }
-        if($user->validation == $activationCode) {
+        if ($user->validation == $activationCode) {
 
             $user->status = 2;
             $user->validation = '';
             $user->save();
-            Toastr::success('Vérification a été effectué avec succès !', 'Bien !', ["positionClass" => "toast-top-full-width","showDuration"=> "4000", "hideDuration"=> "1000", "timeOut"=> "300000"]);
+            Toastr::success('Vérification a été effectué avec succès !', 'Bien !', ["positionClass" => "toast-top-full-width", "showDuration" => "4000", "hideDuration" => "1000", "timeOut" => "300000"]);
             return redirect()->route('showHome'); //TODO modify redirect (to login)
-        }else {
+        } else {
             return 'invalide link';
         }
 
@@ -65,70 +69,71 @@ class WebController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function handleSocialRedirect($provider)
-  {
-      return Socialite::driver($provider)->redirect();
-  }
+    {
+        return Socialite::driver($provider)->redirect();
+    }
 
-  public function handleSocialCallback($provider)
-{
-    $providerData = Socialite::driver($provider)->stateless()->user();
+    public function handleSocialCallback($provider)
+    {
+        $providerData = Socialite::driver($provider)->stateless()->user();
 
-    $user = User::where('provider_id', '=', $providerData->id)
-        ->orWhere('email', '=', $providerData->email)
-        ->first();
+        $user = User::where('provider_id', '=', $providerData->id)
+            ->orWhere('email', '=', $providerData->email)
+            ->first();
 
-    if (!$user) {
+        if (!$user) {
 
-        if ($providerData->name == null) {
-            $name = strtok($providerData->email, '@');
-        } else {
+            if ($providerData->name == null) {
+                $name = strtok($providerData->email, '@');
+            } else {
 
-            $name = explode(" ",$providerData->name);
-            $firstName = $name[0];
-            $lastName = $name[1];
+                $name = explode(" ", $providerData->name);
+                $firstName = $name[0];
+                $lastName = $name[1];
+            }
+
+            $imagePath = 'storage/uploads/avatar/' . $providerData->id . '-' . time() . '.png';
+            file_put_contents($imagePath, file_get_contents($providerData->avatar));
+
+            $user = User::create([
+                'provider_id' => $providerData->id,
+                'provider' => $provider,
+                'email' => $providerData->email,
+                'first_name' => $firstName,
+                'last_name' => $lastName,
+                'picture' => $imagePath,
+                'status' => 1,
+            ]);
+
+            Auth::login($user);
+            Toastr::error('profile to complete !');
+            return redirect(route('showUserCompleteProfile'));
         }
 
-        $imagePath = 'storage/uploads/avatar/'.$providerData->id.'-'.time().'.png';
-        file_put_contents($imagePath, file_get_contents($providerData->avatar));
-
-        $user = User::create([
-            'provider_id' => $providerData->id,
-            'provider' => $provider,
-            'email' => $providerData->email,
-            'first_name' => $firstName,
-            'last_name' => $lastName,
-            'picture' => $imagePath,
-            'status' => 1,
-        ]);
+        if ($user->status === 0) {
+            // todo update mail to verified
+        } elseif ($user->status === 1) {
+            Auth::login($user);
+            Toastr::error('profile to complete !');
+            return redirect(route('showUserCompleteProfile'));
+        } elseif ($user->status === 3) {
+            Auth::logout();
+            Toastr::error('Votre compte est désactivé !');
+            return back();
+        }
 
         Auth::login($user);
-        Toastr::error('profile to complete !');
-        return redirect(route('showUserCompleteProfile'));
+        return redirect()->route('showUserDashboard');
     }
 
-    if ($user->status === 0) {
-        // todo update mail to verified
-    } elseif ($user->status === 1) {
-        Auth::login($user);
-        Toastr::error('profile to complete !');
-        return redirect(route('showUserCompleteProfile'));
-    } elseif ($user->status === 3) {
-        Auth::logout();
-        Toastr::error('Votre compte est désactivé !');
-        return back();
-    }
-
-    Auth::login($user);
-return redirect()->route('showUserDashboard');
-}
-
-public function showUserCompleteProfile(){
+    public function showUserCompleteProfile()
+    {
         if (!Auth::user()) {
             // todo toast
             return redirect(route('showHome'));
         }
 
-        if(Auth::user() and Auth::user()->status === 2){
+        if (Auth::user() and Auth::user()->status === 2) {
             return redirect(route('showHome')); // todo middleware ?
         }
 
@@ -136,58 +141,60 @@ public function showUserCompleteProfile(){
 
         ]);
     }
-    public function handleUserCompleteProfile(Request $request){
 
-      if (!Auth::user()) {
-         // todo toast
-         return redirect(route('showHome'));
-     }
+    public function handleUserCompleteProfile(Request $request)
+    {
 
-      $user = User::find(Auth::user()->id);
+        if (!Auth::user()) {
+            // todo toast
+            return redirect(route('showHome'));
+        }
+
+        $user = User::find(Auth::user()->id);
 
 
-       $this->validate($request, [
-           'email' => 'required|email|unique:users,email,'.$user->id,
-           'firstName' => 'required',
-           'lastName' => 'required',
-           'gender' => 'required',
-           'address' => 'required',
-           'password'   => 'required|confirmed',
-       ],
-           [
-               'email.email' => 'Veuillez saisir un email valide',
-               'email.required' => 'Le champ email est obligatoire',
-               'email.unique' => 'L\'email indiqué est déjà utilisé',
-               'firstName.required' => 'Le champ Prénom est obligatoire',
-               'lastName.required' => 'Le champ Nom est obligatoire',
-               'address' => 'Le Address Nom est obligatoire',
-               'gender.required' => 'Le champ Genre est obligatoire',
-               'password.required'   => 'Veuillez Saisie Mot de passe',
-               'password.confirmed'   => 'Mot de passe Doit ètre Identique',
-           ]);
+        $this->validate($request, [
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'firstName' => 'required',
+            'lastName' => 'required',
+            'gender' => 'required',
+            'address' => 'required',
+            'password' => 'required|confirmed',
+        ],
+            [
+                'email.email' => 'Veuillez saisir un email valide',
+                'email.required' => 'Le champ email est obligatoire',
+                'email.unique' => 'L\'email indiqué est déjà utilisé',
+                'firstName.required' => 'Le champ Prénom est obligatoire',
+                'lastName.required' => 'Le champ Nom est obligatoire',
+                'address' => 'Le Address Nom est obligatoire',
+                'gender.required' => 'Le champ Genre est obligatoire',
+                'password.required' => 'Veuillez Saisie Mot de passe',
+                'password.confirmed' => 'Mot de passe Doit ètre Identique',
+            ]);
 
-           $address = Address::Create([
-             'city' => $request->city ,
-             'postal_code' => $request->code ,
-             'country' => $request->country ,
-             'locality' => $request->city ,
-             'address' => $request->address ,
-             'latitude' =>  $request->latitude,
-             'longitude' =>  $request->longitude ,
-             'description' => $request->address
+        $address = Address::Create([
+            'city' => $request->city,
+            'postal_code' => $request->code,
+            'country' => $request->country,
+            'locality' => $request->city,
+            'address' => $request->address,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'description' => $request->address
 
-           ]);
-           $user->first_name  = $request->firstName;
-           $user->last_name = $request->lastName;
-           $user->email = $request->email;
-           $user->gender = $request->gender;
-           $user->password =  bcrypt($request->password);
-           $user->address_id = $address->id;
-           $user->status = 2;
+        ]);
+        $user->first_name = $request->firstName;
+        $user->last_name = $request->lastName;
+        $user->email = $request->email;
+        $user->gender = $request->gender;
+        $user->password = bcrypt($request->password);
+        $user->address_id = $address->id;
+        $user->status = 2;
 
-           $user->save();
-           return redirect()->route('showUserDashboard');
-   }
+        $user->save();
+        return redirect()->route('showUserDashboard');
+    }
 
 
     /**
@@ -199,131 +206,140 @@ public function showUserCompleteProfile(){
     {
 
 
-    $errors =  $this->validate($request,[
-          'firstName'   => 'required',
-          'lastName'   => 'required',
-          'email'   => 'required|unique:users|email',
-          'password'   => 'required|confirmed',
+        $errors = $this->validate($request, [
+            'firstName' => 'required',
+            'lastName' => 'required',
+            'email' => 'required|unique:users|email',
+            'password' => 'required|confirmed',
 
         ],
-        [
-              'firstName.required'   => 'Votre Nom est Obligatoire',
-              'lastName.required'   => 'Votre Prenom est Obligatoire',
-              'email.required'   => 'Email est obligatoire',
-              'email.unique'   => 'Email est déja existe',
-              'email.email'   => 'Le champ doit ètre de type email',
-              'password.required'   => 'Veuillez Saisie Mot de passe',
-              'password.confirmed'   => 'Mot de passe Doit ètre Identique',
+            [
+                'firstName.required' => 'Votre Nom est Obligatoire',
+                'lastName.required' => 'Votre Prenom est Obligatoire',
+                'email.required' => 'Email est obligatoire',
+                'email.unique' => 'Email est déja existe',
+                'email.email' => 'Le champ doit ètre de type email',
+                'password.required' => 'Veuillez Saisie Mot de passe',
+                'password.confirmed' => 'Mot de passe Doit ètre Identique',
 
-        ]
-          );
+            ]
+        );
 
-      if ($dataResponse = @file_get_contents("http://ip-api.com/json")) {
-          $json = json_decode($dataResponse, true);
-          $latitude = $json['lat'];
-          $longitude = $json['lon'];
-          $city = $json['city'];
-          $country = $json['country'];
-      }
+        if ($dataResponse = @file_get_contents("http://ip-api.com/json")) {
+            $json = json_decode($dataResponse, true);
+            $latitude = $json['lat'];
+            $longitude = $json['lon'];
+            $city = $json['city'];
+            $country = $json['country'];
+        }
 
-      $userAddress = Address::create([
-          'city' => $city,
-          'postal_code'=> isset($address['postal_code'])? $address['postal_code'] : null,
-          'country' => $country,
-          'locality' => null,
-          'address' =>  null,
-          'latitude' => $latitude ,
-          'longitude' => $longitude,
-          'description' => null,
-      ]);
+        $userAddress = Address::create([
+            'city' => $city,
+            'postal_code' => isset($address['postal_code']) ? $address['postal_code'] : null,
+            'country' => $country,
+            'locality' => null,
+            'address' => null,
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+            'description' => null,
+        ]);
 
-      $validation = str_random(30);
-      $user = User::create([
-          'first_name' => $request->input('firstName'),
-          'last_name' => $request->input('lastName'),
-          'email' =>  $request->input('email'),
-          'password' =>  bcrypt($request->input('password')),
-          'gender' =>  ($request->input('gender'))? $request->input('gender') : 1,
-          'validation' => $validation,
-          'status' => 0,
-          'phone' => ($request->has('phone'))? $request->input('phone') : null,
-          'promo_pts' => 0,
-          'picture' => 'img/unknown.png',
-          'address_id' => $userAddress->id
-      ]);
-         $user->assignRole($request->input('role'));
+        $validation = str_random(30);
+        $user = User::create([
+            'first_name' => $request->input('firstName'),
+            'last_name' => $request->input('lastName'),
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
+            'gender' => ($request->input('gender')) ? $request->input('gender') : 1,
+            'validation' => $validation,
+            'status' => 0,
+            'phone' => ($request->has('phone')) ? $request->input('phone') : null,
+            'promo_pts' => 0,
+            'picture' => 'img/unknown.png',
+            'address_id' => $userAddress->id
+        ]);
+        $user->assignRole($request->input('role'));
 
-         $content = ['user' => $user , 'validationLink' => URL('user/activation/'.$user->email.'/'.$validation)];
+        $content = ['user' => $user, 'validationLink' => URL('user/activation/' . $user->email . '/' . $validation)];
 
-         Mail::send('User::mail.welcome', $content, function ($message) use ($user) {
-         $message->to($user->email);
-         $message->subject('Bienvenue');
-         });
+        Mail::send('User::mail.welcome', $content, function ($message) use ($user) {
+            $message->to($user->email);
+            $message->subject('Bienvenue');
+        });
 
-         Toastr::success('Inscription a été effectué avec succès !', 'Bien !', ["positionClass" => "toast-top-full-width","showDuration"=> "4000", "hideDuration"=> "1000", "timeOut"=> "300000"]);
+        Toastr::success('Inscription a été effectué avec succès !', 'Bien !', ["positionClass" => "toast-top-full-width", "showDuration" => "4000", "hideDuration" => "1000", "timeOut" => "300000"]);
 
         return back();
 
     }
 
-    public function handleUserLogin(Request $request){
+    public function handleUserLogin(Request $request)
+    {
 
 
+        $errors = $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required'
 
-      		$errors = $this->validate($request,[
-      			'email' => 'required|email',
-      			'password' => 'required'
-
-      		],
+        ],
             [
-              'email.required'   => 'Email est obligatoire',
-              'email.email'   => 'Le champ doit ètre de type email',
-              'password.required'   => 'Veuillez Saisie Mot de passe'
+                'email.required' => 'Email est obligatoire',
+                'email.email' => 'Le champ doit ètre de type email',
+                'password.required' => 'Veuillez Saisie Mot de passe'
             ]
         );
 
-    		    $email = $request->email;
-            $password = $request->password;
+        $email = $request->email;
+        $password = $request->password;
 
-            $credentials = [
-                'email' => $email,
-                'password' => $password,
-            ];
+        $credentials = [
+            'email' => $email,
+            'password' => $password,
+        ];
 
-            if (Auth::attempt($credentials)) {
-                $user = Auth::user();
-              if ($user->status == 0) {
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            if ($user->status == 0) {
 
-                  Auth::logout();
-                  Toastr::error('Vous devez valider votre email !');
-                 return redirect()->route("showHome");
-                }
-                elseif ($user->status == 3) {
-                    Auth::logout();
-                    Toastr::error('Votre Account est désactivé !');
-                    return back();
-                }else {
-                  Auth::login($user);
+                Auth::logout();
+                Toastr::error('Vous devez valider votre email !');
+                return redirect()->route("showHome");
+            } elseif ($user->status == 3) {
+                Auth::logout();
+                Toastr::error('Votre Account est désactivé !');
+                return back();
+            } else {
+                Auth::login($user);
                 //  return "ok";
-                  return redirect()->route('showUserDashboard');
-                }
+                return redirect()->route('showUserDashboard');
             }
-
-            Toastr::error('Vérifiez Les données saisie!', 'Oops', ["positionClass" => "toast-top-full-width","showDuration"=> "4000", "hideDuration"=> "1000", "timeOut"=> "300000"]);
-            return back();
         }
 
-        public function handleLogout(){
-         Auth::logout();
-         return redirect(route('showHome'));
-     }
+        Toastr::error('Vérifiez Les données saisie!', 'Oops', ["positionClass" => "toast-top-full-width", "showDuration" => "4000", "hideDuration" => "1000", "timeOut" => "300000"]);
+        return back();
+    }
 
-     public function handleUpdateUserProfile(Request $request){
+    public function handleLogout()
+    {
+
+        if (Auth::check()) {
+            if (Auth::user()->roles()->pluck('title')->first() === 'Admin') {
+                Auth::logout();
+                return redirect(route('showAdminLogin'));
+            }
+        }
+        Auth::logout();
+        return redirect(route('showHome'));
+    }
+
+
+    public function handleUpdateUserProfile(Request $request)
+    {
 
         $user = Auth::user();
 
         $this->validate($request, [
-            'email' => 'required|email|unique:users,email,'.$user->id,
+            'email' => 'required|email|unique:users,email,' . $user->id,
             'first_name' => 'required',
             'last_name' => 'required',
             'phone' => '',
@@ -342,9 +358,9 @@ public function showUserCompleteProfile(){
         $user->update([
             'first_name' => ($request->first_name) ? $request->first_name : $user->first_name,
             'last_name' => ($request->last_name) ? $request->last_name : $user->last_name,
-            'email' => ($request->email)? $request->email:$user->email,
-            'phone'  => ($request->phone)? $request->phone:$user->phone,
-            'gender' => ($request->gender) ? $request->gender:$user->gender,
+            'email' => ($request->email) ? $request->email : $user->email,
+            'phone' => ($request->phone) ? $request->phone : $user->phone,
+            'gender' => ($request->gender) ? $request->gender : $user->gender,
             'address' => ($request->address) ? $request->address : $user->address,
             'status' => 2
 
@@ -355,94 +371,97 @@ public function showUserCompleteProfile(){
 
     }
 
-    public function handleUpdateUserProfilePicture(Request $request){
+    public function handleUpdateUserProfilePicture(Request $request)
+    {
 
-            $user = Auth::user();
-            $this->validate($request, [
-        	    	'avatar' => 'image|mimes:jpeg,bmp,png',
-        		],
+        $user = Auth::user();
+        $this->validate($request, [
+            'avatar' => 'image|mimes:jpeg,bmp,png',
+        ],
 
             [
-              'avatar.image' => 'Le champ doit d\'ètre de Type Image',
-              'avatar.mimes' => 'L\'extension d\'image aloué:peg,bmp,png  ',
+                'avatar.image' => 'Le champ doit d\'ètre de Type Image',
+                'avatar.mimes' => 'L\'extension d\'image aloué:peg,bmp,png  ',
             ]
 
-          );
-            $file = $request->avatar;
-            $imagePath = 'storage/uploads/avatar/';
-            $filename = 'avatar' . $user->id . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path($imagePath), $filename);
-            $user->update([
-           'picture' => $imagePath . '' . $filename
-            ]);
+        );
+        $file = $request->avatar;
+        $imagePath = 'storage/uploads/avatar/';
+        $filename = 'avatar' . $user->id . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path($imagePath), $filename);
+        $user->update([
+            'picture' => $imagePath . '' . $filename
+        ]);
 
-    SweetAlert::success('Bien !', 'Image De Profil Modifié avec succés !')->persistent('Fermer');
-    return redirect()->route('showUserProfile');
+        SweetAlert::success('Bien !', 'Image De Profil Modifié avec succés !')->persistent('Fermer');
+        return redirect()->route('showUserProfile');
 
-}
+    }
 
     public function handleUpdateUserPassword(Request $request)
     {
 
         $user = Auth::user();
 
-        $errors =  $this->validate($request,[
-            'oldPassword'   => 'required',
-            'password'   => 'required|confirmed'
+        $errors = $this->validate($request, [
+            'oldPassword' => 'required',
+            'password' => 'required|confirmed'
 
-          ],
-          [
-                'oldPassword.required'   => 'Le champ Actuelle Mot de passe est obligatoire',
-                'password.required'   => 'Le champ mot de passe est obligatoire',
-                'password.confirmed'   => 'Mot de passe Doit ètre Identique'
-          ]
-            );
+        ],
+            [
+                'oldPassword.required' => 'Le champ Actuelle Mot de passe est obligatoire',
+                'password.required' => 'Le champ mot de passe est obligatoire',
+                'password.confirmed' => 'Mot de passe Doit ètre Identique'
+            ]
+        );
 
 
-
-            if (!(Hash::check($request->oldPassword, $user->password))) {
-              SweetAlert::error('Oops !', 'Votre mot de passe actuel ne correspond pas au mot de passe que vous avez fourni. Veuillez réessayer. !')->persistent('Fermer');
-              return redirect()->route('showUserPassword');
-            }
-              if(strcmp($request->oldPassword, $request->password == 0)){
-                SweetAlert::error('Oops !', 'Le nouveau mot de passe ne peut pas être identique à votre mot de passe actuel. Veuillez choisir un mot de passe différent. !')->persistent('Fermer');
-                return redirect()->route('showUserPassword');
-              }
-
-            $user->password = bcrypt($request->password);
-            $user->save();
-            SweetAlert::success('Bien !', 'Mot de passe modifié avec succès. !')->persistent('Fermer');
+        if (!(Hash::check($request->oldPassword, $user->password))) {
+            SweetAlert::error('Oops !', 'Votre mot de passe actuel ne correspond pas au mot de passe que vous avez fourni. Veuillez réessayer. !')->persistent('Fermer');
             return redirect()->route('showUserPassword');
+        }
+        if (strcmp($request->oldPassword, $request->password == 0)) {
+            SweetAlert::error('Oops !', 'Le nouveau mot de passe ne peut pas être identique à votre mot de passe actuel. Veuillez choisir un mot de passe différent. !')->persistent('Fermer');
+            return redirect()->route('showUserPassword');
+        }
+
+        $user->password = bcrypt($request->password);
+        $user->save();
+        SweetAlert::success('Bien !', 'Mot de passe modifié avec succès. !')->persistent('Fermer');
+        return redirect()->route('showUserPassword');
 
     }
 
 
-    public function showUserDashboard() {
+    public function showUserDashboard()
+    {
 
-      $userTerrains = Terrain::whereHas('complex', function ($subQuery) {
-                    $subQuery->where('user_id', Auth::user()->id);
-                  })
-                  ->with('wishlists')
-                  ->get();
+        $userTerrains = Terrain::whereHas('complex', function ($subQuery) {
+            $subQuery->where('user_id', Auth::user()->id);
+        })
+            ->with('wishlists')
+            ->get();
 
-      $userClubs = Club::whereHas('terrain.complex', function ($subQuery) {
-                  $subQuery->where('user_id', Auth::user()->id);
-              })
-              ->with('wishlists')
-              ->get();
-        return view ('User::frontOffice.userDashboard',[
+        $userClubs = Club::whereHas('terrain.complex', function ($subQuery) {
+            $subQuery->where('user_id', Auth::user()->id);
+        })
+            ->with('wishlists')
+            ->get();
+        return view('User::frontOffice.userDashboard', [
 
-          'userTerrains' => $userTerrains,
-          'userClubs' => $userClubs
+            'userTerrains' => $userTerrains,
+            'userClubs' => $userClubs
         ]);
     }
 
-    public function  showUserProfile() {
-        return view ('User::frontOffice.userProfile');
+    public function showUserProfile()
+    {
+        return view('User::frontOffice.userProfile');
     }
 
-    public function  showUserPassword() {
-        return view ('User::frontOffice.userChangePassword');
+    public function showUserPassword()
+    {
+        return view('User::frontOffice.userChangePassword');
     }
 
     function showUserLogin()
@@ -450,193 +469,198 @@ public function showUserCompleteProfile(){
         return redirect(route('showHome'));
     }
 
-    public function  showUserListingTerrain() {
+    public function showUserListingTerrain()
+    {
 
-      $userTerrains = Terrain::whereHas('complex', function ($subQuery) {
-                    $subQuery->where('user_id', Auth::user()->id);
-                  })->paginate(5);
-        return view ('User::frontOffice.userListing',
-          [
-            'userTerrains' => $userTerrains
-          ]
-      );
+        $userTerrains = Terrain::whereHas('complex', function ($subQuery) {
+            $subQuery->where('user_id', Auth::user()->id);
+        })->paginate(5);
+        return view('User::frontOffice.userListing',
+            [
+                'userTerrains' => $userTerrains
+            ]
+        );
     }
 
-    public function  showUserListingClub() {
-      $userClubs = Club::whereHas('terrain.complex', function ($subQuery) {
-                    $subQuery->where('user_id', Auth::user()->id);
-                  })->paginate(5);
+    public function showUserListingClub()
+    {
+        $userClubs = Club::whereHas('terrain.complex', function ($subQuery) {
+            $subQuery->where('user_id', Auth::user()->id);
+        })->paginate(5);
 
-        return view ('User::frontOffice.userListing',
-          [
-            'userClubs' => $userClubs
-          ]
-      );
+        return view('User::frontOffice.userListing',
+            [
+                'userClubs' => $userClubs
+            ]
+        );
     }
+
     public function showUserAddComplex()
     {
-        return view ('User::frontOffice.userAddComplex',
-          [
-            'categories' => Category::select('category')->groupBy('category')->get()
-          ]
-      );
+        return view('User::frontOffice.userAddComplex',
+            [
+                'categories' => Category::select('category')->groupBy('category')->get()
+            ]
+        );
     }
-    public function  showUserAddTerrain() {
-      $user = Auth::user();
-      $complexes = $user->complexes()->get();
-      if (empty($complexes)) {
-        SweetAlert::error('Opps !', 'Veuillez Ajouter Un complexe. !')->persistent('Fermer');
-        return redirect()->route('showUserAddComplex');
-      }
-        return view ('User::frontOffice.userAddTerrain',
-        [
-            'specialities' => TerrainSpeciality::All(),
-            'complexes' => $complexes
-        ]
-      );
+
+    public function showUserAddTerrain()
+    {
+        $user = Auth::user();
+        $Complexs = $user->Complexs()->get();
+        if (empty($Complexs)) {
+            SweetAlert::error('Opps !', 'Veuillez Ajouter Un Complex. !')->persistent('Fermer');
+            return redirect()->route('showUserAddComplex');
+        }
+        return view('User::frontOffice.userAddTerrain',
+            [
+                'specialities' => TerrainSpeciality::All(),
+                'Complexs' => $Complexs
+            ]
+        );
     }
 
     public function hundleUserAddComplex(Request $request)
     {
 
         $user = Auth::user();
-        $this->validate($request,[
-          "address" =>       "required",
-          "latitude" =>      "required",
-          "longitude" =>     "required",
-          "city" =>          "required",
-          "postal_code"=>    "required",
-          "locality"=>       "required",
-          "name"=>           "required",
-          "categories" =>    "required",
-          "phone" =>         "required",
-          "email" =>         "required|email",
-          "web_site" =>      "required"
+        $this->validate($request, [
+            "address" => "required",
+            "latitude" => "required",
+            "longitude" => "required",
+            "city" => "required",
+            "postal_code" => "required",
+            "locality" => "required",
+            "name" => "required",
+            "categories" => "required",
+            "phone" => "required",
+            "email" => "required|email",
+            "web_site" => "required"
         ],
-        [
-          "address.required" =>"Le champ adresse est obligatoire",
-          "latitude.required" =>"Le champ latitude  est obligatoire",
-          "longitude.required" =>"Le champ longitude est obligatoire",
-          'city.required' =>"Le champ Ville est obligatoire",
-          'postal_code' =>"Le champ code postal  est obligatoire",
-          "locality.required" => "Le champ localité est obligatoire",
-          "name.required" => "Le champ nom de complex est obligatoire",
-          "phone.required" =>"Le champ phone  est obligatoire",
-          "email.required" =>"Le champ email",
-          "email.email" =>"Le champ doit ètre email",
-          "web_site.required" =>"Le champ Site Web est est obligatoire",
+            [
+                "address.required" => "Le champ adresse est obligatoire",
+                "latitude.required" => "Le champ latitude  est obligatoire",
+                "longitude.required" => "Le champ longitude est obligatoire",
+                'city.required' => "Le champ Ville est obligatoire",
+                'postal_code' => "Le champ code postal  est obligatoire",
+                "locality.required" => "Le champ localité est obligatoire",
+                "name.required" => "Le champ nom de complex est obligatoire",
+                "phone.required" => "Le champ phone  est obligatoire",
+                "email.required" => "Le champ email",
+                "email.email" => "Le champ doit ètre email",
+                "web_site.required" => "Le champ Site Web est est obligatoire",
 
-        ]
-      );
+            ]
+        );
 
         $address = Address::Create([
-        'city' => $request->city ,
-        'postal_code' => $request->postal_code ,
-        'country' => $request->country ,
-        'locality' => $request->locality ,
-        'address' => $request->adresse ,
-        'latitude' => $request->latitude,
-        'longitude' =>$request->longitude ,
-        'description' => $request->description ,
-      ]);
-      $complex =  Complex::Create([
-          'name' => $request->name,
-          'phone' => $request->phone ,
-          'email' => $request->email,
-          'web_site' => $request->web_site,
-          'address_id' => $address->id,
-          'user_id' => $user->id
+            'city' => $request->city,
+            'postal_code' => $request->postal_code,
+            'country' => $request->country,
+            'locality' => $request->locality,
+            'address' => $request->adresse,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'description' => $request->description,
+        ]);
+        $complex = Complex::Create([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'web_site' => $request->web_site,
+            'address_id' => $address->id,
+            'user_id' => $user->id
         ]);
 
         foreach ($request->categories as $categorie) {
-          Category::create([
-            "category" => $categorie,
-            "complex_id" => $complex->id
-          ]);
+            Category::create([
+                "category" => $categorie,
+                "complex_id" => $complex->id
+            ]);
         }
         if ($request->otherCategories) {
-          $otherCategories = explode(',', $request->otherCategories);
-          foreach ($otherCategories as  $otherCategorie) {
+            $otherCategories = explode(',', $request->otherCategories);
+            foreach ($otherCategories as $otherCategorie) {
 
-            Category::create([
-              "category" => $otherCategorie,
-              "complex_id" => $complex->id
-            ]);
-          }
+                Category::create([
+                    "category" => $otherCategorie,
+                    "complex_id" => $complex->id
+                ]);
+            }
         }
 
-      SweetAlert::success('Bien !', 'Complex ajouté avec succès. !')->persistent('Fermer');
-      return redirect()->route('showUserAddComplex');
+        SweetAlert::success('Bien !', 'Complex ajouté avec succès. !')->persistent('Fermer');
+        return redirect()->route('showUserAddComplex');
 
     }
 
     public function hundleUserAddTerrain(Request $request)
     {
-      $user = Auth::user();
-      $this->validate($request,[
-        "name"=>             "required",
-        "complex_id" =>      "required",
-        "category_id" =>     "required",
-        "speciality_id" =>   "required",
-        "description"=>      "required",
-        "size"=>             "required|between:0,9999",
-        "type"=>             "required",
-        'images' =>           "required",
-        'images.*' =>         "image|mimes:jpeg,png,jpg,gif,svg"
-      ],
-      [
-        'name' =>            'Le champ Nom de terrain est  obligatoire',
-        'complex_id' =>      'Le champ Complexe de terrain est  obligatoire',
-        'category_id' =>     'Le champ Categorie de terrain est  obligatoire',
-        'speciality_id' =>   'Le champ speciality de terrain est  obligatoire',
-        "description" =>     'Le champ Description de terrain est  obligatoire',
-        "size.required" =>   'Le champ Size de terrain est  obligatoire',
-        "size.between" =>    'Format Invalide de champ Type',
-        "type.required" =>   'Le champ Type de terrain est  obligatoire',
-        'images.required' => 'Le champ Image de terrain est  obligatoire',
-        'images.image' =>    'Le champ doit ètre de type image',
-        'images.mimes' =>    'Le champ doit ètre de type image: peg,png,jpg,gif,svg',
-      ]
-    );
+        $user = Auth::user();
+        $this->validate($request, [
+            "name" => "required",
+            "complex_id" => "required",
+            "category_id" => "required",
+            "speciality_id" => "required",
+            "description" => "required",
+            "size" => "required|between:0,9999",
+            "type" => "required",
+            'images' => "required",
+            'images.*' => "image|mimes:jpeg,png,jpg,gif,svg"
+        ],
+            [
+                'name' => 'Le champ Nom de terrain est  obligatoire',
+                'complex_id' => 'Le champ Complex de terrain est  obligatoire',
+                'category_id' => 'Le champ Categorie de terrain est  obligatoire',
+                'speciality_id' => 'Le champ speciality de terrain est  obligatoire',
+                "description" => 'Le champ Description de terrain est  obligatoire',
+                "size.required" => 'Le champ Size de terrain est  obligatoire',
+                "size.between" => 'Format Invalide de champ Type',
+                "type.required" => 'Le champ Type de terrain est  obligatoire',
+                'images.required' => 'Le champ Image de terrain est  obligatoire',
+                'images.image' => 'Le champ doit ètre de type image',
+                'images.mimes' => 'Le champ doit ètre de type image: peg,png,jpg,gif,svg',
+            ]
+        );
 
-    $terrain = Terrain::create([
+        $terrain = Terrain::create([
 
-      "name"=>             $request->name,
-      "complex_id" =>      $request->complex_id,
-      "category_id" =>     $request->category_id,
-      "speciality_id" =>   $request->speciality_id,
-      "description"=>      $request->description,
-      "size"=>             $request->size,
-      "type" =>            $request->type
-    ]);
+            "name" => $request->name,
+            "complex_id" => $request->complex_id,
+            "category_id" => $request->category_id,
+            "speciality_id" => $request->speciality_id,
+            "description" => $request->description,
+            "size" => $request->size,
+            "type" => $request->type
+        ]);
 
 
         $imagePath = 'storage/uploads/terrains/';
         foreach ($request->images as $image) {
-          $filename = 'terrain-'.$terrain->id .'-'. str_random(5) . '-' . time() . '.' . $image->getClientOriginalExtension();
-          $image->move(public_path($imagePath), $filename);
+            $filename = 'terrain-' . $terrain->id . '-' . str_random(5) . '-' . time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path($imagePath), $filename);
 
-          Media::create([
+            Media::create([
 
-            'type' => 1,
-            'link' => $imagePath . '' . $filename,
-            'terrain_id' => $terrain->id
-          ]);
+                'type' => 1,
+                'link' => $imagePath . '' . $filename,
+                'terrain_id' => $terrain->id
+            ]);
         }
 
         foreach ($request->sessionDay as $key => $sessionDay) {
 
-          $sessionStartTime = $request->sessionStartTime[$key];
-          $sessionEndTime = $request->sessionEndTime[$key];
-           $sessionStartDate[] = date('Y-m-d H:i:s', strtotime("$sessionDay $sessionStartTime"));
-           $sessionEndDate[] = date('Y-m-d H:i:s', strtotime("$sessionDay $sessionEndTime"));
+            $sessionStartTime = $request->sessionStartTime[$key];
+            $sessionEndTime = $request->sessionEndTime[$key];
+            $sessionStartDate[] = date('Y-m-d H:i:s', strtotime("$sessionDay $sessionStartTime"));
+            $sessionEndDate[] = date('Y-m-d H:i:s', strtotime("$sessionDay $sessionEndTime"));
             $dayofweek[] = date('w', strtotime($sessionDay));
 
-          $terrain->schedules()->create([
-              'start_at' => $sessionStartDate[$key],
-              'ends_at' => $sessionEndDate[$key],
-              'day' => $dayofweek[$key]
-          ]);
+            $terrain->schedules()->create([
+                'start_at' => $sessionStartDate[$key],
+                'ends_at' => $sessionEndDate[$key],
+                'day' => $dayofweek[$key]
+            ]);
 
         }
 
@@ -647,212 +671,705 @@ public function showUserCompleteProfile(){
     public function showUserAddEquipement()
     {
         $user = Auth::user();
-      $userTerrains =  Terrain::whereHas('complex', function ($subQuery) {
-                      $subQuery->where('user_id', Auth::user()->id);
-                    })->get();
+        $userTerrains = Terrain::whereHas('complex', function ($subQuery) {
+            $subQuery->where('user_id', Auth::user()->id);
+        })->get();
 
-      if(empty($userTerrains)){
-        weetAlert::error('Opps !', 'Veuillez Ajouter Un Terrain. !')->persistent('Fermer');
-        return redirect()->route('showUserAddTerrain');
-      }
+        if (empty($userTerrains)) {
+            SweetAlert::error('Opps !', 'Veuillez Ajouter Un Terrain. !')->persistent('Fermer');
+            return redirect()->route('showUserAddTerrain');
+        }
 
-          return view ('User::frontOffice.userAddEquipement',
-          [   'specialities' => TerrainSpeciality::All(),
-              'terrains' => $userTerrains
-          ]
+        return view('User::frontOffice.userAddEquipement',
+            ['specialities' => TerrainSpeciality::All(),
+                'terrains' => $userTerrains
+            ]
         );
     }
 
     public function hundleUserAddEquipement(Request $request)
     {
-      $user = Auth::user();
+        $user = Auth::user();
 
-      $this->validate($request,[
-        "name"=>              "required",
-        "description"=>       "required",
-        "terrain_id" =>       "required",
-        "speciality_id" =>    "required",
-        "hauteur"=>           "required|between:0,9999",
-        'longueur' =>         "required|between:0,9999",
-        'largueur' =>         "required|between:0,9999",
-        'images' =>           "required",
-        'images.*' =>         "image|mimes:jpeg,png,jpg,gif,svg"
-      ],
-      [
-        'name' =>            'Le champ Nom de terrain est  obligatoire',
-        'terrain_id' =>      'Le champ Terrain est  obligatoire',
-        'speciality_id' =>   'Le champ speciality d\'equipement est  obligatoire',
-        "description" =>     'Le champ Description d\'equipement est  obligatoire',
-        "hauteur.required" =>   'Le champ Hauteur  est  obligatoire',
-        "hauteur.between" =>    'Format Invalide de champ Type',
-        "longueur.required" =>   'Le champ Longueur  est  obligatoire',
-        "longueur.between" =>    'Format Invalide de champ Type',
-        "largueur.required" =>   'Le champ Largueur  est  obligatoire',
-        "largueur.between" =>    'Format Invalide de champ Type',
-        'images.image' =>    'Le champ doit ètre de type image',
-        'images.mimes' =>    'Le champ doit ètre de type image: peg,png,jpg,gif,svg',
-      ]
-    );
+        $this->validate($request, [
+            "name" => "required",
+            "description" => "required",
+            "terrain_id" => "required",
+            "speciality_id" => "required",
+            "hauteur" => "required|between:0,9999",
+            'longueur' => "required|between:0,9999",
+            'largueur' => "required|between:0,9999",
+            'images' => "required",
+            'images.*' => "image|mimes:jpeg,png,jpg,gif,svg"
+        ],
+            [
+                'name' => 'Le champ Nom de terrain est  obligatoire',
+                'terrain_id' => 'Le champ Terrain est  obligatoire',
+                'speciality_id' => 'Le champ speciality d\'equipement est  obligatoire',
+                "description" => 'Le champ Description d\'equipement est  obligatoire',
+                "hauteur.required" => 'Le champ Hauteur  est  obligatoire',
+                "hauteur.between" => 'Format Invalide de champ Type',
+                "longueur.required" => 'Le champ Longueur  est  obligatoire',
+                "longueur.between" => 'Format Invalide de champ Type',
+                "largueur.required" => 'Le champ Largueur  est  obligatoire',
+                "largueur.between" => 'Format Invalide de champ Type',
+                'images.image' => 'Le champ doit ètre de type image',
+                'images.mimes' => 'Le champ doit ètre de type image: peg,png,jpg,gif,svg',
+            ]
+        );
 
-      $equipment = Equipment::create([
-        'name' => $request->name,
-        'description' => $request->description,
-        'status' => 'Verif',
-        'hauteur' => $request->hauteur,
-        'longueur' => $request->longueur,
-        'largueur' => $request->largueur,
-        'speciality_id' => $request->speciality_id,
-        'terrain_id' => $request->terrain_id
-      ]);
-
-      $imagePath = 'storage/uploads/equipements/';
-      foreach ($request->images as $image) {
-        $filename = 'equipement-'.$equipment->id .'-'. str_random(5) . '-' . time() . '.' . $image->getClientOriginalExtension();
-        $image->move(public_path($imagePath), $filename);
-
-        Media::create([
-
-          'type' => 1,
-          'link' => $imagePath . '' . $filename,
-          'equipment_id' => $equipment->id
+        $equipment = Equipment::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'status' => 'Verif',
+            'hauteur' => $request->hauteur,
+            'longueur' => $request->longueur,
+            'largueur' => $request->largueur,
+            'speciality_id' => $request->speciality_id,
+            'terrain_id' => $request->terrain_id
         ]);
-      }
 
-      SweetAlert::success('Bien !', 'Equipement ajouté avec succès. !')->persistent('Fermer');
-      return redirect()->route('showUserAddEquipement');
+        $imagePath = 'storage/uploads/equipements/';
+        foreach ($request->images as $image) {
+            $filename = 'equipement-' . $equipment->id . '-' . str_random(5) . '-' . time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path($imagePath), $filename);
+
+            Media::create([
+
+                'type' => 1,
+                'link' => $imagePath . '' . $filename,
+                'equipment_id' => $equipment->id
+            ]);
+        }
+
+        SweetAlert::success('Bien !', 'Equipement ajouté avec succès. !')->persistent('Fermer');
+        return redirect()->route('showUserAddEquipement');
     }
 
     public function showUserAddClub()
     {
-      $user = Auth::user();
-    $userTerrains =  Terrain::whereHas('complex', function ($subQuery) {
-                    $subQuery->where('user_id', Auth::user()->id);
-                  })->get();
+        $user = Auth::user();
+        $userTerrains = Terrain::whereHas('complex', function ($subQuery) {
+            $subQuery->where('user_id', Auth::user()->id);
+        })->get();
 
-    if(empty($userTerrains)){
-      weetAlert::error('Opps !', 'Veuillez Ajouter Un Terrain. !')->persistent('Fermer');
-      return redirect()->route('showUserAddTerrain');
-    }
+        if (empty($userTerrains)) {
+            SweetAlert::error('Opps !', 'Veuillez Ajouter Un Terrain. !')->persistent('Fermer');
+            return redirect()->route('showUserAddTerrain');
+        }
 
-        return view ('User::frontOffice.userAddClub',
-        [
-            'terrains' => $userTerrains
-        ]
-      );
+        return view('User::frontOffice.userAddClub',
+            [
+                'terrains' => $userTerrains
+            ]
+        );
     }
 
     public function hundleUserAddClub(Request $request)
     {
-      $user = Auth::user();
+        $user = Auth::user();
 
-      $this->validate($request,[
-        "name"=>              "required",
-        "description"=>       "required",
-        "terrain_id" =>       "required",
-        'images' =>           "required",
-        'images.*' =>         "image|mimes:jpeg,png,jpg,gif,svg"
-      ],
-      [
-        'name' =>            'Le champ Nom de terrain est  obligatoire',
-        'terrain_id' =>      'Le champ Terrain est  obligatoire',
-        "description" =>     'Le champ Description d\'equipement est  obligatoire',
-        'images.image' =>    'Le champ doit ètre de type image',
-        'images.mimes' =>    'Le champ doit ètre de type image: peg,png,jpg,gif,svg',
-      ]
-    );
+        $this->validate($request, [
+            "name" => "required",
+            "description" => "required",
+            "terrain_id" => "required",
+            'images' => "required",
+            'images.*' => "image|mimes:jpeg,png,jpg,gif,svg"
+        ],
+            [
+                'name' => 'Le champ Nom de terrain est  obligatoire',
+                'terrain_id' => 'Le champ Terrain est  obligatoire',
+                "description" => 'Le champ Description d\'equipement est  obligatoire',
+                'images.image' => 'Le champ doit ètre de type image',
+                'images.mimes' => 'Le champ doit ètre de type image: peg,png,jpg,gif,svg',
+            ]
+        );
 
-      $club = Club::create([
-        'name' => $request->name,
-        'description' => $request->description,
-        'terrain_id' => $request->terrain_id
-      ]);
-
-      $imagePath = 'storage/uploads/clubs/';
-      foreach ($request->images as $image) {
-        $filename = 'club-'.$club->id .'-'. str_random(5) . '-' . time() . '.' . $image->getClientOriginalExtension();
-        $image->move(public_path($imagePath), $filename);
-
-        Media::create([
-
-          'type' => 1,
-          'link' => $imagePath . '' . $filename,
-          'club_id' => $club->id
+        $club = Club::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'terrain_id' => $request->terrain_id
         ]);
-      }
 
-      SweetAlert::success('Bien !', 'Club ajouté avec succès. !')->persistent('Fermer');
-      return redirect()->route('showUserAddEquipement');
+        $imagePath = 'storage/uploads/clubs/';
+        foreach ($request->images as $image) {
+            $filename = 'club-' . $club->id . '-' . str_random(5) . '-' . time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path($imagePath), $filename);
 
-}
+            Media::create([
 
-public function showUserAddTeam()
-{
-    $user = Auth::user();
-    $userClubs = Club::whereHas('terrain.complex', function ($subQuery) use ($user){
-                $subQuery->where('user_id', $user->id);
-            })->get();
-      if (empty($userClubs)) {
-      weetAlert::error('Opps !', 'Veuillez Ajouter Un Terrain. !')->persistent('Fermer');
-      return redirect()->route('showUserAddTerrain');
-    }
-    return view ('User::frontOffice.userAddTeam',
-    [   'specialities' => TerrainSpeciality::All(),
-        'clubs' => $userClubs
-    ]
-  );
+                'type' => 1,
+                'link' => $imagePath . '' . $filename,
+                'club_id' => $club->id
+            ]);
+        }
 
-}
-public function hundleUserAddTeam(Request $request)
-{
-  $user = Auth::user();
-  $this->validate($request,[
-    "name"=>              "required",
-    "club_id"=>           "required",
-    "speciality_id" =>    "required",
-    'images' =>           "required",
-    'images.*' =>         "image|mimes:jpeg,png,jpg,gif,svg"
-  ],
-  [
-    'name' =>            'Le champ Nom de terrain est  obligatoire',
-    'club_id' =>          'Le champ Club est  obligatoire',
-    "speciality_id" =>    'Le champ Spécialité est  obligatoire',
-    'images.image' =>    'Le champ doit ètre de type image',
-    'images.mimes' =>    'Le champ doit ètre de type image: peg,png,jpg,gif,svg',
-  ]
-);
+        SweetAlert::success('Bien !', 'Club ajouté avec succès. !')->persistent('Fermer');
+        return redirect()->route('showUserAddEquipement');
 
-    $team = Team::create([
-      "name"=>              $request->name,
-      "level" =>            $request->level,
-      "club_id"=>           $request->club_id,
-      "speciality_id" =>    $request->speciality_id,
-    ]);
-
-    $imagePath = 'storage/uploads/teams/';
-    foreach ($request->images as $image) {
-      $filename = 'team-'.$team->id .'-'. str_random(5) . '-' . time() . '.' . $image->getClientOriginalExtension();
-      $image->move(public_path($imagePath), $filename);
-
-      Media::create([
-        'type' => 1,
-        'link' => $imagePath . '' . $filename,
-        'team_id' => $team->id
-      ]);
     }
 
-    SweetAlert::success('Bien !', 'Equipe ajouté avec succès. !')->persistent('Fermer');
-    return redirect()->route('showUserAddTeam');
-  }
+    public function showUserAddTeam()
+    {
+        $user = Auth::user();
+        $userClubs = Club::whereHas('terrain.complex', function ($subQuery) use ($user) {
+            $subQuery->where('user_id', $user->id);
+        })->get();
+        if (empty($userClubs)) {
+            SweetAlert::error('Opps !', 'Veuillez Ajouter Un Terrain. !')->persistent('Fermer');
+            return redirect()->route('showUserAddTerrain');
+        }
+        return view('User::frontOffice.userAddTeam',
+            ['specialities' => TerrainSpeciality::All(),
+                'clubs' => $userClubs
+            ]
+        );
+
+    }
+
+    public function hundleUserAddTeam(Request $request)
+    {
+        $user = Auth::user();
+        $this->validate($request, [
+            "name" => "required",
+            "club_id" => "required",
+            "speciality_id" => "required",
+            'images' => "required",
+            'images.*' => "image|mimes:jpeg,png,jpg,gif,svg"
+        ],
+            [
+                'name' => 'Le champ Nom de terrain est  obligatoire',
+                'club_id' => 'Le champ Club est  obligatoire',
+                "speciality_id" => 'Le champ Spécialité est  obligatoire',
+                'images.image' => 'Le champ doit ètre de type image',
+                'images.mimes' => 'Le champ doit ètre de type image: peg,png,jpg,gif,svg',
+            ]
+        );
+
+        $team = Team::create([
+            "name" => $request->name,
+            "level" => $request->level,
+            "club_id" => $request->club_id,
+            "speciality_id" => $request->speciality_id,
+        ]);
+
+        $imagePath = 'storage/uploads/teams/';
+        foreach ($request->images as $image) {
+            $filename = 'team-' . $team->id . '-' . str_random(5) . '-' . time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path($imagePath), $filename);
+
+            Media::create([
+                'type' => 1,
+                'link' => $imagePath . '' . $filename,
+                'team_id' => $team->id
+            ]);
+        }
+
+        SweetAlert::success('Bien !', 'Equipe ajouté avec succès. !')->persistent('Fermer');
+        return redirect()->route('showUserAddTeam');
+    }
 
     public function showFavoriteList()
     {
-        return view('User::frontOffice.Sportif.favoritList',['whishList'=>Auth::user()->wishlists()->get()]);
+        return view('User::frontOffice.Sportif.favoritList', ['whishList' => Auth::user()->wishlists()->get()]);
 
         //    return Auth::user()->favoritesClubs;
     }
 
-  public function showTest()
-  {
-      return Auth::user();
-  }
+    public function showTest()
+    {
+        return Auth::user();
+    }
+
+    //Admin Login
+    public function showAdminLogin()
+    {
+
+        if (Auth::check()) {
+            if (Auth::user()->roles()->pluck('title')->first() === 'Admin') {
+                return redirect(route('showAdminDashboard'));
+            }
+            else
+            {
+                return redirect('showHome');
+            }
+        }
+        return view('User::backOffice.auth.login');
+    }
+
+    public function handleAdminLogin(Request $request)
+    {
+        $credentials = $this->credentials($request);
+        $rememberMe = $request->has('remember_me') ? true : false;
+        if (auth()->attempt(['email' => $request->input('email'), 'password' => $request->input('password')], $rememberMe)) {
+            $user = Auth::getLastAttempted($credentials, true);
+            if ($user->roles()->pluck('title')->first() == "Admin") {
+                Auth::login($user);
+                return redirect()->route('showAdminDashboard');
+            } else {
+                Auth::logout();
+                alert()->error('Vérifier vos données', 'Erreur')->persistent('Ok');
+                return redirect()->route('showAdminLogin');
+            }
+        } else {
+            Auth::logout();
+            alert()->error('Vérifier vos données', 'Erreur')->persistent('Ok');
+            return redirect()->route('showAdminLogin');
+        }
+    }
+
+    //********* Admin Users
+
+    public function showUsersList()
+    {
+        $athletics = User::whereHas('roles', function ($query) {
+            $query->where('title', '=', 'Internaute');
+        })->get();
+
+        $privateOfficials = User::whereHas('roles', function ($query) {
+            $query->where('title', '=', 'Professionnel');
+        })->get();
+
+        $publicOfficials = User::whereHas('roles', function ($query) {
+            $query->where('title', '=', 'Gestionnaire');
+        })->get();
+
+
+        return view('User::backOffice.usersList', compact('athletics', 'privateOfficials', 'publicOfficials'));
+    }
+
+    public function handleAddUser(Request $request)
+    {
+
+
+        $this->validate($request, [
+            'email' => 'required|email|unique:users,email',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'phone' => '',
+            'role' => 'required|integer|between:2,4',
+
+        ],
+            [
+                'email.email' => 'Veuillez saisir un email valide',
+                'email.required' => 'Le champ email est obligatoire',
+                'email.unique' => 'L\'email indiqué est déjà utilisé',
+                'first_name.required' => 'Le champ Prénom est obligatoire',
+                'last_name.required' => 'Le champ Nom est obligatoire',
+                'role.required' => 'Vérifier vos données',
+                'role.integer' => 'Vérifier vos données',
+                'role.between' => 'Vérifier vos données',
+            ]);
+
+        $validation = str_random(30);
+        $user = User::create([
+            'first_name' => $request->input('first_name'),
+            'last_name' => $request->input('last_name'),
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
+            'gender' => ($request->input('gender')) ? $request->input('gender') : 1,
+            'validation' => $validation,
+            'status' => 0,
+            'phone' => ($request->has('phone')) ? $request->input('phone') : null,
+            'promo_pts' => 0,
+            'picture' => 'img/unknown.png',
+        ]);
+        $user->assignRole($request->input('role'));
+        $content = ['user' => $user, 'validationLink' => URL('user/activation/' . $user->email . '/' . $validation), 'password' => $request->password];
+
+        Mail::send('User::mail.welcome', $content, function ($message) use ($user) {
+            $message->to($user->email);
+            $message->subject('Bienvenue');
+        });
+        $user->save();
+    }
+
+    public function handleDeleteUser($id)
+    {
+        $user = User::find($id);
+        if ($user) {
+            $user->delete();
+            alert()->success("Utilisateur supprimer avec succès")->persistent("Ok");
+        }
+
+        return redirect()->route('showUsersList');
+    }
+
+    public function handleUpdateUser(Request $request, $id)
+    {
+
+        $this->validate($request, [
+            'email' => 'required|email',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'phone' => '',
+            'password' => '',
+
+        ],
+            [
+                'email.email' => 'Veuillez saisir un email valide',
+                'email.required' => 'Le champ email est obligatoire',
+                'first_name.required' => 'Le champ Prénom est obligatoire',
+                'last_name.required' => 'Le champ Nom est obligatoire',
+            ]);
+
+
+        $user = User::find($id);
+
+        if ($user) {
+
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
+            $user->gender = $request->gender;
+            $user->email = $request->email;
+            $user->phone = $request->phone;
+            $this->validate($request, [
+                'picture' => 'image|mimes:jpeg,bmp,png',
+            ],
+
+                [
+                    'picture.image' => 'Le champ doit d\'ètre de Type Image',
+                    'picture.mimes' => 'L\'extension d\'image aloué:peg,bmp,png  ',
+                ]
+
+            );
+            if ($request->hasFile('picture')) {
+
+            $file = $request->picture;
+            $imagePath = 'storage/uploads/avatar/';
+            $filename = 'avatar' . $user->id . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path($imagePath), $filename);
+            $user->update([
+                'picture' => $imagePath . '' . $filename
+            ]);
+
+            }
+            if ($request->input('password')) {
+                $user->password = bcrypt($request->password);
+            }
+            if ($user->email != $request->email) {
+                $userExistWihEmail = User::where('email', $request->email)->first();
+                if ($userExistWihEmail) {
+                    alert()->success("L'email indiqué est déjà utilisé")->persistent("Ok");
+                    $user->save();
+                    return redirect('showUsersList');
+                } else {
+                    $user->email = $request->email;
+                }
+            }
+            $user->save();
+            alert()->success("Utilisateur Modifier avec succès")->persistent("Ok");
+        }
+
+        return redirect()->route('showUsersList');
+    }
+
+    public function handleGetUserById($id)
+    {
+        $user = User::find($id);
+        return ($user) ? json_encode(['user' => $user, 'edit_url' => route('handleUpdateUser', $user->id),'user_image'=>asset($user->picture)]) : json_encode(['response' => null]);
+    }
+
+    public function showAddComplexAdmin()
+    {
+        return view('User::backOffice.addComplex',
+            [
+                'categories' => Category::select('category')->groupBy('category')->get()
+            ]
+        );
+    }
+
+    public function handleAddComplex(Request $request)
+    {
+        $user = Auth::user();
+        $this->validate($request, [
+            "address" => "required",
+            "latitude" => "required",
+            "longitude" => "required",
+            "city" => "required",
+            "postal_code" => "required",
+            "locality" => "required",
+            "name" => "required",
+            "categories" => "required",
+            "phone" => "required",
+            "email" => "required|email",
+            "web_site" => "required"
+        ],
+            [
+                "address.required" => "Le champ adresse est obligatoire",
+                "latitude.required" => "Le champ latitude  est obligatoire",
+                "longitude.required" => "Le champ longitude est obligatoire",
+                'city.required' => "Le champ Ville est obligatoire",
+                'postal_code' => "Le champ code postal  est obligatoire",
+                "locality.required" => "Le champ localité est obligatoire",
+                "name.required" => "Le champ nom de complex est obligatoire",
+                "phone.required" => "Le champ phone  est obligatoire",
+                "email.required" => "Le champ email",
+                "email.email" => "Le champ doit ètre email",
+                "web_site.required" => "Le champ Site Web est est obligatoire",
+
+            ]
+        );
+
+        $address = Address::Create([
+            'city' => $request->city,
+            'postal_code' => $request->postal_code,
+            'country' => $request->country,
+            'locality' => $request->locality,
+            'address' => $request->adresse,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'description' => $request->description,
+        ]);
+        $complex = Complex::Create([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'web_site' => $request->web_site,
+            'address_id' => $address->id,
+            'user_id' => $user->id
+        ]);
+
+        foreach ($request->categories as $categorie) {
+            Category::create([
+                "category" => $categorie,
+                "complex_id" => $complex->id
+            ]);
+        }
+        if ($request->otherCategories) {
+            $otherCategories = explode(',', $request->otherCategories);
+            foreach ($otherCategories as $otherCategorie) {
+
+                Category::create([
+                    "category" => $otherCategorie,
+                    "complex_id" => $complex->id
+                ]);
+            }
+        }
+
+        SweetAlert::success('Bien !', 'Complex ajouté avec succès. !')->persistent('Fermer');
+        return redirect()->route('showAddComplexAdmin');
+    }
+
+    //*****************Terrain *************//
+    public function showTerrainsList()
+    {
+
+        $userTerrains = Terrain::whereHas('complex', function ($subQuery) {
+            $subQuery->where('user_id', Auth::user()->id);
+        })->paginate(5);
+        return view('User::backOffice.terrainsList',
+            [
+                'userTerrains' => $userTerrains
+            ]
+        );
+    }
+
+    public function showAddTerrain()
+    {
+        $user = Auth::user();
+        $Complexs = $user->Complexs()->get();
+        if (empty($Complexs)) {
+            SweetAlert::error('Opps !', 'Veuillez Ajouter Un Complex. !')->persistent('Fermer');
+            return redirect()->route('showAddComplex');
+        }
+        return view('User::backOffice.addTerrain',
+            [
+                'specialities' => TerrainSpeciality::All(),
+                'Complexs' => $Complexs
+            ]
+        );
+
+    }
+
+    public function handleAddTerrain(Request $request)
+    {
+
+        $this->validate($request, [
+            "name" => "required",
+            "complex_id" => "required",
+            "category_id" => "required",
+            "speciality_id" => "required",
+            "description" => "required",
+            "size" => "required|between:0,9999",
+            "type" => "required",
+            'images' => "required",
+            'images.*' => "image|mimes:jpeg,png,jpg,gif,svg"
+        ],
+            [
+                'name' => 'Le champ Nom de terrain est  obligatoire',
+                'complex_id' => 'Le champ Complex de terrain est  obligatoire',
+                'category_id' => 'Le champ Categorie de terrain est  obligatoire',
+                'speciality_id' => 'Le champ speciality de terrain est  obligatoire',
+                "description" => 'Le champ Description de terrain est  obligatoire',
+                "size.required" => 'Le champ Size de terrain est  obligatoire',
+                "size.between" => 'Format Invalide de champ Type',
+                "type.required" => 'Le champ Type de terrain est  obligatoire',
+                'images.required' => 'Le champ Image de terrain est  obligatoire',
+                'images.image' => 'Le champ doit ètre de type image',
+                'images.mimes' => 'Le champ doit ètre de type image: peg,png,jpg,gif,svg',
+            ]
+        );
+
+        $terrain = Terrain::create([
+
+            "name" => $request->name,
+            "complex_id" => $request->complex_id,
+            "category_id" => $request->category_id,
+            "speciality_id" => $request->speciality_id,
+            "description" => $request->description,
+            "size" => $request->size,
+            "type" => $request->type
+        ]);
+
+
+        $imagePath = 'storage/uploads/terrains/';
+        foreach ($request->images as $image) {
+            $filename = 'terrain-' . $terrain->id . '-' . str_random(5) . '-' . time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path($imagePath), $filename);
+
+            Media::create([
+
+                'type' => 1,
+                'link' => $imagePath . '' . $filename,
+                'terrain_id' => $terrain->id
+            ]);
+        }
+
+        foreach ($request->sessionDay as $key => $sessionDay) {
+
+            $sessionStartTime = $request->sessionStartTime[$key];
+            $sessionEndTime = $request->sessionEndTime[$key];
+            $sessionStartDate[] = date('Y-m-d H:i:s', strtotime("$sessionDay $sessionStartTime"));
+            $sessionEndDate[] = date('Y-m-d H:i:s', strtotime("$sessionDay $sessionEndTime"));
+            $dayofweek[] = date('w', strtotime($sessionDay));
+
+            $terrain->schedules()->create([
+                'start_at' => $sessionStartDate[$key],
+                'ends_at' => $sessionEndDate[$key],
+                'day' => $dayofweek[$key]
+            ]);
+
+        }
+
+        SweetAlert::success('Bien !', 'Terrain ajouté avec succès. !')->persistent('Fermer');
+        return redirect()->route('showAddTerrain');
+    }
+
+    public function showEditTerrain($id)
+    {
+        $terrain=Terrain::find($id);
+        if($terrain)
+        {
+            return view('User::backOffice.editTerrain',['specialities' => TerrainSpeciality::All(),
+                'Complexs' => Auth::user()->Complexs()->get()],compact('terrain'));
+        }
+        return redirect()->route('showTerrainsList');
+    }
+
+    public function handleEditTerrain(Request $request,$id)
+    {
+        $terrain=Terrain::find($id);
+        if(!$terrain)
+        {
+            return redirect()->route('showTerrainsList');
+        }
+        $this->validate($request, [
+            "name" => "required",
+            "complex_id" => "required",
+            "category_id" => "required",
+            "speciality_id" => "required",
+            "description" => "required",
+            "size" => "required|between:0,9999",
+            "type" => "required",
+            'images' => "required",
+            'images.*' => "image|mimes:jpeg,png,jpg,gif,svg"
+        ],
+            [
+                'name' => 'Le champ Nom de terrain est  obligatoire',
+                'complex_id' => 'Le champ Complex de terrain est  obligatoire',
+                'category_id' => 'Le champ Categorie de terrain est  obligatoire',
+                'speciality_id' => 'Le champ speciality de terrain est  obligatoire',
+                "description" => 'Le champ Description de terrain est  obligatoire',
+                "size.required" => 'Le champ Size de terrain est  obligatoire',
+                "size.between" => 'Format Invalide de champ Type',
+                "type.required" => 'Le champ Type de terrain est  obligatoire',
+                'images.required' => 'Le champ Image de terrain est  obligatoire',
+                'images.image' => 'Le champ doit ètre de type image',
+                'images.mimes' => 'Le champ doit ètre de type image: peg,png,jpg,gif,svg',
+            ]
+        );
+        $terrain->name=$request->name;
+        $terrain->description=$request->description;
+        $terrain->size=$request->size;
+
+        $imagePath = 'storage/uploads/terrains/';
+        foreach ($request->images as $image) {
+            $filename = 'terrain-' . $terrain->id . '-' . str_random(5) . '-' . time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path($imagePath), $filename);
+
+            Media::create([
+
+                'type' => 1,
+                'link' => $imagePath . '' . $filename,
+                'terrain_id' => $terrain->id
+            ]);
+        }
+
+        foreach ($request->sessionDay as $key => $sessionDay) {
+
+            $sessionStartTime = $request->sessionStartTime[$key];
+            $sessionEndTime = $request->sessionEndTime[$key];
+            $sessionStartDate[] = date('Y-m-d H:i:s', strtotime("$sessionDay $sessionStartTime"));
+            $sessionEndDate[] = date('Y-m-d H:i:s', strtotime("$sessionDay $sessionEndTime"));
+            $dayofweek[] = date('w', strtotime($sessionDay));
+
+            $terrain->schedules()->create([
+                'start_at' => $sessionStartDate[$key],
+                'ends_at' => $sessionEndDate[$key],
+                'day' => $dayofweek[$key]
+            ]);
+
+
+        }
+
+        SweetAlert::success('Bien !', 'Terrain a été modifier avec succès. !')->persistent('Fermer');
+        return redirect()->route('showTerrainsList');
+
+    }
+
+    //********************Clubs******************
+
+    public function showClubsList()
+    {
+        $clubs = Club::whereHas('terrain.complex', function ($subQuery) {
+            $subQuery->where('user_id', Auth::user()->id);
+        })->paginate(5);
+
+        return view('User::backOffice.clubsList',
+            [
+                'clubs' => $clubs
+            ]
+        );
+    }
+
+    public function showAddClub()
+    {
+
+        $userTerrains = Terrain::whereHas('complex', function ($subQuery) {
+            $subQuery->where('user_id', Auth::user()->id);
+        })->get();
+
+        if (empty($userTerrains)) {
+            SweetAlert::error('Opps !', 'Veuillez Ajouter Un Terrain. !')->persistent('Fermer');
+            return redirect()->route('showAddTerrain');
+        }
+
+        return view('User::backOffice.addClub',
+            [
+                'terrains' => $userTerrains
+            ]
+        );
+
+    }
 }

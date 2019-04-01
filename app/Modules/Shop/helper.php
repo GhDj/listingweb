@@ -1,5 +1,0 @@
-<?php
-
-/**
- *	Shop Helper  
- */

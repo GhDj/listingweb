@@ -1,7 +1,10 @@
 <?php
 Route::group(['module' => 'User', 'middleware' => ['web'], 'namespace' => 'App\Modules\User\Controllers'], function() {
 
-    Route::get('admin/dashboard','WebController@showAdminDashboard')->name('showAdminDashboard');
+    Route::get('admin/login','WebController@showAdminLogin')->name('showAdminLogin');
+    Route::post('admin/login','WebController@handleAdminLogin')->name('handleAdminLogin');
+
+
     Route::get('user/activation/{email}/{activationCode}', 'WebController@handleUserActivation');
 
     Route::get('/user/social/{provider}', 'WebController@handleSocialRedirect')->name('handleSocialRedirect');
@@ -32,7 +35,7 @@ Route::group(['module' => 'User', 'middleware' => ['userAccess'], 'namespace' =>
     Route::get('/user/add/complex','WebController@showUserAddComplex')->name('showUserAddComplex');
     Route::get('/user/add/equipement','WebController@showUserAddEquipement')->name('showUserAddEquipement');
     Route::get('/user/add/club','WebController@showUserAddClub')->name('showUserAddClub');
-    Route::get('/user/add/team','WebController@showUserAddTeam')->name('showUserAddTeam');
+    Route::get('/user/add/team','WebControlle/admin/user/addr@showUserAddTeam')->name('showUserAddTeam');
     Route::post('/user/profile/update', 'WebController@handleUpdateUserProfile')->name('handleUpdateUserProfile');
     Route::post('/user/profile/updatePicture', 'WebController@handleUpdateUserProfilePicture')->name('handleUpdateUserProfilePicture');
     Route::post('/user/profile/updatePassword', 'WebController@handleUpdateUserPassword')->name('handleUpdateUserPassword');
@@ -42,7 +45,43 @@ Route::group(['module' => 'User', 'middleware' => ['userAccess'], 'namespace' =>
     Route::post('/user/add/club','WebController@hundleUserAddClub')->name('hundleUserAddClub');
     Route::post('/user/add/team','WebController@hundleUserAddTeam')->name('hundleUserAddTeam');
 
+});
 
 
+Route::group(['module' => 'User', 'middleware' => ['adminAccess'], 'namespace' => 'App\Modules\User\Controllers'], function() {
+
+    Route::get('/admin/dashboard', 'WebController@showAdminDashboard')->name('showAdminDashboard');
+
+    ///Users
+    Route::get('/admin/users', 'WebController@showUsersList')->name('showUsersList');
+    Route::post('/admin/user/add', 'WebController@handleAddUser')->name('handleAddUser');
+
+    Route::get('/admin/user/delete/{id}', 'WebController@handleDeleteUser')->name('handleDeleteUser');
+
+    Route::post('/admin/user/update/{id}', 'WebController@handleUpdateUser')->name('handleUpdateUser');
+
+    Route::get('/admin/user/getById/{id}', 'WebController@handleGetUserById')->name('handleGetUserById');
+
+    //Complex
+
+    Route::get('/admin/add/Complex','WebController@showAddComplexAdmin')->name('showAddComplexAdmin');
+    Route::post('/admin/add/Complex','WebController@handleAddComplex')->name('handleAddComplex');
+
+
+    //Terrains
+
+    Route::get('/admin/terrain','WebController@showTerrainsList')->name('showTerrainsList');
+    Route::get('/admin/terrain/add','WebController@showAddTerrain')->name('showAddTerrain');
+    Route::post('/admin/terrain/add','WebController@handleAddTerrain')->name('handleAddTerrain');
+
+    Route::get('/admin/terrain/edit/{id}','WebController@showEditTerrain')->name('showEditTerrain');
+
+    //Clubs
+
+    Route::get('/admin/club','WebController@showClubsList')->name('showClubsList');
+    Route::get('/admin/club/add','WebController@showAddClub')->name('showAddClub');
+    Route::post('/admin/club/add','WebController@handleAddClub')->name('handleAddClub');
+
+    Route::get('/admin/club/edit/{id}','WebController@showEditTerrain')->name('showEditTerrain');
 
 });

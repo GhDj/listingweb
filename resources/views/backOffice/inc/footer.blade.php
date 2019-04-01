@@ -1,6 +1,11 @@
-<footer class="main-footer">
-    <div class="pull-right hidden-xs">
-        <b>Version</b> 0.1.0
+<div class="flex-grow-1"></div>
+<div class="app-footer">
+    <div class="footer-bottom border-top pt-3 d-flex flex-column flex-sm-row align-items-center">
+        <span class="flex-grow-1"></span>
+        <div class="d-flex align-items-center">
+            <div>
+                <p class="m-0">© {{ now()->format('Y') }} {{ config('app.name') }} Tout droits réservés.</p>
+            </div>
+        </div>
     </div>
-    <strong>Copyright &copy; 2017 <a target="_blank" href="https://www.bluepenlabs.com">BluePen Labs</a>.</strong> Tout droits réservés.
-</footer>
+</div>

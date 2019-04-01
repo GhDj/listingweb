@@ -16,13 +16,21 @@ class RoleSeeder extends Seeder
             'title' => 'Admin',
         ]);
         Role::create([
-            'title' => 'Professionnel',
+            'title' => 'Responsable complexe prive',
         ]);
         Role::create([
-            'title' => 'Gestionnaire',
+            'title' => 'Responsable complexe public ',
         ]);
         Role::create([
-            'title' => 'Internaute',
+            'title' => 'Responsable club',
+        ]);
+
+        Role::create([
+            'title' => 'Sportif',
+        ]);
+
+        Role::create([
+            'title' => 'Sous Administrateur',
         ]);
     }
 }

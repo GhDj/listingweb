@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title'); // 1 Admin // 2 owner // 3 manager // 4 user
+            $table->string('title'); // 1 Admin // 2 private.complex // 3 public.complex // 4 user
             $table->timestamps();
         });
 
@@ -34,7 +34,7 @@ class CreateUsersTable extends Migration
             $table->string('provider')->nullable();
             $table->string('provider_id')->nullable()->unique();
             $table->integer('address_id')->unsigned()->nullable();
-            $table->foreign('address_id')->references('id')->on('addresses');
+            $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });

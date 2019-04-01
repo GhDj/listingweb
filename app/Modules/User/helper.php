@@ -18,12 +18,12 @@ if (!function_exists('checkAdministratorRole')) {
         return false;
     }
 }
-if (!function_exists('checkProfessionnelRole')) {
+if (!function_exists('checkPrivateComplexRole')) {
     /**
      * @param \App\Modules\User\Models\User $user
      * @return bool
      */
-    function checkProfessionnelRole($user)
+    function checkPrivateComplexRole($user)
     {
         foreach ($user->roles as $role) {
             if ($role->id === 2) {
@@ -33,12 +33,13 @@ if (!function_exists('checkProfessionnelRole')) {
         return false;
     }
 }
-if(!function_exists('checkGestionnaireRole')) {
+
+if(!function_exists('checkPublicComplexRole')) {
     /**
      * @param \App\Modules\User\Models\User $user
      * @return bool
      */
-    function checkGestionnaireRole($user)
+    function checkPublicComplexRole($user)
     {
         foreach ($user->roles as $role) {
             if ($role->id === 3) {
@@ -49,12 +50,12 @@ if(!function_exists('checkGestionnaireRole')) {
     }
 }
 
-if(!function_exists('checkInternauteRole')) {
+if(!function_exists('checkClubRole')) {
     /**
      * @param \App\Modules\User\Models\User $user
      * @return bool
      */
-    function checkInternauteRole($user)
+    function checkClubRole($user)
     {
         foreach ($user->roles as $role) {
             if ($role->id === 4) {
@@ -62,5 +63,34 @@ if(!function_exists('checkInternauteRole')) {
             }
         }
         return false;
+    }
+}
+
+
+if(!function_exists('checkAthleticRole')) {
+    /**
+     * @param \App\Modules\User\Models\User $user
+     * @return bool
+     */
+    function checkAthleticRole($user)
+    {
+        foreach ($user->roles as $role) {
+            if ($role->id === 5) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+if(!function_exists('checkUserHasPublicComplex')) {
+    /**
+     * @param \App\Modules\User\Models\User $user
+     * @return bool
+     */
+    function checkUserHasPublicComplex($user)
+    {
+       return ($user->complex) ?  true :  false;
+
     }
 }

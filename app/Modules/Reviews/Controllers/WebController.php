@@ -7,8 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Modules\User\Models\User;
 use App\Modules\Reviews\Models\Report;
 use App\Modules\Reviews\Models\Wishlist;
-use App\Modules\Infrastructures\Models\Terrain;
-use App\Modules\Infrastructures\Models\Club;
+use App\Modules\Complex\Models\Terrain;
+use App\Modules\Complex\Models\Club;
 use Validator;
 use Toastr;
 use UxWeb\SweetAlert\SweetAlert;
@@ -156,10 +156,10 @@ class WebController extends Controller
       	{
             case 'terrain':
             	$terrain = Terrain::find($id);
-            	$test = $user->wishlists->where('wished_id', $id)->where('wished_type', 'App\Modules\Infrastructures\Models\Terrain')->first();
+            	$test = $user->wishlists->where('wished_id', $id)->where('wished_type', 'App\Modules\Complex\Models\Terrain')->first();
             	if ($test)
             		{
-            		$wishlist = Wishlist::where('user_id', $user->id)->where('wished_id', $id)->where('wished_type', 'App\Modules\Infrastructures\Models\Terrain')->delete();
+            		$wishlist = Wishlist::where('user_id', $user->id)->where('wished_id', $id)->where('wished_type', 'App\Modules\Complex\Models\Terrain')->delete();
                 $favorieTerrains = $wishlist - 1;
             		return Response()->json(['status' => 'deleted', "id" => $id, 'type' => $type , 'favorieTerrains'=>$favorieTerrains]);
             		}
@@ -173,10 +173,10 @@ class WebController extends Controller
 
               case 'club':
               	$club = Club::find($id);
-              	$test = $user->wishlists->where('wished_id', $id)->where('wished_type', 'App\Modules\Infrastructures\Models\Club')->first();
+              	$test = $user->wishlists->where('wished_id', $id)->where('wished_type', 'App\Modules\Complex\Models\Club')->first();
               	if ($test)
               		{
-              		$wishlist = Wishlist::where('user_id', $user->id)->where('wished_id', $id)->where('wished_type', 'App\Modules\Infrastructures\Models\Club')->delete();
+              		$wishlist = Wishlist::where('user_id', $user->id)->where('wished_id', $id)->where('wished_type', 'App\Modules\Complex\Models\Club')->delete();
               		return Response()->json(['status' => 'deleted', 'id' => $id, 'type' => $type,'favorieClubs'=>$club->wishlists->count()]);
               		}
               	  else

@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Modules\Infrastructures\Models\Category;
+use App\Modules\Complex\Models\Category;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 

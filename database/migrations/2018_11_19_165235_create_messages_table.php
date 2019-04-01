@@ -16,9 +16,9 @@ class CreateMessagesTable extends Migration
         Schema::create('message_users', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('sender_id')->unsigned()->nullable();
-            $table->foreign('sender_id')->references('id')->on('users');
+            $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('receiver_id')->unsigned()->nullable();
-            $table->foreign('receiver_id')->references('id')->on('users');
+            $table->foreign('receiver_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -26,9 +26,9 @@ class CreateMessagesTable extends Migration
             $table->increments('id');
             $table->longText('content');
             $table->integer('message_user_id')->unsigned();
-            $table->foreign('message_user_id')->references('id')->on('message_users');
+            $table->foreign('message_user_id')->references('id')->on('message_users')->onDelete('cascade');
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('status'); // 0=non lu / 1= lu
             $table->timestamps();
         });

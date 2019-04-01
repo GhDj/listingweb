@@ -18,7 +18,7 @@ class CreateReviewsTable extends Migration
             $table->integer('note');
             $table->string('comment')->nullable();
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('reviewed_id');
             $table->string('reviewed_type');
             $table->timestamps();
@@ -29,7 +29,7 @@ class CreateReviewsTable extends Migration
             $table->string('title');
             $table->string('description')->nullable();
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('reported_id');
             $table->string('reported_type');
             $table->timestamps();
@@ -38,7 +38,7 @@ class CreateReviewsTable extends Migration
         Schema::create('wishlists', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('wished_id');
             $table->string('wished_type');
             $table->timestamps();

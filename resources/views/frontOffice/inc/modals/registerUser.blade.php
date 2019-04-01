@@ -133,7 +133,7 @@ color: red;
                       <div class="add-list-media-header">
                         <label class="radio inline">
                           <input type="radio" name="role" value="2" checked>
-                          <span>Propriétaire</span>
+                          <span>Responsable Complexe privé</span>
                         </label>
                       </div>
                     </div>
@@ -142,8 +142,26 @@ color: red;
                     <div class="col-md-4">
                       <div class="add-list-media-header">
                         <label class="radio inline">
+                          <input type="radio" name="role" value="5">
+                          <span>Sportif</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="add-list-media-header">
+                        <label class="radio inline">
+                          <input type="radio" name="role" value="3">
+                          <span>Responsable Complexe public</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="add-list-media-header">
+                        <label class="radio inline">
                           <input type="radio" name="role" value="4">
-                          <span>Internaute</span>
+                          <span>Responsable club</span>
                         </label>
                       </div>
                     </div>

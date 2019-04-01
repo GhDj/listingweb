@@ -22,6 +22,8 @@ class CreateComplexSchedulesTable extends Migration
             $table->string('group_type');
             $table->timestamps();
         });
+
+
     }
 
     /**

@@ -26,10 +26,8 @@ class CreateMediasTable extends Migration
             $table->foreign('club_id')->references('id')->on('clubs')->onDelete('cascade');
             $table->integer('terrain_id')->unsigned()->nullable();
             $table->foreign('terrain_id')->references('id')->on('terrains')->onDelete('cascade');
-            $table->integer('equipment_id')->unsigned()->nullable();
-            $table->foreign('equipment_id')->references('id')->on('equipments')->onDelete('cascade');
             $table->integer('complex_id')->unsigned()->nullable();
-            $table->foreign('complex_id')->references('id')->on('complexes')->onDelete('cascade');
+            $table->foreign('complex_id')->references('id')->on('Complex')->onDelete('cascade');
             $table->integer('report_id')->unsigned()->nullable();
             $table->foreign('report_id')->references('id')->on('reports')->onDelete('cascade');
             $table->integer('post_id')->unsigned()->nullable();

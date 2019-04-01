@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 @yield('head')
 @yield('css')

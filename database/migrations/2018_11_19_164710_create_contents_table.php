@@ -19,7 +19,7 @@ class CreateContentsTable extends Migration
             $table->string('title');
             $table->integer('status')->default(2); // 1 published / 2 unpublished
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -29,9 +29,9 @@ class CreateContentsTable extends Migration
             $table->text('content');
             $table->integer('status')->default(2); // 1 published / 2 unpublished
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('page_id')->unsigned()->nullable();
-            $table->foreign('page_id')->references('id')->on('pages');
+            $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
             $table->timestamps();
         });
 

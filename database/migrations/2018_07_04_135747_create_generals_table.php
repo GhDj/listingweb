@@ -42,7 +42,8 @@ class CreateGeneralsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('generals');
         Schema::dropIfExists('addresses');
+        Schema::dropIfExists('generals');
+
     }
 }
