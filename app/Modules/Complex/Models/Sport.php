@@ -4,7 +4,7 @@ namespace App\Modules\Complex\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TerrainSpeciality extends Model {
+class Sport extends Model {
 
     /**
      * Indicates if the model should be timestamped.
@@ -26,7 +26,7 @@ class TerrainSpeciality extends Model {
      * @var array
      */
     protected $fillable = [
-        'speciality'
+        'title'
     ];
 
 
