@@ -2,6 +2,7 @@
 
 namespace App\Modules\General\Controllers;
 
+use App\Modules\Complex\Models\Sport;
 use App\Modules\Content\Models\Post;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,6 @@ use App\Modules\Complex\Models\Complex;
 
 use App\Modules\Complex\Models\Category;
 
-use App\Modules\Complex\Models\TerrainSpeciality;
 
 use App\Modules\Complex\Models\Equipment;
 
@@ -32,21 +32,21 @@ class WebController extends Controller
       return view('General::welcome',[
         'results' => Terrain::All(),
         'categories' => Category::All(),
-        'sports' => TerrainSpeciality::All(),
+        'sports' => Sport::All(),
         'complex' => Complex::All(),
         'posts'=>Post::OrderBy('id')->limit(3)->get(),
-        'footballTerrains' => Terrain::where('speciality_id', 1)->take(4)->with('medias')->get()
+        'footballTerrains' => Terrain::where('sport_id', 1)->take(4)->with('medias')->get()
       ]);
     }
 
     public function getTerrainsBySport($sport)
 	  {
-        $terrains = Terrain::where('speciality_id', $sport)
+        $terrains = Terrain::where('sport_id', $sport)
         ->take(4)
          ->with('medias')
         ->get();
 
-        $sport = TerrainSpeciality::find($sport);
+        $sport = Sport::find($sport);
 
       	if ($terrains) {
       		return Response()->json(['status' => '200', 'terrains' => $terrains, 'sport'=>$sport]);

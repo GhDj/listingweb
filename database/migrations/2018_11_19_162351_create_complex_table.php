@@ -28,20 +28,13 @@ class CreateComplexTable extends Migration
         });
 
 
-        Schema::create('infrastructure', function (Blueprint $table) {
+        Schema::create('complex_schedules', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('reception')->nullable();
-            $table->integer('catering_space')->nullable();
-            $table->string('handicap_access')->nullable();
-            $table->integer('tribune_count')->nullable();
-            $table->integer('spectator_tribune_count')->nullable();
-            $table->integer('cloakroom_player')->nullable();
-            $table->integer('cloakroom_referee')->nullable();
-            $table->integer('sports_sanitary')->nullable();
-            $table->foreign('parking_place')->nullable();
-            $table->foreign('handicap_parking_place')->nullable();
-            $table->integer('complex_id')->unsigned();
-            $table->foreign('complex_id')->references('id')->on('complex')->onDelete('cascade');
+            $table->datetime('start_at');
+            $table->datetime('ends_at');
+            $table->integer('day');
+            $table->integer('group_id');
+            $table->string('group_type');
             $table->timestamps();
         });
 
@@ -56,9 +49,28 @@ class CreateComplexTable extends Migration
 
         Schema::create('sports', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('speciality');
+            $table->string('title');
             $table->timestamps();
         });
+
+
+        Schema::create('infrastructure', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('reception')->nullable();
+            $table->integer('catering_space')->nullable();
+            $table->string('handicap_access')->nullable();
+            $table->integer('tribune_count')->nullable();
+            $table->integer('spectator_tribune_count')->nullable();
+            $table->integer('cloakroom_player')->nullable();
+            $table->integer('cloakroom_referee')->nullable();
+            $table->integer('sports_sanitary')->nullable();
+            $table->integer('parking_place')->nullable();
+            $table->integer('handicap_parking_place')->nullable();
+            $table->integer('complex_id')->unsigned();
+            $table->foreign('complex_id')->references('id')->on('complex')->onDelete('cascade');
+            $table->timestamps();
+        });
+
 
         Schema::create('terrains', function (Blueprint $table) {
             $table->increments('id');
@@ -75,71 +87,7 @@ class CreateComplexTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('clubs', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('address_id')->unsigned();
-            $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade');
-            $table->string('phone')->nullable();
-            $table->string('email')->nullable();
-            $table->string('web_site')->nullable();
-            $table->string('logo')->nullable();
-            $table->string('sports')->nullable();
-            $table->text('description');
-            $table->timestamps();
-        });
 
-
-        Schema::create('club_schedule', function (Blueprint $table) {
-            $table->increments('city');
-            $table->increments('id');
-            $table->datetime('start_at');
-            $table->datetime('ends_at');
-            $table->integer('day');
-            $table->integer('club_id')->unsigned();
-            $table->foreign('club_id')->references('id')->on('clubs')->onDelete('cascade');
-            $table->timestamps();
-        });
-
-        Schema::create('club_news', function (Blueprint $table) {
-            $table->increments('title');
-            $table->increments('content');
-
-            $table->integer('club_id')->unsigned();
-            $table->foreign('club_id')->references('id')->on('clubs')->onDelete('cascade');
-            $table->timestamps();
-        });
-
-        Schema::create('teams', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('level')->nullable();
-            $table->integer('speciality_id')->unsigned();
-            $table->foreign('speciality_id')->references('id')->on('terrain_specialities')->onDelete('cascade');
-            $table->integer('club_id')->unsigned();
-            $table->foreign('club_id')->references('id')->on('clubs')->onDelete('cascade');
-            $table->timestamps();
-        });
-
-
-        Schema::create('team_training_place', function (Blueprint $table) {
-            $table->increments('city');
-            $table->integer('sport_id');
-            $table->integer('club_id')->unsigned();
-            $table->foreign('club_id')->references('id')->on('clubs')->onDelete('cascade');
-            $table->timestamps();
-        });
-
-        Schema::create('team_training_schedule', function (Blueprint $table) {
-            $table->increments('city');
-            $table->increments('id');
-            $table->datetime('start_at');
-            $table->datetime('ends_at');
-            $table->integer('day');
-            $table->integer('team_id')->unsigned();
-            $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');
-            $table->timestamps();
-        });
 
 
     }
@@ -151,10 +99,13 @@ class CreateComplexTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('complex');
-        Schema::dropIfExists('terrain_specialities');
+
         Schema::dropIfExists('terrains');
+        Schema::dropIfExists('infrastructure');
+        Schema::dropIfExists('sports');
         Schema::dropIfExists('categories');
-        Schema::dropIfExists('clubs');
+        Schema::dropIfExists('complex_schedules');
+        Schema::dropIfExists('complex');
+
     }
 }

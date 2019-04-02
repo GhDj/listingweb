@@ -8,7 +8,7 @@ use App\Modules\Complex\Models\Category;
 use App\Modules\Infrastructure\Models\ComplexSchedule;
 use App\Modules\User\Models\User;
 use App\Modules\Reviews\Models\Review;
-use App\Modules\Complex\Models\TerrainSpeciality;
+use App\Modules\Complex\Models\Sport;
 
 use App\Modules\General\Models\Media;
 
@@ -25,19 +25,21 @@ class ComplexSeeder extends Seeder
     {
 
 
-        $firstSpeciality  = TerrainSpeciality::Create([
-            'speciality' => 'Football'
+        $firstSpeciality  = Sport::Create([
+            'title' => 'Football'
         ]);
-        $secondSpeciality  = TerrainSpeciality::Create([
-            'speciality' => 'Handball'
+        $secondSpeciality  = Sport::Create([
+            'title' => 'Handball'
         ]);
 
-        $thirdSpeciality  = TerrainSpeciality::Create([
-            'speciality' => 'Nataion'
+        $thirdSpeciality  = Sport::Create([
+            'title' => 'Nataion'
         ]);
-        $fourthSpeciality  = TerrainSpeciality::Create([
-            'speciality' => 'Gym'
+        $fourthSpeciality  = Sport::Create([
+            'title' => 'Gym'
         ]);
+
+
         $frontFirstImagePath = 'img/1.jpg';
         $frontSecondImagePath = 'img/2.jpg';
         $frontThirdtPath = 'img/3.jpg';
@@ -143,7 +145,7 @@ class ComplexSeeder extends Seeder
                               voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
                               Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
             'complex_id' => $firstComplex->id,
-            'speciality_id' => $firstSpeciality->id,
+            'sport_id' => $firstSpeciality->id,
             'category_id' =>  $firstCategory->id
 
         ]);
@@ -183,7 +185,7 @@ class ComplexSeeder extends Seeder
                               Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
             'size' =>200,
             'complex_id' => $firstComplex->id,
-            'speciality_id' => $firstSpeciality->id,
+            'sport_id' => $firstSpeciality->id,
             'category_id' =>  $firstCategory->id
 
         ]);
@@ -224,7 +226,7 @@ class ComplexSeeder extends Seeder
                               Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
             'size' =>300,
             'complex_id' => $firstComplex->id,
-            'speciality_id' => $firstSpeciality->id,
+            'sport_id' => $firstSpeciality->id,
             'category_id' =>  $thirdCategory->id
 
         ]);
@@ -288,7 +290,7 @@ class ComplexSeeder extends Seeder
                                voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
                                Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
             'complex_id' => $secondComplex->id,
-            'speciality_id' => $thirdSpeciality->id,
+            'sport_id' => $thirdSpeciality->id,
             'category_id' =>  $fourthCategory->id
 
         ]);
@@ -312,7 +314,7 @@ class ComplexSeeder extends Seeder
                                Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
             'size' =>203,
             'complex_id' => $secondComplex->id,
-            'speciality_id' => $thirdSpeciality->id,
+            'sport_id' => $thirdSpeciality->id,
             'category_id' =>  $fourthCategory->id
 
         ]);
@@ -334,7 +336,7 @@ class ComplexSeeder extends Seeder
                                Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
             'size' =>110,
             'complex_id' => $secondComplex->id,
-            'speciality_id' => $fourthSpeciality->id,
+            'sport_id' => $fourthSpeciality->id,
             'category_id' =>  $fifthCategory->id
 
         ]);
@@ -357,7 +359,7 @@ class ComplexSeeder extends Seeder
                                Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
             'size' =>1449,
             'complex_id' => $secondComplex->id,
-            'speciality_id' => $fourthSpeciality->id,
+            'sport_id' => $fourthSpeciality->id,
             'category_id' =>  $sixthCategory->id
 
         ]);
@@ -420,7 +422,7 @@ class ComplexSeeder extends Seeder
                                Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
             'size' =>300,
             'complex_id' => $thirdComplex->id,
-            'speciality_id' => $firstSpeciality->id,
+            'sport_id' => $firstSpeciality->id,
             'category_id' =>  $seventhCategory->id
 
         ]);
@@ -482,7 +484,7 @@ class ComplexSeeder extends Seeder
                                Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
             'size' =>300,
             'complex_id' => $fourthComplex->id,
-            'speciality_id' => $firstSpeciality->id,
+            'sport_id' => $firstSpeciality->id,
             'category_id' =>  $seventhCategory->id
 
         ]);
@@ -547,7 +549,7 @@ class ComplexSeeder extends Seeder
                                Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
             'size' =>300,
             'complex_id' => $fifthComplex->id,
-            'speciality_id' => $firstSpeciality->id,
+            'sport_id' => $firstSpeciality->id,
             'category_id' =>  $eighthCategory->id
 
         ]);
@@ -615,7 +617,7 @@ class ComplexSeeder extends Seeder
                                   Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
             'size' =>300,
             'complex_id' => $sixthComplex->id,
-            'speciality_id' => $secondSpeciality->id,
+            'sport_id' => $secondSpeciality->id,
             'category_id' =>  $ninthCategory->id
 
         ]);

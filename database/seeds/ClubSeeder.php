@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 
 use App\Modules\Complex\Models\Terrain;
 
-use App\Modules\Complex\Models\TerrainSpeciality;
+use App\Modules\Complex\Models\Sport;
 
 use App\Modules\Complex\Models\Club;
 
@@ -34,7 +34,8 @@ class ClubSeeder extends Seeder
                                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                          'terrain_id' => Terrain::find(1)->id
+
+                    'address_id'=>1,
                         ]);
 
         $firstFilename = 'frontImage1'.$firstClub->id.'.jpg';
@@ -66,9 +67,9 @@ class ClubSeeder extends Seeder
                                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
                                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                                           Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                          'terrain_id' => Terrain::find(1)->id
-                        ]);
+                                           Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+            ,'address_id'=>3
+          ]);
 
           $thirdClub = Club::Create([
                         'name' => 'Club 3',
@@ -77,8 +78,9 @@ class ClubSeeder extends Seeder
                                              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                                              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                                              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                          'terrain_id' => Terrain::find(1)->id
-                          ]);
+
+              'address_id'=>2
+              ]);
           $fourthClub = Club::Create([
                         'name' => 'Club 4',
                          'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit,
@@ -86,26 +88,26 @@ class ClubSeeder extends Seeder
                                              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                                              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                                              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                          'terrain_id' => Terrain::find(2)->id
+                        'address_id'=>1
                           ]);
            $firstEquipe = Team::Create([
                              'name' => 'equipe 1',
                              'level' => '1',
-                             'speciality_id' => TerrainSpeciality::find(1)->id,
+                             'sport_id' => Sport::find(1)->id,
                              'club_id' => $firstClub->id
            ]);
 
            $secondEquipe = Team::Create([
                              'name' => 'equipe 2',
                              'level' => '2',
-                             'speciality_id' => TerrainSpeciality::find(1)->id,
+                             'sport_id' => Sport::find(1)->id,
                              'club_id' => $firstClub->id
            ]);
 
            $thirdEquipe = Team::Create([
                              'name' => 'equipe 3',
                              'level' => '3',
-                             'speciality_id' => TerrainSpeciality::find(2)->id,
+                             'sport_id' => Sport::find(2)->id,
                              'club_id' => $firstClub->id
            ]);
 
@@ -137,7 +139,7 @@ class ClubSeeder extends Seeder
            $fourthEquipe = Team::Create([
                              'name' => 'equipe 4',
                              'level' => 'level 1',
-                             'speciality_id' => TerrainSpeciality::find(2)->id,
+                             'sport_id' => Sport::find(2)->id,
                              'club_id' => $secondClub->id
            ]);
     }

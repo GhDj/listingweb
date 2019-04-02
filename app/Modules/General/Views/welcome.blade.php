@@ -143,7 +143,7 @@ li.active
                                                     <select data-placeholder="Tous les sports" class="chosen-select" name="speciality" >
                                                         <option value="-1">Tous les sports</option>
                                                         @foreach ($sports as $sport )
-                                                            <option value="{{$sport->id}}">{{$sport->speciality}}</option>
+                                                            <option value="{{$sport->id}}">{{$sport->title}}</option>
                                                         @endforeach
                                                   </select>
                                                 </div>
@@ -276,7 +276,7 @@ li.active
         <div class="list-container-2">
             <ul class="tabs-2 clearfix" style="margin-left: 100px;">
               @foreach ($sports as $sport)
-               <li class="sportChange"  data-sport ="{{$sport->id}}"><a href="#tab-2-{{$sport->id}}" >{{$sport->speciality}}</a></li>
+               <li class="sportChange"  data-sport ="{{$sport->id}}"><a href="#tab-2-{{$sport->id}}" >{{$sport->title}}</a></li>
              @endforeach
             </ul><!--tabs-2-->
         </div>
@@ -299,7 +299,7 @@ li.active
                               </div>
                               <div class="entry-content">
                                   <header>
-                                      <span class="entry-date"><span class="kopa-minus"></span>{{$footballTerrain->speciality->speciality}}</span>
+                                      <span class="entry-date"><span class="kopa-minus"></span>{{$footballTerrain->sport->title}}</span>
                                       <h4 class="entry-title"><a href="#">{{$footballTerrain->name}}</a></h4>
                                   </header>
                               </div>

@@ -34,7 +34,8 @@ class Terrain extends Model
         'width',
         'description',
         'complex_id',
-        'category_id'
+        'category_id',
+        'sport_id'
     ];
 
     public function medias()
@@ -48,10 +49,10 @@ class Terrain extends Model
         return $this->belongsTo('App\Modules\Complex\Models\Complex');
     }
 
-    public function speciality()
+    public function sport()
     {
 
-        return $this->belongsTo('App\Modules\Complex\Models\TerrainSpeciality');
+        return $this->belongsTo('App\Modules\Complex\Models\Sport');
 
     }
 
