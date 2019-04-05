@@ -28,10 +28,13 @@ class Terrain extends Model
      */
     protected $fillable = [
         'name',
-        'type',
         'height',
         'length',
         'width',
+        'lighting',
+        'terrain_nature',
+        'soil_type',
+        'video_recorder',
         'description',
         'complex_id',
         'category_id',

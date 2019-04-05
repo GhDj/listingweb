@@ -9,7 +9,7 @@ use App\Modules\Infrastructure\Models\ComplexSchedule;
 use App\Modules\User\Models\User;
 use App\Modules\Reviews\Models\Review;
 use App\Modules\Complex\Models\Sport;
-
+use App\Modules\Complex\Models\ComplexCategory;
 use App\Modules\General\Models\Media;
 
 use Carbon\Carbon;
@@ -116,34 +116,56 @@ class ComplexSeeder extends Seeder
 
         $firstCategory = Category::Create([
 
-            'category' => 'Terrains Multisports',
-            'complex_id' => $firstComplex->id
+            'title' => 'Terrains Multisports'
 
         ]);
 
         $secondCategory = Category::Create([
 
-            'category' => 'Pisine',
-            'complex_id' => $firstComplex->id
+            'title' => 'Pisine',
+
 
         ]);
 
+
+
         $thirdCategory = Category::Create([
 
-            'category' => 'Fitness',
-            'complex_id' => $firstComplex->id
+            'title' => 'Fitness',
 
+
+        ]);
+
+
+        ComplexCategory::create([
+            'category_id'=>$firstCategory->id,
+            'complex_id'=>$firstComplex->id
+        ]);
+
+        ComplexCategory::create([
+            'category_id'=>$secondCategory->id,
+            'complex_id'=>$firstComplex->id
+        ]);
+
+        ComplexCategory::create([
+            'category_id'=>$thirdCategory->id,
+            'complex_id'=>$firstComplex->id
         ]);
 
         $firstStadium = Terrain::Create([
 
             'name' => 'City Arena',
-            'type' =>'MMMMM',
-            'size' =>100,
+            'height' =>150,
+            'length'=>100,
+            'width'=>200,
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                              Consequuntur fuga perspiciatis deserunt dolor vero reprehenderit facilis,
-                              voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
-                              Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
+                               Consequuntur fuga perspiciatis deserunt dolor vero reprehenderit facilis,
+                               voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
+                               Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
+            'lighting'=>0,
+            'video_recorder'=>1,
+            'terrain_nature'=>'decouvert',
+            'soil_type'=>'gazon',
             'complex_id' => $firstComplex->id,
             'sport_id' => $firstSpeciality->id,
             'category_id' =>  $firstCategory->id
@@ -178,12 +200,17 @@ class ComplexSeeder extends Seeder
         $secondStadium = Terrain::Create([
 
             'name' => 'Terrains Multisports',
-            'type' =>'MMMM',
+            'height' =>150,
+            'length'=>100,
+            'width'=>200,
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                              Consequuntur fuga perspiciatis deserunt dolor vero reprehenderit facilis,
-                              voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
-                              Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
-            'size' =>200,
+                               Consequuntur fuga perspiciatis deserunt dolor vero reprehenderit facilis,
+                               voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
+                               Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
+            'lighting'=>0,
+            'video_recorder'=>1,
+            'terrain_nature'=>'decouvert',
+            'soil_type'=>'gazon',
             'complex_id' => $firstComplex->id,
             'sport_id' => $firstSpeciality->id,
             'category_id' =>  $firstCategory->id
@@ -219,12 +246,17 @@ class ComplexSeeder extends Seeder
         $thirdStadium = Terrain::Create([
 
             'name' => 'Terrains Futsal Hat Trick',
-            'type' =>'MM',
+            'height' =>100,
+            'length'=>200,
+            'width'=>150,
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                              Consequuntur fuga perspiciatis deserunt dolor vero reprehenderit facilis,
-                              voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
-                              Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
-            'size' =>300,
+                               Consequuntur fuga perspiciatis deserunt dolor vero reprehenderit facilis,
+                               voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
+                               Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
+            'lighting'=>1,
+            'video_recorder'=>0,
+            'terrain_nature'=>'couvert',
+            'soil_type'=>'gazon',
             'complex_id' => $firstComplex->id,
             'sport_id' => $firstSpeciality->id,
             'category_id' =>  $thirdCategory->id
@@ -261,34 +293,37 @@ class ComplexSeeder extends Seeder
 
         $fourthCategory = Category::Create([
 
-            'category' => 'Espace Aquatique',
-            'complex_id' => $secondComplex->id
+            'title' => 'Espace Aquatique',
 
         ]);
 
         $fifthCategory = Category::Create([
 
-            'category' => 'Espace Forme',
-            'complex_id' => $secondComplex->id
+            'title' => 'Espace Forme',
 
         ]);
 
         $sixthCategory = Category::Create([
 
-            'category' => 'Espace Multisports',
-            'complex_id' => $secondComplex->id
+            'title' => 'Espace Multisports',
+
 
         ]);
 
         $fourthStadium = Terrain::Create([
 
             'name' => 'Un bassin polyvalent de nage et d’activités',
-            'type' =>'Les espaces intérieurs',
-            'size' =>375,
+            'height' =>100,
+            'length'=>200,
+            'width'=>150,
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                                Consequuntur fuga perspiciatis deserunt dolor vero reprehenderit facilis,
                                voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
                                Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
+            'lighting'=>1,
+            'video_recorder'=>0,
+            'terrain_nature'=>'couvert',
+            'soil_type'=>'gazon',
             'complex_id' => $secondComplex->id,
             'sport_id' => $thirdSpeciality->id,
             'category_id' =>  $fourthCategory->id
@@ -307,12 +342,17 @@ class ComplexSeeder extends Seeder
         $fifthStadium = Terrain::Create([
 
             'name' => 'Un bassin ludique de détente et de loisirs',
-            'type' =>'Les espaces extérieurs',
+            'height' =>100,
+            'length'=>200,
+            'width'=>150,
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                                Consequuntur fuga perspiciatis deserunt dolor vero reprehenderit facilis,
                                voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
                                Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
-            'size' =>203,
+            'lighting'=>1,
+            'video_recorder'=>0,
+            'terrain_nature'=>'couvert',
+            'soil_type'=>'gazon',
             'complex_id' => $secondComplex->id,
             'sport_id' => $thirdSpeciality->id,
             'category_id' =>  $fourthCategory->id
@@ -329,12 +369,17 @@ class ComplexSeeder extends Seeder
         $sixthStadium = Terrain::Create([
 
             'name' => 'Salle cardio-training',
-            'type' =>'M',
+            'height' =>100,
+            'length'=>200,
+            'width'=>150,
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                                Consequuntur fuga perspiciatis deserunt dolor vero reprehenderit facilis,
                                voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
                                Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
-            'size' =>110,
+            'lighting'=>1,
+            'video_recorder'=>0,
+            'terrain_nature'=>'couvert',
+            'soil_type'=>'gazon',
             'complex_id' => $secondComplex->id,
             'sport_id' => $fourthSpeciality->id,
             'category_id' =>  $fifthCategory->id
@@ -352,12 +397,17 @@ class ComplexSeeder extends Seeder
         $seventhStadium = Terrain::Create([
 
             'name' => 'une salle de gymnase',
-            'type' =>'Au sous-sol',
+            'height' =>100,
+            'length'=>200,
+            'width'=>150,
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                                Consequuntur fuga perspiciatis deserunt dolor vero reprehenderit facilis,
                                voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
                                Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
-            'size' =>1449,
+            'lighting'=>1,
+            'video_recorder'=>0,
+            'terrain_nature'=>'couvert',
+            'soil_type'=>'gazon',
             'complex_id' => $secondComplex->id,
             'sport_id' => $fourthSpeciality->id,
             'category_id' =>  $sixthCategory->id
@@ -407,20 +457,25 @@ class ComplexSeeder extends Seeder
 
         $seventhCategory = Category::Create([
 
-            'category' => 'Fitness',
-            'complex_id' => $thirdComplex->id
+            'title' => 'Fitness',
+
 
         ]);
 
         $eighthStadium = Terrain::Create([
 
             'name' => 'Terrains Football Nantes',
-            'type' =>'MM',
+            'height' =>100,
+            'length'=>200,
+            'width'=>150,
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                                Consequuntur fuga perspiciatis deserunt dolor vero reprehenderit facilis,
                                voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
                                Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
-            'size' =>300,
+            'lighting'=>1,
+            'video_recorder'=>0,
+            'terrain_nature'=>'couvert',
+            'soil_type'=>'gazon',
             'complex_id' => $thirdComplex->id,
             'sport_id' => $firstSpeciality->id,
             'category_id' =>  $seventhCategory->id
@@ -469,20 +524,25 @@ class ComplexSeeder extends Seeder
 
         $eighthCategory = Category::Create([
 
-            'category' => 'Fitness',
-            'complex_id' => $fourthComplex->id
+            'title' => 'Fitness',
+
 
         ]);
 
         $ninthStadium = Terrain::Create([
 
             'name' => 'Terrains Football Nantes Erdre',
-            'type' =>'MM',
+            'height' =>100,
+            'length'=>200,
+            'width'=>150,
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                                Consequuntur fuga perspiciatis deserunt dolor vero reprehenderit facilis,
                                voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
                                Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
-            'size' =>300,
+            'lighting'=>1,
+            'video_recorder'=>0,
+            'terrain_nature'=>'couvert',
+            'soil_type'=>'gazon',
             'complex_id' => $fourthComplex->id,
             'sport_id' => $firstSpeciality->id,
             'category_id' =>  $seventhCategory->id
@@ -534,20 +594,25 @@ class ComplexSeeder extends Seeder
 
         $eighthCategory = Category::Create([
 
-            'category' => 'Football',
-            'complex_id' => $fifthComplex->id
+            'title' => 'Football',
+
 
         ]);
 
         $tenthStadium = Terrain::Create([
 
             'name' => 'Terrains Football BoranSport',
-            'type' =>'MM',
+            'height' =>150,
+            'length'=>100,
+            'width'=>200,
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                                Consequuntur fuga perspiciatis deserunt dolor vero reprehenderit facilis,
                                voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
                                Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
-            'size' =>300,
+            'lighting'=>0,
+            'video_recorder'=>1,
+            'terrain_nature'=>'decouvert',
+            'soil_type'=>'gazon',
             'complex_id' => $fifthComplex->id,
             'sport_id' => $firstSpeciality->id,
             'category_id' =>  $eighthCategory->id
@@ -602,20 +667,25 @@ class ComplexSeeder extends Seeder
 
         $ninthCategory = Category::Create([
 
-            'category' => 'Football',
-            'complex_id' => $sixthComplex->id
+            'title' => 'Football',
+
 
         ]);
 
         $ninthStadium = Terrain::Create([
 
             'name' => 'Terrains Football SaintSport',
-            'type' =>'MM',
+            'height' =>150,
+            'length'=>100,
+            'width'=>200,
             'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                  Consequuntur fuga perspiciatis deserunt dolor vero reprehenderit facilis,
-                                  voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
-                                  Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
-            'size' =>300,
+                               Consequuntur fuga perspiciatis deserunt dolor vero reprehenderit facilis,
+                               voluptate non, adipisci eveniet illo voluptatum eaque laboriosam consectetur.
+                               Dignissimos, vitae? Recusandae, temporibus, perspiciatis?',
+            'lighting'=>0,
+            'video_recorder'=>1,
+            'terrain_nature'=>'decouvert',
+            'soil_type'=>'gazon',
             'complex_id' => $sixthComplex->id,
             'sport_id' => $secondSpeciality->id,
             'category_id' =>  $ninthCategory->id

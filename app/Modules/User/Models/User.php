@@ -2,6 +2,7 @@
 
 namespace App\Modules\User\Models;
 
+use App\Modules\Complex\Models\Club;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -104,8 +105,13 @@ class User extends Authenticatable
       return $this->belongsToMany('App\Modules\Complex\Models\Club', 'favorites', 'user_id', 'club_id')->withTimeStamps();
   }
 
-  public function Complexs(){
-      return $this->hasMany('App\Modules\Complex\Models\Complex','user_id');
+  public function Complex(){
+      return $this->hasOne('App\Modules\Complex\Models\Complex','user_id');
+  }
+
+  public function club()
+  {
+      return $this->hasOne(Club::class);
   }
 
 

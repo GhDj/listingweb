@@ -26,14 +26,12 @@ class Category extends Model {
      * @var array
      */
     protected $fillable = [
-        'category',
-        'complex_id'
+        'title',
     ];
 
-    public function terrains(){
-
-        return $this->hasMany('App\Modules\Complex\Models\Terrain','category_id');
-
+    public function terrains()
+    {
+        return $this->hasMany('App\Modules\Complex\Models\Terrain','category_id','id');
     }
 
 }

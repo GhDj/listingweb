@@ -47,6 +47,8 @@
 
                                         @isset($userTerrains)
                                           <h3>Terrains</h3>
+                                            <a class="btn btn-primary pull-right" href="{{route('showUserAddTerrain')}}" ><i
+                                                            class="fa fa-plus-square-o"></i> Ajouter Des Terrains</a>
                                             @endisset
                                       @isset($userClubs)
                                         <h3>Clubs</h3>

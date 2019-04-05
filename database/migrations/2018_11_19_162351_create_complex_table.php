@@ -33,6 +33,7 @@ class CreateComplexTable extends Migration
             $table->datetime('start_at');
             $table->datetime('ends_at');
             $table->integer('day');
+            $table->integer('status')->default(1);
             $table->integer('group_id');
             $table->string('group_type');
             $table->timestamps();
@@ -41,9 +42,7 @@ class CreateComplexTable extends Migration
 
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('category');
-            $table->integer('complex_id')->unsigned();
-            $table->foreign('complex_id')->references('id')->on('Complex')->onDelete('cascade');
+            $table->string('title');
             $table->timestamps();
         });
 
@@ -75,9 +74,14 @@ class CreateComplexTable extends Migration
         Schema::create('terrains', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('type');
             $table->text('description');
-            $table->float('size');
+            $table->float('length');
+            $table->float('width');
+            $table->float('height');
+            $table->integer('lighting');
+            $table->string('terrain_nature'); //couvert , decouvert, autre
+            $table->string('soil_type');
+            $table->integer('video_recorder');
             $table->integer('sport_id')->unsigned();
             $table->foreign('sport_id')->references('id')->on('sports')->onDelete('cascade');
             $table->integer('complex_id')->unsigned();
@@ -88,7 +92,16 @@ class CreateComplexTable extends Migration
         });
 
 
-
+        Schema::create('terrain_schedule', function (Blueprint $table) {
+            $table->increments('id');
+            $table->datetime('start_at');
+            $table->datetime('ends_at');
+            $table->integer('day');
+            $table->integer('status')->default(1);
+            $table->integer('group_id');
+            $table->string('group_type');
+            $table->timestamps();
+        });
 
     }
 
