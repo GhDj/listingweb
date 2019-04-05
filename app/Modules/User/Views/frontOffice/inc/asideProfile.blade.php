@@ -13,20 +13,35 @@
                     <li><a href="{{route('showUserProfile')}}"><i class="fa fa-user-o"></i>Mes infos</a></li>
                     <li><a href="{{route('showUserPassword')}}"><i class="fa fa-unlock-alt"></i>Changer Votre Mot de
                             Passe</a></li>
+
                 </ul>
             </div>
             <!-- user-profile-menu end-->
             <!-- user-profile-menu-->
-            @if (checkPrivateComplexRole(Auth::user()))
+            @if (checkPrivateComplexRole(Auth::user())||checkPublicComplexRole(Auth::user()))
                 <div class="user-profile-menu">
                     <h3>Listings</h3>
                     <ul>
-                        <li><a href="{{route('showUserListingTerrain')}}"><i class="fa fa-th-list"></i> Consulté Votre
-                                List Terrain </a></li>
-                        <li><a href="{{route('showUserAddComplex')}}" class="user-profile-act"><i
-                                        class="fa fa-plus-square-o"></i> Ajouter Des Complexs</a></li>
-                        <li><a href="{{route('showUserAddTerrain')}}" class="user-profile-act"><i
-                                        class="fa fa-plus-square-o"></i> Ajouter Des Terrains</a></li>
+
+                        @if(!Auth::user()->complex)
+                            <li><a href="{{route('showUserAddComplex')}}" ><i
+                                            class="fa fa-plus-square-o"></i> Ajouter Votre complexe</a></li>
+
+                        @else
+                            @if(Auth::user()->complex->infrastructure)
+                                <li><a href="#"><i class="fa fa-gears"></i>Modifier infrastructure</a></li>
+                            @else
+                                <li><a href="{{route('showAddUserInfrastructure')}}"><i class="fa fa-gears"></i>Ajouter infrastructure</a></li>
+
+                            @endif
+                                <li><a href="{{route('showEditComplex')}}" ><i
+                                                class="fa fa-plus-square-o"></i> Modifier Complexe</a></li>
+
+
+                        @endif
+                        <li><a href="{{route('showUserListingTerrain')}}"><i class="fa fa-th-list"></i>
+                                Liste Terrains </a></li>
+
                     </ul>
                 </div>
 

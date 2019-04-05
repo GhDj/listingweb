@@ -33,7 +33,7 @@ class Club extends Model
           'web_site',
           'description',
           'logo',
-          'sports'
+          'user_id'
       ];
 
       public function medias()

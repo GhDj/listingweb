@@ -11,7 +11,7 @@
                     <div class="header-search-select-item">
                         <select data-placeholder="All Categories" class="chosen-select" >
                             @foreach($categories as $category)
-                                <option value="{{$category->id}}">{{$category->category}}</option>
+                                <option value="{{$category->id}}">{{$category->title}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -31,10 +31,9 @@
                       </div>
                       <ul>
                           <li><a href="{{route('showUserDashboard')}}" class="{{$activatedLink['profile']}}">Profile</a></li>
-                          @if (checkProfessionnelRole(Auth::user()))
-                             <li><a href="{{route('showUserListingTerrain')}}"> Mes Terrains</a></li>
-                             <li><a href="{{route('showUserListingClub')}}"> Mes Clubs</a></li>
+                          @if (checkPrivateComplexRole(Auth::user())||checkPublicComplexRole(Auth::user()))
                               <li><a href="{{route('showUserAddComplex')}}"> Ajouter complex</a></li>
+                             <li><a href="{{route('showUserListingTerrain')}}"> Mes Terrains</a></li>
                           @endif
                             <li><a href="{{route('handleLogout')}}">Déconnecter</a></li>
                       </ul>

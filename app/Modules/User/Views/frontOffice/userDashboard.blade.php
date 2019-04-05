@@ -28,7 +28,7 @@
                   <!-- profile-edit-wrap -->
                   <div class="profile-edit-wrap">
                       <div class="profile-edit-page-header">
-                          <h2>User Profile</h2>
+                          <h2>User Profile : {{Auth::user()->roles->first()->title}}</h2>
                           <div class="breadcrumbs"><a href="{{route('showHome')}}">Accueil</a><span>Profile</span></div>
                       </div>
                       <div class="row">
@@ -42,13 +42,13 @@
                                         <!-- statistic-container-->
                                   <div class="statistic-container fl-wrap">
                                   <!-- statistic-item-wrap-->
-                                  @if (checkProfessionnelRole(Auth::user()))
+                                  @if (checkPrivateComplexRole(Auth::user())||checkPublicComplexRole(Auth::user()))
 
 
                                     <div class="statistic-item-wrap">
                                     <div class="statistic-item gradient-bg fl-wrap">
                                         <i class="fa fa-map-marker"></i>
-                                          <div class="statistic-item-numder">{{Auth::user()->Complexs->count()}}</div>
+                                          <div class="statistic-item-numder">{{Auth::user()->Complex->count()}}</div>
                                           <h5>Complex</h5>
                                       </div>
                                       </div>
@@ -61,20 +61,12 @@
                                           <h5>Terrains</h5>
                                       </div>
                                       </div>
-
-                                      <div class="statistic-item-wrap">
-                                      <div class="statistic-item gradient-bg fl-wrap">
-
-                                            <div class="statistic-item-numder">{{$userClubs->count()}}</div>
-                                            <h5>Clubs</h5>
-                                        </div>
-                                        </div>
                                     <!-- statistic-item-wrap end-->
 
                                     @endif
                                   <!-- statistic-item-wrap end-->
                                   <!-- statistic-item-wrap-->
-                                  @if (checkInternauteRole(Auth::user()))
+                                  @if (checkAthleticRole(Auth::user()))
                                     <div class="statistic-item-wrap">
                                     <div class="statistic-item gradient-bg fl-wrap">
                                         <i class="fa fa-comments-o"></i>
@@ -104,7 +96,7 @@
                                   </div>
 
                                   <!-- dashboard-list end-->
-                                  @if (checkInternauteRole(Auth::user()))
+                                  @if (checkAthleticRole(Auth::user()))
                                   @foreach (Auth::user()->wishlists as $wishlist)
                                     <div class="dashboard-list">
                                         <div class="dashboard-message">
@@ -145,7 +137,7 @@
                                 @endforeach
                               @endif
 
-                              @if (checkProfessionnelRole(Auth::user()))
+                              @if (checkPrivateComplexRole(Auth::user()) || checkPublicComplexRole(Auth::user()))
                               @foreach ($userTerrains as $terrain)
                                 @foreach ($terrain->wishlists as $wishlist)
 
@@ -164,24 +156,6 @@
                                 @endforeach
                               @endforeach
 
-                              @foreach ($userClubs as $club)
-                                @foreach ($club->wishlists as $wishlist)
-
-                                  <div class="dashboard-list">
-                                      <div class="dashboard-message">
-                                          <span class="new-dashboard-item"><i class="fa fa-times"></i></span>
-
-                                          <div class="dashboard-message-text">
-
-
-                                          <p><i class="fa fa-heart"></i>{{$wishlist->wisher->first_name}} a aimé  <a href="{{route('showClubDetails',$wishlist->wished->id)}}">{{$wishlist->wished->name}}</a> listing!</p>
-
-                                          </div>
-                                      </div>
-                                  </div>
-                                @endforeach
-                              @endforeach
-
                               <!-- dashboard-list end-->
                               <!-- dashboard-list end-->
 
@@ -192,7 +166,7 @@
                                       <div class="dashboard-message">
                                           <span class="new-dashboard-item"><i class="fa fa-times"></i></span>
                                           <div class="dashboard-message-text">
-                                          <p><i class="fa fa-comments-o"></i>{{$review->reviewer->first_name}} a Commanté <a href="{{route('showTerrainDetails',$review->reviewed->id)}}">{{$review->reviewed->name}}</a> listing!</p>
+                                          <p><i class="fa fa-comments-o"></i>{{$review->reviewer->first_name}} a Commenté <a href="{{route('showTerrainDetails',$review->reviewed->id)}}">{{$review->reviewed->name}}</a> listing!</p>
 
                                           </div>
                                       </div>

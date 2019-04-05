@@ -40,6 +40,7 @@ class ComplexSchedule extends Model {
            'start_at',
            'ends_at',
            'day',
+           'status',
            'group_id',
            'group_type'
        ];
@@ -52,5 +53,7 @@ class ComplexSchedule extends Model {
          $days = array('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche');
          return $days[$numericDay - 1];
      }
+
+
 
 }

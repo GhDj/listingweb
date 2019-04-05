@@ -25,7 +25,7 @@ class Infrastructure extends Model
      *
      * @var string
      */
-    protected $table = 'clubs';
+    protected $table = 'infrastructure';
 
     /**
      * The attributes that are mass assignable.

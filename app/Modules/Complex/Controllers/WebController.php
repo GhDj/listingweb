@@ -52,6 +52,7 @@ class WebController extends Controller
         if (!empty($terrain->reviews)) {
             $starsTerrain = $terrain->reviews->avg('note');
         }
+
         return view('Infrastructure::Recherche.terrainDetails', [
             'terrain' => $terrain,
             'starsTerrain' => $starsTerrain

@@ -2,6 +2,7 @@
 
 namespace App\Modules\User\Controllers;
 
+use App\Modules\Complex\Models\ComplexCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\User\Models\User;
@@ -15,7 +16,7 @@ use App\Modules\Complex\Models\Terrain;
 use App\Modules\Complex\Models\Club;
 use App\Modules\Complex\Models\Category;
 use App\Modules\Complex\Models\Complex;
-use App\Modules\Complex\Models\TerrainSpeciality;
+use App\Modules\Complex\Models\Sport;
 use App\Modules\General\Models\Media;
 use App\Modules\Complex\Models\Equipment;
 use App\Modules\Infrastructure\Models\Team;
@@ -40,7 +41,7 @@ class WebController extends Controller
     public function showAdminDashboard()
     {
 
-            return view("User::backOffice.dashboard");
+        return view("User::backOffice.dashboard");
     }
 
     public function handleUserActivation($email, $activationCode)
@@ -436,22 +437,27 @@ class WebController extends Controller
     public function showUserDashboard()
     {
 
-        $userTerrains = Terrain::whereHas('complex', function ($subQuery) {
-            $subQuery->where('user_id', Auth::user()->id);
-        })
-            ->with('wishlists')
-            ->get();
+        $user = Auth::user();
 
-        $userClubs = Club::whereHas('terrain.complex', function ($subQuery) {
-            $subQuery->where('user_id', Auth::user()->id);
-        })
-            ->with('wishlists')
-            ->get();
-        return view('User::frontOffice.userDashboard', [
+        if (checkClubRole($user)) {
+            $club = Auth::user()->club;
 
-            'userTerrains' => $userTerrains,
-            'userClubs' => $userClubs
-        ]);
+        }
+
+        if (checkPublicComplexRole($user) || checkPrivateComplexRole($user)) {
+            return view('User::frontOffice.userDashboard', [
+                'userTerrains' => $user->complex->terrains,
+                'complex' => $user->complex,
+            ]);
+
+            //return "private or public complex resp";
+        }
+
+        if (checkAthleticRole($user)) {
+            return "sportif";
+        }
+
+
     }
 
     public function showUserProfile()
@@ -497,30 +503,137 @@ class WebController extends Controller
 
     public function showUserAddComplex()
     {
+
+        if (Auth::user()->complex) {
+            return redirect()->route('showEditComplex');
+        }
         return view('User::frontOffice.userAddComplex',
             [
-                'categories' => Category::select('category')->groupBy('category')->get()
+                'categories' => Category::select('title')->groupBy('title')->get()
             ]
         );
     }
 
+    public function showEditComplex()
+    {
+        return view('User::frontOffice.userAddComplex',
+            [
+                'categories' => Category::all(),
+                'complex' => Auth::user()->complex
+            ]
+        );
+    }
+
+
     public function showUserAddTerrain()
     {
         $user = Auth::user();
-        $Complexs = $user->Complexs()->get();
-        if (empty($Complexs)) {
+        $complex = $user->Complex;
+        if (empty($complex)) {
             SweetAlert::error('Opps !', 'Veuillez Ajouter Un Complex. !')->persistent('Fermer');
             return redirect()->route('showUserAddComplex');
         }
         return view('User::frontOffice.userAddTerrain',
             [
-                'specialities' => TerrainSpeciality::All(),
-                'Complexs' => $Complexs
+                'sports' => Sport::All(),
+                'complex' => $complex
             ]
         );
     }
 
-    public function hundleUserAddComplex(Request $request)
+    public function handleEditComplex(Request $request)
+    {
+
+        $user = Auth::user();
+
+
+        $this->validate($request, [
+            "address" => "required",
+            "latitude" => "required",
+            "longitude" => "required",
+            "city" => "required",
+            "postal_code" => "required",
+            "locality" => "required",
+            "name" => "required",
+            "categories" => "required",
+            "phone" => "required",
+            "email" => "required|email",
+            "web_site" => "required"
+        ],
+            [
+                "address.required" => "Le champ adresse est obligatoire",
+                "latitude.required" => "Le champ latitude  est obligatoire",
+                "longitude.required" => "Le champ longitude est obligatoire",
+                'city.required' => "Le champ Ville est obligatoire",
+                'postal_code' => "Le champ code postal  est obligatoire",
+                "locality.required" => "Le champ localité est obligatoire",
+                "name.required" => "Le champ nom de complex est obligatoire",
+                "phone.required" => "Le champ phone  est obligatoire",
+                "email.required" => "Le champ email",
+                "email.email" => "Le champ doit ètre email",
+                "web_site.required" => "Le champ Site Web est est obligatoire",
+
+            ]
+        );
+
+        $complex = Auth::user()->complex;
+        $complex->address->city = $request->city;
+        $complex->address->postal_code = $request->postal_code;
+        $complex->address->country = $request->country;
+        $complex->address->locality = $request->locality;
+        $complex->address->address = $request->address;
+        $complex->address->longitude = $request->longitude;
+        $complex->address->latitude = $request->latitude;
+        $complex->address->description = $request->description;
+
+        $complex->address->save();
+
+        $complex->name = $request->name;
+        $complex->phone = $request->phone;
+        $complex->email = $request->email;
+        $complex->web_site = $request->web_site;
+
+        $complex->save();
+
+        $categoriesArray = $complex->categories()->get(['category_id']);
+
+        foreach ($request->categories as $categorie) {
+
+            if (!$categoriesArray->contains('category_id', $categorie)) {
+                if (Category::find($categorie)) {
+                    ComplexCategory::create([
+                        'complex_id' => $complex->id,
+                        'category_id' => $categorie
+                    ]);
+                }
+            }
+        }
+
+        if ($request->otherCategories) {
+            $otherCategories = explode(',', $request->otherCategories);
+            foreach ($otherCategories as $otherCategory) {
+
+                $newCategory = Category::create([
+                    "title" => $otherCategory
+                ]);
+
+                ComplexCategory::create([
+                    "category_id" => $newCategory->id,
+                    "complex_id" => $complex->id
+                ]);
+            }
+        }
+
+        SweetAlert::success('Bien !', 'Complex modifié avec succès. !')->persistent('Fermer');
+        return redirect()->back();
+    }
+
+    public function showAddUserInfrastructure()
+    {
+        return view('User::frontOffice.userAddInfrastructure');
+    }
+
+    public function handleUserAddComplex(Request $request)
     {
 
         $user = Auth::user();
@@ -573,10 +686,13 @@ class WebController extends Controller
         ]);
 
         foreach ($request->categories as $categorie) {
-            Category::create([
-                "category" => $categorie,
-                "complex_id" => $complex->id
-            ]);
+            $categorieModel = Category::find($categorie);
+            if ($categorieModel) {
+                ComplexCategory::create([
+                    "category_id" => $categorieModel->id,
+                    "complex_id" => $complex->id
+                ]);
+            }
         }
         if ($request->otherCategories) {
             $otherCategories = explode(',', $request->otherCategories);
@@ -596,15 +712,20 @@ class WebController extends Controller
 
     public function hundleUserAddTerrain(Request $request)
     {
-        $user = Auth::user();
+
         $this->validate($request, [
             "name" => "required",
             "complex_id" => "required",
             "category_id" => "required",
-            "speciality_id" => "required",
+            "sport_id" => "required",
             "description" => "required",
-            "size" => "required|between:0,9999",
-            "type" => "required",
+            "lighting"=>"required",
+            "terrain_nature"=>"required",
+            "width" => "required|between:0,9999",
+            "length" => "required|between:0,9999",
+            "height" => "required",
+            "soil_type" => "required",
+            "video_recorder"=>"required",
             'images' => "required",
             'images.*' => "image|mimes:jpeg,png,jpg,gif,svg"
         ],
@@ -612,11 +733,18 @@ class WebController extends Controller
                 'name' => 'Le champ Nom de terrain est  obligatoire',
                 'complex_id' => 'Le champ Complex de terrain est  obligatoire',
                 'category_id' => 'Le champ Categorie de terrain est  obligatoire',
-                'speciality_id' => 'Le champ speciality de terrain est  obligatoire',
+                'sport_id' => 'Le champ sport de terrain est  obligatoire',
                 "description" => 'Le champ Description de terrain est  obligatoire',
-                "size.required" => 'Le champ Size de terrain est  obligatoire',
-                "size.between" => 'Format Invalide de champ Type',
-                "type.required" => 'Le champ Type de terrain est  obligatoire',
+                "width.required" => 'Le champ largeur de terrain est  obligatoire',
+                "width.between" => 'Format Invalide de champ largeur',
+                "length.required" => 'Le champ longueur de terrain est  obligatoire',
+                "length.between" => 'Format Invalide de champ longueur',
+                "height.required" => 'Le champ hauteur de terrain est  obligatoire',
+                "height.between" => 'Format Invalide de champ hauteur',
+                "lighting.required"=>"Le champ éclairage est obligatoire",
+                "terrain_nature.required"=>"Le champ nature du terrain est obligatoire",
+                "soil_type.required"=>"Le champ nature du sol est obligatoire",
+                "video_recorder.required"=>"Le champ captation vidéo est obligatoire",
                 'images.required' => 'Le champ Image de terrain est  obligatoire',
                 'images.image' => 'Le champ doit ètre de type image',
                 'images.mimes' => 'Le champ doit ètre de type image: peg,png,jpg,gif,svg',
@@ -626,13 +754,19 @@ class WebController extends Controller
         $terrain = Terrain::create([
 
             "name" => $request->name,
+            'width'=>$request->width,
+            'height'=>$request->height,
+            'length'=>$request->length,
+            'lighting'=>$request->lighting,
+            "terrain_nature"=>$request->terrain_nature,
+            "soil_type"=>$request->soil_type,
+            "video_recorder"=>$request->video_recorder,
             "complex_id" => $request->complex_id,
             "category_id" => $request->category_id,
-            "speciality_id" => $request->speciality_id,
+            "sport_id" => $request->sport_id,
             "description" => $request->description,
-            "size" => $request->size,
-            "type" => $request->type
         ]);
+
 
 
         $imagePath = 'storage/uploads/terrains/';
@@ -681,69 +815,10 @@ class WebController extends Controller
         }
 
         return view('User::frontOffice.userAddEquipement',
-            ['specialities' => TerrainSpeciality::All(),
+            ['specialities' => Sport::All(),
                 'terrains' => $userTerrains
             ]
         );
-    }
-
-    public function hundleUserAddEquipement(Request $request)
-    {
-        $user = Auth::user();
-
-        $this->validate($request, [
-            "name" => "required",
-            "description" => "required",
-            "terrain_id" => "required",
-            "speciality_id" => "required",
-            "hauteur" => "required|between:0,9999",
-            'longueur' => "required|between:0,9999",
-            'largueur' => "required|between:0,9999",
-            'images' => "required",
-            'images.*' => "image|mimes:jpeg,png,jpg,gif,svg"
-        ],
-            [
-                'name' => 'Le champ Nom de terrain est  obligatoire',
-                'terrain_id' => 'Le champ Terrain est  obligatoire',
-                'speciality_id' => 'Le champ speciality d\'equipement est  obligatoire',
-                "description" => 'Le champ Description d\'equipement est  obligatoire',
-                "hauteur.required" => 'Le champ Hauteur  est  obligatoire',
-                "hauteur.between" => 'Format Invalide de champ Type',
-                "longueur.required" => 'Le champ Longueur  est  obligatoire',
-                "longueur.between" => 'Format Invalide de champ Type',
-                "largueur.required" => 'Le champ Largueur  est  obligatoire',
-                "largueur.between" => 'Format Invalide de champ Type',
-                'images.image' => 'Le champ doit ètre de type image',
-                'images.mimes' => 'Le champ doit ètre de type image: peg,png,jpg,gif,svg',
-            ]
-        );
-
-        $equipment = Equipment::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'status' => 'Verif',
-            'hauteur' => $request->hauteur,
-            'longueur' => $request->longueur,
-            'largueur' => $request->largueur,
-            'speciality_id' => $request->speciality_id,
-            'terrain_id' => $request->terrain_id
-        ]);
-
-        $imagePath = 'storage/uploads/equipements/';
-        foreach ($request->images as $image) {
-            $filename = 'equipement-' . $equipment->id . '-' . str_random(5) . '-' . time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path($imagePath), $filename);
-
-            Media::create([
-
-                'type' => 1,
-                'link' => $imagePath . '' . $filename,
-                'equipment_id' => $equipment->id
-            ]);
-        }
-
-        SweetAlert::success('Bien !', 'Equipement ajouté avec succès. !')->persistent('Fermer');
-        return redirect()->route('showUserAddEquipement');
     }
 
     public function showUserAddClub()
@@ -820,7 +895,7 @@ class WebController extends Controller
             return redirect()->route('showUserAddTerrain');
         }
         return view('User::frontOffice.userAddTeam',
-            ['specialities' => TerrainSpeciality::All(),
+            ['specialities' => Sport::All(),
                 'clubs' => $userClubs
             ]
         );
@@ -888,9 +963,7 @@ class WebController extends Controller
         if (Auth::check()) {
             if (Auth::user()->roles()->pluck('title')->first() === 'Admin') {
                 return redirect(route('showAdminDashboard'));
-            }
-            else
-            {
+            } else {
                 return redirect('showHome');
             }
         }
@@ -1035,13 +1108,13 @@ class WebController extends Controller
             );
             if ($request->hasFile('picture')) {
 
-            $file = $request->picture;
-            $imagePath = 'storage/uploads/avatar/';
-            $filename = 'avatar' . $user->id . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path($imagePath), $filename);
-            $user->update([
-                'picture' => $imagePath . '' . $filename
-            ]);
+                $file = $request->picture;
+                $imagePath = 'storage/uploads/avatar/';
+                $filename = 'avatar' . $user->id . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path($imagePath), $filename);
+                $user->update([
+                    'picture' => $imagePath . '' . $filename
+                ]);
 
             }
             if ($request->input('password')) {
@@ -1067,7 +1140,7 @@ class WebController extends Controller
     public function handleGetUserById($id)
     {
         $user = User::find($id);
-        return ($user) ? json_encode(['user' => $user, 'edit_url' => route('handleUpdateUser', $user->id),'user_image'=>asset($user->picture)]) : json_encode(['response' => null]);
+        return ($user) ? json_encode(['user' => $user, 'edit_url' => route('handleUpdateUser', $user->id), 'user_image' => asset($user->picture)]) : json_encode(['response' => null]);
     }
 
     public function showAddComplexAdmin()
@@ -1175,7 +1248,7 @@ class WebController extends Controller
         }
         return view('User::backOffice.addTerrain',
             [
-                'specialities' => TerrainSpeciality::All(),
+                'specialities' => Sport::All(),
                 'Complexs' => $Complexs
             ]
         );
@@ -1258,20 +1331,18 @@ class WebController extends Controller
 
     public function showEditTerrain($id)
     {
-        $terrain=Terrain::find($id);
-        if($terrain)
-        {
-            return view('User::backOffice.editTerrain',['specialities' => TerrainSpeciality::All(),
-                'Complexs' => Auth::user()->Complexs()->get()],compact('terrain'));
+        $terrain = Terrain::find($id);
+        if ($terrain) {
+            return view('User::backOffice.editTerrain', ['specialities' => Sport::All(),
+                'Complexs' => Auth::user()->Complexs()->get()], compact('terrain'));
         }
         return redirect()->route('showTerrainsList');
     }
 
-    public function handleEditTerrain(Request $request,$id)
+    public function handleEditTerrain(Request $request, $id)
     {
-        $terrain=Terrain::find($id);
-        if(!$terrain)
-        {
+        $terrain = Terrain::find($id);
+        if (!$terrain) {
             return redirect()->route('showTerrainsList');
         }
         $this->validate($request, [
@@ -1299,9 +1370,9 @@ class WebController extends Controller
                 'images.mimes' => 'Le champ doit ètre de type image: peg,png,jpg,gif,svg',
             ]
         );
-        $terrain->name=$request->name;
-        $terrain->description=$request->description;
-        $terrain->size=$request->size;
+        $terrain->name = $request->name;
+        $terrain->description = $request->description;
+        $terrain->size = $request->size;
 
         $imagePath = 'storage/uploads/terrains/';
         foreach ($request->images as $image) {

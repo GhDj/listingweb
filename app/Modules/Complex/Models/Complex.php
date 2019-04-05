@@ -47,9 +47,10 @@ class Complex extends Model {
 
     public function categories(){
 
-        return $this->hasMany('App\Modules\Complex\Models\Category','complex_id');
+        return $this->hasMany('App\Modules\Complex\Models\ComplexCategory','complex_id');
 
     }
+
 
     public function reviews(){
 
@@ -60,6 +61,13 @@ class Complex extends Model {
 
         return $this->morphMany('App\Modules\Reviews\Models\Report','reported');
     }
+
+    public function infrastructure()
+    {
+
+        return $this->hasOne('App\Modules\Complex\Models\Infrastructure','complex_id','id');
+    }
+
 
 
     public function address(){
