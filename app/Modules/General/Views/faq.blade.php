@@ -49,89 +49,10 @@
             </div>
         </div>
         <!--section -->
-        <section  id="sec2">
-            <div class="container">
-                <div class="section-title">
-                    <h2> Steps to  improve your business</h2>
-                    <div class="section-subtitle">popular questions</div>
-                    <span class="section-separator"></span>
-                    <p>Explore some of the best tips from around the city from our partners and friends.</p>
-                </div>
-                <div class="time-line-wrap fl-wrap">
-                    <!--  time-line-container  -->
-                    <div class="time-line-container">
-                        <div class="step-item">Step 1</div>
-                        <div class="time-line-box tl-text tl-left">
-                            <span class="process-count">01 . </span>
-                            <div class="time-line-icon">
-                                <i class="fa fa-map-o"></i>
-                            </div>
-                            <h3>Find Interesting Place</h3>
-                            <p>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.</p>
-                        </div>
-                        <div class="time-line-box tl-media tl-right">
-                            <img src="images/all/15.jpg" alt="">
-                        </div>
-                    </div>
-                    <!--  time-line-container -->
-                    <!--  time-line-container  -->
-                    <div class="time-line-container lf-im">
-                        <div class="step-item">Step 2</div>
-                        <div class="time-line-box tl-text tl-right">
-                            <span class="process-count">02 . </span>
-                            <div class="time-line-icon">
-                                <i class="fa fa-envelope-open-o"></i>
-                            </div>
-                            <h3>Contact a Few Owners</h3>
-                            <p>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.</p>
-                        </div>
-                        <div class="time-line-box tl-media tl-left">
-                            <img src="images/all/16.jpg" alt="">
-                        </div>
-                    </div>
-                    <!--  time-line-container -->
-                    <!--  time-line-container  -->
-                    <div class="time-line-container">
-                        <div class="step-item">Step 3</div>
-                        <div class="time-line-box tl-text tl-left">
-                            <span class="process-count">03 . </span>
-                            <div class="time-line-icon">
-                                <i class="fa fa-hand-peace-o"></i>
-                            </div>
-                            <h3>Make a Listing</h3>
-                            <p>Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.</p>
-                        </div>
-                        <div class="time-line-box tl-media tl-right">
-                            <img src="images/all/18.jpg" alt="">
-                        </div>
-                    </div>
-                    <!--  time-line-container -->
-                    <div class="timeline-end"><i class="fa fa-check"></i></div>
-                </div>
-            </div>
-        </section>
+
         <!-- section end -->
         <!--section -->
-        <section class="color-bg" id="sec3">
-            <div class="shapes-bg-big"></div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="video-box fl-wrap">
-                            <img src="images/all/19.jpg" alt="">
-                            <a class="video-box-btn image-popup" href="https://vimeo.com/110234211"><i class="fa fa-play" aria-hidden="true"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="color-bg-text">
-                            <h3>Video Tutorials</h3>
-                            <p>In ut odio libero, at vulputate urna. Nulla tristique mi a massa convallis cursus. Nulla eu mi magna. Etiam suscipit commodo gravida. Lorem ipsum dolor sit amet, conse ctetuer adipiscing elit, sed diam nonu mmy nibh euismod tincidunt ut laoreet dolore magna aliquam erat.</p>
-                            <a href="#" class="color-bg-link">Our Vimeo Chanel</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+
         <!-- section end -->
         <!--section -->
         <section class="gray-bg" id="sec4">

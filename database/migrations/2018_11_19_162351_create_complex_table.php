@@ -19,11 +19,23 @@ class CreateComplexTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('phone');
+            $table->integer('view_count')->default(0);
+            $table->integer('type')->default(1); // 1 -> public , 2 private
             $table->string('web_site');
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('addresses')->onDelete('cascade');
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('address_id')->unsigned();
             $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade');
+            $table->timestamps();
+        });
+
+
+        Schema::create('complex_request', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('addresses')->onDelete('cascade');
+            $table->integer('complex_id')->unsigned();
+            $table->foreign('complex_id')->references('id')->on('complex')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -101,6 +113,16 @@ class CreateComplexTable extends Migration
             $table->integer('group_id');
             $table->string('group_type');
             $table->timestamps();
+        });
+
+        Schema::create('terrain_activities', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('sport_id')->unsigned();
+            $table->foreign('sport_id')->references('id')->on('sports')->onDelete('cascade');
+            $table->integer('terrain_id')->unsigned();
+            $table->foreign('terrain_id')->references('id')->on('terrains')->onDelete('cascade');
+            $table->timestamps();
+
         });
 
     }

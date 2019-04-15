@@ -1,8 +1,8 @@
-Hi {{ $user->first_name }},
-@if($password)
+Bonjour {{ $user->first_name }},
+@if(isset($password))
     Votre mot de passe est : {{$password}}
 @endif
-Click the link below to activate your account :
+Cliquez sur le lien ci-dessous pour activer votre compte. :
 
 <a href="{{ $validationLink }}">Activate your account !</a>
 

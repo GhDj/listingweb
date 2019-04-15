@@ -34,6 +34,17 @@ if (!function_exists('checkPrivateComplexRole')) {
     }
 }
 
+if (!function_exists('checkIfHasRequest')) {
+    /**
+     * @param \App\Modules\User\Models\User $user
+     * @return bool
+     */
+    function checkIfHasRequest($user)
+    {
+        return (count(($user->complexRequest))>0) ? true : false;
+    }
+}
+
 if(!function_exists('checkPublicComplexRole')) {
     /**
      * @param \App\Modules\User\Models\User $user

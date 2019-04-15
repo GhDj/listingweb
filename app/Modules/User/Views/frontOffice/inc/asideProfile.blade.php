@@ -24,40 +24,33 @@
                     <ul>
 
                         @if(!Auth::user()->complex)
-                            <li><a href="{{route('showUserAddComplex')}}" ><i
-                                            class="fa fa-plus-square-o"></i> Ajouter Votre complexe</a></li>
-
+                            @if(checkPrivateComplexRole(Auth::user()))
+                                <li><a href="{{route('showUserAddComplex')}}"><i
+                                                class="fa fa-plus-square-o"></i> Ajouter Votre complexe</a></li>
+                            @endif
                         @else
                             @if(Auth::user()->complex->infrastructure)
                                 <li><a href="#"><i class="fa fa-gears"></i>Modifier infrastructure</a></li>
                             @else
-                                <li><a href="{{route('showAddUserInfrastructure')}}"><i class="fa fa-gears"></i>Ajouter infrastructure</a></li>
+                                <li><a href="{{route('showAddUserInfrastructure')}}"><i class="fa fa-gears"></i>Ajouter
+                                        infrastructure</a></li>
 
                             @endif
-                                <li><a href="{{route('showEditComplex')}}" ><i
-                                                class="fa fa-plus-square-o"></i> Modifier Complexe</a></li>
+                            <li><a href="{{route('showEditComplex')}}"><i
+                                            class="fa fa-plus-square-o"></i> Modifier Complexe</a></li>
 
 
                         @endif
-                        <li><a href="{{route('showUserListingTerrain')}}"><i class="fa fa-th-list"></i>
-                                Liste Terrains </a></li>
+                        @if(checkPrivateComplexRole(Auth::user())||(checkPublicComplexRole(Auth::user())&&(Auth::user()->complex)))
+                            <li><a href="{{route('showUserListingTerrain')}}"><i class="fa fa-th-list"></i>
+                                    Liste Terrains </a></li>
+                        @endif
 
                     </ul>
                 </div>
 
             @endif
 
-            @if(checkPublicComplexRole(Auth::user()) && (checkUserHasPublicComplex(Auth::user())))
-
-                <div class="user-profile-menu">
-                    <h3>Listings</h3>
-                    <ul>
-                        <li><a href="#"><i class="fa fa-th-list"></i> Modifier complexe </a></li>
-                        <li><a href="#"><i class="fa fa-th-list"></i> Modifier terrain </a></li>
-                    </ul>
-                </div>
-
-            @endif
 
             @if(checkClubRole(Auth::user()))
 
