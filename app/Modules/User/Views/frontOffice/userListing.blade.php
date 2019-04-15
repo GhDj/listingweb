@@ -79,7 +79,10 @@
                                                     <div class="listing-rating card-popup-rainingvis fl-wrap" data-starrating2="5">
                                                         <span>({{$terrain->reviews->count()}} reviews)</span>
                                                     </div>
-
+                                                    <ul class="dashboard-listing-table-opt  fl-wrap">
+                                                        <li><a href="{{route('showUserEditTerrain',$terrain->id)}}">Edit <i class="fa fa-pencil-square-o"></i></a></li>
+                                                        <li><a href="#" class="del-btn">Delete <i class="fa fa-trash-o"></i></a></li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                             </div>

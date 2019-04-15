@@ -51,14 +51,14 @@
                     <div class="profile-edit-wrap">
                         <div class="profile-edit-page-header">
                             <h2>Ajouter Un terrain</h2>
-                            <div class="breadcrumbs"><a href="#">Accueil</a><a href="#">Profile</a><span>Ajouter Un terrain</span>
+                            <div class="breadcrumbs"><a href="{{route('showUserDashboard')}}">Dashboard</a><span>Modifier</span>
                             </div>
                         </div>
                         <div class="row">
                             @include('User::frontOffice.inc.asideProfile')
                             <div class="col-md-9">
                                 <!-- profile-edit-container-->
-                                <form class="" action="{{route('hundleUserAddTerrain')}}" method="post"
+                                <form class="" action="{{route('handleUserUpdateTerrain',$terrain->id)}}" method="post"
                                       enctype="multipart/form-data">
                                     {{ csrf_field() }}
 
@@ -68,14 +68,13 @@
                                         </div>
                                         <div class="custom-form">
                                             <label>Nom de Terrain</label>
-                                            <input type="text" name="name" required value=""/>
+                                            <input type="text" name="name" required value="{{$terrain->name}}"/>
                                             @if ($errors->has('name'))
                                                 <span class="invalid-feedback" role="alert">
                                       <strong>{{ $errors->first('name') }}</strong>
                                     </span>
                                             @endif
                                             <div class="row">
-
                                                 <div class="col-md-4">
                                                     <label>Category</label>
                                                     <select class="chosen" id="complexCategory" name="category_id">
@@ -88,7 +87,7 @@
                                                 <div class="col-md-4">
                                                     <label>Type de terrain</label>
                                                     <select class="chosen" name="sport_id">
-                                                        @foreach ($sports as $sport)
+                                                        <@foreach ($sports as $sport)
                                                             <option value="{{$sport->id}}">{{$sport->title}}</option>
                                                         @endforeach
                                                     </select>
@@ -102,7 +101,7 @@
                                                 <div class="col-md-4">
                                                     <label>Type de terrain</label>
                                                     <select class="chosen" name="sport_id">
-                                                        @foreach ($sports as $sport)
+                                                        <@foreach ($sports as $sport)
                                                             <option value="{{$sport->id}}">{{$sport->title}}</option>
                                                         @endforeach
                                                     </select>
@@ -125,14 +124,14 @@
                                         <div class="custom-form">
 
                                             <label>Nature de sol</label>
-                                            <input type="text" class="form-control" name="soil_type"/>
+                                            <input type="text" value="{{$terrain->soil_type}}" class="form-control" name="soil_type"/>
                                             @if ($errors->has('soil_type'))
                                                 <span class="invalid-feedback" role="alert">
                                       <strong>{{ $errors->first('soil_type') }}</strong>
                                     </span>  @endif
 
                                             <label>Nautre de terrain </label>
-                                            <input type="text" class="form-control" placeholder="(découvetr/couvert/intérieure..etc)" name="terrain_nature"/>
+                                            <input type="text" class="form-control" value="{{$terrain->terrain_nature}}" placeholder="(découvetr/couvert/intérieure..etc)" name="terrain_nature"/>
                                             @if ($errors->has('terrain_nature'))
                                                 <span class="invalid-feedback" role="alert">
                                       <strong>{{ $errors->first('terrain_nature') }}</strong>
@@ -140,8 +139,8 @@
 
                                             <label>Captation vidéo</label>
                                             <select class="chosen-select" name="video_recorder"  required >
-                                                <option selected value="1">Oui</option>
-                                                <option value="0">Non</option>
+                                                <option {{($terrain->video_recorder==1)? "selected ":""}} value="1">Oui</option>
+                                                <option {{($terrain->video_recorder==0)? "selected ":""}}  value="0">Non</option>
                                             </select>
                                             @if ($errors->has('video_recorder'))
                                                 <span class="invalid-feedback" role="alert">
@@ -150,15 +149,15 @@
 
                                             <label>Eclairage: </label>
                                             <select class="chosen-select" name="lighting"  required >
-                                                <option selected value="1">Oui</option>
-                                                <option value="0">Non</option>
+                                                <option {{($terrain->lighting==1)? "selected ":""}}  selected value="1">Oui</option>
+                                                <option {{($terrain->lighting==1)? "selected ":""}}  value="0">Non</option>
                                             </select>
                                             @if ($errors->has('lighting'))
                                                 <span class="invalid-feedback" role="alert">
                                       <strong>{{ $errors->first('lighting') }}</strong>
                                     </span>  @endif
                                             <label>Hauteur: </label>
-                                            <input type="number" name="height" value="" required min="1" max="9999">
+                                            <input type="number" name="height" value="{{$terrain->height}}"  required min="1" max="9999">
                                             @if ($errors->has('height'))
                                                 <span class="invalid-feedback" role="alert">
                                       <strong>{{ $errors->first('height') }}</strong>
@@ -166,21 +165,23 @@
                                             @endif
 
                                             <label>Longueur </label>
-                                            <input type="number" name="length" value="" required min="1" max="9999">
+                                            <input type="number" name="length" value="{{$terrain->length}}" required min="1" max="9999">
                                             @if ($errors->has('length'))
                                                 <span class="invalid-feedback" role="alert">
                                       <strong>{{ $errors->first('length') }}</strong>
                                     </span>
                                             @endif
                                             <label>largueur </label>
-                                            <input type="number" name="width" value="" required min="1" max="9999">
+                                            <input type="number" name="width" value="{{$terrain->width}}" required min="1" max="9999">
                                             @if ($errors->has('width'))
                                                 <span class="invalid-feedback" role="alert">
                                       <strong>{{ $errors->first('width') }}</strong>
                                     </span>
                                             @endif
                                             <label>Description</label>
-                                            <textarea name="description" rows="8" cols="80"></textarea>
+                                            <textarea name="description" rows="8" cols="80">
+                                                {{$terrain->description}}
+                                            </textarea>
                                             @if ($errors->has('description'))
                                                 <span class="invalid-feedback" role="alert">
                                       <strong>{{ $errors->first('description') }}</strong>

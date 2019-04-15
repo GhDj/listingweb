@@ -2,6 +2,7 @@
 
 namespace App\Modules\Complex\Controllers;
 
+use App\Modules\Complex\Models\Sport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -251,7 +252,7 @@ class WebController extends Controller
         return View('Infrastructure::Recherche.searchPage', [
             'clubs' => $clubs,
             'categories' => Category::select('category')->groupBy('category')->get(),
-            'sports' => TerrainSpeciality::All(),
+            'sports' => Sport::All(),
             'latitude' => (isset($data['latitudeClub'])) ? $data['latitudeClub'] : null,
             'longitude' => (isset($data['latitudeClub'])) ? $data['latitudeClub'] : null,
             'address' => (isset($data['address'])) ? $data['address'] : null,

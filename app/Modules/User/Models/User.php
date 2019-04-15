@@ -3,6 +3,7 @@
 namespace App\Modules\User\Models;
 
 use App\Modules\Complex\Models\Club;
+use App\Modules\Complex\Models\ComplexRequest;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -114,6 +115,10 @@ class User extends Authenticatable
       return $this->hasOne(Club::class);
   }
 
+  public function complexRequest()
+  {
+      return $this->hasMany(ComplexRequest::class,'user_id','id');
+  }
 
 
 }

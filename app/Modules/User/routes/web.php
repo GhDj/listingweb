@@ -55,6 +55,11 @@ Route::group(['module' => 'User', 'middleware' => ['userAccess'], 'namespace' =>
 
     Route::get('/user/add/infrastructure','WebController@showAddUserInfrastructure')->name('showAddUserInfrastructure');
 
+    Route::post('user/request/complex','WebController@handleUserRequestComplex')->name('handleUserRequestComplex');
+
+    Route::get('user/edit/terrain/{id}','WebController@showUserEditTerrain')->name('showUserEditTerrain');
+Route::post('user/update/terrain/{id}','WebController@handleUserUpdateTerrain')->name('handleUserUpdateTerrain');
+
 });
 
 

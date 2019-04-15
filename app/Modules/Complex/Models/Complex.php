@@ -2,6 +2,7 @@
 
 namespace App\Modules\Complex\Models;
 
+use App\Modules\User\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Complex extends Model {
@@ -28,6 +29,7 @@ class Complex extends Model {
     protected $fillable = [
         'name',
         'phone',
+        'view_count',
         'email',
         'web_site',
         'address_id',
@@ -85,5 +87,9 @@ class Complex extends Model {
 
       public function owner(){
             return $this->belongsTo('App\Modules\User\Models\User');
+        }
+        public function user()
+        {
+            return $this->hasOne(User::class,'id','user_id');
         }
 }

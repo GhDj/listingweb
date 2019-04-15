@@ -3,6 +3,8 @@
 namespace App\Modules\User\Controllers;
 
 use App\Modules\Complex\Models\ComplexCategory;
+use App\Modules\Complex\Models\ComplexRequest;
+use App\Modules\Complex\Models\TerrainActivity;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\User\Models\User;
@@ -255,7 +257,6 @@ class WebController extends Controller
             'validation' => $validation,
             'status' => 0,
             'phone' => ($request->has('phone')) ? $request->input('phone') : null,
-            'promo_pts' => 0,
             'picture' => 'img/unknown.png',
             'address_id' => $userAddress->id
         ]);
@@ -445,9 +446,16 @@ class WebController extends Controller
         }
 
         if (checkPublicComplexRole($user) || checkPrivateComplexRole($user)) {
+            $reviewCounts=0;
+            if($user->complex)
+            {
+                $reviewCounts=$user->complex->terrains()->with('reviews')->count();
+            }
             return view('User::frontOffice.userDashboard', [
-                'userTerrains' => $user->complex->terrains,
+                'userTerrains' => ($user->complex) ? $user->complex->terrains : null,
                 'complex' => $user->complex,
+                'reviewsCount'=>$reviewCounts,
+                'availableComplex' => Complex::doesnthave('user')->where('type', 1)->get()
             ]);
 
             //return "private or public complex resp";
@@ -710,28 +718,49 @@ class WebController extends Controller
 
     }
 
+    public function handleUserRequestComplex(Request $request)
+    {
+        $this->validate($request, [
+            "complex" => "required",
+        ],
+            [
+                'complex' => 'Le champ Complex de terrain est  obligatoire',
+            ]
+        );
+
+        if ($request->complex) {
+            ComplexRequest::create([
+                'complex_id' => $request->complex,
+                'user_id' => Auth::user()->id
+            ]);
+
+            SweetAlert::success('Information', 'Votre demande a été envoyer avec succès')->persistent("Bien");
+
+        }
+        return redirect()->back();
+    }
+
+
     public function hundleUserAddTerrain(Request $request)
     {
 
         $this->validate($request, [
             "name" => "required",
-            "complex_id" => "required",
             "category_id" => "required",
             "sport_id" => "required",
             "description" => "required",
-            "lighting"=>"required",
-            "terrain_nature"=>"required",
+            "lighting" => "required",
+            "terrain_nature" => "required",
             "width" => "required|between:0,9999",
             "length" => "required|between:0,9999",
             "height" => "required",
             "soil_type" => "required",
-            "video_recorder"=>"required",
+            "video_recorder" => "required",
             'images' => "required",
             'images.*' => "image|mimes:jpeg,png,jpg,gif,svg"
         ],
             [
                 'name' => 'Le champ Nom de terrain est  obligatoire',
-                'complex_id' => 'Le champ Complex de terrain est  obligatoire',
                 'category_id' => 'Le champ Categorie de terrain est  obligatoire',
                 'sport_id' => 'Le champ sport de terrain est  obligatoire',
                 "description" => 'Le champ Description de terrain est  obligatoire',
@@ -741,10 +770,10 @@ class WebController extends Controller
                 "length.between" => 'Format Invalide de champ longueur',
                 "height.required" => 'Le champ hauteur de terrain est  obligatoire',
                 "height.between" => 'Format Invalide de champ hauteur',
-                "lighting.required"=>"Le champ éclairage est obligatoire",
-                "terrain_nature.required"=>"Le champ nature du terrain est obligatoire",
-                "soil_type.required"=>"Le champ nature du sol est obligatoire",
-                "video_recorder.required"=>"Le champ captation vidéo est obligatoire",
+                "lighting.required" => "Le champ éclairage est obligatoire",
+                "terrain_nature.required" => "Le champ nature du terrain est obligatoire",
+                "soil_type.required" => "Le champ nature du sol est obligatoire",
+                "video_recorder.required" => "Le champ captation vidéo est obligatoire",
                 'images.required' => 'Le champ Image de terrain est  obligatoire',
                 'images.image' => 'Le champ doit ètre de type image',
                 'images.mimes' => 'Le champ doit ètre de type image: peg,png,jpg,gif,svg',
@@ -754,19 +783,18 @@ class WebController extends Controller
         $terrain = Terrain::create([
 
             "name" => $request->name,
-            'width'=>$request->width,
-            'height'=>$request->height,
-            'length'=>$request->length,
-            'lighting'=>$request->lighting,
-            "terrain_nature"=>$request->terrain_nature,
-            "soil_type"=>$request->soil_type,
-            "video_recorder"=>$request->video_recorder,
-            "complex_id" => $request->complex_id,
+            'width' => $request->width,
+            'height' => $request->height,
+            'length' => $request->length,
+            'lighting' => $request->lighting,
+            "terrain_nature" => $request->terrain_nature,
+            "soil_type" => $request->soil_type,
+            "video_recorder" => $request->video_recorder,
+            "complex_id" => Auth::user()->complex->id,
             "category_id" => $request->category_id,
             "sport_id" => $request->sport_id,
             "description" => $request->description,
         ]);
-
 
 
         $imagePath = 'storage/uploads/terrains/';
@@ -798,9 +826,128 @@ class WebController extends Controller
 
         }
 
+        foreach ($request->activityList as $activity) {
+            TerrainActivity::create([
+                'sport_id' => $activity,
+                'terrain_id' => $terrain->id,
+            ]);
+        }
+
         SweetAlert::success('Bien !', 'Terrain ajouté avec succès. !')->persistent('Fermer');
         return redirect()->route('showUserAddTerrain');
     }
+
+
+    public function showUserEditTerrain($id)
+    {
+        $terrain = Terrain::find($id);
+        if (!$terrain) {
+            SweetAlert::error("Erreur", "Ce terrain n'exista pas")->persistent("Ok");
+            return redirect()->back();
+        }
+        $complex=Auth::user()->complex;
+        return view('User::frontOffice.userEditTerrain',compact('terrain'),[ 'sports' => Sport::All(),
+            'complex' => $complex]);
+    }
+
+    public function handleUserEditTerrain(Request $request, $id)
+    {
+
+        $terrain = Terrain::find($id);
+        if (!$terrain) {
+            SweetAlert::error("Erreur", "Ce terrain n'exista pas")->persistent("Ok");
+            return redirect()->back();
+        }
+        $this->validate($request, [
+            "name" => "required",
+            "category_id" => "required",
+            "sport_id" => "required",
+            "description" => "required",
+            "lighting" => "required",
+            "terrain_nature" => "required",
+            "width" => "required|between:0,9999",
+            "length" => "required|between:0,9999",
+            "height" => "required",
+            "soil_type" => "required",
+            "video_recorder" => "required",
+            'images' => "required",
+            'images.*' => "image|mimes:jpeg,png,jpg,gif,svg"
+        ],
+            [
+                'name' => 'Le champ Nom de terrain est  obligatoire',
+
+                'category_id' => 'Le champ Categorie de terrain est  obligatoire',
+                'sport_id' => 'Le champ sport de terrain est  obligatoire',
+                "description" => 'Le champ Description de terrain est  obligatoire',
+                "width.required" => 'Le champ largeur de terrain est  obligatoire',
+                "width.between" => 'Format Invalide de champ largeur',
+                "length.required" => 'Le champ longueur de terrain est  obligatoire',
+                "length.between" => 'Format Invalide de champ longueur',
+                "height.required" => 'Le champ hauteur de terrain est  obligatoire',
+                "height.between" => 'Format Invalide de champ hauteur',
+                "lighting.required" => "Le champ éclairage est obligatoire",
+                "terrain_nature.required" => "Le champ nature du terrain est obligatoire",
+                "soil_type.required" => "Le champ nature du sol est obligatoire",
+                "video_recorder.required" => "Le champ captation vidéo est obligatoire",
+                'images.required' => 'Le champ Image de terrain est  obligatoire',
+                'images.image' => 'Le champ doit ètre de type image',
+                'images.mimes' => 'Le champ doit ètre de type image: peg,png,jpg,gif,svg',
+            ]
+        );
+
+        $terrain->name = $request->name;
+        $terrain->width = $request->width;
+        $terrain->height = $request->height;
+        $terrain->length = $request->length;
+        $terrain->lighting = $request->lighting;
+        $terrain->terrain_nature = $request->terrain_nature;
+        $terrain->soil_type = $request->soil_type;
+        $terrain->video_recorder = $request->video_recorder;
+        $terrain->category_id = $request->category_id;
+        $terrain->description = $request->description;
+        $terrain->save;
+
+
+        $imagePath = 'storage/uploads/terrains/';
+        foreach ($request->images as $image) {
+            $filename = 'terrain-' . $terrain->id . '-' . str_random(5) . '-' . time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path($imagePath), $filename);
+
+            Media::create([
+
+                'type' => 1,
+                'link' => $imagePath . '' . $filename,
+                'terrain_id' => $terrain->id
+            ]);
+        }
+
+        foreach ($request->sessionDay as $key => $sessionDay) {
+
+            $sessionStartTime = $request->sessionStartTime[$key];
+            $sessionEndTime = $request->sessionEndTime[$key];
+            $sessionStartDate[] = date('Y-m-d H:i:s', strtotime("$sessionDay $sessionStartTime"));
+            $sessionEndDate[] = date('Y-m-d H:i:s', strtotime("$sessionDay $sessionEndTime"));
+            $dayofweek[] = date('w', strtotime($sessionDay));
+
+            $terrain->schedules()->create([
+                'start_at' => $sessionStartDate[$key],
+                'ends_at' => $sessionEndDate[$key],
+                'day' => $dayofweek[$key]
+            ]);
+
+        }
+
+        foreach ($request->activityList as $activity) {
+            TerrainActivity::create([
+                'sport_id' => $activity,
+                'terrain_id' => $terrain->id,
+            ]);
+        }
+
+        SweetAlert::success('Bien !', 'Terrain ajouté avec succès. !')->persistent('Fermer');
+        return redirect()->route('showUserAddTerrain');
+    }
+
 
     public function showUserAddEquipement()
     {
