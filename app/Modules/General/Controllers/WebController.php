@@ -79,7 +79,7 @@ class WebController extends Controller
 
     public function showSearchPage()
     {
-        return view('General::search.searchPage');
+        return view('General::search.searchPage',['latitude'=>'','longitude'=>'','categories'=>Category::all(),'address'=>'','sports'=>Sport::all()]);
     }
 
 

@@ -30,9 +30,9 @@
                             @endif
                         @else
                             @if(Auth::user()->complex->infrastructure)
-                                <li><a href="#"><i class="fa fa-gears"></i>Modifier infrastructure</a></li>
+                                <li><a href="{{route('showUserEditInfrastructure')}}"><i class="fa fa-gears"></i>Modifier infrastructure</a></li>
                             @else
-                                <li><a href="{{route('showAddUserInfrastructure')}}"><i class="fa fa-gears"></i>Ajouter
+                                <li><a href="{{route('showUserAddInfrastructure')}}"><i class="fa fa-gears"></i>Ajouter
                                         infrastructure</a></li>
 
                             @endif

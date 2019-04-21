@@ -87,7 +87,7 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label>Type de terrain</label>
-                                                    <select class="chosen" name="sport_id">
+                                                    <select class="chosen" id="choose_sport" name="sport_id">
                                                         @foreach ($sports as $sport)
                                                             <option value="{{$sport->id}}">{{$sport->title}}</option>
                                                         @endforeach
@@ -100,15 +100,20 @@
                                                 </div>
 
                                                 <div class="col-md-4">
-                                                    <label>Type de terrain</label>
-                                                    <select class="chosen" name="sport_id">
+                                                    <label>Activités</label>
+                                                    <select class="chosen" id="select_activity_list"
+                                                            name="activityList">
                                                         @foreach ($sports as $sport)
-                                                            <option value="{{$sport->id}}">{{$sport->title}}</option>
+                                                            <optgroup id="{{$sport->id}}" label="{{$sport->title}}">
+                                                                @foreach($sport->categories as $sportCategory)
+                                                                    <option value="{{$sportCategory->id}}">{{$sportCategory->title}}</option>
+                                                                @endforeach
+                                                            </optgroup>
                                                         @endforeach
                                                     </select>
-                                                    @if ($errors->has('sport_id'))
+                                                    @if ($errors->has('activityList'))
                                                         <span class="invalid-feedback" role="alert">
-                                              <strong>{{ $errors->first('sport_id') }}</strong>
+                                              <strong>{{ $errors->first('activityList') }}</strong>
                                             </span>
                                                     @endif
                                                 </div>
@@ -132,14 +137,16 @@
                                     </span>  @endif
 
                                             <label>Nautre de terrain </label>
-                                            <input type="text" class="form-control" placeholder="(découvetr/couvert/intérieure..etc)" name="terrain_nature"/>
+                                            <input type="text" class="form-control"
+                                                   placeholder="(découvetr/couvert/intérieure..etc)"
+                                                   name="terrain_nature"/>
                                             @if ($errors->has('terrain_nature'))
                                                 <span class="invalid-feedback" role="alert">
                                       <strong>{{ $errors->first('terrain_nature') }}</strong>
                                     </span>  @endif
 
                                             <label>Captation vidéo</label>
-                                            <select class="chosen-select" name="video_recorder"  required >
+                                            <select class="chosen-select" name="video_recorder" required>
                                                 <option selected value="1">Oui</option>
                                                 <option value="0">Non</option>
                                             </select>
@@ -149,7 +156,7 @@
                                     </span>  @endif
 
                                             <label>Eclairage: </label>
-                                            <select class="chosen-select" name="lighting"  required >
+                                            <select class="chosen-select" name="lighting" required>
                                                 <option selected value="1">Oui</option>
                                                 <option value="0">Non</option>
                                             </select>
@@ -352,6 +359,16 @@
             $("#date" + id).remove();
         });
 
+        $("#choose_sport").on("change", function () {
+            $("#select_activity_list :selected").removeAttr("selected");
+            var arr = $("#choose_sport :selected").text();
+            if (arr !== 'All') { // arbitrary value to show all
+                $("#select_activity_list").children("optgroup").hide();
+                $("#select_activity_list").children("optgroup[label='" + arr + "']").show();
+            } else {
+                $("#select_activity_list").children("optgroup").show();
+            }
+        })
     </script>
 
 @endsection

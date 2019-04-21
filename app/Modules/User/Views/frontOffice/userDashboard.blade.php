@@ -16,12 +16,11 @@
 
 @endsection
 @section('content')
-<style>
-    .dashboard-header h3
-    {
-        color:black;
-    }
-</style>
+    <style>
+        .dashboard-header h3 {
+            color: black;
+        }
+    </style>
     <!-- wrapper -->
     <div id="wrapper">
         <!--content -->
@@ -59,14 +58,14 @@
                                                 <div class="statistic-item gradient-bg fl-wrap">
 
 
-                                                        @if($userTerrains)
+                                                    @if($userTerrains)
                                                         <div class="statistic-item-numder">  {{$userTerrains->count()}}</div>
-                                                            <h5>Terrains</h5>
+                                                        <h5>Terrains</h5>
 
-                                                        @else
+                                                    @else
                                                         <h5>Aucun Terrain</h5>
 
-                                                        @endif
+                                                    @endif
 
                                                 </div>
                                             </div>
@@ -76,15 +75,14 @@
                                             <div class="statistic-item gradient-bg fl-wrap">
 
 
-
-                                                    @if(Auth::user()->complex)
+                                                @if(Auth::user()->complex)
                                                     <div class="statistic-item-numder">
                                                         {{$complex->view_count}}
                                                     </div>
-                                                        <h5>Visiteur</h5>
-                                                    @else
+                                                    <h5>Visiteur</h5>
+                                                @else
                                                     <h5>Aucun Complex trouvé</h5>
-                                                    @endif
+                                                @endif
 
                                             </div>
                                         </div>
@@ -94,118 +92,118 @@
                                             <div class="statistic-item gradient-bg fl-wrap">
 
 
-                                                    @if(Auth::user()->complex)
+                                                @if(Auth::user()->complex)
                                                     <div class="statistic-item-numder"> {{$reviewsCount}}
 
-                                                </div>
-                                                <h5>Avis</h5>
-                @else
-                                                        <h5>Aucune Avis</h5>
+                                                    </div>
+                                                    <h5>Avis</h5>
+                                                @else
+                                                    <h5>Aucune Avis</h5>
                                                 @endif
                                             </div>
                                         </div>
-                                            <!-- statistic-item-wrap end-->
+                                        <!-- statistic-item-wrap end-->
 
 
                                         <!-- statistic-item-wrap end-->
-                                            <!-- statistic-item-wrap-->
-                                            @if (checkAthleticRole(Auth::user()))
-                                                <div class="statistic-item-wrap">
-                                                    <div class="statistic-item gradient-bg fl-wrap">
-                                                        <i class="fa fa-comments-o"></i>
-                                                        <div class="statistic-item-numder">{{Auth::user()->reviews->count()}}</div>
-                                                        <h5>Total Commentaires</h5>
-                                                    </div>
-                                                </div>
-                                                <!-- statistic-item-wrap end-->
-                                                <!-- statistic-item-wrap-->
-                                                <div class="statistic-item-wrap">
-                                                    <div class="statistic-item gradient-bg fl-wrap">
-                                                        <i class="fa fa-heart-o"></i>
-                                                        <div class="statistic-item-numder">{{Auth::user()->wishlists->count()}}</div>
-                                                        <h5>Aimé</h5>
-                                                    </div>
-                                                </div>
-                                        @endif
-                                        <!-- statistic-item-wrap end-->
-                                        </div>
-                                        <!-- statistic-container end-->
-                                    </div>
-                                    <!-- profile-edit-container end-->
-
-                                    <div class="dashboard-list-box fl-wrap activities">
-                                        <div class="dashboard-header fl-wrap" style="color:black;margin-bottom: 16px">
-
-                                            @if(checkPublicComplexRole(Auth::user())&&(!Auth::user()->complex)&&(!checkIfHasRequest(Auth::user())))
-
-                                                <h3>Vous avez trouver votre complex public ? </h3>
-                                            @else
-                                                Recent Activities</h3>
-                                            @endif
-                                        </div>
-
-                                        <!-- dashboard-list end-->
-
+                                        <!-- statistic-item-wrap-->
                                         @if (checkAthleticRole(Auth::user()))
-                                            @foreach (Auth::user()->wishlists as $wishlist)
-                                                <div class="dashboard-list">
-                                                    <div class="dashboard-message">
+                                            <div class="statistic-item-wrap">
+                                                <div class="statistic-item gradient-bg fl-wrap">
+                                                    <i class="fa fa-comments-o"></i>
+                                                    <div class="statistic-item-numder">{{Auth::user()->reviews->count()}}</div>
+                                                    <h5>Total Commentaires</h5>
+                                                </div>
+                                            </div>
+                                            <!-- statistic-item-wrap end-->
+                                            <!-- statistic-item-wrap-->
+                                            <div class="statistic-item-wrap">
+                                                <div class="statistic-item gradient-bg fl-wrap">
+                                                    <i class="fa fa-heart-o"></i>
+                                                    <div class="statistic-item-numder">{{Auth::user()->wishlists->count()}}</div>
+                                                    <h5>Aimé</h5>
+                                                </div>
+                                            </div>
+                                    @endif
+                                    <!-- statistic-item-wrap end-->
+                                    </div>
+                                    <!-- statistic-container end-->
+                                </div>
+                                <!-- profile-edit-container end-->
+
+                                <div class="dashboard-list-box fl-wrap activities">
+                                    <div class="dashboard-header fl-wrap" style="color:black;margin-bottom: 16px">
+
+                                        @if(checkPublicComplexRole(Auth::user())&&(!Auth::user()->complex)&&(!userHasRequest(Auth::user())))
+
+                                            <h3>Vous avez trouver votre complex public ? </h3>
+                                        @else
+                                            Recent Activities</h3>
+                                        @endif
+                                    </div>
+
+                                    <!-- dashboard-list end-->
+
+                                    @if (checkAthleticRole(Auth::user()))
+                                        @foreach (Auth::user()->wishlists as $wishlist)
+                                            <div class="dashboard-list">
+                                                <div class="dashboard-message">
                                                     <span id="terrain{{$wishlist->wished->id}}"
                                                           data-terrain="{{ $wishlist->wished->id }}" title="Supprimer?"
                                                           class="wichlist new-dashboard-item"><i
                                                                 class="fa fa-times"></i></span>
 
-                                                        <div class="dashboard-message-text">
+                                                    <div class="dashboard-message-text">
 
-                                                            @if ($wishlist->wished_type == "App\Modules\Complex\Models\Terrain")
-                                                                <p><i class="fa fa-heart"></i>vous avez aimé <a
-                                                                            href="{{route('showTerrainDetails',$wishlist->wished->id)}}">{{$wishlist->wished->name}}</a>
-                                                                    listing!</p>
-                                                            @endif
-                                                            @if ($wishlist->wished_type == "App\Modules\Complex\Models\Club")
-                                                                <p><i class="fa fa-heart"></i>vous avez aimé <a
-                                                                            href="{{route('showClubDetails',$wishlist->wished->id)}}">{{$wishlist->wished->name}}</a>
-                                                                    listing!</p>
-                                                            @endif
+                                                        @if ($wishlist->wished_type == "App\Modules\Complex\Models\Terrain")
+                                                            <p><i class="fa fa-heart"></i>vous avez aimé <a
+                                                                        href="{{route('showTerrainDetails',$wishlist->wished->id)}}">{{$wishlist->wished->name}}</a>
+                                                                listing!</p>
+                                                        @endif
+                                                        @if ($wishlist->wished_type == "App\Modules\Complex\Models\Club")
+                                                            <p><i class="fa fa-heart"></i>vous avez aimé <a
+                                                                        href="{{route('showClubDetails',$wishlist->wished->id)}}">{{$wishlist->wished->name}}</a>
+                                                                listing!</p>
+                                                        @endif
 
-                                                        </div>
                                                     </div>
                                                 </div>
-                                            @endforeach
+                                            </div>
+                                        @endforeach
 
+                                    <!-- dashboard-list end-->
                                         <!-- dashboard-list end-->
-                                            <!-- dashboard-list end-->
-                                            @foreach (Auth::user()->reviews as $review)
-                                                <div class="dashboard-list">
-                                                    <div class="dashboard-message">
+                                        @foreach (Auth::user()->reviews as $review)
+                                            <div class="dashboard-list">
+                                                <div class="dashboard-message">
                                                         <span class="new-dashboard-item"><i
                                                                     class="fa fa-times"></i></span>
 
-                                                        <div class="dashboard-message-text">
-                                                            @if ($review->reviewed_type == "App\Modules\Complex\Models\Terrain")
-                                                                <p><i class="fa fa-comments-o"></i> Vous Avez commenté
-                                                                    sur
-                                                                    <a href="{{route('showTerrainDetails',$review->reviewed->id)}}">{{$review->reviewed->name}}</a>
-                                                                </p>
-                                                            @endif
-                                                            @if ($review->reviewed_type ==  "App\Modules\Complex\Models\Club")
-                                                                <p><i class="fa fa-heart"></i>vous avez aimé <a
-                                                                            href="{{route('showClubDetails',$review->reviewed->id)}}">{{$review->reviewed->name}}</a>
-                                                                    listing!</p>
-                                                            @endif
+                                                    <div class="dashboard-message-text">
+                                                        @if ($review->reviewed_type == "App\Modules\Complex\Models\Terrain")
+                                                            <p><i class="fa fa-comments-o"></i> Vous Avez commenté
+                                                                sur
+                                                                <a href="{{route('showTerrainDetails',$review->reviewed->id)}}">{{$review->reviewed->name}}</a>
+                                                            </p>
+                                                        @endif
+                                                        @if ($review->reviewed_type ==  "App\Modules\Complex\Models\Club")
+                                                            <p><i class="fa fa-heart"></i>vous avez aimé <a
+                                                                        href="{{route('showClubDetails',$review->reviewed->id)}}">{{$review->reviewed->name}}</a>
+                                                                listing!</p>
+                                                        @endif
 
-                                                        </div>
                                                     </div>
                                                 </div>
-                                            @endforeach
-                                        @endif
+                                            </div>
+                                        @endforeach
+                                    @endif
 
-                                        @if (checkPrivateComplexRole(Auth::user()) || checkPublicComplexRole(Auth::user()))
-                                            @if(checkPublicComplexRole(Auth::user())&&(!Auth::user()->complex))
+                                    @if (checkPrivateComplexRole(Auth::user()) || checkPublicComplexRole(Auth::user()))
+                                        @if(checkPublicComplexRole(Auth::user())&&(!Auth::user()->complex))
 
-                                                <div class="col-md-12 " style="margin-bottom: 16px">
-                                                    @if(!checkIfHasRequest(Auth::user()))
-                                                        @if(count($availableComplex)>0)
+                                            <div class="col-md-12" style="margin-bottom: 16px">
+                                                @if(!userHasRequest(Auth::user()))
+                                                    @if(count($availableComplex)>0)
                                                         <form action="{{route('handleUserRequestComplex')}}"
                                                               style="display: flex;" class="header-search-select-item"
                                                               method="POST">
@@ -218,77 +216,80 @@
                                                                 @endforeach
                                                             </select>
                                                             <input type="submit" class="header-search-button"
-                                                                   value="Enovyer une demande d'accès"/>
+                                                                   value="Envoyer une demande d'accès"/>
                                                         </form>
-                                                            @else
-                                                            <p>Il n'y a aucun complex libre pour le moment veuillez nous
-                                                                <a href="mailto:zied@olympiadesports.com">contacter</a> pour plus d'information</p>
-                                                            @endif
                                                     @else
+                                                        <p>Il n'y a aucun complex libre pour le moment veuillez nous
+                                                            <a href="mailto:zied@olympiadesports.com">contacter</a> pour
+                                                            plus d'information</p>
+                                                    @endif
+                                                @else
+
                                                         <p>Votre demande a été envoyé veuillez patienter la validation
                                                             de l'administration</p>
-                                                    @endif
-                                                </div>
-                                            @else
+
+                                                @endif
+                                            </div>
+                                        @else
 
 
-                                                @foreach ($userTerrains as $terrain)
-                                                    @foreach ($terrain->wishlists as $wishlist)
+                                            @foreach ($userTerrains as $terrain)
+                                                @foreach ($terrain->wishlists as $wishlist)
 
-                                                        <div class="dashboard-list">
-                                                            <div class="dashboard-message">
+                                                    <div class="dashboard-list">
+                                                        <div class="dashboard-message">
                                                                 <span class="new-dashboard-item"><i
                                                                             class="fa fa-times"></i></span>
 
-                                                                <div class="dashboard-message-text">
+                                                            <div class="dashboard-message-text">
 
 
-                                                                    <p>
-                                                                        <i class="fa fa-heart"></i>{{$wishlist->wisher->first_name}}
-                                                                        a aimé <a
-                                                                                href="{{route('showTerrainDetails',$wishlist->wished->id)}}">{{$wishlist->wished->name}}</a>
-                                                                        listing!</p>
+                                                                <p>
+                                                                    <i class="fa fa-heart"></i>{{$wishlist->wisher->first_name}}
+                                                                    a aimé <a
+                                                                            href="{{route('showTerrainDetails',$wishlist->wished->id)}}">{{$wishlist->wished->name}}</a>
+                                                                    listing!</p>
 
-                                                                </div>
                                                             </div>
                                                         </div>
-                                                    @endforeach
-                                                @endforeach
-                                            @endif
-                                        <!-- dashboard-list end-->
-                                            <!-- dashboard-list end-->
-                                            @if(checkPublicComplexRole(Auth::user())&&(!Auth::user()->complex))
-                                            @else
-                                                @foreach ($userTerrains as $terrain)
-                                                    @foreach ($terrain->reviews as $review)
-
-                                                        <div class="dashboard-list">
-                                                            <div class="dashboard-message">
-                                                        <span class="new-dashboard-item"><i
-                                                                    class="fa fa-times"></i></span>
-                                                                <div class="dashboard-message-text">
-                                                                    <p>
-                                                                        <i class="fa fa-comments-o"></i>{{$review->reviewer->first_name}}
-                                                                        a Commenté <a
-                                                                                href="{{route('showTerrainDetails',$review->reviewed->id)}}">{{$review->reviewed->name}}</a>
-                                                                        listing!</p>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                    </div>
                                                 @endforeach
                                             @endforeach
                                         @endif
-                                    @endif
                                     <!-- dashboard-list end-->
-                                    </div>
+                                        <!-- dashboard-list end-->
+                                        @if(checkPublicComplexRole(Auth::user())&&(!Auth::user()->complex))
+                                        @else
+                                            @foreach ($userTerrains as $terrain)
+                                                @foreach ($terrain->reviews as $review)
 
+                                                    <div class="dashboard-list">
+                                                        <div class="dashboard-message">
+                                                        <span class="new-dashboard-item"><i
+                                                                    class="fa fa-times"></i></span>
+                                                            <div class="dashboard-message-text">
+                                                                <p>
+                                                                    <i class="fa fa-comments-o"></i>{{$review->reviewer->first_name}}
+                                                                    a Commenté <a
+                                                                            href="{{route('showTerrainDetails',$review->reviewed->id)}}">{{$review->reviewed->name}}</a>
+                                                                    listing!</p>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            @endforeach
+                                        @endforeach
+                                    @endif
+                                @endif
+                                <!-- dashboard-list end-->
                                 </div>
+
                             </div>
                         </div>
-                        <!--profile-edit-wrap end -->
                     </div>
-                    <!--container end -->
+                    <!--profile-edit-wrap end -->
+                </div>
+                <!--container end -->
             </section>
             <!-- section end -->
             <!--  section end -->

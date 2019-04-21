@@ -53,12 +53,18 @@ Route::group(['module' => 'User', 'middleware' => ['userAccess'], 'namespace' =>
     Route::post('/user/add/club', 'WebController@hundleUserAddClub')->name('hundleUserAddClub');
     Route::post('/user/add/team', 'WebController@hundleUserAddTeam')->name('hundleUserAddTeam');
 
-    Route::get('/user/add/infrastructure','WebController@showAddUserInfrastructure')->name('showAddUserInfrastructure');
+    Route::get('/user/add/infrastructure','WebController@showUserAddInfrastructure')->name('showUserAddInfrastructure');
+
+    Route::get('/user/edit/infrastructure','WebController@showUserEditInfrastructure')->name('showUserEditInfrastructure');
 
     Route::post('user/request/complex','WebController@handleUserRequestComplex')->name('handleUserRequestComplex');
 
     Route::get('user/edit/terrain/{id}','WebController@showUserEditTerrain')->name('showUserEditTerrain');
 Route::post('user/update/terrain/{id}','WebController@handleUserUpdateTerrain')->name('handleUserUpdateTerrain');
+
+Route::post('user/add/infrastructure','WebController@handleAddInfrastructure')->name('handleAddInfrastructure');
+Route::post('user/edit/infrastructure','WebController@handleEditInfrastructure')->name('handleEditInfrastructure');
+
 
 });
 
@@ -99,4 +105,9 @@ Route::group(['module' => 'User', 'middleware' => ['adminAccess'], 'namespace' =
 
     Route::get('/admin/club/edit/{id}', 'WebController@showEditTerrain')->name('showEditTerrain');
 
+
+    Route::get('/admin/complex_request','WebController@showComplexRequest')->name('showComplexRequest');
+
+    Route::get('/admin/complex_request/accept/{id}','WebController@acceptComplexRequest')->name('acceptComplexRequest');
+    Route::get('/admin/complex_request/cancel/{id}','WebController@cancelComplexRequest')->name('cancelComplexRequest');
 });

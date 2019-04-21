@@ -16,18 +16,19 @@ class ComplexRequest extends Model
 {
     protected $table = "complex_request";
     protected $fillable = [
+        'status',
         'user_id',
         'complex_id',
     ];
 
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->hasOne(User::class,'id','user_id');
     }
 
     public function complex()
     {
-        return $this->hasOne(Complex::class);
+        return $this->hasOne(Complex::class,'id','complex_id');
     }
 
 }

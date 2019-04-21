@@ -117,7 +117,12 @@ class User extends Authenticatable
 
   public function complexRequest()
   {
-      return $this->hasMany(ComplexRequest::class,'user_id','id');
+      return $this->hasOne(ComplexRequest::class,'user_id','id')->where('status',0);
+  }
+
+  public function complexRequestAccepted()
+  {
+      return $this->hasOne(ComplexRequest::class,'user_id','id')->where('status',1);
   }
 
 

@@ -38,6 +38,12 @@
                 </a>
                 <div class="triangle"></div>
             </li>
+            <li class="nav-item @if($current == 'complexRequest') active @endif" >
+                <a class="nav-item-hold" href="{{route('showComplexRequest')}}">
+                    <span class="nav-text">Demande d'accès</span>
+                </a>
+                <div class="triangle"></div>
+            </li>
         </ul>
     </div>
 

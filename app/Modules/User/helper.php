@@ -34,14 +34,25 @@ if (!function_exists('checkPrivateComplexRole')) {
     }
 }
 
-if (!function_exists('checkIfHasRequest')) {
+if (!function_exists('userHasRequest')) {
     /**
      * @param \App\Modules\User\Models\User $user
      * @return bool
      */
-    function checkIfHasRequest($user)
+    function userHasRequest($user)
     {
-        return (count(($user->complexRequest))>0) ? true : false;
+        return ($user->complexRequest) ? true : false;
+    }
+}
+
+if (!function_exists('isRequestAccepted')) {
+    /**
+     * @param \App\Modules\User\Models\User $user
+     * @return bool
+     */
+    function isRequestAccepted($user)
+    {
+        return ($user->complexRequestAccepted) ? true : false;
     }
 }
 
