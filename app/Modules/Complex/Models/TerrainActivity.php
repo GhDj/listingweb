@@ -17,7 +17,7 @@ class TerrainActivity extends Model
      protected $table="";
 
      protected $fillable=[
-         'sport_id',
+         'sport_category_id',
          'terrain_id'
      ];
 }

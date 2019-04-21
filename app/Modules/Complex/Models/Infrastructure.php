@@ -34,6 +34,7 @@ class Infrastructure extends Model
      */
     protected $fillable = [
         'reception',
+        'reception_choices',
         'catering_space',
         'handicap_access',
         'tribune_count','spectator_tribune_count',

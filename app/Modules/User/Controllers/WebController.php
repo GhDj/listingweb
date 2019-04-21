@@ -4,6 +4,7 @@ namespace App\Modules\User\Controllers;
 
 use App\Modules\Complex\Models\ComplexCategory;
 use App\Modules\Complex\Models\ComplexRequest;
+use App\Modules\Complex\Models\Infrastructure;
 use App\Modules\Complex\Models\TerrainActivity;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -446,15 +447,14 @@ class WebController extends Controller
         }
 
         if (checkPublicComplexRole($user) || checkPrivateComplexRole($user)) {
-            $reviewCounts=0;
-            if($user->complex)
-            {
-                $reviewCounts=$user->complex->terrains()->with('reviews')->count();
+            $reviewCounts = 0;
+            if ($user->complex) {
+                $reviewCounts = $user->complex->terrains()->with('reviews')->count();
             }
             return view('User::frontOffice.userDashboard', [
                 'userTerrains' => ($user->complex) ? $user->complex->terrains : null,
                 'complex' => $user->complex,
-                'reviewsCount'=>$reviewCounts,
+                'reviewsCount' => $reviewCounts,
                 'availableComplex' => Complex::doesnthave('user')->where('type', 1)->get()
             ]);
 
@@ -636,9 +636,12 @@ class WebController extends Controller
         return redirect()->back();
     }
 
-    public function showAddUserInfrastructure()
+    public function showUserAddInfrastructure()
     {
-        return view('User::frontOffice.userAddInfrastructure');
+        if (Auth::user()->complex->infrastructure) {
+            return redirect()->route('showUserEditInfrastructure');
+        }
+        return view('User::frontOffice.userAddInfrastructure', ['infrastructure', Auth::user()->complex->infrastructure]);
     }
 
     public function handleUserAddComplex(Request $request)
@@ -730,6 +733,7 @@ class WebController extends Controller
 
         if ($request->complex) {
             ComplexRequest::create([
+                'status' => 0,
                 'complex_id' => $request->complex,
                 'user_id' => Auth::user()->id
             ]);
@@ -748,6 +752,7 @@ class WebController extends Controller
             "name" => "required",
             "category_id" => "required",
             "sport_id" => "required",
+            "sport_category_id" => "required",
             "description" => "required",
             "lighting" => "required",
             "terrain_nature" => "required",
@@ -763,6 +768,7 @@ class WebController extends Controller
                 'name' => 'Le champ Nom de terrain est  obligatoire',
                 'category_id' => 'Le champ Categorie de terrain est  obligatoire',
                 'sport_id' => 'Le champ sport de terrain est  obligatoire',
+                'sport_category_id' => 'Le champ sport de terrain est  obligatoire',
                 "description" => 'Le champ Description de terrain est  obligatoire',
                 "width.required" => 'Le champ largeur de terrain est  obligatoire',
                 "width.between" => 'Format Invalide de champ largeur',
@@ -781,7 +787,6 @@ class WebController extends Controller
         );
 
         $terrain = Terrain::create([
-
             "name" => $request->name,
             'width' => $request->width,
             'height' => $request->height,
@@ -828,7 +833,7 @@ class WebController extends Controller
 
         foreach ($request->activityList as $activity) {
             TerrainActivity::create([
-                'sport_id' => $activity,
+                'sport_category_id' => $activity,
                 'terrain_id' => $terrain->id,
             ]);
         }
@@ -841,16 +846,19 @@ class WebController extends Controller
     public function showUserEditTerrain($id)
     {
         $terrain = Terrain::find($id);
+
         if (!$terrain) {
             SweetAlert::error("Erreur", "Ce terrain n'exista pas")->persistent("Ok");
             return redirect()->back();
         }
-        $complex=Auth::user()->complex;
-        return view('User::frontOffice.userEditTerrain',compact('terrain'),[ 'sports' => Sport::All(),
+
+        $complex = Auth::user()->complex;
+
+        return view('User::frontOffice.userEditTerrain', compact('terrain'), ['sports' => $complex->sports,
             'complex' => $complex]);
     }
 
-    public function handleUserEditTerrain(Request $request, $id)
+    public function handleUserUpdateTerrain(Request $request, $id)
     {
 
         $terrain = Terrain::find($id);
@@ -939,7 +947,7 @@ class WebController extends Controller
 
         foreach ($request->activityList as $activity) {
             TerrainActivity::create([
-                'sport_id' => $activity,
+                'sport_category_id' => $activity,
                 'terrain_id' => $terrain->id,
             ]);
         }
@@ -1589,5 +1597,143 @@ class WebController extends Controller
             ]
         );
 
+    }
+
+    public function showComplexRequest()
+    {
+
+        return view('User::backOffice.showComplexRequest', ['complexRequests' => ComplexRequest::all()]);
+    }
+
+    public function cancelComplexRequest($id)
+    {
+        $complexRequest = ComplexRequest::find($id);
+        if ($complexRequest) {
+            $complexRequest->status = -1;
+
+            alert()->error("Demande d'accès est annulé", "Bien")->persistent("Ok");
+        }
+        return redirect()->back();
+    }
+
+    public function acceptComplexRequest($id)
+    {
+        $complexRequest = ComplexRequest::find($id);
+        if ($complexRequest) {
+            $complexRequest->status = 1;
+            $complexRequest->complex->user_id = $complexRequest->user->id;
+            $complexRequest->complex->save();
+            $complexRequest->save();
+            alert()->error("Demande d'accès est accepté", "Bien")->persistent("Ok");
+        }
+        return redirect()->back();
+
+    }
+
+
+    public function handleAddInfrastructure(Request $request)
+    {
+        $this->validate($request, [
+            "reception" => "required",
+            "catering_space" => "required",
+            "handicap_access" => "required",
+            "tribune_count" => "required",
+            "spectator_tribune_count" => "required",
+            "cloakroom_player" => "required",
+            "cloakroom_referee" => "required",
+            'sports_sanitary' => "required",
+            'parking_place' => "required",
+            'handicap_parking_place' => "required",
+
+        ],
+            [
+                'reception.required' => 'Le champ acceuil de terrain est obligatoire',
+                'catering_space.required' => 'Le champ espace de restauration est obligatoire',
+                'handicap_access.required' => 'Le champ Accès handicapé de terrain est obligatoire',
+                'tribune_count.required' => 'Le champ nombre tribune de terrain est obligatoire',
+                "spectator_tribune_count.required" => 'Le champ nombre de tribune des spectateurs est obligatoire',
+                "cloakroom_player.required" => 'Le champ nombre de vestiaire des jouerus est obligatoire',
+                "cloakroom_referee.required" => 'Le champ nombre de vestiaire des arbitres est obligatoire',
+                "sports_sanitary.required" => 'Le champ nombre de sanitaire sportif est obligatoire',
+                "parking_place.required" => 'Le champ nombre de place parking est obligatoire',
+                "handicap_parking_place	.required" => 'Le champ nombre de place parking pour les handicapés est obligatoire',
+
+            ]
+        );
+
+
+        Infrastructure::create([
+            "reception" => $request->reception,
+            'reception_choices' => json_encode($request->acceuil_choice),
+            "catering_space" => $request->catering_space,
+            "handicap_access" => $request->handicape_access,
+            "tribune_count" => $request->tribune_count,
+            "spectator_tribune_count" => $request->spectator_tribune_count,
+            "cloakroom_player" => $request->cloakroom_player,
+            "cloakroom_referee" => $request->cloakroom_referee,
+            'sports_sanitary' => $request->sports_sanitary,
+            'parking_place' => $request->parking_place,
+            'handicap_parking_place' => $request->handicap_parking_place,
+            'complex_id' => Auth::user()->complex->id,
+        ]);
+        alert()->success("Infrastructure ajouté avec succès", "Bien")->persistent("Ok");
+        return redirect()->route('showUserDashboard');
+    }
+
+    public function handleEditInfrastructure(Request $request)
+    {
+        $this->validate($request, [
+            "reception" => "required",
+            "catering_space" => "required",
+            "handicap_access" => "required",
+            "tribune_count" => "required",
+            "spectator_tribune_count" => "required",
+            "cloakroom_player" => "required",
+            "cloakroom_referee" => "required",
+            'sports_sanitary' => "required",
+            'parking_place' => "required",
+            'handicap_parking_place' => "required",
+
+        ],
+            [
+                'reception.required' => 'Le champ acceuil de terrain est obligatoire',
+                'catering_space.required' => 'Le champ espace de restauration est obligatoire',
+                'handicap_access.required' => 'Le champ Accès handicapé de terrain est obligatoire',
+                'tribune_count.required' => 'Le champ nombre tribune de terrain est obligatoire',
+                "spectator_tribune_count.required" => 'Le champ nombre de tribune des spectateurs est obligatoire',
+                "cloakroom_player.required" => 'Le champ nombre de vestiaire des jouerus est obligatoire',
+                "cloakroom_referee.required" => 'Le champ nombre de vestiaire des arbitres est obligatoire',
+                "sports_sanitary.required" => 'Le champ nombre de sanitaire sportif est obligatoire',
+                "parking_place.required" => 'Le champ nombre de place parking est obligatoire',
+                "handicap_parking_place	.required" => 'Le champ nombre de place parking pour les handicapés est obligatoire',
+
+            ]
+        );
+
+        $infrastructure = Auth::user()->complex->infrastructure;
+
+        $infrastructure->reception = $request->reception;
+        $infrastructure->reception_choices = json_encode($request->reception_choices);
+        $infrastructure->catering_space = $request->catering_space;
+        $infrastructure->handicap_access = $request->handicap_access;
+        $infrastructure->tribune_count = $request->tribune_count;
+        $infrastructure->spectator_tribune_count = $request->spectator_tribune_count;
+        $infrastructure->cloakroom_player = $request->cloakroom_player;
+        $infrastructure->cloakroom_referee = $request->cloakroom_referee;
+        $infrastructure->sports_sanitary = $request->sports_sanitary;
+
+        $infrastructure->parking_place = $request->parking_place;
+        $infrastructure->handicap_parking_place = $request->handicap_parking_place;
+
+        $infrastructure->save();
+
+        alert()->success("Infrastructure modifié avec succès", "Bien")->persistent("Ok");
+
+        return redirect()->back();
+    }
+
+    public function showUserEditInfrastructure()
+    {
+        return View('User::frontOffice.userEditInfrastructure', ['infrastructure' => Auth::user()->complex->infrastructure]);
     }
 }

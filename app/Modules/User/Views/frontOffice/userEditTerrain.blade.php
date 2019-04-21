@@ -87,7 +87,7 @@
                                                 <div class="col-md-4">
                                                     <label>Type de terrain</label>
                                                     <select class="chosen" name="sport_id">
-                                                        <@foreach ($sports as $sport)
+                                                        @foreach ($sports as $sport)
                                                             <option value="{{$sport->id}}">{{$sport->title}}</option>
                                                         @endforeach
                                                     </select>
@@ -99,10 +99,14 @@
                                                 </div>
 
                                                 <div class="col-md-4">
-                                                    <label>Type de terrain</label>
-                                                    <select class="chosen" name="sport_id">
-                                                        <@foreach ($sports as $sport)
-                                                            <option value="{{$sport->id}}">{{$sport->title}}</option>
+                                                    <label>Sport dans le terrain</label>
+                                                    <select class="chosen" name="activityList">
+                                                        @foreach ($sports as $sport)
+                                                            <optgroup label="{{$sport->title}}">
+                                                            @foreach($sport->categories as $sportCategory)
+                                                                    <option value="{{$sport->id}}">{{$sport->title}}</option>
+                                                                @endforeach
+                                                            </optgroup>
                                                         @endforeach
                                                     </select>
                                                     @if ($errors->has('sport_id'))

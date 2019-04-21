@@ -32,6 +32,7 @@ class CreateComplexTable extends Migration
 
         Schema::create('complex_request', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('status')->default(1);
             $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('addresses')->onDelete('cascade');
             $table->integer('complex_id')->unsigned();
@@ -64,10 +65,19 @@ class CreateComplexTable extends Migration
             $table->timestamps();
         });
 
+        Schema::create('sport_categories', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('title');
+            $table->integer('sport_id')->unsigned();
+            $table->foreign('sport_id')->references('id')->on('sports')->onDelete('cascade');
+            $table->timestamps();
+        });
+
 
         Schema::create('infrastructure', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('reception')->nullable();
+            $table->integer('reception')->nullable();
+            $table->string('reception_choices')->default("");
             $table->integer('catering_space')->nullable();
             $table->string('handicap_access')->nullable();
             $table->integer('tribune_count')->nullable();
@@ -117,8 +127,8 @@ class CreateComplexTable extends Migration
 
         Schema::create('terrain_activities', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('sport_id')->unsigned();
-            $table->foreign('sport_id')->references('id')->on('sports')->onDelete('cascade');
+            $table->integer('sport_category_id')->unsigned();
+            $table->foreign('sport_category_id')->references('id')->on('sport_categories')->onDelete('cascade');
             $table->integer('terrain_id')->unsigned();
             $table->foreign('terrain_id')->references('id')->on('terrains')->onDelete('cascade');
             $table->timestamps();

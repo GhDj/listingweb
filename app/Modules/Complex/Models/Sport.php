@@ -40,6 +40,10 @@ class Sport extends Model {
     public function teams(){
 
         return $this->hasMany('App\Modules\Infrastructure\Models\Team','speciality_id');
+    }
 
+    public function categories()
+    {
+        return $this->hasMany(SportCategory::class,'sport_id','id');
     }
 }
