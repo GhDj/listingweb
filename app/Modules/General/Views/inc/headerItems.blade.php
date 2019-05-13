@@ -43,7 +43,7 @@
             </div>
           </div>
             @isset($terrain)
-              <h2>{{  $terrain->name  }}</h2>
+              <h2>{{  $terrain->complex->name  }}</h2>
             @endisset
             @isset($clubDetail)
               <h2>{{  $clubDetail->name  }}</h2>

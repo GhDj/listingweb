@@ -11,13 +11,14 @@ Route::group(['module' => 'General', 'middleware' => ['web'], 'namespace' => 'Ap
     Route::get('/404', 'WebController@handlePageNotFound')->name('handlePageNotFound');
     Route::get('/index/sports/{sportId}', 'WebController@getTerrainsBySport');
 
+    Route::get('/fill','WebController@ExcelToJson')->name('kl');
 });
 
 Route::group(['module' => 'General', 'middleware' => ['web'], 'namespace' => 'App\Modules\General\Controllers'], function() {
 
     Route::resource('General', 'GeneralController');
 
-    Route::get('/search','WebController@showSearchPage')->name('showSearchPage');
+    Route::get('/search','WebController@public/search')->name('showSearchPage');
 
     Route::get('/search/terrain/{id}','WebController@showTerrainDetails')->name('showTerrainDetails');
 

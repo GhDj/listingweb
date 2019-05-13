@@ -30,6 +30,10 @@
             transition: 0.3s;
             width: 15px;
         }
+        .list-widget-social i
+        {
+            margin-top: 10px;
+        }
     </style>
     <!-- wrapper -->
     <div id="wrapper">
@@ -53,7 +57,6 @@
                             <li><a href="#sec4">Avis</a></li>
                             <li><a href="#sec5">Donnez Votre Avis</a></li>
                             <li><a href="#sec8">Signaler un problem</a></li>
-                            <li><a href="#sec9">Decouvre les club present</a></li>
                         </ul>
                     </nav>
 
@@ -91,6 +94,32 @@
 
                                 </div>
 
+                                <div class="list-single-main-item fl-wrap" id="sec7">
+                                    <div class="list-single-main-item-title fl-wrap">
+                                        <h3>Equipement Sportif</h3>
+                                    </div>
+
+                                    <table id="clubs">
+                                        <tr>
+                                            <th>Nom Terrain</th>
+                                            <th>Description</th>
+                                            <th>Sport</th>
+                                        </tr>
+
+                                        @foreach ($terrain->complex->terrains as $terrainComplex)
+
+                                            <tr>
+                                                <td>{{$terrainComplex->name}}</td>
+                                                <td>{{$terrainComplex->description}}</td>
+                                                <td>{{$terrainComplex->sport->title}}</td>
+                                            </tr>
+
+                                        @endforeach
+
+                                    </table>
+
+
+                                </div>
 
                                 <div class="list-single-main-item fl-wrap" id="sec3">
                                     <div class="list-single-main-item-title fl-wrap">
@@ -293,77 +322,12 @@
 
 
                             <!-- list-single-main-item -->
-                                <div class="list-single-main-item fl-wrap" id="sec9">
-                                    <div class="list-single-main-item-title fl-wrap">
-                                        <h3>Decouvre les club present</h3>
-                                    </div>
-                                    <!-- Add Review Box -->
-                                    <div class="add-review-box">
-                                        <!-- Review Comment -->
 
-                                        <table id="clubs">
-                                            <tr>
-                                                <th>Nom Equipe</th>
-                                                <th>Nom Club</th>
-                                                <th>Sport</th>
-                                                <th>Niveau</th>
-                                            </tr>
-
-                                            @foreach ($terrain->clubs as $teamClubs)
-                                                @foreach ($teamClubs->teams as $team)
-                                                    <tr>
-                                                        <td>{{$team->name}}</td>
-                                                        <td>{{$team->club->name}}</td>
-                                                        <td>{{$team->speciality->speciality}}</td>
-                                                        <td>{{$team->level}}</td>
-                                                    </tr>
-                                                @endforeach
-                                            @endforeach
-
-                                        </table>
-                                    </div>
-                                    <!-- Add Review Box / End -->
-                                </div>
                                 <!-- list-single-main-item end -->
                             </div>
 
                             <!--section -->
-                            <section class="gradient-bg">
-                                <div class="cirle-bg">
-                                    <div class="bg" data-bg="images/bg/circle.png"></div>
-                                </div>
-                                <div class="container" style="margin:0 auto;text-align:center">
-                                    <div class="join-wrap fl-wrap">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <h3 style="text-align:center;width:90%;margin-bottom: 5%;">Rejoignez
-                                                    l'olympiade family</h3>
-                                            </div>
-                                        </div>
 
-                                        <div class="row">
-
-                                            <div class="col-md-6">
-                                                <div class="share-holder">
-                                                    <div class="showshare"
-                                                         style="float:left;padding: 15px 40px;margin-left:10%"><span>suivi activité sportive</span>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="share-holder">
-                                                    <div class="showshare"
-                                                         style="float:left;padding: 15px 40px;margin-left:10%"><span>Gagnez des recompenses</span>
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
                             <!--end section -->
 
                         </div>
@@ -447,44 +411,7 @@
                                 <!--box-widget-item end -->
 
                                 <!--box-widget-item -->
-                                <div class="box-widget-item fl-wrap">
-                                    <div class="box-widget-item-header">
-                                        <h3>Clubs: </h3>
-                                    </div>
-                                    <div class="box-widget widget-posts">
-                                        <div class="box-widget-content">
-                                            <ul>
-                                                <li class="clearfix">
-                                                    <a href="#" class="widget-posts-img"><img
-                                                                src="{{asset('images/unkown.jpg')}}" alt=""></a>
-                                                    <div class="widget-posts-descr">
-                                                        <a href="#" title="">Equipe 1</a>
-                                                        <span class="widget-posts-date"><i
-                                                                    class="fa fa-calendar-check-o"></i> 21 Mar 2017 </span>
-                                                    </div>
-                                                </li>
-                                                <li class="clearfix">
-                                                    <a href="#" class="widget-posts-img"><img
-                                                                src="{{asset('images/unkown.jpg')}}" alt=""></a>
-                                                    <div class="widget-posts-descr">
-                                                        <a href="#" title=""> Equipe 2</a>
-                                                        <span class="widget-posts-date"><i
-                                                                    class="fa fa-calendar-check-o"></i> 7 Mar 2017 </span>
-                                                    </div>
-                                                </li>
-                                                <li class="clearfix">
-                                                    <a href="#" class="widget-posts-img"><img
-                                                                src="{{asset('images/unkown.jpg')}}" alt=""></a>
-                                                    <div class="widget-posts-descr">
-                                                        <a href="#" title=""> Equipe 3</a>
-                                                        <span class="widget-posts-date"><i
-                                                                    class="fa fa-calendar-check-o"></i> 7 Mar 2017 </span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+
                                 <!--box-widget-item end -->
 
                             </div>

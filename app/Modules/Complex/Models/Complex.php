@@ -33,7 +33,8 @@ class Complex extends Model {
         'email',
         'web_site',
         'address_id',
-        'user_id'
+        'user_id',
+        'installation_id'
     ];
 
     public function medias()

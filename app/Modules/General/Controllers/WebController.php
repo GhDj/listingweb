@@ -3,8 +3,12 @@
 namespace App\Modules\General\Controllers;
 
 use App\Modules\Complex\Models\Club;
+use App\Modules\Complex\Models\Infrastructure;
 use App\Modules\Complex\Models\Sport;
 use App\Modules\Content\Models\Post;
+use App\Modules\General\Models\Address;
+use App\Modules\Infrastructure\Models\ComplexSchedule;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
@@ -19,6 +23,8 @@ use App\Modules\Complex\Models\Category;
 use App\Modules\Complex\Models\Equipment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use League\Csv\Reader;
+use UxWeb\SweetAlert\SweetAlert;
 
 
 class WebController extends Controller
@@ -33,7 +39,7 @@ class WebController extends Controller
     {
         return view('General::welcome', [
             'results' => Terrain::All(),
-            'categories' => Category::All(),
+            'categories' => Category::select('title')->groupBy('title')->get(),
             'sports' => Sport::All(),
             'complex' => Complex::All(),
             'posts' => Post::OrderBy('id')->limit(3)->get(),
@@ -79,7 +85,7 @@ class WebController extends Controller
 
     public function showSearchPage()
     {
-        return view('General::search.searchPage',['latitude'=>'','longitude'=>'','categories'=>Category::all(),'address'=>'','sports'=>Sport::all()]);
+        return view('General::search.searchPage', ['latitude' => '', 'longitude' => '', 'categories' => Category::all(), 'address' => '', 'sports' => Sport::all()]);
     }
 
 
@@ -144,6 +150,7 @@ class WebController extends Controller
         if (isset($data['latitude']) and !empty($data['latitude'])) {
             $latitude = $data['latitude'];
             $longitude = $data['longitude'];
+
         } else {
             if ($dataResponse = @file_get_contents("http://ip-api.com/json")) {
                 $json = json_decode($dataResponse, true);
@@ -207,11 +214,12 @@ class WebController extends Controller
 
         return View('General::search.searchPage', [
             'terrains' => $terrains,
-            'categories' => Category::select('category')->groupBy('category')->get(),
+            'categories' => Category::all(),
             'sports' => Sport::All(),
-            'latitude' => $data['latitude'],
-            'longitude' => $data['longitude'],
-            'address' => $data['address'],
+
+            'latitude' => $latitude,
+            'longitude' => $latitude,
+            'address' => isset($data['address']) ? $data['address'] : null,
         ]);
 
     }
@@ -294,7 +302,7 @@ class WebController extends Controller
 
         return View('General::search.searchPage', [
             'clubs' => $clubs,
-            'categories' => Category::select('category')->groupBy('category')->get(),
+            'categories' => Category::select('title')->groupBy('title')->get(),
             'sports' => Sport::All(),
             'latitude' => $data['latitudeClub'],
             'longitude' => $data['latitudeClub'],
@@ -361,12 +369,12 @@ class WebController extends Controller
             })
             ->when(isset($data['category']) and $data['category'] != -1, function ($query) use ($data) {
                 $query->whereHas('category', function ($subQuery) use ($data) {
-                    $subQuery->where('category', $data['category']);
+                    $subQuery->where('title', $data['category']);
                 });
             })
             ->when(isset($data['categories']), function ($query) use ($data) {
                 $query->whereHas('category', function ($subQuery) use ($data) {
-                    $subQuery->whereIn('category', $data['categories']);
+                    $subQuery->whereIn('title', $data['categories']);
                 });
             })
             ->when($sqlDistance != null, function ($query) use ($sqlDistance, $data) {
@@ -376,15 +384,14 @@ class WebController extends Controller
                 });
             })->get();
 
-
         return View('General::search.searchPage', [
             'terrains' => $terrains,
-            'categories' => Category::select('category')->groupBy('category')->get(),
+            'categories' => Category::select('title')->groupBy('title')->get(),
             'sports' => Sport::All(),
             'latitude' => $data['latitude'],
             'longitude' => $data['longitude'],
             'address' => $data['address'],
-            'oldCategories' => $data['categories']
+            'oldCategories' => isset($data['categories']) ? $data['categories'] : null
         ]);
 
     }
@@ -465,7 +472,7 @@ class WebController extends Controller
 
         return View('General::search.searchPage', [
             'clubs' => $clubs,
-            'categories' => Category::select('category')->groupBy('category')->get(),
+            'categories' => Category::select('title')->groupBy('title')->get(),
             'sports' => Sport::All(),
             'latitude' => $data['latitudeClub'],
             'longitude' => $data['longitudeClub'],
@@ -485,5 +492,108 @@ class WebController extends Controller
         return response()->json(['status' => 200, 'categories' => $complex->categories()->with('category')->get()]);
     }
 
+
+    public function ExcelToJson()
+    {
+        ini_set('memory_limit', '2048M');
+
+        set_time_limit(0);
+        $repository = public_path() . '/storage/uploads/excels/';
+        try {
+            $response = file_get_contents($repository . "complex29.json");
+        } catch (\Exception $e) {
+            SweetAlert::error('Erreur de comunication avec l\'API avec l\'erreur suivant : ' . $e->getMessage())->persistent('Fermer');
+            return $e;
+        }
+
+        if (isset($response))// Show response
+            $response = json_decode($response, true);
+        else die('Echec de la syncro');
+
+        if ($response != null) {
+            foreach ($response as $complex) {
+
+                $address = Address::create([
+                    'postal_code' => $complex['postal_code'],
+                    'country' => 'france',
+                    'city' => $complex['place_name'],
+                    'address' => $complex['street_number'] . ", " . $complex['street'] . ", " . $complex['place_name']
+                ]);
+                $complex = Complex::create([
+                    'installation_id' => $complex['installation_id'],
+                    'name' => $complex['name'],
+                    'web_site' => $complex['web_site'],
+                    'phone' => $complex['num_tel'],
+                    'address_id' => $address->id
+                ]);
+
+                Infrastructure::create([
+                    'handicap_access' => $complex['handicap_access'],
+                    'parking_place' => $complex['parking_place'],
+                    'handicap_parking_place' => $complex['handicap_place_parking'],
+                    'complex_id' => $complex->id
+                ]);
+
+
+                if ((\DateTime::createFromFormat('H:i:', $complex['open_sunday']) !== FALSE) && (DateTime::createFromFormat('H:i', $complex['close_sunday']) !== FALSE)) {
+
+                    $complex->schedules()->create([
+                        'start_at' => Carbon::parse($complex['open_sunday'])->format('H:i'),
+                        'ends_at' => Carbon::parse($complex['close_sunday'])->format('H:i'),
+                        'day' => 0,
+                    ]);
+                }
+
+                if ((\DateTime::createFromFormat('H:i:', $complex['open_Monday']) !== FALSE) && (DateTime::createFromFormat('H:i:', $complex['close_Monday']) !== FALSE)) {
+                    $complex->schedules()->create([
+                        'start_at' => Carbon::parse($complex['open_Monday'])->format('H:i'),
+                        'ends_at' => Carbon::parse($complex['close_Monday'])->format('H:i'),
+                        'day' => 1,
+                    ]);
+                }
+
+                if ((\DateTime::createFromFormat('H:i:', $complex['open_Tuesday']) !== FALSE) && (DateTime::createFromFormat('H:i:', $complex['close_Tuesday']) !== FALSE)) {
+                    $complex->schedules()->create([
+                        'start_at' => Carbon::parse($complex['open_Tuesday'])->format('H:i'),
+                        'ends_at' => Carbon::parse($complex['close_Tuesday'])->format('H:i'),
+                        'day' => 2,
+                    ]);
+
+                }
+                if ((\DateTime::createFromFormat('H:i:', $complex['open_Wednesday']) !== FALSE) && (DateTime::createFromFormat('H:i:', $complex['close_wednesday']) !== FALSE)) {
+                    $complex->schedules()->create([
+                        'start_at' => Carbon::parse($complex['open_Wednesday'])->format('H:i'),
+                        'ends_at' => Carbon::parse($complex['close_wednesday'])->format('H:i'),
+                        'day' => 3,
+                    ]);
+                }
+
+                if ((\DateTime::createFromFormat('H:i:', $complex['open_thursday']) !== FALSE) && (DateTime::createFromFormat('H:i:', $complex['close_thursday']) !== FALSE)) {
+                    $complex->schedules()->create([
+                        'start_at' => Carbon::parse($complex['open_thursday'])->format('H:i'),
+                        'ends_at' => Carbon::parse($complex['close_thursday'])->format('H:i'),
+                        'day' => 4,
+                    ]);
+                }
+                if ((\DateTime::createFromFormat('H:i:', $complex['open_Friday']) !== FALSE) && (DateTime::createFromFormat('H:i:', $complex['close_Friday']) !== FALSE)) {
+                    $complex->schedules()->create([
+                        'start_at' => Carbon::parse($complex['open_Friday'])->format('H:i'),
+                        'ends_at' => Carbon::parse($complex['close_Friday'])->format('H:i'),
+                        'day' => 5,
+                    ]);
+                }
+                if ((\DateTime::createFromFormat('H:i:', $complex['open_saturday']) !== FALSE) && (DateTime::createFromFormat('H:i:', $complex['close_saturday']) !== FALSE)) {
+                    $complex->schedules()->create([
+                        'start_at' => Carbon::parse($complex['open_saturday'])->format('H:i'),
+                        'ends_at' => Carbon::parse($complex['close_saturday'])->format('H:i'),
+                        'day' => 6,
+                    ]);
+                }
+            }
+        }
+
+        return "done";
+        //unlink($repository."complex.json");
+    }
 
 }

@@ -100,14 +100,14 @@ li.active
                                                     <input type="text" placeholder="Nom de Terrain" name="name"/>
                                                 </div>
                                                   <div class="main-search-input-item location" id="autocomplete-container">
-                                                      <input type="text" placeholder="Location" id="autocomplete-input" value="" autocomplete="off">
+                                                      <input type="text" placeholder="Location" name="address" id="autocomplete-input" value="" autocomplete="off">
                                                       <a href="#" class="get_current_location" data-input=""><i class="fa fa-dot-circle-o"></i></a>
                                                   </div>
                                                 <div class="main-search-input-item">
                                                     <select data-placeholder="Tous les categories" class="chosen-select" name="category" >
                                                         <option value="-1">Tous les categories</option>
                                                         @foreach ($categories as $categorie )
-                                                            <option value="{{$categorie->id}}">{{$categorie->category}}</option>
+                                                            <option value="{{$categorie->id}}">{{$categorie->title}}</option>
                                                         @endforeach
                                                   </select>
                                                 </div>
@@ -184,7 +184,7 @@ li.active
                                           <img  src="images/all/1.jpg"   alt="">
                                           <div class="listing-counter"><span>{{count($category->terrains)}} </span> Terrains</div>
                                           <div class="listing-item-cat">
-                                              <h3><a href="#">{{$category->category}}</a></h3>
+                                              <h3><a href="#">{{$category->title}}</a></h3>
                                               <p></p>
                                           </div>
                                       </div>

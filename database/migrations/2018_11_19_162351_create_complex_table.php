@@ -16,16 +16,17 @@ class CreateComplexTable extends Migration
 
         Schema::create('complex', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('email');
-            $table->string('phone');
+            $table->string('name')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
             $table->integer('view_count')->default(0);
             $table->integer('type')->default(1); // 1 -> public , 2 private
-            $table->string('web_site');
+            $table->string('web_site')->nullable();
             $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('address_id')->unsigned();
             $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade');
+            $table->integer('installation_id')->nullable();
             $table->timestamps();
         });
 
@@ -47,8 +48,8 @@ class CreateComplexTable extends Migration
             $table->datetime('ends_at');
             $table->integer('day');
             $table->integer('status')->default(1);
-            $table->integer('group_id');
-            $table->string('group_type');
+            $table->integer('group_id')->nullable();
+            $table->string('group_type')->nullable();
             $table->timestamps();
         });
 
