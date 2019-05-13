@@ -1440,11 +1440,10 @@ class WebController extends Controller
         );
 
         $terrain = Terrain::create([
-
             "name" => $request->name,
             "complex_id" => $request->complex_id,
             "category_id" => $request->category_id,
-            "speciality_id" => $request->speciality_id,
+            "sport_id" => $request->speciality_id,
             "description" => $request->description,
             "size" => $request->size,
             "type" => $request->type
