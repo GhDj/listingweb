@@ -19,7 +19,7 @@ class Complex extends Model {
      *
      * @var string
      */
-    protected $table = 'Complex';
+    protected $table = 'complex';
 
     /**
      * The attributes that are mass assignable.
