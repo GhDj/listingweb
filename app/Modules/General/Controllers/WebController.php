@@ -42,6 +42,7 @@ class WebController extends Controller
             'categories' => Category::select('title')->groupBy('title')->get(),
             'sports' => Sport::All(),
             'complex' => Complex::All(),
+            'terrains'=>Terrain::all(),
             'posts' => Post::OrderBy('id')->limit(3)->get(),
             'footballTerrains' => Terrain::where('sport_id', 1)->take(4)->with('medias')->get()
         ]);
