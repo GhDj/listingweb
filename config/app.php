@@ -2,7 +2,7 @@
 
 return [
 
-  'seed_path_img' => 'http://localhost:3000/bluepenlabs/time-for-life-web/public/', // Path local
+  'seed_path_img' => 'http://olympiade.prod/public/', // Path local
   // 'seed_path_img' => 'https://bluepenlabs.com/projects/time-for-life-web/public/', // Path serveur
 
     /*
@@ -42,7 +42,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
