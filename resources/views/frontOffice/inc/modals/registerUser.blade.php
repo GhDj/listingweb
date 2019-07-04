@@ -64,7 +64,7 @@ color: red;
       <div class="soc-log fl-wrap">
         <p>Identifier avec les reseaux Socials.</p>
         <a href="{{ route('handleSocialRedirect', ['provider' => 'facebook']) }}" class="facebook-log"><i class="fa fa-facebook-official"></i>Identifier Avec Facebook</a>
-        <a href="#" class="twitter-log"><i class="fa fa-twitter"></i> Identifier Avec Twitter</a>
+        <a href="{{ route('handleSocialRedirect', ['provider' => 'twitter']) }}" class="twitter-log"><i class="fa fa-twitter"></i> Identifier Avec Twitter</a>
       </div>
       <div class="log-separator fl-wrap"><span>or</span></div>
       <div id="tabs-container">

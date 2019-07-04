@@ -79,7 +79,7 @@ class WebController extends Controller
 
     public function handleSocialCallback($provider)
     {
-        $providerData = Socialite::driver($provider)->stateless()->user();
+        $providerData = Socialite::driver($provider)->user();
 
         $user = User::where('provider_id', '=', $providerData->id)
             ->orWhere('email', '=', $providerData->email)
@@ -96,8 +96,9 @@ class WebController extends Controller
                 $lastName = $name[1];
             }
 
-            $imagePath = 'storage/uploads/avatar/' . $providerData->id . '-' . time() . '.png';
-            file_put_contents($imagePath, file_get_contents($providerData->avatar));
+           // Change images/avatar to public/images/avatar on production mode.
+            $imagePath = 'images/avatar/' . $providerData->id . '-' . time() . '.png';
+            file_put_contents($imagePath, fopen($providerData->avatar,'r'));
 
             $user = User::create([
                 'provider_id' => $providerData->id,
