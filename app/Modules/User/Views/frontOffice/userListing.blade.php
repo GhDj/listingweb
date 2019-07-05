@@ -66,7 +66,8 @@
                                             <div class="dashboard-list">
                                             <div class="dashboard-message">
                                                 <div class="dashboard-listing-table-image">
-                                                     <a href="{{route('showTerrainDetails',$terrain->id)}}"> <img src="@if ($terrain->medias->count() > 0)
+                                                     <a href="{{route('showTerrainDetails',$terrain->id)}}">
+                                                         <img src="@if ($terrain->medias->count() > 0)
                                                                 {{  $terrain->medias->first()->link}}
                                                                 @else
                                                                 {{  asset('images/all/9.jpg')}}
@@ -74,14 +75,18 @@
                                                               " alt=""></a>
                                                 </div>
                                                 <div class="dashboard-listing-table-text">
-                                                    <h4><a href="{{route('showTerrainDetails',$terrain->id)}}">{{$terrain->name}}</a></h4>
-                                                    <span class="dashboard-listing-table-address"><i class="fa fa-map-marker"></i><a  href="#">{{$terrain->complex->address->address}}</a></span>
+                                                    <h4>
+                                                        <a href="{{route('showTerrainDetails',$terrain->id)}}">{{$terrain->name}}</a>
+                                                    </h4>
+                                                    <span class="dashboard-listing-table-address"><i class="fa fa-map-marker"></i>
+                                                        <a  href="#">{{$terrain->complex->address->address}}</a>
+                                                    </span>
                                                     <div class="listing-rating card-popup-rainingvis fl-wrap" data-starrating2="5">
                                                         <span>({{$terrain->reviews->count()}} reviews)</span>
                                                     </div>
                                                     <ul class="dashboard-listing-table-opt  fl-wrap">
-                                                        <li><a href="{{route('showUserEditTerrain',$terrain->id)}}">Edit <i class="fa fa-pencil-square-o"></i></a></li>
-                                                        <li><a href="#" class="del-btn">Delete <i class="fa fa-trash-o"></i></a></li>
+                                                        <li><a href="{{route('showUserEditTerrain',$terrain->id)}}">Modifier <i class="fa fa-pencil-square-o"></i></a></li>
+                                                        <li><a href="#" class="del-btn">Supprimer <i class="fa fa-trash-o"></i></a></li>
                                                     </ul>
                                                 </div>
                                             </div>

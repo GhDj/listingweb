@@ -41,7 +41,7 @@ Route::group(['module' => 'User', 'middleware' => ['userAccess'], 'namespace' =>
 
     Route::get('/user/add/equipement', 'WebController@showUserAddEquipement')->name('showUserAddEquipement');
     Route::get('/user/add/club', 'WebController@showUserAddClub')->name('showUserAddClub');
-    Route::get('/user/add/team', 'WebControlle/admin/user/addr@showUserAddTeam')->name('showUserAddTeam');
+    Route::get('/user/add/team', 'WebController@showUserAddTeam')->name('showUserAddTeam');
     Route::post('/user/profile/update', 'WebController@handleUpdateUserProfile')->name('handleUpdateUserProfile');
     Route::post('/user/profile/updatePicture', 'WebController@handleUpdateUserProfilePicture')->name('handleUpdateUserProfilePicture');
     Route::post('/user/profile/updatePassword', 'WebController@handleUpdateUserPassword')->name('handleUpdateUserPassword');

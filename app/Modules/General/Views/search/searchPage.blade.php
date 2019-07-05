@@ -77,15 +77,24 @@
                     <div class="map-container column-map right-pos-map">
                         <div id="map-main"></div>
                         <ul class="mapnavigation">
-                            <li><a href="#" class="prevmap-nav">Prev</a></li>
-                            <li><a href="#" class="nextmap-nav">Next</a></li>
+                            <li><a href="#" class="prevmap-nav">Précédent</a></li>
+                            <li><a href="#" class="nextmap-nav">Suivant</a></li>
                         </ul>
                     </div>
-                    <div class="col-list-wrap left-list" style="padding:0;">
+                    <div class="col-list-wrap left-list">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="listsearch-options fl-wrap" id="lisfw">
                                     <div class="container">
+                                        <div class="listsearch-header fl-wrap">
+                                            <h3>Résultats pour : <span>{{ \App\Modules\Complex\Models\Category::where('id','=',$selectdCategoryId)->first()->title }}</span></h3>
+                                           <!-- <div class="listing-view-layout">
+                                                <ul>
+                                                    <li><a class="grid active" href="#"><i class="fa fa-th-large"></i></a></li>
+                                                    <li><a class="list" href="#"><i class="fa fa-list-ul"></i></a></li>
+                                                </ul>
+                                            </div>-->
+                                        </div>
                                         <div class="widget kopa-entry-list-widget">
                                                                                        <div class="tab-container-4">
                                                 <div class="tab-content-4" id="tab-1-6">
@@ -114,7 +123,7 @@
                                                                             <option value="-1">tous les categories
                                                                             </option>
                                                                             @foreach ($categories as $categorie )
-                                                                                <option value="{{$categorie->title}}">{{$categorie->title}}</option>
+                                                                                <option value="{{$categorie->id}}" @isset($selectdCategoryId) @if($selectdCategoryId == $categorie->id) selected @endif @endisset>{{$categorie->title}}</option>
                                                                             @endforeach
                                                                         </select>
                                                                     </div>
@@ -122,7 +131,7 @@
                                                                         <i class="mbri-key single-i"></i>
                                                                         <input type="text" placeholder="Où"
                                                                                name="address" id="autocomplete-input"
-                                                                               value="{{$address}}"/>
+                                                                               value=""/>
                                                                     </div>
 
                                                                     <div class="hidden-listing-filter fl-wrap">
@@ -271,9 +280,9 @@
                                             @if ($terrains->count() > 0)
                                                 @foreach ($terrains as $terrain)
                                                     <!-- listing-item -->
-                                                        <div class="listing-item list-layout">
+                                                        <div class="listing-item">
                                                             <article class="geodir-category-listing fl-wrap">
-                                                                <div class="geodir-category-img" style="width:35%">
+                                                                <div class="geodir-category-img">
 
                                                                     <img src="@if ($terrain->medias->count() > 0)
                                                                     {{  $terrain->medias->first()->link}}
@@ -286,23 +295,37 @@
                                                                         <span>{{$terrain->wishlists->count()}}</span><i
                                                                                 class="fa fa-heart"></i></div>
                                                                 </div>
-                                                                <a class="listing-geodir-category" id="category_title"
-                                                                   href="#">{{$terrain->category->title}}</a>
-                                                                <div class="geodir-category-content fl-wrap"
-                                                                     style="width:35%">
+
+                                                               {{-- <a class="listing-geodir-category" id="category_title"
+                                                                   href="#">{{$terrain->category->title}}</a>--}}
+                                                                <div class="geodir-category-content fl-wrap">
 
 
-                                                                    <h3>
-                                                                        <a href="{{ route('showTerrainDetails',['id' => $terrain->id]) }}">{{$terrain->name}}</a>
-                                                                    </h3>
 
-                                                                    <div class="geodir-category-location"><a href="#0"
-                                                                                                             class="map-item"><i
-                                                                                    class="fa fa-map-marker"
-                                                                                    aria-hidden="true"></i> {{$terrain->complex->name}}
-                                                                            ,{{$terrain->complex->address->city}}
-                                                                            ,{{$terrain->complex->address->address}}</a>
+                                                                        <a class="listing-geodir-category" href="{{ route('showTerrainDetails',['id' => $terrain->id]) }}">{{$terrain->category->title }}</a>
+
+                                                                    <div class="listing-avatar"><a href="author-single.html"><img src="{{ \App\Modules\User\Models\User::findOrFail($terrain->complex->user_id)->picture }}" alt=""></a>
+                                                                        <span class="avatar-tooltip">Ajouté par
+                                                                            <strong>{{ \App\Modules\User\Models\User::findOrFail($terrain->complex->user_id)->first_name }} {{ \App\Modules\User\Models\User::findOrFail($terrain->complex->user_id)->last_name }}</strong></span>
                                                                     </div>
+
+                                                                    <h3><a href="listing-single.html">{{$terrain->name}}</a></h3>
+
+                                                                    <p>
+                                                                        {{$terrain->description}}
+                                                                    </p>
+
+                                                                    <div class="geodir-category-options fl-wrap">
+                                                                        <div class="listing-rating card-popup-rainingvis" data-starrating2="{{$terrain->reviews->count() }}">
+
+                                                                            <span>({{$terrain->reviews->count() }} reviews)</span>
+                                                                        </div>
+                                                                        <div class="geodir-category-location">
+                                                                            <a href="#0" class="map-item">
+                                                                                <i class="fa fa-map-marker" aria-hidden="true"></i> {{$terrain->complex->address->city}},{{$terrain->complex->address->address}}</a></div>
+                                                                    </div>
+
+
 
                                                                 </div>
 
@@ -325,7 +348,8 @@
 
                                             @endisset
 
-                                            @isset($clubs)
+
+                                        @isset($clubs)
                                                 @if ($clubs->count() > 0)
 
 

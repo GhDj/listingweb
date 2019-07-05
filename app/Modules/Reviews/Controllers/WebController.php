@@ -119,6 +119,7 @@ class WebController extends Controller
              $ratingValue = 1;
              break;
              }
+
            $review = $terrain->reviews()->create(['note' => $ratingValue,
                                                   'comment' => $request->input('comment'),
                                                   'user_id' => $user->id

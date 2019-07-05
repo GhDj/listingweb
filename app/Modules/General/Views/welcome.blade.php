@@ -199,7 +199,7 @@
                                             Terrains
                                         </div>
                                         <div class="listing-item-cat">
-                                            <h3><a href="#">{{$category->title}}</a></h3>
+                                            <h3><a href="{{ route('hundleGetListingByCategory',$category->id) }}">{{$category->title}}</a></h3>
                                             <p></p>
                                         </div>
                                     </div>

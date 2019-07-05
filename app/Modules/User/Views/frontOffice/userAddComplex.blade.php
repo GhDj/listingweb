@@ -245,7 +245,7 @@
                 </div>
                 <!--container end -->
             </section>
-            <input type="text" class="form-control" id="tokenfield" value=""/>
+            <input type="hidden" class="form-control" id="tokenfield" value=""/>
             <!-- section end -->
             <div class="limit-box fl-wrap"></div>
         </div>

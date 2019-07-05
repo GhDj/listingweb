@@ -6,6 +6,7 @@ use App\Modules\Complex\Models\ComplexCategory;
 use App\Modules\Complex\Models\ComplexRequest;
 use App\Modules\Complex\Models\Infrastructure;
 use App\Modules\Complex\Models\TerrainActivity;
+use App\Modules\Reviews\Models\Review;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\User\Models\User;
@@ -450,8 +451,14 @@ class WebController extends Controller
         if (checkPublicComplexRole($user) || checkPrivateComplexRole($user)) {
             $reviewCounts = 0;
             if ($user->complex) {
-                $reviewCounts = $user->complex->terrains()->with('reviews')->count();
+                //$reviewCounts = $user->complex->terrains()->with('reviews')->count();
+                $reviewCounts = 0;
+                foreach ($user->complex->terrains() as $terrain) {
+                    $reviewCounts += Review::where('reviewed_id','=',$terrain->id)->count();
+                }
+
             }
+       //     dd($reviewCounts);
             return view('User::frontOffice.userDashboard', [
                 'userTerrains' => ($user->complex) ? $user->complex->terrains : null,
                 'complex' => $user->complex,
@@ -711,6 +718,7 @@ class WebController extends Controller
             foreach ($otherCategories as $otherCategorie) {
 
                 Category::create([
+                    "title" => $otherCategorie,
                     "category" => $otherCategorie,
                     "complex_id" => $complex->id
                 ]);
@@ -748,7 +756,7 @@ class WebController extends Controller
 
     public function hundleUserAddTerrain(Request $request)
     {
-
+       // dd($request);
         $this->validate($request, [
             "name" => "required",
             "category_id" => "required",
@@ -787,6 +795,7 @@ class WebController extends Controller
             ]
         );
 
+//dd($request);
         $terrain = Terrain::create([
             "name" => $request->name,
             'width' => $request->width,
@@ -802,7 +811,7 @@ class WebController extends Controller
             "description" => $request->description,
         ]);
 
-
+//dd($terrain);
         $imagePath = 'storage/uploads/terrains/';
         foreach ($request->images as $image) {
             $filename = 'terrain-' . $terrain->id . '-' . str_random(5) . '-' . time() . '.' . $image->getClientOriginalExtension();
@@ -832,7 +841,7 @@ class WebController extends Controller
 
         }
 
-        foreach ($request->activityList as $activity) {
+        foreach ($request->sport_category_id as $activity) {
             TerrainActivity::create([
                 'sport_category_id' => $activity,
                 'terrain_id' => $terrain->id,
@@ -1440,6 +1449,8 @@ class WebController extends Controller
             ]
         );
 
+        dd($request);
+
         $terrain = Terrain::create([
             "name" => $request->name,
             "complex_id" => $request->complex_id,
@@ -1447,7 +1458,14 @@ class WebController extends Controller
             "sport_id" => $request->speciality_id,
             "description" => $request->description,
             "size" => $request->size,
-            "type" => $request->type
+            "type" => $request->type,
+            'height' => $request->height,
+            'length' => $request->length,
+            'width' => $request->width,
+            'lighting' => $request->lighting,
+            'terrain_nature' => $request->terrain_nature,
+            'soil_type' => $request->soil_type,
+            'video_recorder' => $request->video_recorder
         ]);
 
 

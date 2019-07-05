@@ -58,10 +58,19 @@
                             @include('User::frontOffice.inc.asideProfile')
                             <div class="col-md-9">
                                 <!-- profile-edit-container-->
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                                 <form class="" action="{{route('hundleUserAddTerrain')}}" method="post"
                                       enctype="multipart/form-data">
                                     {{ csrf_field() }}
-
+                                    <input type="hidden" name="complex_id" value="{{ $complex->id }}">
                                     <div class="profile-edit-container add-list-container">
                                         <div class="profile-edit-header fl-wrap">
                                             <h4>Informations</h4>
@@ -101,8 +110,8 @@
 
                                                 <div class="col-md-4">
                                                     <label>Activités</label>
-                                                    <select class="chosen" id="select_activity_list"
-                                                            name="activityList">
+                                                    <select class="chosen" id="sport_category_id"
+                                                            name="sport_category_id[]">
                                                         @foreach ($sports as $sport)
                                                             <optgroup id="{{$sport->id}}" label="{{$sport->title}}">
                                                                 @foreach($sport->categories as $sportCategory)
