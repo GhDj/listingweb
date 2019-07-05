@@ -35,10 +35,15 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
     'facebook' => [
-      'client_id' => '1986859941412226',
-      'client_secret' => 'f96bfc46d061187bbfcb0e2ce579b456',
-      'redirect' => 'http://localhost/olympiade-sports-web/public/user/social/facebook/callback',
-  ],
+      'client_id' => '457949274766288',
+      'client_secret' => 'a0e01a5a7a6cdb6810daf304839f5d3f',
+      'redirect' => 'http://olympiade.prod/public/user/social/facebook/callback',
+    ],
+    'twitter' => [
+        'client_id' => 'ifEHqgpIIkJTwyuXpYjgrBkCI',
+        'client_secret' => 'NL75fa6EfxdE78qbK7czValJW6wsRJaqieQ4C9ElMIaky89CLN',
+        'redirect' => 'http://olympiade.prod/public/user/social/twitter/callback',
+    ],
 
   'google' => [
       'client_id' => '949293573898-ufje7v1v157mo1e8rqqjjlilvotku4j1.apps.googleusercontent.com',

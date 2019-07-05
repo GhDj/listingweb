@@ -1334,6 +1334,11 @@ section.gray-section .section-separator {
 	cursor:pointer;
 	transition: all .2s ease-in-out;
 }
+
+.close-reg .fa {
+	line-height: 40px;
+}
+
 .soc-log {
 	padding:15px 30px;
 }

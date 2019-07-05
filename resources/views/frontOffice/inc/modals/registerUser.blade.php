@@ -60,16 +60,16 @@ color: red;
   <div class="main-register-holder">
     <div class="main-register fl-wrap">
       <div class="close-reg"><i class="fa fa-times"></i></div>
-      <h3>Sign In <span>olym<strong>piade</strong> Sports</span></h3>
+      <h3>S'identifier à <span>olym<strong>piade</strong> Sports</span></h3>
       <div class="soc-log fl-wrap">
         <p>Identifier avec les reseaux Socials.</p>
         <a href="{{ route('handleSocialRedirect', ['provider' => 'facebook']) }}" class="facebook-log"><i class="fa fa-facebook-official"></i>Identifier Avec Facebook</a>
-        <a href="#" class="twitter-log"><i class="fa fa-twitter"></i> Identifier Avec Twitter</a>
+        <a href="{{ route('handleSocialRedirect', ['provider' => 'twitter']) }}" class="twitter-log"><i class="fa fa-twitter"></i> Identifier Avec Twitter</a>
       </div>
       <div class="log-separator fl-wrap"><span>or</span></div>
       <div id="tabs-container">
         <ul class="tabs-menu">
-          <li class="current"><a href="#tab-1">Login</a></li>
+          <li class="current"><a href="#tab-1">Connexion</a></li>
           <li><a href="#tab-2">Inscription</a></li>
         </ul>
         <div class="tab">
@@ -126,11 +126,11 @@ color: red;
 
                   <label>Inscription Comme * </label>
 
-              <div class="col-md-12">
+
                   <div class="row">
                     <!--col -->
-                    <div class="col-md-4">
-                      <div class="add-list-media-header">
+                    <div class="col-md-6">
+                      <div class="">
                         <label class="radio inline">
                           <input type="radio" name="role" value="2" checked>
                           <span>Responsable Complexe privé</span>
@@ -139,17 +139,18 @@ color: red;
                     </div>
                     <!--col end-->
                     <!--col -->
-                    <div class="col-md-4">
-                      <div class="add-list-media-header">
+                    <div class="col-md-6">
+                      <div class="">
                         <label class="radio inline">
                           <input type="radio" name="role" value="5">
                           <span>Sportif</span>
                         </label>
                       </div>
                     </div>
-
-                    <div class="col-md-4">
-                      <div class="add-list-media-header">
+                  </div>
+                <div class="row">
+                    <div class="col-md-6">
+                      <div class="">
                         <label class="radio inline">
                           <input type="radio" name="role" value="3">
                           <span>Responsable Complexe public</span>
@@ -157,8 +158,8 @@ color: red;
                       </div>
                     </div>
 
-                    <div class="col-md-4">
-                      <div class="add-list-media-header">
+                    <div class="col-md-6">
+                      <div class="">
                         <label class="radio inline">
                           <input type="radio" name="role" value="4">
                           <span>Responsable club</span>
@@ -167,7 +168,7 @@ color: red;
                     </div>
                     <!--col end-->
                   </div>
-                </div>
+
               </div>
 
                   <div class="form-group row">
@@ -225,7 +226,7 @@ color: red;
                     </div>
                   </div>
 
-                  <button type="submit" class="log-submit-btn"><span>Enregistrer</span></button>
+                  <button type="submit" class="log-submit-btn"><span>S'inscrire</span></button>
                 </form>
               </div>
             </div>
