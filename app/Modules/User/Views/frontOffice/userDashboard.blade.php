@@ -93,7 +93,8 @@
 
 
                                                 @if(Auth::user()->complex)
-                                                    <div class="statistic-item-numder"> {{$reviewsCount}}
+                                                    <div class="statistic-item-numder">
+                                                        {{$reviewsCount}}
 
                                                     </div>
                                                     <h5>Avis</h5>
@@ -138,7 +139,7 @@
 
                                             <h3>Vous avez trouver votre complex public ? </h3>
                                         @else
-                                            Recent Activities</h3>
+                                            Activités Récentes</h3>
                                         @endif
                                     </div>
 
@@ -225,42 +226,47 @@
                                                     @endif
                                                 @else
 
-                                                        <p>Votre demande a été envoyé veuillez patienter la validation
-                                                            de l'administration</p>
+                                                    <p>Votre demande a été envoyé veuillez patienter la validation
+                                                        de l'administration</p>
 
                                                 @endif
                                             </div>
                                         @else
 
 
-                                            @foreach ($userTerrains as $terrain)
-                                                @foreach ($terrain->wishlists as $wishlist)
+                                            @if(!empty($userTerrains))
+                                                @foreach ($userTerrains as $terrain)
+                                                    @if(Auth::user()->wishlists->count() > 0)
+                                                        @foreach ($terrain->wishlists as $wishlist)
 
-                                                    <div class="dashboard-list">
-                                                        <div class="dashboard-message">
-                                                                <span class="new-dashboard-item"><i
-                                                                            class="fa fa-times"></i></span>
+                                                        <div class="dashboard-list">
+                                                            <div class="dashboard-message">
+                                                                    <span class="new-dashboard-item"><i
+                                                                                class="fa fa-times"></i></span>
 
-                                                            <div class="dashboard-message-text">
+                                                                <div class="dashboard-message-text">
 
 
-                                                                <p>
-                                                                    <i class="fa fa-heart"></i>{{$wishlist->wisher->first_name}}
-                                                                    a aimé <a
-                                                                            href="{{route('showTerrainDetails',$wishlist->wished->id)}}">{{$wishlist->wished->name}}</a>
-                                                                    listing!</p>
+                                                                    <p>
+                                                                        <i class="fa fa-heart"></i>{{$wishlist->wisher->first_name}}
+                                                                        a aimé <a
+                                                                                href="{{route('showTerrainDetails',$wishlist->wished->id)}}">{{$wishlist->wished->name}}</a>
+                                                                        listing!</p>
 
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    @endforeach
+                                                    @endif
                                                 @endforeach
-                                            @endforeach
+                                            @endif
                                         @endif
                                     <!-- dashboard-list end-->
                                         <!-- dashboard-list end-->
                                         @if(checkPublicComplexRole(Auth::user())&&(!Auth::user()->complex))
                                         @else
-                                            @foreach ($userTerrains as $terrain)
+                                            @if(!empty($userTerrains))
+                                                @foreach ($userTerrains as $terrain)
                                                 @foreach ($terrain->reviews as $review)
 
                                                     <div class="dashboard-list">
@@ -279,6 +285,7 @@
                                                     </div>
                                             @endforeach
                                         @endforeach
+                                            @endif
                                     @endif
                                 @endif
                                 <!-- dashboard-list end-->

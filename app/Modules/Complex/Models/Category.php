@@ -34,4 +34,9 @@ class Category extends Model {
         return $this->hasMany('App\Modules\Complex\Models\Terrain','category_id','id');
     }
 
+    public function complexes()
+    {
+        return $this->hasMany('App\Modules\Complex\Models\ComplexCategory','category_id','id');
+    }
+
 }

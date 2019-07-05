@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 class TerrainActivity extends Model
 {
 
-     protected $table="";
+     protected $table="terrain_activities";
 
      protected $fillable=[
          'sport_category_id',

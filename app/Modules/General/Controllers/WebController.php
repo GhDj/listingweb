@@ -3,6 +3,7 @@
 namespace App\Modules\General\Controllers;
 
 use App\Modules\Complex\Models\Club;
+use App\Modules\Complex\Models\ComplexCategory;
 use App\Modules\Complex\Models\Infrastructure;
 use App\Modules\Complex\Models\Sport;
 use App\Modules\Content\Models\Post;
@@ -39,7 +40,7 @@ class WebController extends Controller
     {
         return view('General::welcome', [
             'results' => Terrain::All(),
-            'categories' => Category::select('title')->groupBy('title')->get(),
+            'categories' => Category::All(),
             'sports' => Sport::All(),
             'complex' => Complex::All(),
             'terrains'=>Terrain::all(),
@@ -493,6 +494,32 @@ class WebController extends Controller
         return response()->json(['status' => 200, 'categories' => $complex->categories()->with('category')->get()]);
     }
 
+    public function hundleGetListingByCategory($id)
+    {
+        $complex = Complex::where('id','=',ComplexCategory::find($id)->complex_id)->first();
+        //dd($complex['terrains']);
+        if (!$complex) {
+            return response()->json(['status' => 404]);
+        }
+
+        $terrains = Terrain::whereHas('complex')->where('complex_id','=',$complex->id)->get();
+
+       // dd($complex->categories);
+
+       // $terrains = Complex::where('id','=',ComplexCategory::find($id)->complex_id)->get()->terrains();
+
+       // return response()->json(['status' => 200, 'complexes' => $terrains]);
+        return view('General::search.searchPage', [
+            'complexs' => $complex,
+            'selectdCategoryId'=> $id,
+            'latitude' => null,
+            'longitude' => null,
+            'categories' => Category::all(),
+            'address' => '',
+            'terrains' => $terrains,
+            'sports' => Sport::all()
+        ]);
+    }
 
     public function ExcelToJson()
     {

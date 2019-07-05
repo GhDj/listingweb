@@ -2,7 +2,7 @@
 
 Route::group(['module' => 'User', 'middleware' => ['api'], 'namespace' => 'App\Modules\User\Controllers'], function() {
 
-    Route::resource('User', 'UserController');
+    Route::resource('User', 'ApiController');
     Route::post('/api/user/register', 'ApiController@handleUserRegister');
     Route::post('/api/user/login', 'ApiController@handleUserLogin');
     Route::post('/api/user/profile/update/{id}', 'ApiController@handleUpdateUserProfile');

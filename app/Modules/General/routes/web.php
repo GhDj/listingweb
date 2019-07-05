@@ -18,7 +18,7 @@ Route::group(['module' => 'General', 'middleware' => ['web'], 'namespace' => 'Ap
 
     Route::resource('General', 'GeneralController');
 
-    Route::get('/search','WebController@public/search')->name('showSearchPage');
+    Route::get('/search','WebController@showSearchPage')->name('showSearchPage');
 
     Route::get('/search/terrain/{id}','WebController@showTerrainDetails')->name('showTerrainDetails');
 
@@ -33,5 +33,7 @@ Route::group(['module' => 'General', 'middleware' => ['web'], 'namespace' => 'Ap
     Route::post('/searchFilterClub','WebController@handleFilterClubs')->name('handleFilterClubs');
 
     Route::get('category/{complex}','WebController@hundleGetCategory')->name('hundleGetCategory');
+
+    Route::get('categorylisting/{category_id}','WebController@hundleGetListingByCategory')->name('hundleGetListingByCategory');
 });
 
