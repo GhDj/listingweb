@@ -445,6 +445,11 @@ class WebController extends Controller
 
         if (checkClubRole($user)) {
             $club = Auth::user()->club;
+            return view('User::frontOffice.userDashboard', [
+                'userTerrains' => ($user->complex) ? $user->complex->terrains : null,
+                'complex' => $user->complex,
+                'availableComplex' => Complex::doesnthave('user')->where('type', 1)->get()
+            ]);
 
         }
 
@@ -453,7 +458,7 @@ class WebController extends Controller
             if ($user->complex) {
                 //$reviewCounts = $user->complex->terrains()->with('reviews')->count();
                 $reviewCounts = 0;
-                foreach ($user->complex->terrains() as $terrain) {
+                foreach ($user->complex->terrains()->paginate(30) as $terrain) {
                     $reviewCounts += Review::where('reviewed_id','=',$terrain->id)->count();
                 }
 
@@ -461,7 +466,7 @@ class WebController extends Controller
        //     dd($reviewCounts);
             return view('User::frontOffice.userDashboard', [
                 'userTerrains' => ($user->complex) ? $user->complex->terrains : null,
-                'complex' => $user->complex,
+                'complex' => $user->complex->paginate(30),
                 'reviewsCount' => $reviewCounts,
                 'availableComplex' => Complex::doesnthave('user')->where('type', 1)->get()
             ]);
@@ -470,7 +475,12 @@ class WebController extends Controller
         }
 
         if (checkAthleticRole($user)) {
-            return "sportif";
+            return view('User::frontOffice.Sportif.userDashboard', [
+                'userTerrains' => null,
+                'complex' => null,
+                'reviewsCount' => 0,
+                'availableComplex' => ''
+            ]);
         }
 
 
@@ -1161,15 +1171,15 @@ class WebController extends Controller
     public function showUsersList()
     {
         $athletics = User::whereHas('roles', function ($query) {
-            $query->where('title', '=', 'Internaute');
+            $query->where('title', '=', 'Sportif');
         })->get();
 
         $privateOfficials = User::whereHas('roles', function ($query) {
-            $query->where('title', '=', 'Professionnel');
+            $query->where('title', '=', 'Responsable complexe prive');
         })->get();
 
         $publicOfficials = User::whereHas('roles', function ($query) {
-            $query->where('title', '=', 'Gestionnaire');
+            $query->where('title', '=', 'Responsable complexe public ');
         })->get();
 
 
@@ -1310,9 +1320,18 @@ class WebController extends Controller
 
     public function showAddComplexAdmin()
     {
-        return view('User::backOffice.addComplex',
+        return view('User::backOffice.addComplexe',
             [
-                'categories' => Category::select('category')->groupBy('category')->get()
+                'categories' => Category::all()
+            ]
+        );
+    }
+
+    public function showComplexsList()
+    {
+        return view('User::backOffice.complexList',
+            [
+                'complexs' => Complex::with('address')->paginate(30)
             ]
         );
     }
@@ -1590,6 +1609,19 @@ class WebController extends Controller
             $subQuery->where('user_id', Auth::user()->id);
         })->paginate(5);
 
+        return view('User::backOffice.clubsList',
+            [
+                'clubs' => $clubs
+            ]
+        );
+    }
+
+    public function showAdminClubsList()
+    {
+       /* $clubs = Club::whereHas('terrain.complex', function ($subQuery) {
+            $subQuery->where('user_id', Auth::user()->id);
+        })->paginate(5);*/
+        $clubs = Club::paginate(5);
         return view('User::backOffice.clubsList',
             [
                 'clubs' => $clubs

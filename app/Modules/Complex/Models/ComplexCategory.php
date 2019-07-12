@@ -26,5 +26,10 @@ class ComplexCategory extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function complex()
+    {
+        return $this->hasMany(Complex::class,'id','complex_id');
+    }
+
 
 }

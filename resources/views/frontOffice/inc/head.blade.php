@@ -24,7 +24,7 @@
 
           <link rel="stylesheet" type="text/css" href="{{ asset ('plugins') }}/sweetalert/sweetalert.css">
           <link rel="stylesheet" type="text/css" href="{{ asset ('plugins') }}/sweetalert/swal-forms.css">
-
+    <script src="{{ asset('js/frontOffice/jquery.min.js') }}"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.29.2/sweetalert2.all.js"></script>
 
           <!--=============== favicons ===============-->

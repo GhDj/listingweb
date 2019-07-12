@@ -11,7 +11,7 @@
 
 @section('sidebar')
     @include('backOffice.inc.sidebar', [
-        'current' => 'terrainsList'
+        'current' => 'clubsList'
     ])
 @endsection
 

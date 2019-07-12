@@ -12,7 +12,7 @@
 
 @section('header')
 
-    @include('frontOffice.inc.header',['activatedLink'=>['home'=>'','contact'=>'','faq'=>'','profile'=>'act-link']])
+    @include('frontOffice.inc.header',['activatedLink'=>['home'=>'','contact'=>'','faq'=>'','profile'=>'act-link','associations'=>'','infrastructure'=>'']])
 
 @endsection
 @section('content')
@@ -32,7 +32,7 @@
                     <!-- profile-edit-wrap -->
                     <div class="profile-edit-wrap">
                         <div class="profile-edit-page-header">
-                            <h2>User Profile : {{Auth::user()->roles->first()->title}}</h2>
+                            <h2>Espace utilisateur {{Auth::user()->roles->first()->title}}</h2>
                             <div class="breadcrumbs"><a href="{{route('showHome')}}">Accueil</a><span>Profile</span>
                             </div>
                         </div>
@@ -73,16 +73,17 @@
 
                                         <div class="statistic-item-wrap">
                                             <div class="statistic-item gradient-bg fl-wrap">
-
+                                                @if (checkPrivateComplexRole(Auth::user())||checkPublicComplexRole(Auth::user()))
 
                                                 @if(Auth::user()->complex)
                                                     <div class="statistic-item-numder">
-                                                        {{$complex->view_count}}
+                                                        {{ Auth::user()->complex->view_count }}
                                                     </div>
                                                     <h5>Visiteur</h5>
                                                 @else
                                                     <h5>Aucun Complex trouvé</h5>
                                                 @endif
+                                                    @endif
 
                                             </div>
                                         </div>
@@ -91,16 +92,19 @@
                                         <div class="statistic-item-wrap">
                                             <div class="statistic-item gradient-bg fl-wrap">
 
-
+                                                @if (checkPrivateComplexRole(Auth::user())||checkPublicComplexRole(Auth::user()))
                                                 @if(Auth::user()->complex)
                                                     <div class="statistic-item-numder">
+                                                       @isset($reviewsCount)
                                                         {{$reviewsCount}}
+                                                        @endisset
 
                                                     </div>
                                                     <h5>Avis</h5>
                                                 @else
                                                     <h5>Aucune Avis</h5>
                                                 @endif
+                                                    @endif
                                             </div>
                                         </div>
                                         <!-- statistic-item-wrap end-->

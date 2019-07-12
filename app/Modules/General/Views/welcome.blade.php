@@ -10,7 +10,7 @@
 
 @section('header')
 
-    @include('frontOffice.inc.header',['activatedLink'=>['home'=>'act-link','contact'=>'','faq'=>'','profile'=>'']])
+    @include('frontOffice.inc.header',['activatedLink'=>['home'=>'act-link','contact'=>'','faq'=>'','profile'=>'','associations' =>'','infrastructure'=>'']])
 
 @endsection
 
@@ -184,7 +184,6 @@
                         <h2>Catégories</h2>
                         <div class="section-subtitle">Catalogue de Catégories</div>
                         <span class="section-separator"></span>
-                        <p>.</p>
                     </div>
                     <!-- portfolio start -->
                     <div class="gallery-items fl-wrap mr-bot spad">
@@ -195,7 +194,7 @@
                                 <div class="grid-item-holder">
                                     <div class="listing-item-grid">
                                         <img src="images/all/1.jpg" alt="">
-                                        <div class="listing-counter"><span>{{count($category->terrains)}} </span>
+                                        <div class="listing-counter"><span>{{ \App\Modules\Complex\Models\ComplexCategory::where('category_id','=',$category->id)->first()->complex()->first()->terrains->count() }} </span>
                                             Terrains
                                         </div>
                                         <div class="listing-item-cat">
