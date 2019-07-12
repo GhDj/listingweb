@@ -47,10 +47,10 @@
 
                             @foreach ($categories as $categorie)
                                 <label class="radio radio-primary col-md-3">
-                                    <input id="check-{{$categorie->category}}" class="form-control" type="checkbox"
+                                    <input id="check-{{$categorie->title}}" class="form-control" type="checkbox"
                                            name="categories[]"
-                                           value="{{$categorie->category}}">
-                                    <span>{{$categorie->category}}</span>
+                                           value="{{$categorie->title}}">
+                                    <span>{{$categorie->title}}</span>
                                     <span class="checkmark"></span>
                                 </label>
                             @endforeach

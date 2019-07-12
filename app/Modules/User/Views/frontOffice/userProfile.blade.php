@@ -12,7 +12,7 @@
 
 @section('header')
 
-    @include('frontOffice.inc.header',['activatedLink'=>['home'=>'','contact'=>'','faq'=>'','profile'=>'act-link']])
+    @include('frontOffice.inc.header',['activatedLink'=>['home'=>'','contact'=>'','faq'=>'','profile'=>'act-link','associations'=>'','infrastructure'=>'']])
 
 @endsection
 @section('content')
@@ -64,7 +64,7 @@
                       <!-- profile-edit-wrap -->
                       <div class="profile-edit-wrap">
                           <div class="profile-edit-page-header">
-                              <h2>Edit profile</h2>
+                              <h2>Mes Infos</h2>
                               <div class="breadcrumbs"><a href="#">Accueil</a><a href="#">Profile</a><span>Votre Profile</span></div>
                           </div>
                           <div class="row">
@@ -73,7 +73,7 @@
                                   <!-- profile-edit-container-->
                                   <div class="profile-edit-container">
                                       <div class="profile-edit-header fl-wrap">
-                                          <h4>My Account</h4>
+                                          <h4>Modifier mon profil</h4>
                                       </div>
                                       <div class="custom-form">
                                         <form action="{{route('handleUpdateUserProfile')}}"  id="user_information_form" method="post">
@@ -141,9 +141,9 @@
                                               @endif
                                             </div>
                                           </div>
-
+                                            <div class="form-group row" >
                                           <label> Genre </label>
-                                              <div style="margin-left:70px;">
+
                                                 <label class="radio">
                                                 <input type="radio" name="gender" value="1"
 
@@ -151,7 +151,8 @@
                                                         checked
                                                       @endif
 
-                                                > <span>Homme</span> </label>
+                                                > <span>Homme</span>
+                                                </label>
                                                 <label class="radio">
                                                 <input type="radio" name="gender"  value="2"
 
@@ -161,6 +162,22 @@
 
                                                 > <span>Femme</span> </label>
                                               </div>
+
+                                            <div class="form-group row">
+                                                <label for ="bio">A propos de vous </label>
+                                                <div class="col-md-12">
+                                                    <textarea name="bio" id="bio" cols="30" rows="10">
+                                                        {{ isset(Auth::user()->bio) ? Auth::user()->bio : '' }}
+                                                    </textarea>
+
+                                                    @if ($errors->has('bio'))
+                                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('bio') }}</strong>
+                                              </span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
                                                 <button class="btn  big-btn  color-bg flat-btn">Enregistrer<i class="fa fa-angle-right"></i></button>
                                         </form>
                                       </div>

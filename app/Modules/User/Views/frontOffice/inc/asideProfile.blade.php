@@ -18,7 +18,7 @@
             </div>
             <!-- user-profile-menu end-->
             <!-- user-profile-menu-->
-            @if (checkPrivateComplexRole(Auth::user())||checkPublicComplexRole(Auth::user()))
+            @if (checkPrivateComplexRole(Auth::user())|| checkPublicComplexRole(Auth::user()))
                 <div class="user-profile-menu">
                     <h3>Listings</h3>
                     <ul>

@@ -8,6 +8,7 @@ use App\Modules\Complex\Models\Infrastructure;
 use App\Modules\Complex\Models\Sport;
 use App\Modules\Content\Models\Post;
 use App\Modules\General\Models\Address;
+use App\Modules\General\Models\AdressImport;
 use App\Modules\Infrastructure\Models\ComplexSchedule;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -24,7 +25,9 @@ use App\Modules\Complex\Models\Category;
 use App\Modules\Complex\Models\Equipment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
 use League\Csv\Reader;
+use Maatwebsite\Excel\Facades\Excel;
 use UxWeb\SweetAlert\SweetAlert;
 
 
@@ -99,6 +102,8 @@ class WebController extends Controller
             SweetAlert::error('Opps !', 'Terrain Introuvable. !')->persistent('Fermer');
             return redirect()->route('showHome');
         }
+
+        Terrain::find($id)->complex->increment('view_count');
 
         $starsTerrain = 0;
         if (!empty($terrain->reviews)) {
@@ -525,100 +530,142 @@ class WebController extends Controller
     {
         ini_set('memory_limit', '2048M');
 
-        set_time_limit(0);
-        $repository = public_path() . '/storage/uploads/excels/';
-        try {
-            $response = file_get_contents($repository . "complex29.json");
+       // set_time_limit(0);
+        $repository = public_path() . '/uploads/';
+        //Excel::fake();
+        //$ee = Excel::import(new AdressImport,$repository . "V01.xls");
+       // $ee = Excel::assertImported($repository . "V01.xls",function($reader) {
+      //      $reader->all();
+        //})->get();
+      //  Excel::assertImported($repository . "V01.xls", 'disks');
+        //$array = (new AdressImport)->toArray($repository ."V01.xls");
+      //  dd($array);
+       // Excel::import(new AdressImport,$repository . "V01.xls");
+        /*try {
+            $response = file_get_contents($repository."data.json");
         } catch (\Exception $e) {
             SweetAlert::error('Erreur de comunication avec l\'API avec l\'erreur suivant : ' . $e->getMessage())->persistent('Fermer');
             return $e;
-        }
+        }*/
 
-        if (isset($response))// Show response
-            $response = json_decode($response, true);
-        else die('Echec de la syncro');
+      //  dd(json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', utf8_encode($response)),true));
+       // dd($response);
+        $i = 0;
 
-        if ($response != null) {
-            foreach ($response as $complex) {
+        for ($i;$i<=453;$i++) {
+            try {
+                $response = file_get_contents($repository."data".$i.".json");
+            } catch (\Exception $e) {
+                SweetAlert::error('Erreur de comunication avec l\'API avec l\'erreur suivant : ' . $e->getMessage())->persistent('Fermer');
+                return $e;
+            }
+            if (isset($response))// Show response
+                // $response = json_decode($response, true);
+                $response = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', utf8_encode($response)),true);
+            else die('Echec de la syncro');
 
-                $address = Address::create([
-                    'postal_code' => $complex['postal_code'],
-                    'country' => 'france',
-                    'city' => $complex['place_name'],
-                    'address' => $complex['street_number'] . ", " . $complex['street'] . ", " . $complex['place_name']
-                ]);
-                $complex = Complex::create([
-                    'installation_id' => $complex['installation_id'],
-                    'name' => $complex['name'],
-                    'web_site' => $complex['web_site'],
-                    'phone' => $complex['num_tel'],
-                    'address_id' => $address->id
-                ]);
-
-                Infrastructure::create([
-                    'handicap_access' => $complex['handicap_access'],
-                    'parking_place' => $complex['parking_place'],
-                    'handicap_parking_place' => $complex['handicap_place_parking'],
-                    'complex_id' => $complex->id
-                ]);
-
-
-                if ((\DateTime::createFromFormat('H:i:', $complex['open_sunday']) !== FALSE) && (DateTime::createFromFormat('H:i', $complex['close_sunday']) !== FALSE)) {
-
-                    $complex->schedules()->create([
-                        'start_at' => Carbon::parse($complex['open_sunday'])->format('H:i'),
-                        'ends_at' => Carbon::parse($complex['close_sunday'])->format('H:i'),
-                        'day' => 0,
+            if ($response != null) {
+                foreach ($response as $complex) {
+                    $is_admin = (isset($complex['Nom Lieu Dit'])) ? $complex['Nom Lieu Dit'] : $complex['Commune '];
+                    if (!isset($complex['Nom de la rue'])) {
+                        $complex['Nom de la rue'] = '';
+                    }
+                    $address = Address::create([
+                        'postal_code' => (isset($complex['Code Postal'])) ? $complex['Code Postal'] : '',
+                        'country' => 'france',
+                        'city' => (isset($complex['Nom Lieu Dit'])) ? $complex['Nom Lieu Dit'] : $complex['Commune '],
+                        'address' => (isset($complex['Numro de la voie '])) ? $complex['Numro de la voie '] : '' .
+                        ", " . (isset($complex['Nom de la rue'])) ? $complex['Nom de la rue'] : '' .
+                            ", " . $complex['Commune ']
                     ]);
-                }
-
-                if ((\DateTime::createFromFormat('H:i:', $complex['open_Monday']) !== FALSE) && (DateTime::createFromFormat('H:i:', $complex['close_Monday']) !== FALSE)) {
-                    $complex->schedules()->create([
-                        'start_at' => Carbon::parse($complex['open_Monday'])->format('H:i'),
-                        'ends_at' => Carbon::parse($complex['close_Monday'])->format('H:i'),
-                        'day' => 1,
-                    ]);
-                }
-
-                if ((\DateTime::createFromFormat('H:i:', $complex['open_Tuesday']) !== FALSE) && (DateTime::createFromFormat('H:i:', $complex['close_Tuesday']) !== FALSE)) {
-                    $complex->schedules()->create([
-                        'start_at' => Carbon::parse($complex['open_Tuesday'])->format('H:i'),
-                        'ends_at' => Carbon::parse($complex['close_Tuesday'])->format('H:i'),
-                        'day' => 2,
+                    $complex = Complex::create([
+                        'installation_id' => $complex['Numro de l\'installation sportive '],
+                        'name' => $complex['Nom de l\'installation sportive '],
+                        'web_site' => (isset($complex['Site web'])) ? $complex['Site web'] : null,
+                        'phone' => (isset($complex['num_tel'])) ? $complex['num_tel'] : null,
+                        'address_id' => $address->id
                     ]);
 
-                }
-                if ((\DateTime::createFromFormat('H:i:', $complex['open_Wednesday']) !== FALSE) && (DateTime::createFromFormat('H:i:', $complex['close_wednesday']) !== FALSE)) {
-                    $complex->schedules()->create([
-                        'start_at' => Carbon::parse($complex['open_Wednesday'])->format('H:i'),
-                        'ends_at' => Carbon::parse($complex['close_wednesday'])->format('H:i'),
-                        'day' => 3,
+                    Infrastructure::create([
+                        'handicap_access' => $complex['Installation Accessible Handicap'],
+                        'parking_place' => $complex['Nombre de place de Parking'],
+                        'handicap_parking_place' => $complex['Nombre de places Handicaps'],
+                        'complex_id' => $complex->id
                     ]);
-                }
 
-                if ((\DateTime::createFromFormat('H:i:', $complex['open_thursday']) !== FALSE) && (DateTime::createFromFormat('H:i:', $complex['close_thursday']) !== FALSE)) {
-                    $complex->schedules()->create([
-                        'start_at' => Carbon::parse($complex['open_thursday'])->format('H:i'),
-                        'ends_at' => Carbon::parse($complex['close_thursday'])->format('H:i'),
-                        'day' => 4,
-                    ]);
-                }
-                if ((\DateTime::createFromFormat('H:i:', $complex['open_Friday']) !== FALSE) && (DateTime::createFromFormat('H:i:', $complex['close_Friday']) !== FALSE)) {
-                    $complex->schedules()->create([
-                        'start_at' => Carbon::parse($complex['open_Friday'])->format('H:i'),
-                        'ends_at' => Carbon::parse($complex['close_Friday'])->format('H:i'),
-                        'day' => 5,
-                    ]);
-                }
-                if ((\DateTime::createFromFormat('H:i:', $complex['open_saturday']) !== FALSE) && (DateTime::createFromFormat('H:i:', $complex['close_saturday']) !== FALSE)) {
-                    $complex->schedules()->create([
-                        'start_at' => Carbon::parse($complex['open_saturday'])->format('H:i'),
-                        'ends_at' => Carbon::parse($complex['close_saturday'])->format('H:i'),
-                        'day' => 6,
-                    ]);
+
+                    /*if ((\DateTime::createFromFormat('H:i:', $complex['open_sunday']) !== FALSE) && (DateTime::createFromFormat('H:i', $complex['close_sunday']) !== FALSE)) {
+
+                        $complex->schedules()->create([
+                            'start_at' => Carbon::parse($complex['Heure de fermeture Lundi'])->format('H:i'),
+                            'ends_at' => Carbon::parse($complex['Heure de fermeture Lundi'])->format('H:i'),
+                            'day' => 0,
+                        ]);
+                    }
+
+                    if ((\DateTime::createFromFormat('H:i:', $complex['open_Monday']) !== FALSE) && (DateTime::createFromFormat('H:i:', $complex['close_Monday']) !== FALSE)) {
+                        $complex->schedules()->create([
+                            'start_at' => Carbon::parse($complex['Heure d\'ouverture Lundi'])->format('H:i'),
+                            'ends_at' => Carbon::parse($complex['Heure de fermeture Lundi'])->format('H:i'),
+                            'day' => 1,
+                        ]);
+                    }
+
+                    if ((\DateTime::createFromFormat('H:i:', $complex['open_Tuesday']) !== FALSE) && (DateTime::createFromFormat('H:i:', $complex['close_Tuesday']) !== FALSE)) {
+                        $complex->schedules()->create([
+                            'start_at' => Carbon::parse($complex['open_Tuesday'])->format('H:i'),
+                            'ends_at' => Carbon::parse($complex['close_Tuesday'])->format('H:i'),
+                            'day' => 2,
+                        ]);
+
+                    }
+                    if ((\DateTime::createFromFormat('H:i:', $complex['open_Wednesday']) !== FALSE) && (DateTime::createFromFormat('H:i:', $complex['close_wednesday']) !== FALSE)) {
+                        $complex->schedules()->create([
+                            'start_at' => Carbon::parse($complex['open_Wednesday'])->format('H:i'),
+                            'ends_at' => Carbon::parse($complex['close_wednesday'])->format('H:i'),
+                            'day' => 3,
+                        ]);
+                    }
+
+                    if ((\DateTime::createFromFormat('H:i:', $complex['open_thursday']) !== FALSE) && (DateTime::createFromFormat('H:i:', $complex['close_thursday']) !== FALSE)) {
+                        $complex->schedules()->create([
+                            'start_at' => Carbon::parse($complex['open_thursday'])->format('H:i'),
+                            'ends_at' => Carbon::parse($complex['close_thursday'])->format('H:i'),
+                            'day' => 4,
+                        ]);
+                    }
+                    if ((\DateTime::createFromFormat('H:i:', $complex['open_Friday']) !== FALSE) && (DateTime::createFromFormat('H:i:', $complex['close_Friday']) !== FALSE)) {
+                        $complex->schedules()->create([
+                            'start_at' => Carbon::parse($complex['open_Friday'])->format('H:i'),
+                            'ends_at' => Carbon::parse($complex['close_Friday'])->format('H:i'),
+                            'day' => 5,
+                        ]);
+                    }
+                    if ((\DateTime::createFromFormat('H:i:', $complex['open_saturday']) !== FALSE) && (DateTime::createFromFormat('H:i:', $complex['close_saturday']) !== FALSE)) {
+                        $complex->schedules()->create([
+                            'start_at' => Carbon::parse($complex['open_saturday'])->format('H:i'),
+                            'ends_at' => Carbon::parse($complex['close_saturday'])->format('H:i'),
+                            'day' => 6,
+                        ]);
+                    }*/
                 }
             }
         }
+
+
+
+        /*//dd($response);
+        $i = 0;
+       // $output = [];
+        $output = array_chunk($response,300,true);
+        foreach ($output as $d) {
+        //    $arrResult = json_decode($response,true);
+            Storage::disk('public')->put('data'.$i.'.json', json_encode($d));
+            $i++;
+            //array_push($complex);
+         //   dd($d);
+        }*/
+
 
         return "done";
         //unlink($repository."complex.json");

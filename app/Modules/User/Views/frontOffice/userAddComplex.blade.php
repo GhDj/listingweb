@@ -17,7 +17,7 @@
 
 
 @section('header')
-    @include('frontOffice.inc.header',['activatedLink'=>['home'=>'','contact'=>'','faq'=>'','profile'=>'act-link']])
+    @include('frontOffice.inc.header',['activatedLink'=>['home'=>'','contact'=>'','faq'=>'','profile'=>'act-link','associations'=>'','infrastructure'=>'']])
 
 @endsection
 
@@ -148,7 +148,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
-                                                            <label>:Code postal</i></label>
+                                                            <label>Code postal</i></label>
                                                             <div class="col-md-12">
                                                                 <input type="text" name="postal_code" placeholder=""
                                                                        value="{{(isset($complex) ? $complex->address->postal_code : "")}}"/>

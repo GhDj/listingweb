@@ -1,8 +1,17 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: ghdj9
+ * Date: 7/5/2019
+ * Time: 12:11 AM
+ */
+?>
+
 @extends('frontOffice.layout')
 
 @section('head')
 
-    @include('frontOffice.inc.head', ['title' => 'Olympiade | Détails Club' ])
+    @include('frontOffice.inc.head', ['title' => 'Olympiade | Espace Utilisateur' ])
 
 
 
@@ -42,69 +51,27 @@
                                 <!-- profile-edit-container-->
                                 <div class="profile-edit-container">
                                     <div class="profile-edit-header fl-wrap" style="margin-top:30px">
-                                        <h4>Salut ,
+                                        <h4>Bonjour ,
                                             <span>{{Auth::user()->first_name}} {{Auth::user()->last_name}} </span></h4>
                                     </div>
                                     <!-- statistic-container-->
                                     <div class="statistic-container fl-wrap">
                                         <!-- statistic-item-wrap-->
-                                    @if (checkPrivateComplexRole(Auth::user())||checkPublicComplexRole(Auth::user()))
+
 
 
                                         <!-- statistic-item-wrap end-->
                                             <!-- statistic-item-wrap-->
 
-                                            <div class="statistic-item-wrap">
-                                                <div class="statistic-item gradient-bg fl-wrap">
 
 
-                                                    @if($userTerrains)
-                                                        <div class="statistic-item-numder">  {{$userTerrains->count()}}</div>
-                                                        <h5>Terrains</h5>
-
-                                                    @else
-                                                        <h5>Aucun Terrain</h5>
-
-                                                    @endif
-
-                                                </div>
-                                            </div>
-                                        @endif
-
-                                        <div class="statistic-item-wrap">
-                                            <div class="statistic-item gradient-bg fl-wrap">
-                                                @if (checkPrivateComplexRole(Auth::user())||checkPublicComplexRole(Auth::user()))
-
-                                                @if(Auth::user()->complex)
-                                                    <div class="statistic-item-numder">
-                                                        {{ Auth::user()->complex->view_count }}
-                                                    </div>
-                                                    <h5>Visiteur</h5>
-                                                @else
-                                                    <h5>Aucun Complex trouvé</h5>
-                                                @endif
-                                                    @endif
-
-                                            </div>
-                                        </div>
 
 
                                         <div class="statistic-item-wrap">
                                             <div class="statistic-item gradient-bg fl-wrap">
-
-                                                @if (checkPrivateComplexRole(Auth::user())||checkPublicComplexRole(Auth::user()))
-                                                @if(Auth::user()->complex)
-                                                    <div class="statistic-item-numder">
-                                                       @isset($reviewsCount)
-                                                        {{$reviewsCount}}
-                                                        @endisset
-
-                                                    </div>
-                                                    <h5>Avis</h5>
-                                                @else
-                                                    <h5>Aucune Avis</h5>
-                                                @endif
-                                                    @endif
+                                                <i class="fa fa fa-star"></i>
+                                                <div class="statistic-item-numder">{{Auth::user()->wishlists->count()}}</div>
+                                                <h5>Favoris</h5>
                                             </div>
                                         </div>
                                         <!-- statistic-item-wrap end-->
@@ -112,24 +79,24 @@
 
                                         <!-- statistic-item-wrap end-->
                                         <!-- statistic-item-wrap-->
-                                        @if (checkAthleticRole(Auth::user()))
+
                                             <div class="statistic-item-wrap">
                                                 <div class="statistic-item gradient-bg fl-wrap">
-                                                    <i class="fa fa-comments-o"></i>
+                                                    <i class="fa fa-heart-o"></i>
                                                     <div class="statistic-item-numder">{{Auth::user()->reviews->count()}}</div>
-                                                    <h5>Total Commentaires</h5>
+                                                    <h5>Notes</h5>
                                                 </div>
                                             </div>
                                             <!-- statistic-item-wrap end-->
                                             <!-- statistic-item-wrap-->
                                             <div class="statistic-item-wrap">
                                                 <div class="statistic-item gradient-bg fl-wrap">
-                                                    <i class="fa fa-heart-o"></i>
-                                                    <div class="statistic-item-numder">{{Auth::user()->wishlists->count()}}</div>
-                                                    <h5>Aimé</h5>
+                                                    <i class="fa fa-comments-o"></i>
+                                                    <div class="statistic-item-numder">{{Auth::user()->reviews->count()}}</div>
+                                                    <h5>Commentaires</h5>
                                                 </div>
                                             </div>
-                                    @endif
+
                                     <!-- statistic-item-wrap end-->
                                     </div>
                                     <!-- statistic-container end-->
@@ -243,24 +210,24 @@
                                                     @if(Auth::user()->wishlists->count() > 0)
                                                         @foreach ($terrain->wishlists as $wishlist)
 
-                                                        <div class="dashboard-list">
-                                                            <div class="dashboard-message">
+                                                            <div class="dashboard-list">
+                                                                <div class="dashboard-message">
                                                                     <span class="new-dashboard-item"><i
                                                                                 class="fa fa-times"></i></span>
 
-                                                                <div class="dashboard-message-text">
+                                                                    <div class="dashboard-message-text">
 
 
-                                                                    <p>
-                                                                        <i class="fa fa-heart"></i>{{$wishlist->wisher->first_name}}
-                                                                        a aimé <a
-                                                                                href="{{route('showTerrainDetails',$wishlist->wished->id)}}">{{$wishlist->wished->name}}</a>
-                                                                        listing!</p>
+                                                                        <p>
+                                                                            <i class="fa fa-heart"></i>{{$wishlist->wisher->first_name}}
+                                                                            a aimé <a
+                                                                                    href="{{route('showTerrainDetails',$wishlist->wished->id)}}">{{$wishlist->wished->name}}</a>
+                                                                            listing!</p>
 
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    @endforeach
+                                                        @endforeach
                                                     @endif
                                                 @endforeach
                                             @endif
@@ -271,25 +238,25 @@
                                         @else
                                             @if(!empty($userTerrains))
                                                 @foreach ($userTerrains as $terrain)
-                                                @foreach ($terrain->reviews as $review)
+                                                    @foreach ($terrain->reviews as $review)
 
-                                                    <div class="dashboard-list">
-                                                        <div class="dashboard-message">
+                                                        <div class="dashboard-list">
+                                                            <div class="dashboard-message">
                                                         <span class="new-dashboard-item"><i
                                                                     class="fa fa-times"></i></span>
-                                                            <div class="dashboard-message-text">
-                                                                <p>
-                                                                    <i class="fa fa-comments-o"></i>{{$review->reviewer->first_name}}
-                                                                    a Commenté <a
-                                                                            href="{{route('showTerrainDetails',$review->reviewed->id)}}">{{$review->reviewed->name}}</a>
-                                                                    listing!</p>
+                                                                <div class="dashboard-message-text">
+                                                                    <p>
+                                                                        <i class="fa fa-comments-o"></i>{{$review->reviewer->first_name}}
+                                                                        a Commenté <a
+                                                                                href="{{route('showTerrainDetails',$review->reviewed->id)}}">{{$review->reviewed->name}}</a>
+                                                                        listing!</p>
 
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                @endforeach
                                             @endforeach
-                                        @endforeach
-                                            @endif
+                                        @endif
                                     @endif
                                 @endif
                                 <!-- dashboard-list end-->
@@ -305,6 +272,22 @@
             <!-- section end -->
             <!--  section end -->
             <div class="limit-box fl-wrap"></div>
+            <section class="gradient-bg">
+                <div class="cirle-bg">
+                    <div class="bg" data-bg="images/bg/circle.png" style="background-image: url({{ asset('images/bg/circle.png') }});"></div>
+                </div>
+                <div class="container">
+                    <div class="join-wrap fl-wrap">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h3>Do You Have Questions ?</h3>
+                                <p>Lorem ipsum dolor sit amet, harum dolor nec in, usu molestiae at no.</p>
+                            </div>
+                            <div class="col-md-4"><a href="contacts.html" class="join-wrap-btn">Get In Touch <i class="fa fa-envelope-o"></i></a></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     </div>
 
@@ -347,3 +330,4 @@
         });
     </script>
 @endsection
+

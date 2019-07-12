@@ -92,6 +92,7 @@ Route::group(['module' => 'User', 'middleware' => ['adminAccess'], 'namespace' =
     //Terrains
 
     Route::get('/admin/terrain', 'WebController@showTerrainsList')->name('showTerrainsList');
+    Route::get('/admin/complexs', 'WebController@showComplexsList')->name('showComplexsList');
     Route::get('/admin/terrain/add', 'WebController@showAddTerrain')->name('showAddTerrain');
     Route::post('/admin/terrain/add', 'WebController@handleAddTerrain')->name('handleAddTerrain');
 
@@ -99,7 +100,7 @@ Route::group(['module' => 'User', 'middleware' => ['adminAccess'], 'namespace' =
 
     //Clubs
 
-    Route::get('/admin/club', 'WebController@showClubsList')->name('showClubsList');
+    Route::get('/admin/club', 'WebController@showAdminClubsList')->name('showClubsList');
     Route::get('/admin/club/add', 'WebController@showAddClub')->name('showAddClub');
     Route::post('/admin/club/add', 'WebController@handleAddClub')->name('handleAddClub');
 

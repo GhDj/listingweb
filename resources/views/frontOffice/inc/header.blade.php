@@ -59,6 +59,21 @@
         <nav>
             <ul>
                 <li>
+                    <a href="#" class="{{$activatedLink['associations']}}">Association Sportives <i class="fa fa-caret-down"></i></a>
+
+                </li>
+                <li>
+                    <a href="#" class="{{$activatedLink['infrastructure']}}">Infrastructures Sportives <i class="fa fa-caret-down"></i></a>
+
+                    <ul>
+                        @foreach($categories as $category)
+
+                            <a href="{{ route('hundleGetListingByCategory',$category->id) }}">{{$category->title}}</a>
+
+                        @endforeach
+                    </ul>
+                </li>
+                <li>
                     <a href="{{route('showHome')}}" class="{{$activatedLink['home']}}">Accueil</a>
                 </li>
 
