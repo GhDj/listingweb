@@ -150,6 +150,48 @@
                                                     class="fa fa-share"></i></div>
                                         <div class="share-container  isShare"></div>
                                     </div>
+                                    <div class="profile-edit-container add-list-container">
+                                        <div class="profile-edit-header fl-wrap">
+                                            <h4>Ajouter des photos</h4>
+                                        </div>
+                                        <div class="custom-form">
+                                            <div class="row">
+                                                <!--col -->
+                                                <div class="col-md-12">
+                                                    <form action="{{ route('handleUserUploadImage') }}" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+
+                                                        @csrf
+
+                                                        <input type="hidden" name="terrain_id" value="{{ $terrain->id }}">
+
+                                                        <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+
+
+
+                                                        <div class="add-list-media-wrap fuzone">
+
+                                                            <div class="fu-text">
+                                                                <span><i class="fa fa-picture-o"></i> Cliquez ici ou déposez des images à télécharger</span>
+                                                            </div>
+                                                            <input required type="file" class="form-control" name="images[]"
+                                                                   multiple>
+                                                            @if ($errors->has('images'))
+                                                                <span class="invalid-feedback" role="alert">
+                                                      <strong>{{ $errors->first('images') }}</strong>
+                                                    </span>
+                                                            @endif
+                                                        </div>
+
+                                                        <button class="btn  big-btn  color-bg flat-btn">Ajouter <i
+                                                                    class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                                                    </form>
+
+                                                </div>
+                                                <!--col end-->
+
+                                            </div>
+                                        </div>
+                                    </div>
                                     <!-- end gallery items -->
                                 </div>
                                 <!-- list-single-main-item end -->

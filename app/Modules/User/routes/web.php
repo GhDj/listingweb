@@ -111,4 +111,8 @@ Route::group(['module' => 'User', 'middleware' => ['adminAccess'], 'namespace' =
 
     Route::get('/admin/complex_request/accept/{id}','WebController@acceptComplexRequest')->name('acceptComplexRequest');
     Route::get('/admin/complex_request/cancel/{id}','WebController@cancelComplexRequest')->name('cancelComplexRequest');
+
+    /***** Club Request ********/
+    Route::get('/admin/club_request/accept/{id}','WebController@handleAcceptClubRequest')->name('acceptClubRequest');
+    Route::get('/admin/club_request/cancel/{id}','WebController@handleCancelComplexRequest')->name('cancelClubRequest');
 });

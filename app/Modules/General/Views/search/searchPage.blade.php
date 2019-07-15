@@ -12,7 +12,7 @@
 
 @section('header')
 
-    @include('frontOffice.inc.header',['activatedLink'=>['home'=>'act-link','contact'=>'','faq'=>'','profile'=>'']])
+    @include('frontOffice.inc.header',['activatedLink'=>['home'=>'act-link','contact'=>'','faq'=>'','profile'=>'','associations' =>'','infrastructure'=>'']])
 
 @endsection
 
@@ -302,14 +302,14 @@
 
 
 
-                                                                        <a class="listing-geodir-category" href="{{ route('showTerrainDetails',['id' => $terrain->id]) }}">{{$terrain->category->title }}</a>
+                                                                        <a class="listing-geodir-category" href="{{ route('hundleGetListingByCategory',$terrain->category->id) }}">{{$terrain->category->title }}</a>
 
                                                                     <div class="listing-avatar"><a href="author-single.html"><img src="{{ \App\Modules\User\Models\User::findOrFail($terrain->complex->user_id)->picture }}" alt=""></a>
                                                                         <span class="avatar-tooltip">Ajouté par
                                                                             <strong>{{ \App\Modules\User\Models\User::findOrFail($terrain->complex->user_id)->first_name }} {{ \App\Modules\User\Models\User::findOrFail($terrain->complex->user_id)->last_name }}</strong></span>
                                                                     </div>
 
-                                                                    <h3><a href="listing-single.html">{{$terrain->name}}</a></h3>
+                                                                    <h3><a href="{{ route('showTerrainDetails',['id' => $terrain->id]) }}">{{$terrain->name}}</a></h3>
 
                                                                     <p>
                                                                         {{$terrain->description}}

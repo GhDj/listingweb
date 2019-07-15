@@ -9,6 +9,7 @@ use App\Modules\Complex\Models\Sport;
 use App\Modules\Content\Models\Post;
 use App\Modules\General\Models\Address;
 use App\Modules\General\Models\AdressImport;
+use App\Modules\General\Models\Media;
 use App\Modules\Infrastructure\Models\ComplexSchedule;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -29,6 +30,7 @@ use Illuminate\Support\Facades\Storage;
 use League\Csv\Reader;
 use Maatwebsite\Excel\Facades\Excel;
 use UxWeb\SweetAlert\SweetAlert;
+use Intervention\Image\ImageManagerStatic as Image;
 
 
 class WebController extends Controller
@@ -42,11 +44,11 @@ class WebController extends Controller
     public function showHome()
     {
         return view('General::welcome', [
-            'results' => Terrain::All(),
-            'categories' => Category::All(),
-            'sports' => Sport::All(),
-            'complex' => Complex::All(),
-            'terrains'=>Terrain::all(),
+            'results' => Terrain::paginate(30),
+            'categories' => Category::paginate(30),
+            'sports' => Sport::paginate(30),
+            'complex' => Complex::paginate(30),
+            'terrains'=>Terrain::paginate(30),
             'posts' => Post::OrderBy('id')->limit(3)->get(),
             'footballTerrains' => Terrain::where('sport_id', 1)->take(4)->with('medias')->get()
         ]);
@@ -154,6 +156,8 @@ class WebController extends Controller
 
         $data = Input::All();
 
+        $selectdCategoryId = $data['category'];
+
         if (isset($data['latitude']) and !empty($data['latitude'])) {
             $latitude = $data['latitude'];
             $longitude = $data['longitude'];
@@ -223,7 +227,7 @@ class WebController extends Controller
             'terrains' => $terrains,
             'categories' => Category::all(),
             'sports' => Sport::All(),
-
+            'selectdCategoryId' => $selectdCategoryId,
             'latitude' => $latitude,
             'longitude' => $latitude,
             'address' => isset($data['address']) ? $data['address'] : null,
@@ -671,4 +675,43 @@ class WebController extends Controller
         //unlink($repository."complex.json");
     }
 
+    public function handleUploadImage(Request $request) {
+
+        request()->validate([
+
+            'images' => 'required',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+
+        ]);
+
+        $images  = $request->file('images');
+
+
+
+        foreach ($images as $image) {
+
+         //   dd($image);
+
+            $filename = time().'-'.$image->getClientOriginalName();
+            $image->move(public_path('/uploads/terrains/'), $filename);
+
+
+          //  $image->move(public_path('/uploads/terrains/'),$filename);
+
+
+            //dd($image);
+
+          Media::create([
+                'link' =>'uploads/terrains/'.$filename,
+                'terrain_id' => $request['terrain_id'],
+                'type' => 10
+                /* type 10 means images uploaded for the gallery by any authentificated user and waiting for validation*/,
+            ]);
+
+        }
+        //dd($request['images']);
+        SweetAlert::success('Bien !', 'Images Ajoutés. !')->persistent('Fermer');
+        return redirect()->back();
+
+    }
 }

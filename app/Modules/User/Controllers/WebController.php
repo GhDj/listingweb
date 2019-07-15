@@ -2,6 +2,7 @@
 
 namespace App\Modules\User\Controllers;
 
+use App\Modules\Complex\Models\ClubRequest;
 use App\Modules\Complex\Models\ComplexCategory;
 use App\Modules\Complex\Models\ComplexRequest;
 use App\Modules\Complex\Models\Infrastructure;
@@ -445,10 +446,10 @@ class WebController extends Controller
 
         if (checkClubRole($user)) {
             $club = Auth::user()->club;
-            return view('User::frontOffice.userDashboard', [
+            return view('User::frontOffice.Club.userDashboard', [
                 'userTerrains' => ($user->complex) ? $user->complex->terrains : null,
                 'complex' => $user->complex,
-                'availableComplex' => Complex::doesnthave('user')->where('type', 1)->get()
+                'availableComplex' => Complex::doesnthave('user')->where('type', 1)->paginate(30)
             ]);
 
         }
@@ -458,7 +459,7 @@ class WebController extends Controller
             if ($user->complex) {
                 //$reviewCounts = $user->complex->terrains()->with('reviews')->count();
                 $reviewCounts = 0;
-                foreach ($user->complex->terrains()->paginate(30) as $terrain) {
+                foreach ($user->complex->terrains() as $terrain) {
                     $reviewCounts += Review::where('reviewed_id','=',$terrain->id)->count();
                 }
 
@@ -466,9 +467,9 @@ class WebController extends Controller
        //     dd($reviewCounts);
             return view('User::frontOffice.userDashboard', [
                 'userTerrains' => ($user->complex) ? $user->complex->terrains : null,
-                'complex' => $user->complex->paginate(30),
+                'complex' => ($user->complex) ? $user->complex : null,
                 'reviewsCount' => $reviewCounts,
-                'availableComplex' => Complex::doesnthave('user')->where('type', 1)->get()
+                'availableComplex' => Complex::doesnthave('user')->where('type', 1)->paginate(30)
             ]);
 
             //return "private or public complex resp";
@@ -1035,10 +1036,20 @@ class WebController extends Controller
             ]
         );
 
+        $terrain = Terrain::findOrFail($request->terrain_id);
+
         $club = Club::create([
             'name' => $request->name,
             'description' => $request->description,
-            'terrain_id' => $request->terrain_id
+            'terrain_id' => $request->terrain_id,
+            'address_id' => $terrain->complex->address->id,
+            'user_id' => $user->id
+        ]);
+
+        ClubRequest::create([
+            'status' => 0,
+            'user_id' => $user->id,
+            'club_id' => $club->id
         ]);
 
         $imagePath = 'storage/uploads/clubs/';
@@ -1054,17 +1065,15 @@ class WebController extends Controller
             ]);
         }
 
-        SweetAlert::success('Bien !', 'Club ajouté avec succès. !')->persistent('Fermer');
-        return redirect()->route('showUserAddEquipement');
+        SweetAlert::success('Bien !', 'Votre demande à été enregistré !')->persistent('Fermer');
+        return redirect()->back();
 
     }
 
     public function showUserAddTeam()
     {
         $user = Auth::user();
-        $userClubs = Club::whereHas('terrain.complex', function ($subQuery) use ($user) {
-            $subQuery->where('user_id', $user->id);
-        })->get();
+        $userClubs = $user->club;
         if (empty($userClubs)) {
             SweetAlert::error('Opps !', 'Veuillez Ajouter Un Terrain. !')->persistent('Fermer');
             return redirect()->route('showUserAddTerrain');
@@ -1652,7 +1661,8 @@ class WebController extends Controller
     public function showComplexRequest()
     {
 
-        return view('User::backOffice.showComplexRequest', ['complexRequests' => ComplexRequest::all()]);
+        return view('User::backOffice.showComplexRequest', ['complexRequests' => ComplexRequest::all(),
+            'clubsRequests' => ClubRequest::all()]);
     }
 
     public function cancelComplexRequest($id)
@@ -1678,6 +1688,28 @@ class WebController extends Controller
         }
         return redirect()->back();
 
+    }
+
+    public function handleAcceptClubRequest($id)
+    {
+        $clubRequest = ClubRequest::find($id);
+        if ($clubRequest) {
+            $clubRequest->status = 1;
+            $clubRequest->save();
+            alert()->error("Demande d'accès est accepté", "Bien")->persistent("Ok");
+        }
+        return redirect()->back();
+    }
+
+    public function handleCancelComplexRequest($id)
+    {
+        $complexRequest = ComplexRequest::find($id);
+        if ($complexRequest) {
+            $complexRequest->status = -1;
+
+            alert()->error("Demande d'accès est annulé", "Bien")->persistent("Ok");
+        }
+        return redirect()->back();
     }
 
 

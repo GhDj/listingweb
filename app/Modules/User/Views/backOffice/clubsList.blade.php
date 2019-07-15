@@ -60,7 +60,7 @@
                                 <div class="card-body">
                                     <p><div class="dashboard-listing-table-text">
                                         <h4><a href="{{route('showClubDetails',$club->id)}}">{{$club->name}}</a></h4>
-                                        <span class="dashboard-listing-table-address"><i class="fa fa-map-marker"></i><a  href="#">{{$club->terrain->complex->address->address}}</a></span>
+                                        <span class="dashboard-listing-table-address"><i class="fa fa-map-marker"></i><a  href="#">{{$club->address->address}}</a></span>
                                         <div class="listing-rating card-popup-rainingvis fl-wrap" data-starrating2="5">
                                             <span>({{$club->reviews->count()}} reviews)</span>
                                         </div>
