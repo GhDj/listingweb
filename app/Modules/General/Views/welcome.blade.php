@@ -80,11 +80,21 @@
                     <div class="container">
                         <div class="widget kopa-entry-list-widget">
 
-                            <div class="list-container-4">
+                            <div class="list-container-8">
                                 <ul class="tabs-4 clearfix">
-                                    <li class="active"><a href="#tab-1-1" style="color:black">Chercher Un terrain</a>
+                                    <li class="active">
+                                        <a href="#tab-1-1">
+
+                                            <div class="section-title search-tab-title">
+                                                <h2>Chercher Un terrain</h2>
+                                            </div>
+                                        </a>
                                     </li>
-                                    <li><a href="#tab-1-2" style="color:black">Chercher Un Club</a></li>
+                                    <li><a href="#tab-1-2">
+
+                                            <div class="section-title search-tab-title">
+                                                <h2>Chercher une association sportive</h2>
+                                            </div></a></li>
                                 </ul><!--tabs-2-->
                             </div>
                             <div class="tab-container-4">

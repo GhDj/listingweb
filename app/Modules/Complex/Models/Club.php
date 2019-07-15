@@ -27,13 +27,13 @@ class Club extends Model
        */
       protected $fillable = [
           'name',
-          'address',
+          'address_id',
           'phone',
           'email',
           'web_site',
           'description',
           'logo',
-          'user_id'
+          'user_id',
       ];
 
       public function medias()
@@ -52,6 +52,26 @@ class Club extends Model
           return $this->morphMany('App\Modules\Reviews\Models\Wishlist','wished');
       }
 
+      public function terrain() {
+          return $this->belongsTo('App\Modules\Complex\Models\Terrain');
+      }
 
+      public function status() {
+          return $this->hasOne('App\Modules\Complex\Models\ClubRequest','club_id','id');
+      }
+
+    public function address() {
+        return $this->hasOne('App\Modules\General\Models\Address','id','address_id');
+    }
+
+      public function user() {
+          return $this->belongsTo('App\Modules\User\Models\User','user_id');
+      }
+
+    public function reviews()
+    {
+
+        return $this->morphMany('App\Modules\Reviews\Models\Review', 'reviewed');
+    }
 
 }

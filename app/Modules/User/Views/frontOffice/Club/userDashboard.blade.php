@@ -1,3 +1,12 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: ghdj9
+ * Date: 7/13/2019
+ * Time: 4:23 AM
+ */
+?>
+
 @extends('frontOffice.layout')
 
 @section('head')
@@ -79,49 +88,49 @@
 
                                         <div class="statistic-item-wrap">
                                             <div class="statistic-item gradient-bg fl-wrap">
-                                                @if (checkPrivateComplexRole(Auth::user())||checkPublicComplexRole(Auth::user()))
 
-                                                @if(Auth::user()->complex)
-                                                    <div class="statistic-item-numder">
-                                                        {{ Auth::user()->complex->view_count }}
-                                                    </div>
-                                                    <h5>Visites</h5>
-                                                @else
+
+                                                    @if(Auth::user()->club()->first())
+                                                        <div class="statistic-item-numder">
+                                                            {{ Auth::user()->complex->view_count }}
+                                                        </div>
+                                                        <h5>Visites</h5>
+                                                    @else
                                                         <div class="statistic-item-numder">
                                                             0
                                                         </div>
                                                         <h5>Visites</h5>
-                                                @endif
-                                                @endif
-
-                                            </div>
-                                        </div>
-
-
-                                        <div class="statistic-item-wrap">
-                                            <div class="statistic-item gradient-bg fl-wrap">
-
-                                                @if (checkPrivateComplexRole(Auth::user())||checkPublicComplexRole(Auth::user()))
-                                                @if(Auth::user()->complex)
-                                                    <div class="statistic-item-numder">
-                                                       @isset($reviewsCount)
-                                                        {{$reviewsCount}}
-                                                        @endisset
-
-                                                    </div>
-                                                    <h5>Notes</h5>
-                                                @else
-                                                    <h5>Aucune Note</h5>
-                                                @endif
                                                     @endif
+
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="statistic-item-wrap">
+                                            <div class="statistic-item gradient-bg fl-wrap">
+
+
+                                                    @if(Auth::user()->club()->first())
+                                                        <div class="statistic-item-numder">
+                                                            @isset($reviewsCount)
+                                                                {{$reviewsCount}}
+                                                            @endisset
+
+                                                        </div>
+                                                        <h5>Notes</h5>
+                                                    @else
+                                                        <h5>Aucune Note</h5>
+                                                    @endif
+
                                             </div>
                                         </div>
 
                                         <div class="statistic-item-wrap">
                                             <div class="statistic-item gradient-bg fl-wrap">
 
-                                                @if (checkPrivateComplexRole(Auth::user())||checkPublicComplexRole(Auth::user()))
-                                                    @if(Auth::user()->complex)
+
+                                                    @if(Auth::user()->club()->first())
                                                         <div class="statistic-item-numder">
                                                             @isset($reviewsCount)
                                                                 {{$reviewsCount}}
@@ -132,32 +141,32 @@
                                                     @else
                                                         <h5>Aucun Commentaire</h5>
                                                     @endif
-                                                @endif
+
                                             </div>
                                         </div>
                                         <!-- statistic-item-wrap end-->
 
+                                        <div class="statistic-item-wrap">
+                                            <div class="statistic-item gradient-bg fl-wrap">
 
+
+                                                @if(Auth::user()->club()->first())
+                                                    <div class="statistic-item-numder">
+                                                        @isset($reviewsCount)
+                                                            {{$reviewsCount}}
+                                                        @endisset
+
+                                                    </div>
+                                                    <h5>Commentaires</h5>
+                                                @else
+                                                    <h5>Aucun Commentaire</h5>
+                                                @endif
+
+                                            </div>
+                                        </div>
                                         <!-- statistic-item-wrap end-->
                                         <!-- statistic-item-wrap-->
-                                        @if (checkAthleticRole(Auth::user()))
-                                            <div class="statistic-item-wrap">
-                                                <div class="statistic-item gradient-bg fl-wrap">
-                                                    <i class="fa fa-comments-o"></i>
-                                                    <div class="statistic-item-numder">{{Auth::user()->reviews->count()}}</div>
-                                                    <h5>Total Commentaires</h5>
-                                                </div>
-                                            </div>
-                                            <!-- statistic-item-wrap end-->
-                                            <!-- statistic-item-wrap-->
-                                            <div class="statistic-item-wrap">
-                                                <div class="statistic-item gradient-bg fl-wrap">
-                                                    <i class="fa fa-heart-o"></i>
-                                                    <div class="statistic-item-numder">{{Auth::user()->wishlists->count()}}</div>
-                                                    <h5>Aimé</h5>
-                                                </div>
-                                            </div>
-                                    @endif
+
                                     <!-- statistic-item-wrap end-->
                                     </div>
                                     <!-- statistic-container end-->
@@ -244,8 +253,8 @@
 
                                                             {{--<select data-placeholder="Les complex public disponibles"
                                                                     name="complex" class="chosen-select">--}}
-                                                                <select data-placeholder="Les complex public disponibles"
-                                                                        name="complex">
+                                                            <select data-placeholder="Les complex public disponibles"
+                                                                    name="complex">
                                                                 @foreach($availableComplex as $complex)
                                                                     <option value="{{$complex->id}}">{{$complex->name}}</option>
                                                                 @endforeach
@@ -273,24 +282,24 @@
                                                     @if(Auth::user()->wishlists->count() > 0)
                                                         @foreach ($terrain->wishlists as $wishlist)
 
-                                                        <div class="dashboard-list">
-                                                            <div class="dashboard-message">
+                                                            <div class="dashboard-list">
+                                                                <div class="dashboard-message">
                                                                     <span class="new-dashboard-item"><i
                                                                                 class="fa fa-times"></i></span>
 
-                                                                <div class="dashboard-message-text">
+                                                                    <div class="dashboard-message-text">
 
 
-                                                                    <p>
-                                                                        <i class="fa fa-heart"></i>{{$wishlist->wisher->first_name}}
-                                                                        a aimé <a
-                                                                                href="{{route('showTerrainDetails',$wishlist->wished->id)}}">{{$wishlist->wished->name}}</a>
-                                                                        listing!</p>
+                                                                        <p>
+                                                                            <i class="fa fa-heart"></i>{{$wishlist->wisher->first_name}}
+                                                                            a aimé <a
+                                                                                    href="{{route('showTerrainDetails',$wishlist->wished->id)}}">{{$wishlist->wished->name}}</a>
+                                                                            listing!</p>
 
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    @endforeach
+                                                        @endforeach
                                                     @endif
                                                 @endforeach
                                             @endif
@@ -301,25 +310,25 @@
                                         @else
                                             @if(!empty($userTerrains))
                                                 @foreach ($userTerrains as $terrain)
-                                                @foreach ($terrain->reviews as $review)
+                                                    @foreach ($terrain->reviews as $review)
 
-                                                    <div class="dashboard-list">
-                                                        <div class="dashboard-message">
+                                                        <div class="dashboard-list">
+                                                            <div class="dashboard-message">
                                                         <span class="new-dashboard-item"><i
                                                                     class="fa fa-times"></i></span>
-                                                            <div class="dashboard-message-text">
-                                                                <p>
-                                                                    <i class="fa fa-comments-o"></i>{{$review->reviewer->first_name}}
-                                                                    a Commenté <a
-                                                                            href="{{route('showTerrainDetails',$review->reviewed->id)}}">{{$review->reviewed->name}}</a>
-                                                                    listing!</p>
+                                                                <div class="dashboard-message-text">
+                                                                    <p>
+                                                                        <i class="fa fa-comments-o"></i>{{$review->reviewer->first_name}}
+                                                                        a Commenté <a
+                                                                                href="{{route('showTerrainDetails',$review->reviewed->id)}}">{{$review->reviewed->name}}</a>
+                                                                        listing!</p>
 
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                @endforeach
                                             @endforeach
-                                        @endforeach
-                                            @endif
+                                        @endif
                                     @endif
                                 @endif
                                 <!-- dashboard-list end-->
@@ -377,3 +386,4 @@
         });
     </script>
 @endsection
+

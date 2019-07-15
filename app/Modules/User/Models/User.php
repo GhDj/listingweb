@@ -112,7 +112,7 @@ class User extends Authenticatable
 
   public function club()
   {
-      return $this->hasOne(Club::class);
+      return $this->hasOne(Club::class,'user_id','id');
   }
 
   public function complexRequest()

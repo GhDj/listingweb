@@ -37,3 +37,7 @@ Route::group(['module' => 'General', 'middleware' => ['web'], 'namespace' => 'Ap
     Route::get('categorylisting/{category_id}','WebController@hundleGetListingByCategory')->name('hundleGetListingByCategory');
 });
 
+Route::group(['module' => 'General', 'middleware' => ['userAccess'], 'namespace' => 'App\Modules\General\Controllers'], function () {
+    Route::post('/media/upload', 'WebController@handleUploadImage')->name('handleUserUploadImage');
+});
+

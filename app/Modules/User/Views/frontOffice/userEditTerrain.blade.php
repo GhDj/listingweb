@@ -12,7 +12,7 @@
 
 @section('header')
 
-    @include('frontOffice.inc.header',['activatedLink'=>['home'=>'','contact'=>'','faq'=>'','profile'=>'act-link']])
+    @include('frontOffice.inc.header',['activatedLink'=>['home'=>'','contact'=>'','faq'=>'','profile'=>'act-link','associations'=>'','infrastructure'=>'']])
 
 @endsection
 
@@ -87,9 +87,17 @@
                                                 <div class="col-md-4">
                                                     <label>Type de terrain</label>
                                                     <select class="chosen" name="sport_id">
-                                                        @foreach ($sports as $sport)
-                                                            <option value="{{$sport->id}}">{{$sport->title}}</option>
-                                                        @endforeach
+                                                        @isset($sports)
+
+                                                            @if(!empty($sports))
+
+                                                                @foreach ($sports as $sport)
+                                                                    <option value="{{$sport->id}}">{{$sport->title}}</option>
+                                                                @endforeach
+
+                                                            @endif
+
+                                                        @endisset
                                                     </select>
                                                     @if ($errors->has('sport_id'))
                                                         <span class="invalid-feedback" role="alert">
@@ -101,13 +109,19 @@
                                                 <div class="col-md-4">
                                                     <label>Sport dans le terrain</label>
                                                     <select class="chosen" name="activityList">
-                                                        @foreach ($sports as $sport)
-                                                            <optgroup label="{{$sport->title}}">
-                                                            @foreach($sport->categories as $sportCategory)
-                                                                    <option value="{{$sport->id}}">{{$sport->title}}</option>
+                                                        @isset($sports)
+
+                                                            @if(!empty($sports))
+                                                                @foreach ($sports as $sport)
+                                                                    <optgroup label="{{$sport->title}}">
+                                                                    @foreach($sport->categories as $sportCategory)
+                                                                            <option value="{{$sport->id}}">{{$sport->title}}</option>
+                                                                        @endforeach
+                                                                    </optgroup>
                                                                 @endforeach
-                                                            </optgroup>
-                                                        @endforeach
+
+                                                            @endif
+                                                        @endisset
                                                     </select>
                                                     @if ($errors->has('sport_id'))
                                                         <span class="invalid-feedback" role="alert">

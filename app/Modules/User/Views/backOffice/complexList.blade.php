@@ -19,7 +19,7 @@
 
 @section('sidebar')
     @include('backOffice.inc.sidebar', [
-        'current' => 'terrainsList'
+        'current' => 'Complexs'
     ])
 @endsection
 
@@ -32,7 +32,7 @@
         /* Datatables responsive */
 
         $(document).ready(function () {
-            $('#datatable-responsive').DataTable({
+            $('#datatable-complex').DataTable({
                 responsive: true,
                 language: {
                     url: "{{ asset('plugins') }}/datatable/lang/french.json"
@@ -52,9 +52,9 @@
                     <h1 class="card-title">Complexes</h1>
                 </div>
                     <div class="card-body">
+                        <a href="{{route('showAddComplexAdmin')}}" class="btn btn-primary">Ajouter</a>
 
-
-                        <table id="datatable-complex-request"
+                        <table id="datatable-complex"
                                class="display table table-striped table-bordered" cellspacing="0"
                                width="100%">
                             <thead>

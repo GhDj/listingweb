@@ -55,10 +55,21 @@
             @if(checkClubRole(Auth::user()))
 
                 <div class="user-profile-menu">
-                    <h3>Listings</h3>
+                    <h3>Gestion du Club</h3>
                     <ul>
-                        <li><a href="#"><i class="fa fa-th-list"></i> Modifier club </a></li>
-                        <li><a href="#"><i class="fa fa-th-list"></i> Ajouter Equipe </a></li>
+                        @if(Auth::user()->club()->first() != null)
+                            @if(Auth::user()->club()->first()->status->status == 0)
+                                <li><a href="#" class="user-profile-act"><i class="fa fa-th-list"></i> Club en vérification </a></li>
+
+                                @else(Auth::user()->club()->first()->status->status == 1)
+                                <li><a href="{{route('showUserAddClub')}}"><i class="fa fa-th-list"></i> Modifier club </a></li>
+                                <li><a href="{{route('showUserAddTeam')}}"><i class="fa fa-th-list"></i> Ajouter Equipe </a></li>
+                            @endif
+                        @else
+                            <li><a href="{{route('showUserAddClub')}}"><i class="fa fa-th-list"></i> Ajouter club </a></li>
+
+                        @endif
+
                     </ul>
                 </div>
         @endif
