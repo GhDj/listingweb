@@ -17,3 +17,4 @@ yarn-error.log
 .stylelintrc.json
 captainhook.json
 /node_modules
+/public/uploads

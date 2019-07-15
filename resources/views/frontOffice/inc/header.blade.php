@@ -36,7 +36,9 @@
             <ul>
                 <li><a href="{{route('showUserDashboard')}}" class="{{$activatedLink['profile']}}">Profile</a></li>
                 @if (checkPrivateComplexRole(Auth::user())||checkPublicComplexRole(Auth::user()))
-                    <li><a href="{{route('showUserAddComplex')}}"> Ajouter complex</a></li>
+                   @if((!Auth::user()->complex) && (checkPrivateComplexRole(Auth::user())))
+                     <li><a href="{{route('showUserAddComplex')}}"> Ajouter complex</a></li>
+                    @endif
                     <li><a href="{{route('showUserListingTerrain')}}"> Mes Terrains</a></li>
                 @endif
                 <li><a href="{{route('handleLogout')}}">Déconnecter</a></li>

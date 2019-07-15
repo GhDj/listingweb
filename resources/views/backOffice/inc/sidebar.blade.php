@@ -13,8 +13,8 @@
                 </a>
                 <div class="triangle"></div>
             </li>
-            <li class="nav-item @if($current == 'addComplex') active @endif">
-                <a class="nav-item-hold" href="{{route('showAddComplexAdmin')}}">
+            <li class="nav-item @if($current == 'Complexs') active @endif">
+                <a class="nav-item-hold" href="{{route('showComplexsList')}}">
                     <span class="nav-text">Complexs</span>
                 </a>
                 <div class="triangle"></div>
