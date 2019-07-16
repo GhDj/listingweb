@@ -302,7 +302,7 @@
 
 
 
-                                                                        <a class="listing-geodir-category" href="{{ route('hundleGetListingByCategory',$terrain->complex->category->id) }}">{{$terrain->complex->category->title }}</a>
+                                                                        <a class="listing-geodir-category" href="{{ route('hundleGetListingByCategory',$terrain->category->id) }}">{{$terrain->category->title }}</a>
 
                                                                     <div class="listing-avatar"><a href="author-single.html"><img src="{{ \App\Modules\User\Models\User::findOrFail($terrain->complex->user_id)->picture }}" alt=""></a>
                                                                         <span class="avatar-tooltip">Ajouté par
