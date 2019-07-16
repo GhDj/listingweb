@@ -493,7 +493,7 @@
 
             var lon = "{{$terrain->complex->address->longitude}}";
             $.ajax({
-                url: 'http://api.openweathermap.org/data/2.5/weather?lat=' + lat + "&lon=" + lon + "&units=metric&lang=fr&APPID=c10bb3bd22f90d636baa008b1529ee25",
+                url: 'https://api.openweathermap.org/data/2.5/weather?lat=' + lat + "&lon=" + lon + "&units=metric&lang=fr&APPID=c10bb3bd22f90d636baa008b1529ee25",
                 type: "GET",
                 dataType: "jsonp",
                 success: function (data) {
