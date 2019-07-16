@@ -42,13 +42,13 @@ return [
     'twitter' => [
         'client_id' => 'ifEHqgpIIkJTwyuXpYjgrBkCI',
         'client_secret' => 'NL75fa6EfxdE78qbK7czValJW6wsRJaqieQ4C9ElMIaky89CLN',
-        'redirect' => 'http://olympiade.prod/public/user/social/twitter/callback',
+        'redirect' => 'https://bluepenlabs.com/projects/olympiade-sports-web/public/user/social/twitter/callback',
     ],
 
   'google' => [
       'client_id' => '949293573898-ufje7v1v157mo1e8rqqjjlilvotku4j1.apps.googleusercontent.com',
       'client_secret' => 'yNElY5JwKBwD_5wQOIcM1LhQ',
-      'redirect' => 'http://localhost/olympiade-sports-web/public/user/social/google/callback',
+      'redirect' => 'https://bluepenlabs.com/projects/olympiade-sports-web/public/user/social/google/callback',
   ],
 
 ];
