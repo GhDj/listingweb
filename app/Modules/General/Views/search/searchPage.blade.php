@@ -87,7 +87,7 @@
                                 <div class="listsearch-options fl-wrap" id="lisfw">
                                     <div class="container">
                                         <div class="listsearch-header fl-wrap">
-                                            <h3>Résultats pour : <span>{{ \App\Modules\Complex\Models\Category::where('id','=',$selectdCategoryId)->first()->title }}</span></h3>
+                                            <h3>Résultats pour : <span>@isset($selectedCategory) {{$selectedCategory}} @endisset</span></h3>
                                            <!-- <div class="listing-view-layout">
                                                 <ul>
                                                     <li><a class="grid active" href="#"><i class="fa fa-th-large"></i></a></li>
@@ -217,7 +217,7 @@
                                                                         <i class="mbri-key single-i"></i>
                                                                         <input type="text" placeholder="Ou"
                                                                                name="address" id="autocomplete"
-                                                                               value="{{$address}}"/>
+                                                                               value="@isset($address){{$address}}@endisset"/>
                                                                     </div>
 
                                                                     <div class="hidden-listing-filter fl-wrap">
@@ -288,7 +288,7 @@
                                                                     {{  $terrain->medias->first()->link}}
                                                                     @else
                                                                             images/unkown.jpg
-@endif" alt="">
+                                                                    @endif" alt="">
 
                                                                     <div class="overlay"></div>
                                                                     <div class="list-post-counter">
@@ -302,7 +302,7 @@
 
 
 
-                                                                        <a class="listing-geodir-category" href="{{ route('hundleGetListingByCategory',$terrain->category->id) }}">{{$terrain->category->title }}</a>
+                                                                        <a class="listing-geodir-category" href="{{ route('hundleGetListingByCategory',$terrain->complex->category->id) }}">{{$terrain->complex->category->title }}</a>
 
                                                                     <div class="listing-avatar"><a href="author-single.html"><img src="{{ \App\Modules\User\Models\User::findOrFail($terrain->complex->user_id)->picture }}" alt=""></a>
                                                                         <span class="avatar-tooltip">Ajouté par
@@ -365,7 +365,7 @@
 @endif" alt="">
                                                                     <div class="overlay"></div>
                                                                     <div class="list-post-counter">
-                                                                        <span>{{$terrain->wishlists->count()}}</span><i
+                                                                        <span>{{$club->wishlists->count()}}</span><i
                                                                                 class="fa fa-heart"></i></div>
                                                                 </div>
                                                                 <a class="listing-geodir-category"

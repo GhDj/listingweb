@@ -90,9 +90,17 @@ class WebController extends Controller
 
     //*********************** Search functions **********************//
 
-    public function showSearchPage()
+    public function showSearchPage(Request $request, $category_id)
     {
-        return view('General::search.searchPage', ['latitude' => '', 'longitude' => '', 'categories' => Category::all(), 'address' => '', 'sports' => Sport::all()]);
+        if (isset($request['selectdCategoryId']))
+        {
+            $selectedCategory = Category::where('id','=',$request['selectdCategoryId'])->first()->title;
+        } else if (isset($category_id)) {
+            $selectedCategory = Category::where('id','=',$category_id)->first()->title;
+         } else {
+            $selectedCategory = null;
+        }
+        return view('General::search.searchPage', ['latitude' => '', 'longitude' => '', 'categories' => Category::all(), 'address' => '', 'sports' => Sport::all(), 'selectedCategory' => $selectedCategory]);
     }
 
 
@@ -135,13 +143,14 @@ class WebController extends Controller
         if (!empty($club->reviews)) {
             $starsClub = $club->reviews->avg('note');
         }
-        $specialitys = Sport::whereHas('teams.club', function ($query) use ($id) {
+        /*$specialitys = Sport::whereHas('teams.club', function ($query) use ($id) {
             $query->where('id', $id);
-        })->get();
-
+        })->get();*/
+        //dd($club->sports);
         return view('General::search.clubDetails', [
             'clubDetail' => $club,
-            'specialitys' => $specialitys,
+            'specialitys' => $club->sports()->get(),
+            'sports' => $club->sports()->get(),
             'starsClub' => $starsClub
         ]);
     }
@@ -294,7 +303,7 @@ class WebController extends Controller
         }
 
 
-        $clubs = Club::select('clubs.*')
+       /* $clubs = Club::select('clubs.*')
             ->when(isset($data['name']), function ($query) use ($data) {
                 $query->Where('name', 'LIKE', '%' . $data['name'] . '%');
             })
@@ -309,15 +318,15 @@ class WebController extends Controller
                     $subQuery->havingRaw("distance <= ?", [50]);
                 });
             })
-            ->get();
+            ->get();*/
 
         return View('General::search.searchPage', [
-            'clubs' => $clubs,
+            'clubs' => Club::all(),
             'categories' => Category::select('title')->groupBy('title')->get(),
             'sports' => Sport::All(),
-            'latitude' => $data['latitudeClub'],
-            'longitude' => $data['latitudeClub'],
-            'address' => $data['address'],
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+            //'address' => $data['address'],
         ]);
 
     }
@@ -506,12 +515,15 @@ class WebController extends Controller
     public function hundleGetListingByCategory($id)
     {
         $complex = Complex::where('id','=',ComplexCategory::find($id)->complex_id)->first();
-        //dd($complex['terrains']);
-        if (!$complex) {
-            return response()->json(['status' => 404]);
-        }
 
         $terrains = Terrain::whereHas('complex')->where('complex_id','=',$complex->id)->get();
+
+
+        if (isset($category_id)) {
+            $selectedCategory = Category::where('id','=',$id)->first()->title;
+        } else {
+            $selectedCategory = null;
+        }
 
        // dd($complex->categories);
 
@@ -520,7 +532,7 @@ class WebController extends Controller
        // return response()->json(['status' => 200, 'complexes' => $terrains]);
         return view('General::search.searchPage', [
             'complexs' => $complex,
-            'selectdCategoryId'=> $id,
+            'selectedCategory'=> $selectedCategory,
             'latitude' => null,
             'longitude' => null,
             'categories' => Category::all(),

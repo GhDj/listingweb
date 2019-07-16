@@ -34,6 +34,7 @@ class Club extends Model
           'description',
           'logo',
           'user_id',
+          'terrain_id'
       ];
 
       public function medias()
@@ -53,7 +54,7 @@ class Club extends Model
       }
 
       public function terrain() {
-          return $this->belongsTo('App\Modules\Complex\Models\Terrain');
+          return $this->belongsTo('App\Modules\Complex\Models\Terrain','terrain_id');
       }
 
       public function status() {
@@ -70,8 +71,13 @@ class Club extends Model
 
     public function reviews()
     {
-
         return $this->morphMany('App\Modules\Reviews\Models\Review', 'reviewed');
+    }
+
+    public function sports()
+    {
+        return $this->hasMany('App\Modules\Complex\Models\ClubSport', 'club_id');
+
     }
 
 }

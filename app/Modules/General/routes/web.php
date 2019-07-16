@@ -28,6 +28,8 @@ Route::group(['module' => 'General', 'middleware' => ['web'], 'namespace' => 'Ap
 
     Route::post('/searchClub','WebController@handleSearchClubs')->name('handleSearchClubs');
 
+    Route::get('/searchClub','WebController@handleSearchClubs')->name('handleSearchClubs');
+
     Route::post('/searchFilterTerrain','WebController@handleFilterMaps')->name('handleFilterMaps');
 
     Route::post('/searchFilterClub','WebController@handleFilterClubs')->name('handleFilterClubs');

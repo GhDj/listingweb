@@ -46,4 +46,9 @@ class Sport extends Model {
     {
         return $this->hasMany(SportCategory::class,'sport_id','id');
     }
+
+    public function clubs()
+    {
+        return $this->hasMany('App\Modules\Complex\Models\ClubSport','sport_id','id');
+    }
 }

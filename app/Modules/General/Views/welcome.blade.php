@@ -191,14 +191,78 @@
             <section id="sec2">
                 <div class="container">
                     <div class="section-title">
-                        <h2>Catégories</h2>
-                        <div class="section-subtitle">Catalogue de Catégories</div>
+                        <h2>Olympiade Club</h2>
+                        <div class="section-subtitle">Olympiade Club</div>
                         <span class="section-separator"></span>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</p>
                     </div>
                     <!-- portfolio start -->
                     <div class="gallery-items fl-wrap mr-bot spad">
+                        <!-- gallery-item-->
+                        <div class="gallery-item">
+                            <div class="grid-item-holder">
+                                <div class="listing-item-grid">
+                                    <img src="images/all/1.jpg" alt="" style="
+    height: 535px;
+">
+                                    <div class="listing-counter"><span>{{ \App\Modules\Complex\Models\ComplexCategory::where('category_id','=',1)->first()->complex()->first()->terrains->count() }} </span> Emplacements</div>
+                                    <div class="listing-item-cat">
+                                        <h3><a href="{{ route('hundleGetListingByCategory',1) }}">Equipements Sportifs</a></h3>
+                                        <p>Constant care and attention to the patients makes good record</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- gallery-item end-->
+                        <!-- gallery-item-->
+                        <div class="gallery-item gallery-item-second">
+                            <div class="grid-item-holder">
+                                <div class="listing-item-grid">
+                                    <img src="images/bg/19.jpg" alt="">
+                                    <div class="listing-counter"><span> {{ \App\Modules\Complex\Models\Club::all()->count() }} </span> Clubs</div>
+                                    <div class="listing-item-cat">
+                                        <h3><a href="{{ route('handleSearchClubs') }}">Associations Sportives</a></h3>
+                                        <p>Constant care and attention to the patients makes good record</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- gallery-item end-->
+                        <!-- gallery-item-->
 
-                    @foreach($categories as $category)
+                        <!-- gallery-item end-->
+                        <!-- gallery-item-->
+                        <div class="gallery-item">
+                            <div class="grid-item-holder">
+                                <div class="listing-item-grid">
+                                    <img src="images/all/22.jpg" alt="">
+                                    <div class="listing-counter"><span>7 </span> Locations</div>
+                                    <div class="listing-item-cat">
+                                        <h3><a href="listing.html">Olympiade Magazine</a></h3>
+                                        <p>Constant care and attention to the patients makes good record</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- gallery-item end-->
+                        <!-- gallery-item-->
+                        <div class="gallery-item">
+                            <div class="grid-item-holder">
+                                <div class="listing-item-grid">
+                                    <img src="images/all/5.jpg" alt="">
+                                    <div class="listing-counter"><span>15 </span> Locations</div>
+                                    <div class="listing-item-cat">
+                                        <h3><a href="listing.html">Olympiade Family</a></h3>
+                                        <p>Constant care and attention to the patients makes good record</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- gallery-item end-->
+                    </div>
+                    <div class="gallery-items fl-wrap mr-bot spad">
+
+                   {{-- @foreach($categories as $category)
                         <!-- gallery-item-->
                             <div class="gallery-item">
                                 <div class="grid-item-holder">
@@ -215,7 +279,7 @@
                                 </div>
                             </div>
                             <!-- gallery-item end-->
-                        @endforeach
+                        @endforeach--}}
                     </div>
                     <!-- portfolio end -->
                     <!--    <a href="listing.html" class="btn  big-btn circle-btn dec-btn  color-bg flat-btn">View All<i class="fa fa-eye"></i></a>-->
@@ -226,7 +290,7 @@
 
 
             <!--section -->
-            <section id="sec2">
+            {{--<section id="sec2">
                 <div class="container">
                     <div class="section-title">
                         <h2>Notre Application</h2>
@@ -278,7 +342,7 @@
                     <!-- portfolio end -->
 
                 </div>
-            </section>
+            </section>--}}
             <!-- section end -->
 
             <!--section -->
@@ -318,7 +382,7 @@
                                                         @endif
 
                                                         <div class="overlay"></div>
-                                                        <div class="list-post-counter"><span>4</span><i
+                                                        <div class="list-post-counter"><span>{{ $terrain->wishlists->count() }}</span><i
                                                                     class="fa fa-heart"></i></div>
                                                     </div>
                                                     <div class="geodir-category-content fl-wrap">
