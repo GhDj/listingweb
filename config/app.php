@@ -2,7 +2,7 @@
 
 return [
 
- // 'seed_path_img' => 'http://olympiade.prod/public/', // Path local
+  //'seed_path_img' => 'http://olympiade.prod/public/', // Path local
    'seed_path_img' => 'https://bluepenlabs.com/projects/time-for-life-web/public/', // Path serveur
 
     /*
