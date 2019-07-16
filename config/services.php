@@ -37,7 +37,7 @@ return [
     'facebook' => [
       'client_id' => '457949274766288',
       'client_secret' => 'a0e01a5a7a6cdb6810daf304839f5d3f',
-      'redirect' => 'http://olympiade.prod/public/user/social/facebook/callback',
+      'redirect' => 'https://bluepenlabs.com/projects/olympiade-sports-web/public/user/social/facebook/callback',
     ],
     'twitter' => [
         'client_id' => 'ifEHqgpIIkJTwyuXpYjgrBkCI',
