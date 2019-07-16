@@ -150,6 +150,7 @@
                                                     class="fa fa-share"></i></div>
                                         <div class="share-container  isShare"></div>
                                     </div>
+                                    @if(Auth::user())
                                     <div class="profile-edit-container add-list-container">
                                         <div class="profile-edit-header fl-wrap">
                                             <h4>Ajouter des photos</h4>
@@ -158,13 +159,16 @@
                                             <div class="row">
                                                 <!--col -->
                                                 <div class="col-md-12">
+
                                                     <form action="{{ route('handleUserUploadImage') }}" method="post" accept-charset="utf-8" enctype="multipart/form-data">
 
                                                         @csrf
 
                                                         <input type="hidden" name="terrain_id" value="{{ $terrain->id }}">
 
-                                                        <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+
+                                                            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+
 
 
 
@@ -192,6 +196,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                @endif
                                     <!-- end gallery items -->
                                 </div>
                                 <!-- list-single-main-item end -->

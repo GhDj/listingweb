@@ -14,7 +14,7 @@
 @section('header')
 
 
-  @include('frontOffice.inc.header',['activatedLink'=>['home'=>'act-link','contact'=>'','faq'=>'','profile'=>'']])
+  @include('frontOffice.inc.header',['activatedLink'=>['home'=>'','contact'=>'','faq'=>'','profile'=>'','associations' =>'act-link','infrastructure'=>'']])
 
 @endsection
 
@@ -60,7 +60,7 @@
 <div class="content">
   <!--  section  -->
 
-      @include('Infrastructure::inc.headerItems')
+      @include('General::inc.headerItems')
 
   <!--  section end -->
   <!--  section  -->
@@ -82,32 +82,33 @@
             <!-- list-single-main-item end -->
 
             <!-- list-single-main-item -->
-            @foreach ($specialitys as $speciality)
 
-              <div class="list-single-main-item fl-wrap" id="sec7">
-                <div class="accordion">
-                  <a class="toggle act-accordion" href="#"> {{$speciality->speciality}} <i class="fa fa-angle-down"></i></a>
-                  <div class="accordion-inner visible">
-                    <div class="box-widget result">
-                      <div class="box-widget-content">
-                        <ul>
-                          @foreach (getTeams($clubDetail->id,$speciality->id,$speciality) as $teams)
+              @foreach ($specialitys as $speciality)
 
-                            @foreach ($teams as $team)
+                <div class="list-single-main-item fl-wrap" id="sec7">
+                  <div class="accordion">
+                    <a class="toggle act-accordion" href="#"> {{$speciality->speciality}} <i class="fa fa-angle-down"></i></a>
+                    <div class="accordion-inner visible">
+                      <div class="box-widget result">
+                        <div class="box-widget-content">
+                          <ul>
+
+
+                              @foreach ($clubDetail->teams as $team)
 
                                 <li><span class="club-name">{{$team->name}} </span><span class="club-level">{{$team->level}}</span></li>
 
-                            @endforeach
+                              @endforeach
 
 
-                          @endforeach
-                        </ul>
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
             @endforeach
+
             <!-- list-single-main-item end -->
           </div>
 
@@ -128,8 +129,8 @@
                       <div class="box-widget result">
                         <div class="box-widget-content" style="padding:10px 30px">
                           <ul>
-                            <li><span class="club-name">Nombres d'équipe </span><span class="club-level">{{$clubDetail->teams->count()}}</span></li>
-                            <li><span class="club-name"> Nombres de Sports </span><span class="club-level">{{$specialitys->count()}}</span></li>
+                            <li><span class="club-name">Nombres d'équipe </span><span class="club-level">{{ $clubDetail->teams->count() }}</span></li>
+                            <li><span class="club-name"> Nombres de Sports </span><span class="club-level">{{$clubDetail->sports()->count()}}</span></li>
 
                           </ul>
                         </div>
@@ -161,27 +162,17 @@
                 <div class="box-widget-content"  style="padding:10px 30px">
                   <span class="current-status">Sports</span>
                   <ul>
+                    @foreach($sports as $sport)
                     <li class="clearfix">
-                      <a href="#" class="widget-posts-img"><img src="{{asset('images/unkown.jpg')}}" alt=""></a>
+                     <!-- <a href="#" class="widget-posts-img"><img src="{{asset('images/unkown.jpg')}}" alt=""></a>-->
                       <div class="widget-posts-descr">
-                        <a href="#" title="">Clubs</a>
+                        <a href="#" title="">{{ $sport->sport->title }}</a>
+
                         <span class="widget-posts-date"><i class="fa fa-calendar-check-o"></i> 21 Mar 2017 </span>
                       </div>
                     </li>
-                    <li class="clearfix">
-                      <a href="#" class="widget-posts-img"><img src="{{asset('images/unkown.jpg')}}" alt=""></a>
-                      <div class="widget-posts-descr">
-                        <a href="#" title="">Clubs</a>
-                        <span class="widget-posts-date"><i class="fa fa-calendar-check-o"></i> 7 Mar 2017 </span>
-                      </div>
-                    </li>
-                    <li class="clearfix">
-                      <a href="#" class="widget-posts-img"><img src="{{asset('images/unkown.jpg')}}" alt=""></a>
-                      <div class="widget-posts-descr">
-                        <a href="#" title="">Clubs</a>
-                        <span class="widget-posts-date"><i class="fa fa-calendar-check-o"></i> 7 Mar 2017 </span>
-                      </div>
-                    </li>
+                    @endforeach
+
                   </ul>
                 </div>
               </div>
