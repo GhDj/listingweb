@@ -116,7 +116,7 @@
                                                          id="autocomplete-container">
                                                         <input type="text" placeholder="Location" name="address"
                                                                id="autocomplete-input" value="" autocomplete="off">
-                                                        <a href="#" class="get_current_location" data-input=""><i
+                                                        <a href="#" class="get_current_location" data-input="autocomplete-input"><i
                                                                     class="fa fa-dot-circle-o"></i></a>
                                                     </div>
                                                     <div class="main-search-input-item">
@@ -155,7 +155,7 @@
                                                          id="autocomplete-container">
                                                         <input type="text" placeholder="Location"
                                                                id="autocomplete-input-club" value="" autocomplete="off">
-                                                        <a href="#" data-input="-club" class="get_current_location"><i
+                                                        <a href="#" data-input="autocomplete-input-club" class="get_current_location"><i
                                                                     class="fa fa-dot-circle-o"></i></a>
                                                     </div>
 
@@ -169,8 +169,7 @@
                                                         </select>
                                                     </div>
 
-                                                    <button class="main-search-button"
-                                                            onclick="window.location.href='listing.html'">Search
+                                                    <button class="main-search-button" type="submit">Chercher
                                                     </button>
 
                                                 </form>
@@ -377,7 +376,7 @@
                                                             <img src="{{ asset($terrain->medias->first()->link)}}"
                                                                  alt="">
                                                         @else
-                                                            <img src="{{asset("storage/uploads/terrains/default.png")}}"
+                                                            <img src="{{asset("images/unkown.jpg")}}"
                                                                  alt="">
                                                         @endif
 
@@ -395,7 +394,7 @@
                                                                             alt=""></a>
                                                             @else
                                                                 <a href="#"><img
-                                                                            src="{{asset("storage/uploads/avatar/default.png")}}"
+                                                                            src="{{asset("images/avatar/avatar-bg.png")}}"
                                                                             alt=""></a>
                                                             @endif
                                                             @if($terrain->complex->user_id!=null)
@@ -482,7 +481,7 @@
                                     </li>
                                 </ul>
                                 </p>
-                                <a href="#" class="color-bg-link modal-open">Sign In Now</a>
+                                <a href="#" class="color-bg-link modal-open">Connectez vous maintenant</a>
                             </div>
                         </div>
                     </div>
@@ -723,7 +722,9 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-
+            $(".get_current_location").click(function () {
+                handleGetCurrentLocation($(this).attr("data-input"));
+            });
             if ($(".tab-content-4").length > 0) {
 
                 $(".tab-content-4").hide();

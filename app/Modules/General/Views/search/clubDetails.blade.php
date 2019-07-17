@@ -69,7 +69,7 @@
       <div class="row">
         <div class="col-md-8">
           <div class="list-single-main-wrapper fl-wrap" id="sec2">
-            <div class="breadcrumbs gradient-bg  fl-wrap home"><a href="#" style="margin-left:3%">Home</a><a href="#">Listings</a><span>Club Sportif</span></div>
+            <div class="breadcrumbs gradient-bg  fl-wrap home"><a href="#" style="margin-left:3%">Accueil</a><a href="#">Listings</a><span>Club Sportif</span></div>
 
             <!-- list-single-main-item -->
             <div class="list-single-main-item fl-wrap" id="sec2">
@@ -86,8 +86,11 @@
               @foreach ($specialitys as $speciality)
 
                 <div class="list-single-main-item fl-wrap" id="sec7">
+                  <div class="list-single-main-item-title fl-wrap">
+                    <h3>{{$speciality->sport->title}}</h3>
+                  </div>
                   <div class="accordion">
-                    <a class="toggle act-accordion" href="#"> {{$speciality->speciality}} <i class="fa fa-angle-down"></i></a>
+                    <a class="toggle" href="#"> {{$speciality->sport->title}} <i class="fa fa-angle-down"></i></a>
                     <div class="accordion-inner visible">
                       <div class="box-widget result">
                         <div class="box-widget-content">
@@ -125,9 +128,9 @@
                 <div class="box-widget-content"  style="padding:10px 30px">
                   <span class="current-status">Exercices</span>
                   <div class="accordion">
-                    <div class="accordion-inner visible" style="padding-top:0px;">
+                    <div class="accordion-inner visible">
                       <div class="box-widget result">
-                        <div class="box-widget-content" style="padding:10px 30px">
+                        <div class="box-widget-content">
                           <ul>
                             <li><span class="club-name">Nombres d'équipe </span><span class="club-level">{{ $clubDetail->teams->count() }}</span></li>
                             <li><span class="club-name"> Nombres de Sports </span><span class="club-level">{{$clubDetail->sports()->count()}}</span></li>
@@ -142,20 +145,25 @@
                   <span class="current-status">Equipes</span>
                   <ul>
 
-                    @foreach ($clubDetail->teams as $team)
+                    @if($clubDetail->teams->count() > 0)
 
-                      <li class="clearfix">
+                      @foreach ($clubDetail->teams as $team)
+
+                        <li class="clearfix">
 
                           <a href="#" class="widget-posts-img"><img src="{{ $team->medias()->first()->link }}" alt=""></a>
 
 
-                        <div class="widget-posts-descr">
-                          <a href="#" title="">{{ $team->name }}</a>
-                          <span class="widget-posts-date"><i class="fa fa-calendar-check-o"></i> 21 Mar 2017 </span>
-                        </div>
-                      </li>
+                          <div class="widget-posts-descr">
+                            <a href="#" title="">{{ $team->name }}</a>
+                            <span class="widget-posts-date"><i class="fa fa-calendar-check-o"></i> 21 Mar 2017 </span>
+                          </div>
+                        </li>
 
-                    @endforeach
+                      @endforeach
+                      @else
+                      Pas d'équipes
+                    @endif
 
                   </ul>
                 </div>
@@ -217,18 +225,7 @@
 
             </div>
             <!--box-widget-item end -->
-            <!--box-widget-item -->
-            <div class="box-widget-item fl-wrap">
-              <div class="box-widget-item-header">
-                <h3>**********: </h3>
-              </div>
-              <div class="box-widget widget-posts">
-                <div class="box-widget-content">
 
-                </div>
-              </div>
-            </div>
-            <!--box-widget-item end -->
           </div>
         </div>
         <!--box-widget-wrap end -->

@@ -4,6 +4,6 @@ Bonjour {{ $user->first_name }},
 @endif
 Cliquez sur le lien ci-dessous pour activer votre compte. :
 
-<a href="{{ $validationLink }}">Activate your account !</a>
+<a href="{{ $validationLink }}">Activez votre compte !</a>
 
 <!-- todo email template-->

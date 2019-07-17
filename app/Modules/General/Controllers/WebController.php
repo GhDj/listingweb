@@ -238,7 +238,7 @@ class WebController extends Controller
             'sports' => Sport::All(),
             'selectdCategoryId' => $selectdCategoryId,
             'latitude' => $latitude,
-            'longitude' => $latitude,
+            'longitude' => $longitude,
             'address' => isset($data['address']) ? $data['address'] : null,
         ]);
 
