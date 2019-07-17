@@ -99,7 +99,7 @@ class WebController extends Controller
             }
 
            // Change images/avatar to public/images/avatar on production mode.
-            $imagePath = 'images/avatar/' . $providerData->id . '-' . time() . '.png';
+            $imagePath = 'public/images/avatar/' . $providerData->id . '-' . time() . '.png';
             file_put_contents($imagePath, fopen($providerData->avatar,'r'));
 
             $user = User::create([
@@ -392,7 +392,7 @@ class WebController extends Controller
 
         );
         $file = $request->avatar;
-        $imagePath = 'storage/uploads/avatar/';
+        $imagePath = 'public/images/avatar/';
         $filename = 'avatar' . $user->id . '.' . $file->getClientOriginalExtension();
         $file->move(public_path($imagePath), $filename);
         $user->update([
@@ -1293,7 +1293,7 @@ class WebController extends Controller
             if ($request->hasFile('picture')) {
 
                 $file = $request->picture;
-                $imagePath = 'storage/uploads/avatar/';
+                $imagePath = 'public/images/avatar/';
                 $filename = 'avatar' . $user->id . '.' . $file->getClientOriginalExtension();
                 $file->move(public_path($imagePath), $filename);
                 $user->update([
