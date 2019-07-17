@@ -35,11 +35,20 @@ class Media extends Model {
         'report_id',
         'post_id',
         'product_id',
-        'team_id'
+        'team_id',
+        'user_id'
     ];
 
     function getLinkAttribute($link){
       return asset($link);
   }
+
+  public function terrain() {
+        return $this->belongsTo('App\Modules\Complex\Models\Terrain');
+  }
+
+    public function user() {
+        return $this->belongsTo('App\Modules\User\Models\User');
+    }
 
 }

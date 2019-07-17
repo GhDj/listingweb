@@ -2,15 +2,25 @@
     <div class="slideshow-container" data-scrollax="properties: { translateY: '200px' }">
 
       @isset($terrain)
-        @foreach ($terrain->medias as $media)
+            @if ($terrain->medias->count() > 0)
 
-          <!-- slideshow-item -->
-          <div class="slideshow-item">
-            <div class="bg" data-bg="{{$media->link}}"></div>
-          </div>
-          <!--  slideshow-item end  -->
+                @foreach ($terrain->medias as $media)
 
-        @endforeach
+                <!-- slideshow-item -->
+                    <div class="slideshow-item">
+                        <div class="bg" data-bg="{{$media->link}}"></div>
+                    </div>
+                    <!--  slideshow-item end  -->
+
+                @endforeach
+
+            @else
+                <img src="" alt="">
+                <div class="slideshow-item">
+                    <div class="bg" data-bg="{{ asset('images/unkown.jpg') }}"></div>
+                </div>
+            @endif
+
       @endisset
 
       @isset($clubDetail)
@@ -35,10 +45,10 @@
           <div class="list-single-header-item-opt fl-wrap">
             <div class="list-single-header-cat fl-wrap">
                 @isset($terrain)
-                      <a href="#">{{  $terrain->category->category  }}</a>
+                      <a href="#">{{  $terrain->category->title  }}</a>
                 @endisset
                 @isset($clubDetail)
-                      <a href="#">{{  $clubDetail->terrain->category->category  }}</a>
+                      <a href="#">{{  $clubDetail->sports()->first()->sport->title  }}</a>
                 @endisset
             </div>
           </div>
