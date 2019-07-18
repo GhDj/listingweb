@@ -99,7 +99,7 @@ class WebController extends Controller
             }
 
            // Change images/avatar to public/images/avatar on production mode.
-            $imagePath = 'public/images/avatar/' . $providerData->id . '-' . time() . '.png';
+            $imagePath = 'storage/uploads/users/' . $providerData->id . '-' . time() . '.png';
             file_put_contents($imagePath, fopen($providerData->avatar,'r'));
 
             $user = User::create([
@@ -273,7 +273,14 @@ class WebController extends Controller
             $message->subject('Bienvenue');
         });
 
-        Toastr::success('Inscription a été effectué avec succès !', 'Bien !', ["positionClass" => "toast-top-full-width", "showDuration" => "4000", "hideDuration" => "1000", "timeOut" => "300000"]);
+        if(count(Mail::failures()) > 0 ) {
+            Toastr::warning('L\'envoi des mails a échoué, contactez le support');
+        } else {
+            Toastr::success('Inscription a été effectué avec succès !', 'Bien !', ["positionClass" => "toast-top-full-width", "showDuration" => "4000", "hideDuration" => "1000", "timeOut" => "300000"]);
+        }
+
+
+
 
         return back();
 
@@ -392,7 +399,7 @@ class WebController extends Controller
 
         );
         $file = $request->avatar;
-        $imagePath = 'public/images/avatar/';
+        $imagePath = 'storage/uploads/users/';
         $filename = 'avatar' . $user->id . '.' . $file->getClientOriginalExtension();
         $file->move(public_path($imagePath), $filename);
         $user->update([
@@ -726,6 +733,7 @@ class WebController extends Controller
             $categorieModel = Category::find($categorie);
             if ($categorieModel) {
                 ComplexCategory::create([
+                    "status" => 0,
                     "category_id" => $categorieModel->id,
                     "complex_id" => $complex->id
                 ]);
@@ -1321,7 +1329,7 @@ class WebController extends Controller
             if ($request->hasFile('picture')) {
 
                 $file = $request->picture;
-                $imagePath = 'public/images/avatar/';
+                $imagePath = 'storage/uploads/users/';
                 $filename = 'avatar' . $user->id . '.' . $file->getClientOriginalExtension();
                 $file->move(public_path($imagePath), $filename);
                 $user->update([
@@ -1693,6 +1701,13 @@ class WebController extends Controller
             'clubsRequests' => ClubRequest::all()]);
     }
 
+    public function showMediaRequest()
+    {
+
+        return view('User::backOffice.showMediaRequest', ['complexRequests' => ComplexRequest::all(),
+            'mediaRequests' => Media::all()]);
+    }
+
     public function cancelComplexRequest($id)
     {
         $complexRequest = ComplexRequest::find($id);
@@ -1736,6 +1751,28 @@ class WebController extends Controller
             $complexRequest->status = -1;
 
             alert()->error("Demande d'accès est annulé", "Bien")->persistent("Ok");
+        }
+        return redirect()->back();
+    }
+
+    public function handleAcceptMediaRequest($id)
+    {
+        $mediaRequest = Media::find($id);
+        if ($mediaRequest) {
+            $mediaRequest->type = $mediaRequest->type + 1;
+            $mediaRequest->save();
+            alert()->error("Media accepté", "Bien")->persistent("Ok");
+        }
+        return redirect()->back();
+    }
+
+    public function handleCancelMediaRequest($id)
+    {
+        $mediaRequest = Media::find($id);
+        if ($mediaRequest) {
+            $mediaRequest->type = 10;
+            $mediaRequest->save();
+            alert()->error("Media annulé", "Bien")->persistent("Ok");
         }
         return redirect()->back();
     }

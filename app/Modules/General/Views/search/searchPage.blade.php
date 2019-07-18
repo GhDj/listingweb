@@ -283,12 +283,13 @@
                                                         <div class="listing-item">
                                                             <article class="geodir-category-listing fl-wrap">
                                                                 <div class="geodir-category-img">
+                                                                    @if ($terrain->medias->count() > 0)
+                                                                    <img src="{{  $terrain->medias->first()->link}}" alt="">
 
-                                                                    <img src="@if ($terrain->medias->count() > 0)
-                                                                    {{  $terrain->medias->first()->link}}
                                                                     @else
-                                                                            images/unkown.jpg
-                                                                    @endif" alt="">
+                                                                        <img src="{{ asset('images/unkown.jpg') }}" alt="">
+
+                                                                    @endif
 
                                                                     <div class="overlay"></div>
                                                                     <div class="list-post-counter">
@@ -350,61 +351,67 @@
 
 
                                         @isset($clubs)
+                                            @if(!empty($clubs))
                                                 @if ($clubs->count() > 0)
 
 
                                                     @foreach ($clubs as $club)
-                                                    <!-- listing-item -->
-                                                        <div class="listing-item list-layout">
-                                                            <article class="geodir-category-listing fl-wrap">
-                                                                <div class="geodir-category-img" style="width:35%">
-                                                                    <img src="@if ($club->medias->count() > 0)
-                                                                    {{  $club->medias->first()->link}}
-                                                                    @else
-                                                                            images/unkown.jpg
+
+                                                        @if($club->status->status > 0)
+
+                                                            <!-- listing-item -->
+                                                                <div class="listing-item list-layout">
+                                                                    <article class="geodir-category-listing fl-wrap">
+                                                                        <div class="geodir-category-img" style="width:35%">
+                                                                            <img src="@if ($club->medias->count() > 0)
+                                                                            {{  $club->medias->first()->link}}
+                                                                            @else
+                                                                                    images/unkown.jpg
 @endif" alt="">
-                                                                    <div class="overlay"></div>
-                                                                    <div class="list-post-counter">
-                                                                        <span>{{$club->wishlists->count()}}</span><i
-                                                                                class="fa fa-heart"></i></div>
-                                                                </div>
-                                                                <a class="listing-geodir-category"
-                                                                   href="#">{{ucfirst($club->terrain->complex->name)}}</a>
-
-                                                                <div class="geodir-category-content fl-wrap"
-                                                                     style="width:35%">
-
-
-                                                                    <h3>
-                                                                        <a href="{{ route('showClubDetails',['id' => $club->id]) }}">{{$club->name}}</a>
-                                                                    </h3>
-
-                                                                    <div class="geodir-category-location"><a href="#0"
-                                                                                                             class="map-item"><i
-                                                                                    class="fa fa-map-marker"
-                                                                                    aria-hidden="true"></i> {{$club->terrain->complex->name}}
-                                                                            ,{{$club->terrain->complex->address->city}}
-                                                                            ,{{$club->terrain->complex->address->address}}
-                                                                        </a></div>
-
-
-                                                                    <div class="geodir-category-options ">
-
-
-                                                                        <div class="search-item-1">
-                                                                            <ul>
-                                                                                <li><a href="#">Test1</a></li>
-                                                                                <li>Test2</li>
-                                                                                <li>Test3</li>
-                                                                            </ul>
+                                                                            <div class="overlay"></div>
+                                                                            <div class="list-post-counter">
+                                                                                <span>{{$club->wishlists->count()}}</span><i
+                                                                                        class="fa fa-heart"></i></div>
                                                                         </div>
-                                                                    </div>
+                                                                        <a class="listing-geodir-category"
+                                                                           href="#">{{ucfirst($club->terrain->complex->name)}}</a>
+
+                                                                        <div class="geodir-category-content fl-wrap"
+                                                                             style="width:35%">
+
+
+                                                                            <h3>
+                                                                                <a href="{{ route('showClubDetails',['id' => $club->id]) }}">{{$club->name}}</a>
+                                                                            </h3>
+
+                                                                            <div class="geodir-category-location"><a href="#0"
+                                                                                                                     class="map-item"><i
+                                                                                            class="fa fa-map-marker"
+                                                                                            aria-hidden="true"></i> {{$club->terrain->complex->name}}
+                                                                                    ,{{$club->terrain->complex->address->city}}
+                                                                                    ,{{$club->terrain->complex->address->address}}
+                                                                                </a></div>
+
+
+                                                                            <div class="geodir-category-options ">
+
+
+                                                                                <div class="search-item-1">
+                                                                                    <ul>
+                                                                                        <li><a href="#">Test1</a></li>
+                                                                                        <li>Test2</li>
+                                                                                        <li>Test3</li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="geodir-category-content " style="width:30%">
+                                                                        </div>
+                                                                    </article>
                                                                 </div>
-                                                                <div class="geodir-category-content " style="width:30%">
-                                                                </div>
-                                                            </article>
-                                                        </div>
-                                                        <!-- listing-item end-->
+                                                                <!-- listing-item end-->
+
+                                                        @endif
 
                                                     @endforeach
                                                 @else
@@ -417,6 +424,7 @@
                                                         </article>
                                                     </div>
 
+                                                @endif
                                                 @endif
                                             @endisset
                                         </div>

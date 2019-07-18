@@ -67,4 +67,12 @@ class Media extends Model {
         return $this->belongsTo('App\Modules\User\Models\User');
     }
 
+  public function terrain() {
+        return $this->belongsTo('App\Modules\Complex\Models\Terrain');
+  }
+
+    public function user() {
+        return $this->belongsTo('App\Modules\User\Models\User');
+    }
+
 }

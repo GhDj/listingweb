@@ -103,4 +103,8 @@ class Complex extends Model
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
+
+    public function status() {
+        return $this->belongsTo('App\Modules\Complex\Models\ComplexRequest');
+    }
 }

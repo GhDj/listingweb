@@ -81,60 +81,60 @@
                 <div class="card-body">
 
 
-                    <table id="datatable-media-request"
-                           class="display table table-striped table-bordered" cellspacing="0"
-                           width="100%">
-                        <thead>
-                        <th>Utilisateur</th>
-                        <th>Lié à </th>
-                        <th>Media</th>
-                        <th>Date</th>
-                        <th>Action</th>
-                        </thead>
-                        <tbody>
-                        @foreach($mediaRequests as $mediaRequest)
-                            <tr>
-                                <td>
-                                    {{$mediaRequest->user->first_name}} {{$mediaRequest->user->last_name}}
-                                </td>
-                                <td>
-                                    @if($mediaRequest->terrain_id)
-                                        Terrain : {{$mediaRequest->terrain->name}}
-                                    @elseif($mediaRequest->review_id)
-                                        Review : {{$mediaRequest->review_id}}
-                                    @elseif($mediaRequest->team_id)
-                                        Equipe : {{$mediaRequest->team_id}}
-                                    @elseif($mediaRequest->report_id)
-                                        Report : {{$mediaRequest->report_id}}
-                                    @elseif($mediaRequest->post_id)
-                                        Post : {{$mediaRequest->post_id}}
-                                    @elseif($mediaRequest->club_id)
-                                        Club : {{$mediaRequest->club_id}}
-                                    @elseif($mediaRequest->complex_id)
-                                        Complex : {{$mediaRequest->complex_id}}
-                                    @endif
-                                </td>
-                                <td>
-                                    <img src="{{ asset($mediaRequest->link) }}" class="responsive-img" alt="">
-                                </td>
-                                <td>
-                                    {{$mediaRequest->created_at}}
-                                </td>
-                                <td>
-                                    @if($mediaRequest->type == 10)
-                                        <a href="{{route('acceptMediaRequest',$mediaRequest->id)}}"
-                                           class="btn btn-success">Accepter</a>
-                                    @elseif ($mediaRequest->type > 10)
+                            <table id="datatable-media-request"
+                                   class="display table table-striped table-bordered" cellspacing="0"
+                                   width="100%">
+                                <thead>
+                                <th>Utilisateur</th>
+                                <th>Lié à </th>
+                                <th>Media</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                                </thead>
+                                <tbody>
+                                @foreach($mediaRequests as $mediaRequest)
+                                    <tr>
+                                        <td>
+                                            {{$mediaRequest->user->first_name}} {{$mediaRequest->user->last_name}}
+                                        </td>
+                                        <td>
+                                            @if($mediaRequest->terrain_id)
+                                                Terrain : {{$mediaRequest->terrain->name}}
+                                            @elseif($mediaRequest->review_id)
+                                                Review : {{$mediaRequest->review_id}}
+                                            @elseif($mediaRequest->team_id)
+                                                Equipe : {{$mediaRequest->team_id}}
+                                            @elseif($mediaRequest->report_id)
+                                                Report : {{$mediaRequest->report_id}}
+                                            @elseif($mediaRequest->post_id)
+                                                Post : {{$mediaRequest->post_id}}
+                                            @elseif($mediaRequest->club_id)
+                                                Club : {{$mediaRequest->club_id}}
+                                            @elseif($mediaRequest->complex_id)
+                                                Complex : {{$mediaRequest->complex_id}}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <img src="{{ asset($mediaRequest->link) }}" class="responsive-img" alt="">
+                                        </td>
+                                        <td>
+                                            {{$mediaRequest->created_at}}
+                                        </td>
+                                        <td>
+                                            @if($mediaRequest->type == 10)
+                                                <a href="{{route('acceptMediaRequest',$mediaRequest->id)}}"
+                                                   class="btn btn-success">Accepter</a>
+                                            @elseif ($mediaRequest->type > 10)
 
-                                        <a href="{{route('cancelMediaRequest',$mediaRequest->id)}}"
-                                           class="btn btn-danger">Annuler</a>
+                                            <a href="{{route('cancelMediaRequest',$mediaRequest->id)}}"
+                                               class="btn btn-danger">Annuler</a>
 
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
 
 
 
