@@ -807,7 +807,53 @@ function getCurrentLocation(input_id) {
                     state = (state === null || typeof state === 'undefined') ? '' : state + ', ';
                     country = (country === null || typeof country === 'undefined') ? '' : country;
 
+                    console.log(street + city + state + country);
+
                     document.getElementById('autocomplete-input' + input_id).value = street + city + state + country;
+                }
+            });
+        });
+    }
+}
+
+function handleGetCurrentLocation(input_holder) {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            document.getElementsByName('latitude')[0].value = position.coords.latitude;
+            document.getElementsByName('longitude')[0].value = position.coords.longitude;
+            var street, place, state, city, country = '';
+            var geocoder = new google.maps.Geocoder();
+            var geocoderRequest = {location: {lat: position.coords.latitude, lng: position.coords.longitude}};
+            geocoder.geocode(geocoderRequest, function (results, status) {
+                if (status === google.maps.GeocoderStatus.OK) {
+                    for (var i = 0; i < results[0].address_components.length; i++) {
+                        switch (results[0].address_components[i]['types'][0]) {
+                            case 'political' :
+                                city = results[0].address_components[i]['long_name'];
+                                break;
+                            case 'route' :
+                                street = results[0].address_components[i]['long_name'] + ", ";
+                                break;
+                            case 'administrative_area_level_1' :
+                                state = results[0].address_components[i]['long_name'];
+                                break;
+                            case 'locality' :
+                                place = results[0].address_components[i]['long_name'];
+                                break;
+                            case 'country' :
+                                country = results[0].address_components[i]['long_name'];
+                                break;
+                        }
+                    }
+                    place = (place === null || typeof place === 'undefined') ? '' : place + ', ';
+                    city = (city === null || typeof city === 'undefined') ? place : city + ', ';
+                    street = (street === null || street === 'Unnamed Road,' || typeof street === 'undefined') ? '' : street;
+                    state = (state === null || typeof state === 'undefined') ? '' : state + ', ';
+                    country = (country === null || typeof country === 'undefined') ? '' : country;
+
+                    console.log(street + city + state + country);
+
+                    document.getElementById(input_holder).value = street + city + state + country;
                 }
             });
         });

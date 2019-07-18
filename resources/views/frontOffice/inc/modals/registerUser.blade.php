@@ -102,7 +102,7 @@ color: red;
                   </div>
                 </div>
 
-                <button type="submit" class="log-submit-btn"><span>Identifier</span></button>
+                <button type="submit" class="log-submit-btn"><span>S'identifier</span></button>
 
                 <div class="clearfix"></div>
                 <div class="filter-tags">

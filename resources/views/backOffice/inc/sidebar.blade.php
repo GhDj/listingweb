@@ -44,6 +44,19 @@
                 </a>
                 <div class="triangle"></div>
             </li>
+            <li class="nav-item @if($current == 'mediaRequest') active @endif" >
+                <a class="nav-item-hold" href="{{route('showMediaRequest')}}">
+                    <span class="nav-text">Validation Media</span>
+                </a>
+                <div class="triangle"></div>
+            </li>
+
+            <li class="nav-item @if($current == 'categoryRequest') active @endif" >
+                <a class="nav-item-hold" href="{{route('showCategoryRequest')}}">
+                    <span class="nav-text">Validation Catégories</span>
+                </a>
+                <div class="triangle"></div>
+            </li>
         </ul>
     </div>
 

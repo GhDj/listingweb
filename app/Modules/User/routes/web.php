@@ -109,10 +109,26 @@ Route::group(['module' => 'User', 'middleware' => ['adminAccess'], 'namespace' =
 
     Route::get('/admin/complex_request','WebController@showComplexRequest')->name('showComplexRequest');
 
+    Route::get('/admin/media_request','WebController@showMediaRequest')->name('showMediaRequest');
+
+
     Route::get('/admin/complex_request/accept/{id}','WebController@acceptComplexRequest')->name('acceptComplexRequest');
     Route::get('/admin/complex_request/cancel/{id}','WebController@cancelComplexRequest')->name('cancelComplexRequest');
 
     /***** Club Request ********/
     Route::get('/admin/club_request/accept/{id}','WebController@handleAcceptClubRequest')->name('acceptClubRequest');
     Route::get('/admin/club_request/cancel/{id}','WebController@handleCancelComplexRequest')->name('cancelClubRequest');
+
+
+    /***** Media Request ********/
+    Route::get('/admin/media_request/accept/{id}','WebController@handleAcceptMediaRequest')->name('acceptMediaRequest');
+    Route::get('/admin/media_request/cancel/{id}','WebController@handleCancelMediaRequest')->name('cancelMediaRequest');
+
+    /***** Category Request ********/
+
+    Route::get('/admin/category_request','WebController@showCategoryRequest')->name('showCategoryRequest');
+    Route::get('/admin/category_request/accept/{id}','WebController@handleAcceptCategoryRequest')->name('acceptCategoryRequest');
+    Route::get('/admin/category_request/cancel/{id}','WebController@handleCancelCategoryRequest')->name('cancelCategoryRequest');
+
+
 });

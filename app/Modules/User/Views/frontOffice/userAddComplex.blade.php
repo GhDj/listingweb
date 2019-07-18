@@ -55,8 +55,7 @@
                                     </div>
                                     <div class="custom-form">
                                         <form class=""
-                                              action="{{isset($complex) ? route('handleEditComplex') : route('handleUserAddComplex')}}"
-                                              method="post">
+                                              action="{{isset($complex) ? route('handleEditComplex') : route('handleUserAddComplex')}}" method="post" enctype="multipart/form-data">
                                             {{ csrf_field() }}
                                             <div class="form-group row">
                                                 <label>Nom de Complex <i class="fa fa-briefcase"></i></label>
@@ -89,18 +88,37 @@
                                                 @endforeach
                                             </div>
 
-                                            <label>Ajouter Autre Categorie </label>
-                                            <input type="text" id="keywrdRdvId" class="form-control">
-                                            <div class="input-group-append">
+                                            <div class="form-group">
+
+                                                <label>Ajouter Autre Categorie </label>
+                                                <input type="text" id="otherCategories" class="form-control">
+
+                                                <label for="category-img">Image de la catégorie</label>
+
+                                                <div class="add-list-media-wrap fuzone">
+
+                                                    <div class="fu-text">
+                                                        <span><i class="fa fa-picture-o"></i> Cliquez ici ou déposez l'image à télécharger</span>
+                                                    </div>
+                                                    <input required type="file" class="form-control" name="categoryImage">
+                                                    @if ($errors->has('images'))
+                                                        <span class="invalid-feedback" role="alert">
+                                                      <strong>{{ $errors->first('images') }}</strong>
+                                                    </span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            
+                                            {{--<div class="input-group-append">
                                                 <button id="addKeywrdRdvId" class="btn btn-warning" type="button"
                                                         style="margin-top:0;float:left">Ajouter
                                                 </button>
                                             </div>
                                             <div id="keywordRdvBlk" class="input-group in-step1"></div>
 
-                                            <input type="hidden" class="form-control" id="otherCategorie"
-                                                   name="otherCategories"/>
-
+                                            <input type="hidden" class="form-control" id="otherCategorie" name="otherCategories"/>
+--}}
 
                                             <!-- profile-edit-container end-->
                                             <!-- profile-edit-container-->
