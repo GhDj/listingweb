@@ -40,8 +40,32 @@ class Media extends Model {
     ];
 
     function getLinkAttribute($link){
-      return asset($link);
-  }
+        return asset($link);
+    }
+
+    public function terrain() {
+        return $this->belongsTo('App\Modules\Complex\Models\Terrain');
+    }
+
+    public function category() {
+        return $this->belongsTo('App\Modules\Complex\Models\Category');
+    }
+
+    public function review() {
+        return $this->belongsTo('App\Modules\Reviews\Models\Review');
+    }
+
+    public function post() {
+        return $this->belongsTo('App\Modules\Content\Models\Post');
+    }
+
+    public function club() {
+        return $this->belongsTo('App\Modules\Complex\Models\Club');
+    }
+
+    public function user() {
+        return $this->belongsTo('App\Modules\User\Models\User');
+    }
 
   public function terrain() {
         return $this->belongsTo('App\Modules\Complex\Models\Terrain');

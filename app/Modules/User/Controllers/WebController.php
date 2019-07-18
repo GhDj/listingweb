@@ -673,6 +673,7 @@ class WebController extends Controller
     public function handleUserAddComplex(Request $request)
     {
 
+      //  dd($request);
         $user = Auth::user();
         $this->validate($request, [
             "address" => "required",
@@ -722,6 +723,12 @@ class WebController extends Controller
             'user_id' => $user->id
         ]);
 
+        ComplexRequest::create([
+            'status' => 0,
+            'complex_id' => $complex->id,
+            'user_id' => $user->id
+        ]);
+
         foreach ($request->categories as $categorie) {
             $categorieModel = Category::find($categorie);
             if ($categorieModel) {
@@ -733,15 +740,36 @@ class WebController extends Controller
             }
         }
         if ($request->otherCategories) {
-            $otherCategories = explode(',', $request->otherCategories);
-            foreach ($otherCategories as $otherCategorie) {
+            //$otherCategories = explode(',', $request->otherCategories);
+            $cat = Category::create([
+               "title" => $request->otherCategories,
+            ]);
+            ComplexCategory::create([
+                "category_id" => $cat->id,
+                "complex_id" => $complex->id
+            ]);
+            $imagePath = 'storage/uploads/categories/';
+
+                $filename = 'category-' . $cat->id . '-' . str_random(5) . '-' . time() . '.' . $request->categoryImage->getClientOriginalExtension();
+                $request->categoryImage->move(public_path($imagePath), $filename);
+
+                Media::create([
+
+                    'type' => 1,
+                    'link' => $imagePath . '' . $filename,
+                    'category_id' => $cat->id
+                ]);
+
+
+
+            /*foreach ($otherCategories as $otherCategorie) {
 
                 Category::create([
                     "title" => $otherCategorie,
                     "category" => $otherCategorie,
                     "complex_id" => $complex->id
                 ]);
-            }
+            }*/
         }
 
         SweetAlert::success('Bien !', 'Complex ajouté avec succès. !')->persistent('Fermer');
@@ -1855,4 +1883,65 @@ class WebController extends Controller
     {
         return View('User::frontOffice.userEditInfrastructure', ['infrastructure' => Auth::user()->complex->infrastructure]);
     }
+
+
+    /********** Media Request **********/
+
+    public function showMediaRequest()
+    {
+
+        return view('User::backOffice.showCategoryRequest', ['categoryRequests' => Category::where('status','=','0')->get()]);
+    }
+    public function handleAcceptMediaRequest($id)
+    {
+        $mediaRequest = Media::find($id);
+        if ($mediaRequest) {
+            $mediaRequest->type = $mediaRequest->type + 1;
+            $mediaRequest->save();
+            alert()->error("Media accepté", "Bien")->persistent("Ok");
+        }
+        return redirect()->back();
+    }
+
+    public function handleCancelMediaRequest($id)
+    {
+        $mediaRequest = Media::find($id);
+        if ($mediaRequest) {
+            $mediaRequest->type = 10;
+            $mediaRequest->save();
+            alert()->error("Media annulé", "Bien")->persistent("Ok");
+        }
+        return redirect()->back();
+    }
+
+    /********** Category Request **********/
+
+    public function showCategoryRequest()
+    {
+
+        return view('User::backOffice.showMediaRequest', ['complexRequests' => ComplexRequest::all(),
+            'mediaRequests' => Media::all()]);
+    }
+    public function handleAcceptCategoryRequest($id)
+    {
+        $mediaRequest = Media::find($id);
+        if ($mediaRequest) {
+            $mediaRequest->type = $mediaRequest->type + 1;
+            $mediaRequest->save();
+            alert()->error("Media accepté", "Bien")->persistent("Ok");
+        }
+        return redirect()->back();
+    }
+
+    public function handleCancelCategoryRequest($id)
+    {
+        $mediaRequest = Media::find($id);
+        if ($mediaRequest) {
+            $mediaRequest->type = 10;
+            $mediaRequest->save();
+            alert()->error("Media annulé", "Bien")->persistent("Ok");
+        }
+        return redirect()->back();
+    }
+
 }

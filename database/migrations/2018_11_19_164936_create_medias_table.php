@@ -17,7 +17,7 @@ class CreateMediasTable extends Migration
             $table->increments('id');
             $table->string('link');
             $table->integer('type'); // 1-complex gallery | 2-terrain gallery | 3-equipment gallery
-            // 4-reports images | 5-post images | 7-ads banners | 8-products images
+            // 4-reports images | 5-post images | 7-ads banners | 8-products images | 9-category image | 10 - -1 Unverified
             $table->integer('review_id')->unsigned()->nullable();
             $table->foreign('review_id')->references('id')->on('reviews')->onDelete('cascade');
             $table->integer('team_id')->unsigned()->nullable();
@@ -33,7 +33,10 @@ class CreateMediasTable extends Migration
             $table->integer('post_id')->unsigned()->nullable();
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
             $table->integer('product_id')->unsigned()->nullable();
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('category_id')->unsigned()->nullable();
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
 
