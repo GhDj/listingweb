@@ -90,7 +90,7 @@ class WebController extends Controller
 
     //*********************** Search functions **********************//
 
-    public function showSearchPage(Request $request, $category_id)
+    public function showSearchPage(Request $request)
     {
         if (isset($request['selectdCategoryId']))
         {
@@ -100,7 +100,25 @@ class WebController extends Controller
          } else {
             $selectedCategory = null;
         }
-        return view('General::search.searchPage', ['latitude' => '', 'longitude' => '', 'categories' => Category::all(), 'address' => '', 'sports' => Sport::all(), 'selectedCategory' => $selectedCategory]);
+
+        if ($dataResponse = @file_get_contents("http://ip-api.com/json")) {
+            $json = json_decode($dataResponse, true);
+            $latitude = $json['lat'];
+            $longitude = $json['lon'];
+        } else {
+            $latitude = null;
+            $longitude = null;
+        }
+
+        return view('General::search.searchPage', [
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+            'categories' => Category::all(),
+            'address' => '',
+            'sports' => Sport::all(),
+            'selectedCategory' => $selectedCategory,
+            'terrains' => Terrain::paginate(30)
+            ]);
     }
 
 
@@ -164,6 +182,8 @@ class WebController extends Controller
     {
 
         $data = Input::All();
+
+        //dd($data);
 
         $selectdCategoryId = $data['category'];
 

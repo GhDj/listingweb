@@ -51,7 +51,7 @@
                     <nav class="scroll-nav scroll-init">
                         <ul>
                             <li><a href="#sec2">Carte</a></li>
-                            <li><a href="#sec6">Déscription</a></li>
+                            <li><a href="#sec6">Description</a></li>
                             <li><a href="#sec7">Equipement Sportif</a></li>
                             <li><a href="#sec3">Photos</a></li>
                             <li><a href="#sec4">Avis</a></li>
@@ -123,7 +123,7 @@
 
                                 <div class="list-single-main-item fl-wrap" id="sec3">
                                     <div class="list-single-main-item-title fl-wrap">
-                                        <h3>Gallery - Photos</h3>
+                                        <h3>Galerie - Photos</h3>
                                     </div>
                                     <!-- gallery-items   -->
                                     <div class="gallery-items grid-small-pad  list-single-gallery three-coulms lightgallery">
@@ -146,7 +146,7 @@
                                     </div>
                                     <div class="share-holder hid-share">
                                         <div class="showshare">
-                                            <span>Partager Vos Photos Et Gagner des recompenses </span><i
+                                            <span>Partager avec vos proches </span><i
                                                     class="fa fa-share"></i></div>
                                         <div class="share-container  isShare"></div>
                                     </div>
@@ -251,7 +251,7 @@
                                               method="post" enctype="multipart/form-data">
                                             {{ csrf_field() }}
                                             <div class="leave-rating-wrap">
-                                                <span class="leave-rating-title">Avis 1 : </span>
+                                                <span class="leave-rating-title">Avis : </span>
                                                 <div class="leave-rating">
                                                     <input type="radio" name="rating" id="rating-1" value="1"/>
                                                     <label for="rating-1" class="fa fa-star-o"></label>
@@ -277,7 +277,7 @@
                                                     </div>
                                                 </div>
                                             </fieldset>
-                                            <button class="btn  big-btn  color-bg flat-btn">Submit Review <i
+                                            <button class="btn  big-btn  color-bg flat-btn">Poster le commentaire <i
                                                         class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                                         </form>
                                     </div>
@@ -305,7 +305,7 @@
 
                                                         <select data-placeholder="Categories" class="chosen-select"
                                                                 name="title">
-                                                            <option value="">Categories</option>
+                                                            <option value="">Les catégories</option>
                                                             <option value="Problem 1">Problem 1</option>
                                                             <option value="Problem 2">Problem 2</option>
                                                             <option value="Problem 3">Problem 3</option>

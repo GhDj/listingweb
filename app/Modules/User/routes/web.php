@@ -121,4 +121,9 @@ Route::group(['module' => 'User', 'middleware' => ['adminAccess'], 'namespace' =
     /***** Media Request ********/
     Route::get('/admin/media_request/accept/{id}','WebController@handleAcceptMediaRequest')->name('acceptMediaRequest');
     Route::get('/admin/media_request/cancel/{id}','WebController@handleCancelMediaRequest')->name('cancelMediaRequest');
+
+    /***** Category Request ********/
+    Route::get('/admin/Category_request','WebController@showCategoryRequest')->name('showCategoryRequest');
+    Route::get('/admin/Category_request/accept/{id}','WebController@handleAcceptCategoryRequest')->name('acceptCategoryRequest');
+    Route::get('/admin/Category_request/cancel/{id}','WebController@handleCancelCategoryRequest')->name('cancelCategoryRequest');
 });
