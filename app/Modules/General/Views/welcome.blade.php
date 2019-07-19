@@ -573,7 +573,7 @@
                                     <img src="images/unkown.jpg" alt="">
                                     <div class="listing-counter"><span>10 </span> Clubs</div>
                                     <div class="listing-item-cat">
-                                        <h3><a href="listing.html">Terrain</a></h3>
+                                        <h3><a href="{{ route('showSearchPage') }}">Terrain</a></h3>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                                             te</p>
                                     </div>

@@ -99,6 +99,8 @@
                                 <td>
                                     @if(\App\Modules\General\Models\Media::where('category_id','=',$categoryRequest->id)->first())
                                     <img src="{{ \App\Modules\General\Models\Media::where('category_id','=',$categoryRequest->id)->first()->link }}" alt="">
+                                        @else
+                                        Sans Image
                                         @endif
                                 </td>
 

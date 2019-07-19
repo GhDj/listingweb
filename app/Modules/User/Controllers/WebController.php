@@ -98,7 +98,7 @@ class WebController extends Controller
                 $lastName = $name[1];
             }
 
-           // Change images/avatar to public/images/avatar on production mode.
+            // Change images/avatar to public/images/avatar on production mode.
             $imagePath = 'storage/uploads/users/' . $providerData->id . '-' . time() . '.png';
             file_put_contents($imagePath, fopen($providerData->avatar,'r'));
 
@@ -471,7 +471,7 @@ class WebController extends Controller
                 }
 
             }
-       //     dd($reviewCounts);
+            //     dd($reviewCounts);
             return view('User::frontOffice.userDashboard', [
                 'userTerrains' => ($user->complex) ? $user->complex->terrains : null,
                 'complex' => ($user->complex) ? $user->complex : null,
@@ -673,7 +673,7 @@ class WebController extends Controller
     public function handleUserAddComplex(Request $request)
     {
 
-      //  dd($request);
+        //  dd($request);
         $user = Auth::user();
         $this->validate($request, [
             "address" => "required",
@@ -742,7 +742,7 @@ class WebController extends Controller
         if ($request->otherCategories) {
             //$otherCategories = explode(',', $request->otherCategories);
             $cat = Category::create([
-               "title" => $request->otherCategories,
+                "title" => $request->otherCategories,
             ]);
             ComplexCategory::create([
                 "category_id" => $cat->id,
@@ -750,15 +750,15 @@ class WebController extends Controller
             ]);
             $imagePath = 'storage/uploads/categories/';
 
-                $filename = 'category-' . $cat->id . '-' . str_random(5) . '-' . time() . '.' . $request->categoryImage->getClientOriginalExtension();
-                $request->categoryImage->move(public_path($imagePath), $filename);
+            $filename = 'category-' . $cat->id . '-' . str_random(5) . '-' . time() . '.' . $request->categoryImage->getClientOriginalExtension();
+            $request->categoryImage->move(public_path($imagePath), $filename);
 
-                Media::create([
+            Media::create([
 
-                    'type' => 1,
-                    'link' => $imagePath . '' . $filename,
-                    'category_id' => $cat->id
-                ]);
+                'type' => 1,
+                'link' => $imagePath . '' . $filename,
+                'category_id' => $cat->id
+            ]);
 
 
 
@@ -803,7 +803,7 @@ class WebController extends Controller
 
     public function hundleUserAddTerrain(Request $request)
     {
-       // dd($request);
+        // dd($request);
         $this->validate($request, [
             "name" => "required",
             "category_id" => "required",
@@ -1663,9 +1663,9 @@ class WebController extends Controller
 
     public function showAdminClubsList()
     {
-       /* $clubs = Club::whereHas('terrain.complex', function ($subQuery) {
-            $subQuery->where('user_id', Auth::user()->id);
-        })->paginate(5);*/
+        /* $clubs = Club::whereHas('terrain.complex', function ($subQuery) {
+             $subQuery->where('user_id', Auth::user()->id);
+         })->paginate(5);*/
         $clubs = Club::paginate(5);
         return view('User::backOffice.clubsList',
             [
@@ -1701,12 +1701,6 @@ class WebController extends Controller
             'clubsRequests' => ClubRequest::all()]);
     }
 
-    public function showMediaRequest()
-    {
-
-        return view('User::backOffice.showMediaRequest', ['complexRequests' => ComplexRequest::all(),
-            'mediaRequests' => Media::all()]);
-    }
 
     public function cancelComplexRequest($id)
     {
@@ -1755,27 +1749,7 @@ class WebController extends Controller
         return redirect()->back();
     }
 
-    public function handleAcceptMediaRequest($id)
-    {
-        $mediaRequest = Media::find($id);
-        if ($mediaRequest) {
-            $mediaRequest->type = $mediaRequest->type + 1;
-            $mediaRequest->save();
-            alert()->error("Media accepté", "Bien")->persistent("Ok");
-        }
-        return redirect()->back();
-    }
 
-    public function handleCancelMediaRequest($id)
-    {
-        $mediaRequest = Media::find($id);
-        if ($mediaRequest) {
-            $mediaRequest->type = 10;
-            $mediaRequest->save();
-            alert()->error("Media annulé", "Bien")->persistent("Ok");
-        }
-        return redirect()->back();
-    }
 
 
     public function handleAddInfrastructure(Request $request)
@@ -1896,7 +1870,7 @@ class WebController extends Controller
     {
         $mediaRequest = Media::find($id);
         if ($mediaRequest) {
-            $mediaRequest->type = $mediaRequest->type + 1;
+            $mediaRequest->status = $mediaRequest->type + 1;
             $mediaRequest->save();
             alert()->error("Media accepté", "Bien")->persistent("Ok");
         }
@@ -1919,27 +1893,28 @@ class WebController extends Controller
     public function showCategoryRequest()
     {
 
-        return view('User::backOffice.showMediaRequest', ['complexRequests' => ComplexRequest::all(),
-            'mediaRequests' => Media::all()]);
+        return view('User::backOffice.showCategoryRequest', [
+            'categoryRequests' => Category::all()
+        ]);
     }
     public function handleAcceptCategoryRequest($id)
     {
-        $mediaRequest = Media::find($id);
-        if ($mediaRequest) {
-            $mediaRequest->type = $mediaRequest->type + 1;
-            $mediaRequest->save();
-            alert()->error("Media accepté", "Bien")->persistent("Ok");
+        $categoryRequest = Category::find($id);
+        if ($categoryRequest) {
+            $categoryRequest->status = 1;
+            $categoryRequest->save();
+            alert()->error("Bien !", "Catégorie acceptée")->persistent("Ok");
         }
         return redirect()->back();
     }
 
     public function handleCancelCategoryRequest($id)
     {
-        $mediaRequest = Media::find($id);
+        $mediaRequest = Category::find($id);
         if ($mediaRequest) {
-            $mediaRequest->type = 10;
+            $mediaRequest->status = 0;
             $mediaRequest->save();
-            alert()->error("Media annulé", "Bien")->persistent("Ok");
+            alert()->error("Bien !", "Catégorie annulée")->persistent("Ok");
         }
         return redirect()->back();
     }
