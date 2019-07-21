@@ -12,7 +12,7 @@
                     <input type="text" placeholder="mot clé" value=""/>
                 </div>
                 <div class="header-search-select-item">
-                    <select data-placeholder="All Categories" class="chosen-select">
+                    <select data-placeholder="All Categories" class="chosen-select" name="category">
                         @foreach($categories as $category)
                             <option value="{{$category->id}}">{{$category->title}}</option>
                         @endforeach

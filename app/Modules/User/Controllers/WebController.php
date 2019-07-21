@@ -115,18 +115,20 @@ class WebController extends Controller
             ]);
 
             Auth::login($user);
-            Toastr::error('profile to complete !');
-            return redirect(route('showUserCompleteProfile'));
+            Toastr::error('Vous devez compléter votre profil !');
+            return redirect()->route('showUserCompleteProfile');
         }
 
         if ($user->status === 0) {
             $user->status = 1;
             $user->save();
             Auth::login($user);
+            return redirect()->route('showUserCompleteProfile');
         } elseif ($user->status === 1) {
             Auth::login($user);
-            Toastr::error('profile to complete !');
-            return redirect(route('showUserCompleteProfile'));
+
+            Toastr::error('Vous devez compléter votre profil !');
+            return redirect()->route('showUserCompleteProfile');
         } elseif ($user->status === 3) {
 
             Auth::logout();
@@ -135,13 +137,23 @@ class WebController extends Controller
         }
 
         Auth::login($user);
-        return redirect()->route('showUserDashboard');
+      //  return redirect()->route('showUserDashboard');
     }
 
     public function showUserCompleteProfile()
     {
-        if (!Auth::user()) {
-            // todo toast
+        //dd(Auth::user());
+        if (!Auth::user() or Auth::user()->status != 1) {
+            Toastr::error('Vous n\'êtes pas autorisé a accéder a cette page');
+            return redirect(route('showHome'));
+        }
+
+        return view('User::frontOffice.lastStep', [
+
+        ]);
+
+        /*if (!Auth::user() or Auth::user()->status != 1) {
+            Toastr::error('Vous n\'êtes pas autorisé a accéder a cette page');
             return redirect(route('showHome'));
         }
 
@@ -151,16 +163,17 @@ class WebController extends Controller
 
         return view('User::frontOffice.lastStep', [
 
-        ]);
+        ]);*/
     }
 
     public function handleUserCompleteProfile(Request $request)
     {
 
-        if (!Auth::user()) {
-            // todo toast
+        if (!Auth::user() or Auth::user()->status != 1) {
+            Toastr::error('Vous n\'êtes pas autorisé a accéder a cette page');
             return redirect(route('showHome'));
         }
+
 
         $user = User::find(Auth::user()->id);
 
