@@ -81,6 +81,8 @@ class WebController extends Controller
 
     public function handleSocialCallback($provider)
     {
+
+        // dd($provider);
         $providerData = Socialite::driver($provider)->user();
 
         $user = User::where('provider_id', '=', $providerData->id)
@@ -118,12 +120,15 @@ class WebController extends Controller
         }
 
         if ($user->status === 0) {
-            // todo update mail to verified
+            $user->status = 1;
+            $user->save();
+            Auth::login($user);
         } elseif ($user->status === 1) {
             Auth::login($user);
             Toastr::error('profile to complete !');
             return redirect(route('showUserCompleteProfile'));
         } elseif ($user->status === 3) {
+
             Auth::logout();
             Toastr::error('Votre compte est désactivé !');
             return back();

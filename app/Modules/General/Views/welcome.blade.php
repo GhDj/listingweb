@@ -407,7 +407,7 @@
                                                         <h3>
                                                             <a href="{{route('showTerrainDetails',$terrain->id)}}">{{$terrain->name}}</a>
                                                         </h3>
-                                                        <p style="height: 100%;overflow: auto">{{$terrain->description}}</p>
+                                                        <p>{{ substr($terrain->description,0,50) }}</p>
                                                         <div class="geodir-category-options fl-wrap">
                                                             <div class="listing-rating card-popup-rainingvis"
                                                                  data-starrating2="5">
