@@ -1500,8 +1500,16 @@ section.gray-section .section-separator {
 	overflow:hidden;
 	border-radius:10px;
 	border:1px solid #eee;
+}
+
+.card-listing .geodir-category-listing.home {
+	overflow:hidden;
+	border-radius:10px;
+	border:1px solid #eee;
 	height: 100%;
 }
+
+
 .card-listing .geodir-category-content {
 	z-index:2;
 }
@@ -1534,8 +1542,14 @@ section.gray-section .section-separator {
 .card-listing .geodir-category-content {
 	padding:30px 20px 10px;
 	background:#fff;
+}
+
+.card-listing .geodir-category-content.home {
+	padding:30px 20px 10px;
+	background:#fff;
 	height: 100%;
 }
+
 .card-listing  .listing-rating  {
 	float:left;
 	width:100%;

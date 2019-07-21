@@ -15,14 +15,15 @@ Route::group(['module' => 'User', 'middleware' => ['web'], 'namespace' => 'App\M
     Route::get('/user/logout', 'WebController@handleLogout')->name('handleLogout');
     Route::get('/user/login', 'WebController@showUserLogin')->name('login');
     Route::get('/test', 'WebController@showTest')->name('test');
+    Route::get('/user/complete', 'WebController@showUserCompleteProfile')->name('showUserCompleteProfile');
+    Route::post('/user/complete', 'WebController@handleUserCompleteProfile')->name('handleUserCompleteProfile');
 
 });
 
 Route::group(['module' => 'User', 'middleware' => ['userAccess'], 'namespace' => 'App\Modules\User\Controllers'], function () {
 
 
-    Route::get('/user/complete', 'WebController@showUserCompleteProfile')->name('showUserCompleteProfile');
-    Route::post('/user/complete', 'WebController@handleUserCompleteProfile')->name('handleUserCompleteProfile');
+
     Route::get('/user/favoriteList', 'WebController@showFavoriteList')->name('showFavoriteList');
     Route::get('/user/dashboard', 'WebController@showUserDashboard')->name('showUserDashboard');
     Route::get('/user/profile', 'WebController@showUserProfile')->name('showUserProfile');

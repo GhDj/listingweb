@@ -370,7 +370,7 @@
                                         <div class="slick-slide-item" style="max-height: 400px">
                                             <!-- listing-item -->
                                             <div class="listing-item">
-                                                <article class="geodir-category-listing fl-wrap">
+                                                <article class="geodir-category-listing home fl-wrap">
                                                     <div class="geodir-category-img">
                                                         @if(count($terrain->medias)>0)
                                                             <img src="{{ asset($terrain->medias->first()->link)}}"
@@ -384,7 +384,7 @@
                                                         <div class="list-post-counter"><span>{{ $terrain->wishlists->count() }}</span><i
                                                                     class="fa fa-heart"></i></div>
                                                     </div>
-                                                    <div class="geodir-category-content fl-wrap">
+                                                    <div class="geodir-category-content fl-wrap home">
                                                         <a class="listing-geodir-category"
                                                            href="#">{{$terrain->sport->title}}</a>
                                                         <div class="listing-avatar">
