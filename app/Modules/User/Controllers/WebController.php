@@ -114,6 +114,8 @@ class WebController extends Controller
                 'status' => 1,
             ]);
 
+            $user->assignRole(5);
+
             Auth::login($user);
             Toastr::error('Vous devez compléter votre profil !');
             return redirect()->route('showUserCompleteProfile');
@@ -137,7 +139,7 @@ class WebController extends Controller
         }
 
         Auth::login($user);
-      //  return redirect()->route('showUserDashboard');
+        return redirect()->route('showUserDashboard');
     }
 
     public function showUserCompleteProfile()
@@ -183,8 +185,7 @@ class WebController extends Controller
             'firstName' => 'required',
             'lastName' => 'required',
             'gender' => 'required',
-            'address' => 'required',
-            'password' => 'required|confirmed',
+            'address' => 'required'
         ],
             [
                 'email.email' => 'Veuillez saisir un email valide',
@@ -193,9 +194,7 @@ class WebController extends Controller
                 'firstName.required' => 'Le champ Prénom est obligatoire',
                 'lastName.required' => 'Le champ Nom est obligatoire',
                 'address' => 'Le Address Nom est obligatoire',
-                'gender.required' => 'Le champ Genre est obligatoire',
-                'password.required' => 'Veuillez Saisie Mot de passe',
-                'password.confirmed' => 'Mot de passe Doit ètre Identique',
+                'gender.required' => 'Le champ Genre est obligatoire'
             ]);
 
         $address = Address::Create([
@@ -213,11 +212,11 @@ class WebController extends Controller
         $user->last_name = $request->lastName;
         $user->email = $request->email;
         $user->gender = $request->gender;
-        $user->password = bcrypt($request->password);
         $user->address_id = $address->id;
         $user->status = 2;
 
         $user->save();
+        $user->assignRole($request->role);
         return redirect()->route('showUserDashboard');
     }
 

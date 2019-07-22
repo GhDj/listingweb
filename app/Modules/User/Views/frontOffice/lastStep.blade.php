@@ -80,40 +80,59 @@
           <!--section -->
           <section id="sec1">
               <!-- container -->
-              <div style="width:420px; margin-left:30%">
+              <div>
 
                 <div class="custom-form">
-                  <form method="post" name="registerform" class="main-register-form" id="main-register-form2" action="{{ route('handleUserCompleteProfile') }}">
+                  <form method="post" name="registerform" class="main-register-form complete-profile" id="main-register-form2" action="{{ route('handleUserCompleteProfile') }}">
                     {{ csrf_field() }}
 
                 <div class="form-group row">
 
-                    <label>Inscription Comme * </label>
+                    <h3>Inscription Comme * </h3>
 
-                <div class="col-md-12">
+
                     <div class="row">
-                      <!--col -->
-                      <div class="col-md-4">
-                        <div class="add-list-media-header">
-                          <label class="radio inline">
-                            <input type="radio" name="role" value="2" checked>
-                            <span>Propriétaire</span>
-                          </label>
+                        <!--col -->
+                        <div class="form-group col-md-6">
+
+                                <label class="radio inline">
+                                    <input type="radio" name="role" value="2" checked>
+                                    <span>Responsable Complexe privé</span>
+                                </label>
+
                         </div>
-                      </div>
-                      <!--col end-->
-                      <!--col -->
-                      <div class="col-md-4">
-                        <div class="add-list-media-header">
-                          <label class="radio inline">
-                            <input type="radio" name="role" value="4">
-                            <span>Internaute</span>
-                          </label>
+                        <!--col end-->
+                        <!--col -->
+                        <div class="form-group col-md-6">
+
+                                <label class="radio inline">
+                                    <input type="radio" name="role" value="5">
+                                    <span>Sportif</span>
+                                </label>
+
                         </div>
-                      </div>
-                      <!--col end-->
                     </div>
-                  </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+
+                                <label class="radio inline">
+                                    <input type="radio" name="role" value="3">
+                                    <span>Responsable Complexe public</span>
+                                </label>
+
+                        </div>
+
+                        <div class="form-group col-md-6">
+
+                                <label class="radio inline">
+                                    <input type="radio" name="role" value="4">
+                                    <span>Responsable club</span>
+                                </label>
+
+                        </div>
+                        <!--col end-->
+                    </div>
+
                 </div>
 
                     <div class="form-group row">
@@ -154,13 +173,16 @@
                       </div>
                     </div>
 
-                    <label> Genre </label>
-                        <div style="margin-left:70px;">
-                          <label class="radio">
-                          <input type="radio" name="gender" value="1"> <span>Homme</span> </label>
-                          <label class="radio">
-                          <input type="radio" name="gender"  value="2"> <span>Femme</span> </label>
-                        </div>
+                    <h3> Genre </h3>
+
+                          <div class="row form-group">
+                              <label class="radio">
+                                  <input type="radio" name="gender" value="1"> <span>Homme</span> </label>
+                          </div>
+                          <div class="row form-group">
+                              <label class="radio">
+                                  <input type="radio" name="gender"  value="2"> <span>Femme</span> </label></div>
+
 
                     <input type="hidden" name="latitude" id="latitude">
 
@@ -187,7 +209,7 @@
                       </div>
                     </div>
 
-                    <div class="form-group row">
+                    {{--<div class="form-group row">
                       <label for="password"> Mot de passe * </label>
                       <div class="col-md-12">
                         <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" onClick="this.select()" required>
@@ -204,7 +226,8 @@
                       <div class="col-md-12">
                         <input id="password_confirm" type="password" name="password_confirmation" onClick="this.select()" required>
                       </div>
-                    </div>
+                    </div>--}}
+
                     <button type="submit" class="log-submit-btn"><span>Enregistrer</span></button>
                   </form>
                 </div>
