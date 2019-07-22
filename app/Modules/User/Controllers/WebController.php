@@ -1298,7 +1298,25 @@ class WebController extends Controller
     {
         $user = User::find($id);
         if ($user) {
+            $admin = User::whereHas('roles', function ($query) {$query->where('title', '=', 'Admin');})->first();
+
+            if ($user->complex()->first()) {
+                $complex = $user->complex()->first();
+                $complex->user_id = $admin->id;
+                $complex->save();
+            }
+
+            if ($user->club()->first())
+            {
+                foreach ($user->club() as $club)
+                {
+                    $club->user_id = $admin->id;
+                    $club->save();
+                }
+            }
+
             $user->delete();
+
             alert()->success("Utilisateur supprimer avec succès")->persistent("Ok");
         }
 
