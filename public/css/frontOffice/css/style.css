@@ -6747,3 +6747,19 @@ footer.main-footer.fixed-footer {
 .search-tab-title h2 {
 	font-size: 18px;
 }
+
+.complete-profile {
+	width: 60%;
+	margin: auto;
+}
+
+.complete-profile h1,
+.complete-profile h2,
+.complete-profile h3,
+.complete-profile h4,
+.complete-profile h5,
+.complete-profile h6 {
+	color: #666;
+	text-align: left;
+	font-weight: 600;
+}
