@@ -4,7 +4,7 @@
         <span class="flex-grow-1"></span>
         <div class="d-flex align-items-center">
             <div>
-                <p class="m-0">© {{ now()->format('Y') }} {{ config('app.name') }} Tout droits réservés.</p>
+                <p class="m-0">© {{ now()->format('Y') }} BluePen Labs Tout droits réservés.</p>
             </div>
         </div>
     </div>

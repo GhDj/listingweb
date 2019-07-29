@@ -68,7 +68,12 @@
 
 
     <div class="breadcrumb">
-        <h1>Demande d'accès</h1>
+        <h1>Demandes d'ajout</h1>
+        <ul>
+            <li><a href="">Tableau de bord</a></li>
+            <li><a href="">Demandes d'ajout</a></li>
+            <li><a href="">Médias</a></li>
+        </ul>
     </div>
 
     <div class="separator-breadcrumb border-top"></div>
@@ -88,7 +93,7 @@
                                 <th>Utilisateur</th>
                                 <th>Lié à </th>
                                 <th>Media</th>
-                                <th>Date</th>
+                                <th>Date de la demande</th>
                                 <th>Action</th>
                                 </thead>
                                 <tbody>
@@ -123,7 +128,7 @@
                                         <td>
                                             @if($mediaRequest->type == 10)
                                                 <a href="{{route('acceptMediaRequest',$mediaRequest->id)}}"
-                                                   class="btn btn-success">Accepter</a>
+                                                  ><span class="badge badge-pill badge-outline-success p-2 m-1"><i class="i-Like"></i></span></a>
                                             @elseif ($mediaRequest->type > 10)
 
                                             <a href="{{route('cancelMediaRequest',$mediaRequest->id)}}"
@@ -134,6 +139,13 @@
                                     </tr>
                                 @endforeach
                                 </tbody>
+                                <tfoot>
+                                <th>Utilisateur</th>
+                                <th>Lié à </th>
+                                <th>Media</th>
+                                <th>Date de la demande</th>
+                                <th>Action</th>
+                                </tfoot>
                             </table>
 
 

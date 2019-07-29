@@ -69,7 +69,12 @@
 
 
     <div class="breadcrumb">
-        <h1>Demande d'accès Catégories</h1>
+        <h1>Demandes d'ajout</h1>
+        <ul>
+            <li><a href="">Tableau de bord</a></li>
+            <li><a href="">Demandes d'ajout</a></li>
+            <li><a href="">Catégories</a></li>
+        </ul>
     </div>
 
     <div class="separator-breadcrumb border-top"></div>
@@ -89,7 +94,7 @@
                         
                         <th>Categorie </th>
                         <th>Media</th>
-                        <th>Date</th>
+                        <th>Date de la demande</th>
                         <th>Action</th>
                         </thead>
                         <tbody>
@@ -110,7 +115,7 @@
                                 <td>
                                     @if($categoryRequest->status == 0)
                                         <a href="{{route('acceptCategoryRequest',$categoryRequest->id)}}"
-                                           class="btn btn-success">Accepter</a>
+                                           ><span class="badge badge-pill badge-outline-success p-2 m-1"><i class="i-Like"></i></span></a>
                                     @elseif ($categoryRequest->status > 0)
 
                                         <a href="{{route('cancelCategoryRequest',$categoryRequest->id)}}"
@@ -121,6 +126,12 @@
                             </tr>
                         @endforeach
                         </tbody>
+                        <tfoot>
+                        <th>Categorie </th>
+                        <th>Media</th>
+                        <th>Date de la demande</th>
+                        <th>Action</th>
+                        </tfoot>
                     </table>
 
 

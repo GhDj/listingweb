@@ -9,6 +9,7 @@
     <script src="{{ asset('plugins') }}/jquery/jquery-v4.js"></script>
 
     <link rel="stylesheet" href="{{ asset('css/backOffice') }}/style.css">
+    <link rel="stylesheet" href="{{ asset('css/backOffice') }}/purple.css">
     <link rel="stylesheet" href="{{ asset('plugins') }}/perfect-scrollbar/perfect-scrollbar.css">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('plugins/select-chosen') }}/select-chosen.css" />
