@@ -22741,3 +22741,7 @@ blockquote {
         right: 5px
     }
 }
+
+button.add_user {
+    margin-left: auto !important;
+}

@@ -2,8 +2,8 @@
 
 @section('head')
     @include('backOffice.inc.head',
-    ['title' => 'Jobifier',
-    'description' => 'Espace Administratif - Jobifier'
+    ['title' => 'Olympiade',
+    'description' => 'Espace Administratif - Olympiade'
     ])
 @endsection
 
@@ -40,8 +40,19 @@
         /* Datatables responsive */
 
         $(document).ready(function () {
-            $('#datatable-responsive').DataTable({
+           /* $('#datatable-responsive').DataTable({
                 responsive: true,
+                language: {
+                    url: "{{ asset('plugins') }}/datatable/lang/french.json"
+                }
+            });*/
+            $('#datatable-sportifs').DataTable({
+
+                responsive: true,
+                initComplete: function(){
+                    $("div.breadcrumb")
+                        .append('<button type="button" class="add_user btn btn-primary m-1" data-role=4 id="sprotif">Ajouter</button>');
+                },
                 language: {
                     url: "{{ asset('plugins') }}/datatable/lang/french.json"
                 }
@@ -53,7 +64,11 @@
 
 
     <div class="breadcrumb">
-        <h1>Utilisateurs</h1>
+        <h1>Sportifs</h1> <ul>
+            <li><a href="">Tableau de bord</a></li>
+            <li><a href="">Utilistauers</a></li>
+            <li><a href="">Sportifs</a></li>
+        </ul>
     </div>
 
     <div class="separator-breadcrumb border-top"></div>
@@ -64,29 +79,16 @@
             <div class="card text-left">
 
                 <div class="card-body">
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="home-basic-tab" data-toggle="tab" href="#homeBasic" role="tab" aria-controls="homeBasic" aria-selected="true">Sportif</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="profile-basic-tab" data-toggle="tab" href="#profileBasic" role="tab" aria-controls="profileBasic" aria-selected="false">Resp.Privé</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="contact-basic-tab" data-toggle="tab" href="#contactBasic" role="tab" aria-controls="contactBasic" aria-selected="false">Resp.Public</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="homeBasic" role="tabpanel" aria-labelledby="home-basic-tab">
-                            <table id="datatable-athletic"
+
+                     <table id="datatable-sportifs"
                                    class="display table table-striped table-bordered" cellspacing="0"
                                    width="100%">
                                 <thead>
                                 <tr>
-                                    <th>Image</th>
                                     <th>Nom</th>
                                     <th>Prénom</th>
                                     <th>Email</th>
-                                    <th>Phone</th>
+                                    <th>Téléphone</th>
                                     <th>Date</th>
                                     <th>Action</th>
                                 </tr>
@@ -96,35 +98,31 @@
                                 <tbody>
                                 @foreach($athletics as $athletic)
                                     <tr>
-                                        <td><img class="user_image_table" src="{{asset($athletic->picture)}}"/></td>
                                         <td>{{$athletic->first_name}}</td>
                                         <td>{{$athletic->last_name}}</td>
                                         <td>{{$athletic->email}}</td>
                                         <td>{{$athletic->phone}}</td>
                                         <td>{{\Carbon\Carbon::parse($athletic->created_at)->format('d-m-Y')}}</td>
                                         <td>
-                                            <a href="{{route('handleDeleteUser',$athletic->id)}}">Supprimer</a>
-                                            <a href="#" class="edit_user " get-user-url="{{route('handleGetUserById',$athletic->id)}}">Modifier</a>
+                                            <a href="{{route('handleDeleteUser',$athletic->id)}}"><span class="badge badge-pill badge-outline-dark p-2 m-1"><i class="i-Remove"></i></span></a>
+                                            <a href="#" class="edit_user " get-user-url="{{route('handleGetUserById',$athletic->id)}}"> <span class="badge badge-pill badge-outline-success p-2 m-1"><i class="i-Edit"></i></span></a>
                                         </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Image</th>
                                     <th>Nom</th>
                                     <th>Prénom</th>
                                     <th>Email</th>
-                                    <th>Phone</th>
+                                    <th>Téléphone</th>
                                     <th>Date</th>
                                     <th>Action</th>
                                 </tr>
                                 </tfoot>
 
                             </table>
-                        </div>
-                        <div class="tab-pane fade" id="profileBasic" role="tabpanel" aria-labelledby="profile-basic-tab">
-                            <table id="datatable-resp-prive"
+                     {{--<table id="datatable-resp-prive"
                                    class="display table table-striped table-bordered" cellspacing="0"
                                    width="100%">
                                 <thead>
@@ -167,9 +165,8 @@
                                     <th>Action</th>
                                 </tr>
                                 </tfoot>
-                            </table>  </div>
-                        <div class="tab-pane fade" id="contactBasic" role="tabpanel" aria-labelledby="contact-basic-tab">
-                            <table id="datatable-resp-public"
+                            </table>
+                    <table id="datatable-resp-public"
                                    class="display table table-striped table-bordered" cellspacing="0"
                                    width="100%">
                                 <thead>
@@ -213,8 +210,7 @@
                                 </tr>
                                 </tfoot>
 
-                            </table>   </div>
-                    </div>
+                            </table>--}}
                 </div>
 
 
@@ -385,18 +381,14 @@
     </div>
 
     <script>
-    $("#datatable-athletic").dataTable({
+   /* $("#datatable-sportifs").DataTable({
         dom: '<"toolbar">lfrtip',
-        initComplete: function(){
-            $("div.toolbar")
-                .html('<button type="button" class="add_user btn btn-primary m-1" data-role=4 id="sprotif">Ajouter</button>');
-        },
-        "language":
-            {
-                "url":"http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json",
-            }
-    });
 
+    });
+*/
+   /*$('#datatable-sportifs').dataTable({
+
+   });*/
 
     $("#datatable-resp-prive").dataTable({
         dom: '<"toolbar2">lfrtip',

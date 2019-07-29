@@ -76,6 +76,8 @@ Route::group(['module' => 'User', 'middleware' => ['adminAccess'], 'namespace' =
 
     ///Users
     Route::get('/admin/users', 'WebController@showUsersList')->name('showUsersList');
+    Route::get('/admin/ResPublic', 'WebController@showResPublicList')->name('showResPublicList');
+    Route::get('/admin/ResPrive', 'WebController@showResPriveList')->name('showResPriveList');
     Route::post('/admin/user/add', 'WebController@handleAddUser')->name('handleAddUser');
 
     Route::get('/admin/user/delete/{id}', 'WebController@handleDeleteUser')->name('handleDeleteUser');
@@ -105,7 +107,7 @@ Route::group(['module' => 'User', 'middleware' => ['adminAccess'], 'namespace' =
     Route::get('/admin/club/add', 'WebController@showAddClub')->name('showAddClub');
     Route::post('/admin/club/add', 'WebController@handleAddClub')->name('handleAddClub');
 
-    Route::get('/admin/club/edit/{id}', 'WebController@showEditTerrain')->name('showEditTerrain');
+    Route::get('/admin/club/edit/{id}', 'WebController@showEditTerrain')->name('showEditClub');
 
 
     Route::get('/admin/complex_request','WebController@showComplexRequest')->name('showComplexRequest');
@@ -116,6 +118,7 @@ Route::group(['module' => 'User', 'middleware' => ['adminAccess'], 'namespace' =
     Route::get('/admin/complex_request/cancel/{id}','WebController@cancelComplexRequest')->name('cancelComplexRequest');
 
     /***** Club Request ********/
+    Route::get('/admin/club_request','WebController@showClubRequest')->name('showClubRequest');
     Route::get('/admin/club_request/accept/{id}','WebController@handleAcceptClubRequest')->name('acceptClubRequest');
     Route::get('/admin/club_request/cancel/{id}','WebController@handleCancelComplexRequest')->name('cancelClubRequest');
 

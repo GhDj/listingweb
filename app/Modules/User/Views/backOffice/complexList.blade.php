@@ -42,17 +42,28 @@
         });
 
     </script>
+    <div class="breadcrumb">
+        <h1>Complexes</h1> <ul>
+            <li><a href="">Tableau de bord</a></li>
+            <li><a href="">Infrastructures</a></li>
+            <li><a href="">Complexes</a></li>
+        </ul>
 
+        <button role="link" href="{{route('showAddComplexAdmin')}}" class="btn btn-primary add_user">Ajouter</button>
+
+    </div>
+
+    <div class="separator-breadcrumb border-top"></div>
 
     <div class="row mb-4">
         <div class="col-md-12 mb-4">
             <div class="card text-left">
 
-                <div class="card-header">
-                    <h1 class="card-title">Complexes</h1>
-                </div>
+
                     <div class="card-body">
+{{--
                         <a href="{{route('showAddComplexAdmin')}}" class="btn btn-primary">Ajouter</a>
+--}}
 
                         <table id="datatable-complex"
                                class="display table table-striped table-bordered" cellspacing="0"
@@ -60,7 +71,10 @@
                             <thead>
                             <th>Responsable</th>
                             <th>Complex</th>
+                            <th>Email</th>
+                            <th>Téléphone</th>
                             <th>Localité</th>
+
                            {{-- <th>Action</th>--}}
                             </thead>
                             <tbody>
@@ -73,6 +87,12 @@
                                     </td>
                                     <td>
                                         {{$complex->name}}
+                                    </td>
+                                    <td>
+                                        {{$complex->email}}
+                                    </td>
+                                    <td>
+                                        {{$complex->phone}}
                                     </td>
                                     <td>
                                         {{$complex->address->address}}
@@ -89,6 +109,15 @@
                                 </tr>
                             @endforeach
                             </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>Responsable</th>
+                                <th>Complex</th>
+                                <th>Email</th>
+                                <th>Téléphone</th>
+                                <th>Localité</th>
+                            </tr>
+                            </tfoot>
                         </table>
                     </div>
                    {{-- <div style="margin-top: 10px;" class="row col-md-12">
@@ -115,7 +144,7 @@
                         @endforeach
                     </div>--}}
 
-                <div class="card-footer text-right">{{ $complexs->links() }}</div>
+                {{--<div class="card-footer text-right">{{ $complexs->links() }}</div>--}}
             </div>
 
         </div>

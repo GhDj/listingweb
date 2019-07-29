@@ -24,7 +24,7 @@
         /* Datatables responsive */
 
         $(document).ready(function () {
-            $('#datatable-responsive').DataTable({
+            $('#datatable-clubs').DataTable({
                 responsive: true,
                 language: {
                     url: "{{ asset('plugins') }}/datatable/lang/french.json"
@@ -37,7 +37,14 @@
 
 
     <div class="breadcrumb">
-        <h1>Club</h1>
+        <h1>Clubs</h1> <ul>
+            <li><a href="">Tableau de bord</a></li>
+            <li><a href="">Infrastructures</a></li>
+            <li><a href="">Clubs</a></li>
+        </ul>
+
+        <button role="link" href="{{route('showAddClub')}}" class="btn btn-primary add_user">Ajouter</button>
+
     </div>
     <div class="separator-breadcrumb border-top"></div>
 
@@ -46,9 +53,65 @@
             <div class="card text-left">
 
                 <div class="card-body">
-                    <a href="{{route('showAddClub')}}" class="btn btn-primary">Ajouter</a>
+                    <table id="datatable-clubs"
+                           class="display table table-striped table-bordered" cellspacing="0"
+                           width="100%">
+                        <thead>
+                        <th>Responsable</th>
+                        <th>Complex</th>
+                        <th>Email</th>
+                        <th>Téléphone</th>
+                        <th>Localité</th>
 
-                    <div style="margin-top: 10px;" class="row col-md-12">
+
+                        {{-- <th>Action</th>--}}
+                        </thead>
+                        <tbody>
+                        @foreach($clubs as $club)
+                            <tr>
+                                <td>
+                                    @isset($club->user)
+                                        {{$club->user->first_name}} {{$club->user->last_name}}
+                                    @endisset
+                                </td>
+                                <td>
+                                    {{$club->name}}
+                                </td>
+                                <td>
+                                    {{$club->email}}
+                                </td>
+                                <td>
+                                    {{$club->phone}}
+                                </td>
+                                <td>
+                                    {{$club->address->address}}
+                                </td>
+                               {{-- <td>
+                                    <a href="{{route('showEditClub',$club->id)}}"> <span class="badge badge-pill badge-outline-success p-2 m-1"><i class="i-Edit"></i></span></a>
+                                </td>--}}
+                                {{--  <td>
+                                      @if($complexRequest->status!=1)
+                                          <a href="{{route('acceptComplexRequest',$complexRequest->id)}}"
+                                             class="btn btn-success">Accepter</a>
+                                      @endif
+
+                                      <a href="{{route('cancelComplexRequest',$complexRequest->id)}}"
+                                         class="btn btn-danger">Annuler</a>
+                                  </td>--}}
+                            </tr>
+                        @endforeach
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>Responsable</th>
+                            <th>Complex</th>
+                            <th>Email</th>
+                            <th>Téléphone</th>
+                            <th>Localité</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                    {{--<div style="margin-top: 10px;" class="row col-md-12">
                         @foreach ($clubs as $club)
                             <div class="card mb-4 o-hidden col-md-4">
                                 <a href="{{route('showClubDetails',$club->id)}}"> <img
@@ -70,7 +133,7 @@
                                 <a href="{{route('showEditTerrain',$club->id)}}" class="btn btn-success">Modifier</a>
                             </div>
                         @endforeach
-                    </div>
+                    </div>--}}
                 </div>
             </div>
         </div>

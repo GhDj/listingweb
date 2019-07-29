@@ -46,7 +46,18 @@ class WebController extends Controller
     public function showAdminDashboard()
     {
 
-        return view("User::backOffice.dashboard");
+        $sportifs = User::whereHas('roles', function ($query) {
+        $query->where('title', '=', 'Sportif');
+    })->count();
+        $complexs = Complex::all()->count();
+        $clubs = Club::all()->count();
+        $terrains = Terrain::all()->count();
+        return view("User::backOffice.dashboard",[
+            'sportifs' => $sportifs,
+            'clubs' => $clubs,
+            'complexs' => $complexs,
+            'terrains' => $terrains
+        ]);
     }
 
     public function handleUserActivation($email, $activationCode)
@@ -473,7 +484,7 @@ class WebController extends Controller
             return view('User::frontOffice.Club.userDashboard', [
                 'userTerrains' => ($user->complex) ? $user->complex->terrains : null,
                 'complex' => $user->complex,
-                'availableComplex' => Complex::doesnthave('user')->where('type', 1)->paginate(30)
+                'availableComplex' => Complex::doesnthave('user')->where('type', 1)->get()
             ]);
 
         }
@@ -493,7 +504,7 @@ class WebController extends Controller
                 'userTerrains' => ($user->complex) ? $user->complex->terrains : null,
                 'complex' => ($user->complex) ? $user->complex : null,
                 'reviewsCount' => $reviewCounts,
-                'availableComplex' => Complex::doesnthave('user')->where('type', 1)->paginate(30)
+                'availableComplex' => Complex::doesnthave('user')->where('type', 1)->get()
             ]);
 
             //return "private or public complex resp";
@@ -531,7 +542,7 @@ class WebController extends Controller
 
         $userTerrains = Terrain::whereHas('complex', function ($subQuery) {
             $subQuery->where('user_id', Auth::user()->id);
-        })->paginate(5);
+        })->get();
         return view('User::frontOffice.userListing',
             [
                 'userTerrains' => $userTerrains
@@ -543,7 +554,7 @@ class WebController extends Controller
     {
         $userClubs = Club::whereHas('terrain.complex', function ($subQuery) {
             $subQuery->where('user_id', Auth::user()->id);
-        })->paginate(5);
+        })->get();
 
         return view('User::frontOffice.userListing',
             [
@@ -1236,16 +1247,31 @@ class WebController extends Controller
             $query->where('title', '=', 'Sportif');
         })->get();
 
-        $privateOfficials = User::whereHas('roles', function ($query) {
-            $query->where('title', '=', 'Responsable complexe prive');
-        })->get();
+
+        return view('User::backOffice.usersList', compact('athletics'));
+    }
+
+
+    public function showResPublicList()
+    {
 
         $publicOfficials = User::whereHas('roles', function ($query) {
             $query->where('title', '=', 'Responsable complexe public ');
         })->get();
 
 
-        return view('User::backOffice.usersList', compact('athletics', 'privateOfficials', 'publicOfficials'));
+        return view('User::backOffice.resPublicList', compact('publicOfficials'));
+    }
+
+    public function showResPriveList()
+    {
+
+        $privateOfficials = User::whereHas('roles', function ($query) {
+            $query->where('title', '=', 'Responsable complexe prive ');
+        })->get();
+
+
+        return view('User::backOffice.resPriveList', compact('privateOfficials'));
     }
 
     public function handleAddUser(Request $request)
@@ -1393,7 +1419,7 @@ class WebController extends Controller
     {
         return view('User::backOffice.complexList',
             [
-                'complexs' => Complex::with('address')->paginate(30)
+                'complexs' => Complex::with('address')->get()
             ]
         );
     }
@@ -1474,9 +1500,7 @@ class WebController extends Controller
     public function showTerrainsList()
     {
 
-        $userTerrains = Terrain::whereHas('complex', function ($subQuery) {
-            $subQuery->where('user_id', Auth::user()->id);
-        })->paginate(5);
+        $userTerrains = Terrain::all();
         return view('User::backOffice.terrainsList',
             [
                 'userTerrains' => $userTerrains
@@ -1588,7 +1612,7 @@ class WebController extends Controller
         $terrain = Terrain::find($id);
         if ($terrain) {
             return view('User::backOffice.editTerrain', ['specialities' => Sport::All(),
-                'Complexs' => Auth::user()->Complexs()->get()], compact('terrain'));
+                'Complexs' => Auth::user()->complex()->get()], compact('terrain'));
         }
         return redirect()->route('showTerrainsList');
     }
@@ -1669,7 +1693,7 @@ class WebController extends Controller
     {
         $clubs = Club::whereHas('terrain.complex', function ($subQuery) {
             $subQuery->where('user_id', Auth::user()->id);
-        })->paginate(5);
+        })->get();
 
         return view('User::backOffice.clubsList',
             [
@@ -1683,7 +1707,7 @@ class WebController extends Controller
         /* $clubs = Club::whereHas('terrain.complex', function ($subQuery) {
              $subQuery->where('user_id', Auth::user()->id);
          })->paginate(5);*/
-        $clubs = Club::paginate(5);
+        $clubs = Club::all();
         return view('User::backOffice.clubsList',
             [
                 'clubs' => $clubs
@@ -1714,8 +1738,13 @@ class WebController extends Controller
     public function showComplexRequest()
     {
 
-        return view('User::backOffice.showComplexRequest', ['complexRequests' => ComplexRequest::all(),
-            'clubsRequests' => ClubRequest::all()]);
+        return view('User::backOffice.showComplexRequest', ['complexRequests' => ComplexRequest::all()]);
+    }
+
+    public function showClubRequest()
+    {
+
+        return view('User::backOffice.showClubRequest', ['clubsRequests' => ClubRequest::all()]);
     }
 
 
