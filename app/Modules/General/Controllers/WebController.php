@@ -54,6 +54,10 @@ class WebController extends Controller
         ]);
     }
 
+    public function showFamily() {
+        return view('General::family');
+    }
+
     public function getTerrainsBySport($sport)
     {
         $terrains = Terrain::where('sport_id', $sport)

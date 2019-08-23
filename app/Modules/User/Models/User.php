@@ -78,6 +78,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Modules\Reviews\Models\Review','user_id');
     }
 
+    public function medias(){
+        return $this->hasMany('App\Modules\General\Models\Media','user_id');
+    }
+
     public function reports(){
         return $this->hasMany('App\Modules\Reviews\Models\Report','user_id');
     }

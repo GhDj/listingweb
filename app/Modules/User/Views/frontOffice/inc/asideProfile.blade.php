@@ -13,7 +13,8 @@
                     <li><a href="{{route('showUserProfile')}}"><i class="fa fa-user-o"></i>Mes infos</a></li>
                     <li><a href="{{route('showUserPassword')}}"><i class="fa fa-unlock-alt"></i>Changer Votre Mot de
                             Passe</a></li>
-
+                    <li><a href="{{route('showUserPassword')}}"><i class="fa fa-unlock-alt"></i>Mes Avis</a></li>
+                    <li><a href="{{route('showUserPassword')}}"><i class="fa fa-unlock-alt"></i>Mes Photos</a></li>
                 </ul>
             </div>
             <!-- user-profile-menu end-->

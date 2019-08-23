@@ -70,8 +70,8 @@
                                         <div class="statistic-item-wrap">
                                             <div class="statistic-item gradient-bg fl-wrap">
                                                 <i class="fa fa fa-star"></i>
-                                                <div class="statistic-item-numder">{{Auth::user()->wishlists->count()}}</div>
-                                                <h5>Favoris</h5>
+                                                <div class="statistic-item-numder">{{ $terrainFav }}</div>
+                                                <h5>Infrastructure favoris</h5>
                                             </div>
                                         </div>
                                         <!-- statistic-item-wrap end-->
@@ -83,8 +83,8 @@
                                             <div class="statistic-item-wrap">
                                                 <div class="statistic-item gradient-bg fl-wrap">
                                                     <i class="fa fa-heart-o"></i>
-                                                    <div class="statistic-item-numder">{{Auth::user()->reviews->count()}}</div>
-                                                    <h5>Notes</h5>
+                                                    <div class="statistic-item-numder">{{ $clubFav }}</div>
+                                                    <h5> Clubs favoris</h5>
                                                 </div>
                                             </div>
                                             <!-- statistic-item-wrap end-->
@@ -93,11 +93,21 @@
                                                 <div class="statistic-item gradient-bg fl-wrap">
                                                     <i class="fa fa-comments-o"></i>
                                                     <div class="statistic-item-numder">{{Auth::user()->reviews->count()}}</div>
-                                                    <h5>Commentaires</h5>
+                                                    <h5>Notes</h5>
                                                 </div>
                                             </div>
 
                                     <!-- statistic-item-wrap end-->
+                                        <!-- statistic-item-wrap-->
+                                        <div class="statistic-item-wrap">
+                                            <div class="statistic-item gradient-bg fl-wrap">
+                                                <i class="fa fa-comments-o"></i>
+                                                <div class="statistic-item-numder">{{Auth::user()->reviews->count()}}</div>
+                                                <h5>Commentaires</h5>
+                                            </div>
+                                        </div>
+
+                                        <!-- statistic-item-wrap end-->
                                     </div>
                                     <!-- statistic-container end-->
                                 </div>

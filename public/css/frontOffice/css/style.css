@@ -4374,7 +4374,7 @@ article .list-single-main-item {
 	color:#fff;
 }
 .dashboard-list-box.activities .dashboard-list {
-	padding-left:0;
+	/*padding-left:0;*/
 }
 .dashboard-list-box.activities  .dashboard-message-text {
 	padding-left:0;
@@ -6762,4 +6762,12 @@ footer.main-footer.fixed-footer {
 	color: #666;
 	text-align: left;
 	font-weight: 600;
+}
+
+.share-holder.hid-share.show-reg-form.modal-open {
+	top: 0px;
+	background: #4db7fe;
+	color: #fff;
+	padding: 15px 40px 15px 40px;
+	border-radius: 30px;
 }
