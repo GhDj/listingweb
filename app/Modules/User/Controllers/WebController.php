@@ -511,7 +511,20 @@ class WebController extends Controller
         }
 
         if (checkAthleticRole($user)) {
+            $clubFav= 0;
+            $terrainFav = 0;
+            foreach (Auth::user()->wishlists as $wish)
+            {
+                if ($wish->wished_type == "App\Modules\Complex\Models\Club") {
+                    $clubFav++;
+                } elseif ($wish->wished_type == "App\Modules\Complex\Models\Terrain") {
+                    $terrainFav++;
+                }
+            }
+
             return view('User::frontOffice.Sportif.userDashboard', [
+                'clubFav' => $clubFav,
+                'terrainFav' => $terrainFav,
                 'userTerrains' => null,
                 'complex' => null,
                 'reviewsCount' => 0,

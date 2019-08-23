@@ -48,11 +48,10 @@
                                     <!-- dashboard-list end-->
 
                                         @foreach (Auth::user()->wishlists as $wishlist)
-                                            <div class="dashboard-list">
-                                                <div class="dashboard-message">
 
 
-                                                    <div class="dashboard-message-text">
+
+
 
                                                         @if ($wishlist->wished_type == "App\Modules\Complex\Models\Terrain")
                                                             <div class="dashboard-list" id="element{{ $wishlist->wished->id }}">
@@ -100,8 +99,8 @@
                                                                     <div class="dashboard-listing-table-text">
                                                                         <h4><a href="{{route('showTerrainDetails',$wishlist->wished->id)}}">{{$wishlist->wished->name}}</a></h4>
                                                                         <span class="dashboard-listing-table-address"><i class="fa fa-map-marker"></i><a  href="#">{{$wishlist->wished->terrain->complex->address->address}}</a></span>
-                                                                        <div class="listing-rating card-popup-rainingvis fl-wrap" data-starrating2="5">
-
+                                                                        <div class="listing-rating card-popup-rainingvis fl-wrap" data-starrating2="{{$wishlist->wished->reviews->count()}}">
+                                                                            <span>@if($wishlist->wished->reviews->count() > 0)({{$wishlist->wished->reviews->count()}} reviews) @endif</span>
                                                                         </div>
                                                                         <ul class="dashboard-listing-table-opt  fl-wrap">
                                                                             <li><a href="{{route('showTerrainDetails',$wishlist->wished->id)}}">Voir <i class="fa fa-pencil-square-o"></i></a></li>
@@ -112,9 +111,9 @@
                                                             </div>
                                                         @endif
 
-                                                    </div>
-                                                </div>
-                                            </div>
+
+
+
                                         @endforeach
 
 

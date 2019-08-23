@@ -119,13 +119,23 @@
                 @isset($terrain)
                 @if (Auth::check() and Auth::user()->status == 2)
 
-                  <span class="viewed-counter wichlist" id ="terrain{{$terrain->id}}" data-terrain = "{{ $terrain->id }}"><span>
+                  <span class="viewed-counter wichlist" id ="terrain{{$terrain->id}}" data-terrain = "{{ $terrain->id }}">
+                      <span>
                     @if (is_null(Auth::user()->wishlists->where('wished_id',$terrain->id)->where('wished_type','App\Modules\Complex\Models\Terrain')->first()))
                       <img src="{{asset('img/unlike.png')}}" alt="">
                         @else
                       <img src="{{asset('img/like.png')}}" alt="">
                     @endif
-                    </span> Favorie</span>
+                    </span> Favorie
+                  </span>
+                    @else
+                          <span class="viewed-counter wichlist show-reg-form modal-open" id ="terrain{{$terrain->id}}" data-terrain = "{{ $terrain->id }}">
+                      <span>
+
+                              <img src="{{asset('img/unlike.png')}}" alt="">
+
+                    </span> Favorie
+                  </span>
                 @endif
 
                 <span class="viewed-counter"><i class="fa fa-share-alt"></i> Partager </span>
@@ -141,7 +151,16 @@
                     <img src="{{asset('img/like.png')}}" alt="">
                   @endif
                     </span> Favorie</span>
+                        @else
+                            <span class="viewed-counter wichlist show-reg-form modal-open" id ="terrain{{$clubDetail->id}}" data-terrain = "{{ $clubDetail->id }}">
+                      <span>
+
+                              <img src="{{asset('img/unlike.png')}}" alt="">
+
+                    </span> Favorie
+                  </span>
                   @endif
+
                 <span class="viewed-counter wichlist" ata-club = "{{ $clubDetail->id }}"><i class="fa fa-share-alt"></i> Partager </span>
                 <span class="viewed-counter"><i class="fa fa-location-arrow"></i>Y aller </span>
               @endisset

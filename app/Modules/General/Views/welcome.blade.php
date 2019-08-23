@@ -251,7 +251,7 @@
                                     <img src="images/all/5.jpg" alt="">
                                     <div class="listing-counter"><span>15 </span> Locations</div>
                                     <div class="listing-item-cat">
-                                        <h3><a href="listing.html">Olympiade Family</a></h3>
+                                        <h3><a href="{{ route('showFamily') }}">Olympiade Family</a></h3>
                                         <p>Constant care and attention to the patients makes good record</p>
                                     </div>
                                 </div>
