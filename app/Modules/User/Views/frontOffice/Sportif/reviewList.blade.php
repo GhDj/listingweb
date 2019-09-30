@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: ghdj9
  * Date: 8/21/2019
- * Time: 4:01 PM
+ * Time: 5:21 PM
  */?>
 @extends('frontOffice.layout')
 
@@ -40,7 +40,7 @@
                     <!-- profile-edit-wrap -->
                     <div class="profile-edit-wrap">
                         <div class="profile-edit-page-header">
-                            <h2>Mes Photos</h2>
+                            <h2>Mes Avis</h2>
                             <div class="breadcrumbs"><a href="{{route('showHome')}}">Accueil</a><a href="#">Profile</a><span>Favoris</span></div>
                         </div>
                         <div class="row">
@@ -49,19 +49,19 @@
 
                                 <div class="dashboard-list-box fl-wrap activities">
                                     <div class="dashboard-header fl-wrap">
-                                        <h3>Ma Photos</h3>
+                                        <h3>Ma Liste</h3>
                                     </div>
 
                                     <!-- dashboard-list end-->
 
-                                    @foreach (Auth::user()->medias as $media)
+                                    @foreach (Auth::user()->reviews as $review)
                                         <div class="dashboard-list">
                                             <div class="dashboard-message">
 
 
                                                 <div class="dashboard-message-text">
 
-                                                    @if ($media->terrain_id > 0)
+                                                    @if ($review->wished_type == "App\Modules\Complex\Models\Terrain" )
                                                         <div class="dashboard-list" id="element{{ $media->id }}">
                                                             <div class="dashboard-message">
                                                                 <div class="dashboard-listing-table-image">

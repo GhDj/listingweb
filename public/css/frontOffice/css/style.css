@@ -6764,10 +6764,6 @@ footer.main-footer.fixed-footer {
 	font-weight: 600;
 }
 
-.share-holder.hid-share.show-reg-form.modal-open {
-	top: 0px;
-	background: #4db7fe;
-	color: #fff;
-	padding: 15px 40px 15px 40px;
-	border-radius: 30px;
+.dashboard-listing-table-text .list-item-widget-contacts li span .fa {
+	float: left;
 }
