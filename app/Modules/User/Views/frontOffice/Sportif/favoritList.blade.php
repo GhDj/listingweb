@@ -48,11 +48,10 @@
                                     <!-- dashboard-list end-->
 
                                         @foreach (Auth::user()->wishlists as $wishlist)
-                                            <div class="dashboard-list">
-                                                <div class="dashboard-message">
 
 
-                                                    <div class="dashboard-message-text">
+
+
 
                                                         @if ($wishlist->wished_type == "App\Modules\Complex\Models\Terrain")
                                                             <div class="dashboard-list" id="element{{ $wishlist->wished->id }}">
@@ -147,9 +146,9 @@
                                                             </div>
                                                         @endif
 
-                                                    </div>
-                                                </div>
-                                            </div>
+
+
+
                                         @endforeach
 
 

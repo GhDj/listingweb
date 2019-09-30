@@ -144,13 +144,14 @@
 
 
                                     </div>
-                                    <div class="share-holder hid-share">
-                                        <div class="showshare">
-                                            <span>Partager avec vos proches </span><i
-                                                    class="fa fa-share"></i></div>
-                                        <div class="share-container  isShare"></div>
-                                    </div>
+
                                     @if(Auth::user())
+                                        <div class="share-holder hid-share">
+                                            <div class="showshare">
+                                                <span>Partager avec vos proches </span><i
+                                                        class="fa fa-share"></i></div>
+                                            <div class="share-container  isShare"></div>
+                                        </div>
                                     <div class="profile-edit-container add-list-container">
                                         <div class="profile-edit-header fl-wrap">
                                             <h4>Ajouter des photos</h4>
@@ -196,6 +197,12 @@
                                             </div>
                                         </div>
                                     </div>
+                                        @else
+                                        <div class="share-holder hid-share show-reg-form modal-open ">
+                                            <div class="">
+                                                <span>Partager vos photos </span>
+                                            </div>
+                                        </div>
                                 @endif
                                     <!-- end gallery items -->
                                 </div>
@@ -205,6 +212,14 @@
                                     <div class="list-single-main-item-title fl-wrap">
                                         <h3><span> {{ $terrain->reviews->count() }} </span> - Commentaires - </h3>
                                     </div>
+
+                                    @if(!Auth::user())
+                                        <div class="share-holder hid-share show-reg-form modal-open ">
+                                            <div class="">
+                                                <span>Partager votre commentaire </span>
+                                            </div>
+                                        </div>
+                                    @endif
                                     <div class="reviews-comments-wrap">
 
                                     @foreach ($terrain->reviews as $review)
@@ -244,43 +259,51 @@
                                         <h3>Donnez Votre Avis</h3>
                                     </div>
                                     <!-- Add Review Box -->
-                                    <div id="add-review" class="add-review-box">
-                                        <!-- Review Comment -->
-                                        <form class="add-comment custom-form"
-                                              action="{{ route('hundleUserReviews',['terrain_id'=>$terrain->id])}}"
-                                              method="post" enctype="multipart/form-data">
-                                            {{ csrf_field() }}
-                                            <div class="leave-rating-wrap">
-                                                <span class="leave-rating-title">Avis : </span>
-                                                <div class="leave-rating">
-                                                    <input type="radio" name="rating" id="rating-1" value="1"/>
-                                                    <label for="rating-1" class="fa fa-star-o"></label>
-                                                    <input type="radio" name="rating" id="rating-2" value="2"/>
-                                                    <label for="rating-2" class="fa fa-star-o"></label>
-                                                    <input type="radio" name="rating" id="rating-3" value="3"/>
-                                                    <label for="rating-3" class="fa fa-star-o"></label>
-                                                    <input type="radio" name="rating" id="rating-4" value="4"/>
-                                                    <label for="rating-4" class="fa fa-star-o"></label>
-                                                    <input type="radio" name="rating" id="rating-5" value="5"/>
-                                                    <label for="rating-5" class="fa fa-star-o"></label>
+                                    @if(Auth::user())
+                                        <div id="add-review" class="add-review-box">
+                                            <!-- Review Comment -->
+                                            <form class="add-comment custom-form"
+                                                  action="{{ route('hundleUserReviews',['terrain_id'=>$terrain->id])}}"
+                                                  method="post" enctype="multipart/form-data">
+                                                {{ csrf_field() }}
+                                                <div class="leave-rating-wrap">
+                                                    <span class="leave-rating-title">Avis : </span>
+                                                    <div class="leave-rating">
+                                                        <input type="radio" name="rating" id="rating-1" value="1"/>
+                                                        <label for="rating-1" class="fa fa-star-o"></label>
+                                                        <input type="radio" name="rating" id="rating-2" value="2"/>
+                                                        <label for="rating-2" class="fa fa-star-o"></label>
+                                                        <input type="radio" name="rating" id="rating-3" value="3"/>
+                                                        <label for="rating-3" class="fa fa-star-o"></label>
+                                                        <input type="radio" name="rating" id="rating-4" value="4"/>
+                                                        <label for="rating-4" class="fa fa-star-o"></label>
+                                                        <input type="radio" name="rating" id="rating-5" value="5"/>
+                                                        <label for="rating-5" class="fa fa-star-o"></label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <fieldset>
+                                                <fieldset>
 
                                                 <textarea cols="40" rows="3" placeholder="Your Review:"
                                                           name="comment"></textarea>
 
-                                                <div class="change-photo-btn">
-                                                    <div class="photoUpload">
-                                                        <span><i class="fa fa-upload"></i> Ajouter Photo</span>
-                                                        <input type="file" class="upload" name="image">
+                                                    <div class="change-photo-btn">
+                                                        <div class="photoUpload">
+                                                            <span><i class="fa fa-upload"></i> Ajouter Photo</span>
+                                                            <input type="file" class="upload" name="image">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </fieldset>
-                                            <button class="btn  big-btn  color-bg flat-btn">Poster le commentaire <i
-                                                        class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
-                                        </form>
-                                    </div>
+                                                </fieldset>
+                                                <button class="btn  big-btn  color-bg flat-btn">Poster le commentaire <i
+                                                            class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                                            </form>
+                                        </div>
+                                        @else
+                                        <div class="share-holder hid-share show-reg-form modal-open ">
+                                            <div class="">
+                                                <span>Partager votre avis </span>
+                                            </div>
+                                        </div>
+                                        @endif
                                     <!-- Add Review Box / End -->
                                 </div>
                                 <!-- list-single-main-item end -->
