@@ -6763,3 +6763,7 @@ footer.main-footer.fixed-footer {
 	text-align: left;
 	font-weight: 600;
 }
+
+.dashboard-listing-table-text .list-item-widget-contacts li span .fa {
+	float: left;
+}

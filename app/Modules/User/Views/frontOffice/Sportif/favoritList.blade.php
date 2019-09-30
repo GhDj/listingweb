@@ -67,10 +67,28 @@
                                                                     </div>
                                                                     <div class="dashboard-listing-table-text">
                                                                         <h4><a href="{{route('showTerrainDetails',$wishlist->wished->id)}}">{{$wishlist->wished->name}}</a></h4>
-                                                                        <span class="dashboard-listing-table-address"><i class="fa fa-map-marker"></i><a  href="#">{{$wishlist->wished->complex->address->address}}</a></span>
-                                                                        <div class="listing-rating card-popup-rainingvis fl-wrap" data-starrating2="{{$wishlist->wished->reviews->count()}}">
-                                                                            <span>@if($wishlist->wished->reviews->count() > 0)({{$wishlist->wished->reviews->count()}} reviews) @endif</span>
-                                                                        </div>
+
+                                                                        <ul class="list-author-widget-contacts list-item-widget-contacts">
+                                                                            <li>
+                                                                                <span class=""><i class="fa fa-map-marker"></i><a  href="#">{{$wishlist->wished->complex->address->address}}</a></span>
+                                                                            </li>
+                                                                            <li>
+                                                                                <span class=""><i class="fa fa-envelope-o"></i><a  href="#">{{$wishlist->wished->complex->email}}</a></span>
+                                                                            </li>
+                                                                            <li>
+                                                                                <span class=""><i class="fa fa-phone"></i><a  href="#">{{$wishlist->wished->complex->phone}}</a></span>
+                                                                            </li>
+                                                                            <li>
+                                                                                <div class="listing-rating card-popup-rainingvis fl-wrap" data-starrating2="{{$wishlist->wished->reviews->count()}}">
+                                                                                    <span>@if($wishlist->wished->reviews->count() > 0)({{$wishlist->wished->reviews->count()}} reviews) @endif</span>
+                                                                                </div>
+                                                                            </li>
+                                                                        </ul>
+
+
+
+
+
                                                                         <ul class="dashboard-listing-table-opt  fl-wrap">
                                                                             <li>
                                                                                 <a href="{{route('showTerrainDetails',$wishlist->wished->id)}}" class="voir-btn">Voir <i class="fa fa-eye"></i></a>
@@ -99,10 +117,27 @@
                                                                     </div>
                                                                     <div class="dashboard-listing-table-text">
                                                                         <h4><a href="{{route('showTerrainDetails',$wishlist->wished->id)}}">{{$wishlist->wished->name}}</a></h4>
-                                                                        <span class="dashboard-listing-table-address"><i class="fa fa-map-marker"></i><a  href="#">{{$wishlist->wished->terrain->complex->address->address}}</a></span>
-                                                                        <div class="listing-rating card-popup-rainingvis fl-wrap" data-starrating2="5">
 
-                                                                        </div>
+
+
+                                                                        <ul class="list-author-widget-contacts list-item-widget-contacts">
+                                                                            <li>
+                                                                                <span class=""><i class="fa fa-map-marker"></i><a  href="#">{{$wishlist->wished->terrain->complex->address->address}}</a></span>
+                                                                            </li>
+                                                                            <li>
+                                                                                <span class=""><i class="fa fa-envelope-o"></i><a  href="#">{{$wishlist->wished->email}}</a></span>
+                                                                            </li>
+                                                                            <li>
+                                                                                <span class=""><i class="fa fa-phone"></i><a  href="#">{{$wishlist->wished->phone}}</a></span>
+                                                                            </li>
+                                                                            <li>
+                                                                                <div class="listing-rating card-popup-rainingvis fl-wrap" data-starrating2="5">
+
+                                                                                </div>
+                                                                            </li>
+                                                                        </ul>
+
+
                                                                         <ul class="dashboard-listing-table-opt  fl-wrap">
                                                                             <li><a href="{{route('showTerrainDetails',$wishlist->wished->id)}}">Voir <i class="fa fa-pencil-square-o"></i></a></li>
                                                                         </ul>

@@ -1199,6 +1199,20 @@ class WebController extends Controller
         //    return Auth::user()->favoritesClubs;
     }
 
+    public function showMediaList()
+    {
+        return view('User::frontOffice.Sportif.mediaList', ['medias' => Auth::user()->medias()->get()]);
+
+        //    return Auth::user()->favoritesClubs;
+    }
+
+    public function showReviewList()
+    {
+        return view('User::frontOffice.Sportif.reviewList', ['reviews' => Auth::user()->medias()->get()]);
+
+        //    return Auth::user()->favoritesClubs;
+    }
+
     public function showTest()
     {
         return Auth::user();

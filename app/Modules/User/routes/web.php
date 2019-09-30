@@ -25,6 +25,9 @@ Route::group(['module' => 'User', 'middleware' => ['userAccess'], 'namespace' =>
 
 
     Route::get('/user/favoriteList', 'WebController@showFavoriteList')->name('showFavoriteList');
+    Route::get('/user/showMediaList', 'WebController@showMediaList')->name('showMediaList');
+    Route::get('/user/showReviewList', 'WebController@showReviewList')->name('showReviewList');
+
     Route::get('/user/dashboard', 'WebController@showUserDashboard')->name('showUserDashboard');
     Route::get('/user/profile', 'WebController@showUserProfile')->name('showUserProfile');
 

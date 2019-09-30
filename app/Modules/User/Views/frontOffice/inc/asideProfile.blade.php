@@ -13,6 +13,12 @@
                     <li><a href="{{route('showUserProfile')}}"><i class="fa fa-user-o"></i>Mes infos</a></li>
                     <li><a href="{{route('showUserPassword')}}"><i class="fa fa-unlock-alt"></i>Changer Votre Mot de
                             Passe</a></li>
+                    @if (checkAthleticRole(Auth::user()))
+                        <li><a href="{{route('showMediaList')}}"><i class="fa fa-gears"></i>Mes Photos
+                                <span>{{count(Auth::user()->medias)}}</span> </a></li>
+                        <li><a href="{{route('showReviewList')}}"><i class="fa fa-gears"></i>Mes Avis
+                                <span>{{count(Auth::user()->reviews)}}</span> </a></li>
+                    @endif
 
                 </ul>
             </div>
