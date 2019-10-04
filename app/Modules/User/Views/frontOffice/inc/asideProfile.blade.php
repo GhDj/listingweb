@@ -14,9 +14,9 @@
                     <li><a href="{{route('showUserPassword')}}"><i class="fa fa-unlock-alt"></i>Changer Votre Mot de
                             Passe</a></li>
                     @if (checkAthleticRole(Auth::user()))
-                        <li><a href="{{route('showMediaList')}}"><i class="fa fa-gears"></i>Mes Photos
+                        <li><a href="{{route('showMediaList')}}"><i class="fa fa-image"></i>Mes Photos
                                 <span>{{count(Auth::user()->medias)}}</span> </a></li>
-                        <li><a href="{{route('showReviewList')}}"><i class="fa fa-gears"></i>Mes Avis
+                        <li><a href="{{route('showReviewList')}}"><i class="fa fa-comments-o"></i>Mes Avis
                                 <span>{{count(Auth::user()->reviews)}}</span> </a></li>
                     @endif
 
@@ -42,8 +42,10 @@
                                         infrastructure</a></li>
 
                             @endif
-                            <li><a href="{{route('showEditComplex')}}"><i
-                                            class="fa fa-plus-square-o"></i> Modifier Complexe</a></li>
+                            <li><a href="{{route('showEditComplex')}}"><i class="fa fa-plus-square-o"></i> Modifier Complexe</a></li>
+                                <li><a href="#"><i class="fa fa-plus-square-o"></i> Les prix </a></li>
+                                <li><a href="#"><i class="fa fa-plus-square-o"></i> Avis des sportifs </a></li>
+                                <li><a href="#"><i class="fa fa-plus-square-o"></i> Signalement des problèmes </a></li>
 
 
                         @endif

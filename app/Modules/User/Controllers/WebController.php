@@ -7,7 +7,9 @@ use App\Modules\Complex\Models\ComplexCategory;
 use App\Modules\Complex\Models\ComplexRequest;
 use App\Modules\Complex\Models\Infrastructure;
 use App\Modules\Complex\Models\TerrainActivity;
+use App\Modules\Complex\Models\ComplexSchedule;
 use App\Modules\Reviews\Models\Review;
+use App\Modules\Reviews\Models\Wishlist;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Modules\User\Models\User;
@@ -494,9 +496,13 @@ class WebController extends Controller
             if ($user->complex) {
                 //$reviewCounts = $user->complex->terrains()->with('reviews')->count();
                 $reviewCounts = 0;
+                $wishCounts = 0;
                 foreach ($user->complex->terrains() as $terrain) {
                     $reviewCounts += Review::where('reviewed_id','=',$terrain->id)->count();
+                    $wishCounts += Wishlist::where('wished_id','=',$terrain->id)->count();
                 }
+
+                $views = $user->complex->view_count;
 
             }
             //     dd($reviewCounts);
@@ -504,6 +510,8 @@ class WebController extends Controller
                 'userTerrains' => ($user->complex) ? $user->complex->terrains : null,
                 'complex' => ($user->complex) ? $user->complex : null,
                 'reviewsCount' => $reviewCounts,
+                'views'  =>$views,
+                'wishCounts'  =>$wishCounts,
                 'availableComplex' => Complex::doesnthave('user')->where('type', 1)->get()
             ]);
 
@@ -584,6 +592,7 @@ class WebController extends Controller
         }
         return view('User::frontOffice.userAddComplex',
             [
+                'title' => "Complexe sportif",
                 'categories' => Category::select('title')->groupBy('title')->get()
             ]
         );
@@ -593,7 +602,7 @@ class WebController extends Controller
     {
         return view('User::frontOffice.userAddComplex',
             [
-                'categories' => Category::all(),
+                'title' => "Modifier complexe sportif",
                 'complex' => Auth::user()->complex
             ]
         );
@@ -628,7 +637,6 @@ class WebController extends Controller
             "longitude" => "required",
             "city" => "required",
             "postal_code" => "required",
-            "locality" => "required",
             "name" => "required",
             "categories" => "required",
             "phone" => "required",
@@ -670,7 +678,7 @@ class WebController extends Controller
 
         $complex->save();
 
-        $categoriesArray = $complex->categories()->get(['category_id']);
+        /*$categoriesArray = $complex->categories()->get(['category_id']);
 
         foreach ($request->categories as $categorie) {
 
@@ -697,7 +705,7 @@ class WebController extends Controller
                     "complex_id" => $complex->id
                 ]);
             }
-        }
+        }*/
 
         SweetAlert::success('Bien !', 'Complex modifié avec succès. !')->persistent('Fermer');
         return redirect()->back();
@@ -722,12 +730,9 @@ class WebController extends Controller
             "longitude" => "required",
             "city" => "required",
             "postal_code" => "required",
-            "locality" => "required",
             "name" => "required",
-            "categories" => "required",
             "phone" => "required",
             "email" => "required|email",
-            "web_site" => "required"
         ],
             [
                 "address.required" => "Le champ adresse est obligatoire",
@@ -735,12 +740,10 @@ class WebController extends Controller
                 "longitude.required" => "Le champ longitude est obligatoire",
                 'city.required' => "Le champ Ville est obligatoire",
                 'postal_code' => "Le champ code postal  est obligatoire",
-                "locality.required" => "Le champ localité est obligatoire",
                 "name.required" => "Le champ nom de complex est obligatoire",
                 "phone.required" => "Le champ phone  est obligatoire",
                 "email.required" => "Le champ email",
                 "email.email" => "Le champ doit ètre email",
-                "web_site.required" => "Le champ Site Web est est obligatoire",
 
             ]
         );
@@ -764,13 +767,33 @@ class WebController extends Controller
             'user_id' => $user->id
         ]);
 
+        foreach ($request->sessionDay as $key => $sessionDay) {
+
+            $sessionStartTime = $request->sessionStartTime[$key];
+            $sessionEndTime = $request->sessionEndTime[$key];
+            $sessionStartDate[] = date('Y-m-d H:i:s', strtotime("$sessionDay $sessionStartTime"));
+            $sessionEndDate[] = date('Y-m-d H:i:s', strtotime("$sessionDay $sessionEndTime"));
+            //$dayofweek[] = $request->sessionDay[$key];
+
+            $sc = ComplexSchedule::create([
+                'start_at' => $sessionStartDate[$key],
+                'ends_at' => $sessionEndDate[$key],
+                'day' => $request->sessionDay[$key],
+                'group_type'  => "App\Modules\Complex\Models\Complex",
+                'group_id' => $complex->id,
+                'status' => 1
+            ]);
+
+        }
+
         ComplexRequest::create([
             'status' => 0,
             'complex_id' => $complex->id,
             'user_id' => $user->id
         ]);
 
-        foreach ($request->categories as $categorie) {
+
+        /*foreach ($request->categories as $categorie) {
             $categorieModel = Category::find($categorie);
             if ($categorieModel) {
                 ComplexCategory::create([
@@ -779,8 +802,9 @@ class WebController extends Controller
                     "complex_id" => $complex->id
                 ]);
             }
-        }
-        if ($request->otherCategories) {
+        }*/
+
+     /*   if ($request->otherCategories) {
             //$otherCategories = explode(',', $request->otherCategories);
             $cat = Category::create([
                 "title" => $request->otherCategories,
@@ -810,8 +834,8 @@ class WebController extends Controller
                     "category" => $otherCategorie,
                     "complex_id" => $complex->id
                 ]);
-            }*/
-        }
+            }
+        }*/
 
         SweetAlert::success('Bien !', 'Complex ajouté avec succès. !')->persistent('Fermer');
         return redirect()->route('showUserAddComplex');
@@ -1214,6 +1238,7 @@ class WebController extends Controller
 
     public function showMediaList()
     {
+       // dd(Auth::user()->medias()->get());
         return view('User::frontOffice.Sportif.mediaList', ['medias' => Auth::user()->medias()->get()]);
 
         //    return Auth::user()->favoritesClubs;
@@ -1478,7 +1503,6 @@ class WebController extends Controller
             "longitude" => "required",
             "city" => "required",
             "postal_code" => "required",
-            "locality" => "required",
             "name" => "required",
             "categories" => "required",
             "phone" => "required",
@@ -1491,7 +1515,6 @@ class WebController extends Controller
                 "longitude.required" => "Le champ longitude est obligatoire",
                 'city.required' => "Le champ Ville est obligatoire",
                 'postal_code' => "Le champ code postal  est obligatoire",
-                "locality.required" => "Le champ localité est obligatoire",
                 "name.required" => "Le champ nom de complex est obligatoire",
                 "phone.required" => "Le champ phone  est obligatoire",
                 "email.required" => "Le champ email",
@@ -1505,7 +1528,7 @@ class WebController extends Controller
             'city' => $request->city,
             'postal_code' => $request->postal_code,
             'country' => $request->country,
-            'locality' => $request->locality,
+            'locality' => $request->city,
             'address' => $request->adresse,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,

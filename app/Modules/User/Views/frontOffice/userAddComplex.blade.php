@@ -29,6 +29,45 @@
             padding-left: 0px !important;
             margin-right: 1px;
         }
+
+     .chosen {
+         width: 100%;
+         padding: 15px 20px;
+         margin-bottom: 15px;
+     }
+
+        form input[type=number], form input[type=date], form input[type=time] {
+            float: left;
+            border: 1px solid #eee;
+            background: #f9f9f9;
+            width: 100%;
+            padding: 15px 20px 15px 30px;
+            border-radius: 6px;
+            color: transparent;
+            font-size: 13px;
+        }
+
+        form input[type=number]:invalid:before,form input[type=date]:invalid:before, form input[type=time]:invalid:before  {
+            color: #666;
+            content: attr(placeholder);
+        }
+
+        /*form input[type=number]:invalid,form input[type=date]:invalid, form input[type=time]:invalid  {
+            color: #666;
+            content: attr(placeholder);
+        }*/
+
+        form input[type=number]:valid,form input[type=date]:valid, form input[type=time]:valid,
+        form input[type=number]:active,form input[type=date]:active, form input[type=time]:active,
+        form input[type=number]:focus,form input[type=date]:focus, form input[type=time]:focus{
+            color: #666;
+        }
+        form input[type=number]:valid:before,form input[type=date]:valid:before, form input[type=time]:valid:before,
+        form input[type=number]:active:before,form input[type=date]:active:before, form input[type=time]:active:before,
+        form input[type=number]:focus:before,form input[type=date]:focus:before, form input[type=time]:focus:before {
+            display: none;
+        }
+
     </style>
     <!-- wrapper -->
     <div id="wrapper">
@@ -41,9 +80,9 @@
                     <!-- profile-edit-wrap -->
                     <div class="profile-edit-wrap">
                         <div class="profile-edit-page-header">
-                            <h2>Ajouter Un Complex</h2>
+                            <h2>{{ $title }}</h2>
                             <div class="breadcrumbs"><a href="#">Home</a><a
-                                        href="#">Profile</a><span>Ajouter Un Complex</span></div>
+                                        href="#">Profile</a><span>{{ $title }}</span></div>
                         </div>
                         <div class="row">
                             @include('User::frontOffice.inc.asideProfile')
@@ -71,7 +110,7 @@
                                             </div>
 
 
-                                            <label>Categories Disponible</label>
+                                            {{--<label>Categories Disponible</label>
                                             <div class=" fl-wrap filter-tags">
 
                                                 @foreach ($categories as $categorie)
@@ -107,7 +146,7 @@
                                                     </span>
                                                     @endif
                                                 </div>
-                                            </div>
+                                            </div>--}}
 
                                             
                                             {{--<div class="input-group-append">
@@ -127,18 +166,7 @@
                                                     <h4>Emplacement / Contacts</h4>
                                                 </div>
                                                 <div class="custom-form">
-                                                    <div class="form-group row">
-                                                        <label>Localité<i class="fa fa-map-marker"></i></label>
-                                                        <div class="col-md-12">
-                                                            <input type="text" name="locality"
-                                                                   value="{{(isset($complex) ? $complex->address->locality : "")}}"/>
-                                                            @if ($errors->has('locality'))
-                                                                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('locality') }}</strong>
-                                      </span>
-                                                            @endif
-                                                        </div>
-                                                    </div>
+
 
                                                     <div class="form-group row">
                                                         <label>Addresse<i class="fa fa-map-marker"></i></label>
@@ -166,7 +194,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
-                                                            <label>Code postal</i></label>
+                                                            <label>Code postal</label>
                                                             <div class="col-md-12">
                                                                 <input type="text" name="postal_code" placeholder=""
                                                                        value="{{(isset($complex) ? $complex->address->postal_code : "")}}"/>
@@ -212,8 +240,9 @@
                                                                  data-latitude="{{(isset($complex) ? $complex->address->latitude : "46.2276")}}"
                                                                  data-longitude="{{(isset($complex) ? $complex->address->longitude : "2.2137")}}"></div>
                                                         </div>
+                                                    </div>
 
-                                                        <div class="form-group row">
+                                                        <div class="form-group">
                                                             <label>Téléphone<i class="fa fa-phone"></i></label>
                                                             <div class="col-md-12">
                                                                 <input type="text" name="phone"
@@ -249,6 +278,261 @@
                                                                 @endif
                                                             </div>
                                                         </div>
+                                                    <div class="row">
+                                                        <div class="profile-edit-container add-list-container">
+                                                        <div class="profile-edit-header fl-wrap">
+                                                            <h4>Ajouter Temp d'ouverture et fermeture</h4>
+                                                        </div>
+                                                        <div class="custom-form">
+                                                            {{--<div class="row">
+                                                                <button type="button" name="button" id="add-time">
+                                                                    Ajouter
+                                                                </button>
+                                                            </div>--}}
+                                                            <div class="row">
+
+                                                                <div class="col-md-3">
+                                                                    <label class="text-center">Jour</label>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <label class="text-center">Temp d'ouverture</label>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <label class="text-center">Temp de fermeture</label>
+                                                                </div>
+                                                                <!--col end-->
+
+                                                            </div>
+                                                            <div id="date">
+                                                                <div class="row">
+                                                                    <div class="col-md-3">
+                                                                        <input type="hidden" name="sessionDay[]" data-toggle="tooltip" data-placement="top" value="1" title="Tooltip on top" > <h3>Lundi</h3>
+                                                                        @if ($errors->has('sessionDay'))
+                                                                            <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $errors->first('sessionDay') }}</strong>
+                                            </span>
+                                                                        @endif
+                                                                    </div>
+
+                                                                    <div class="col-md-3">
+                                                                        <input type="time" name="sessionStartTime[]" placeholder="Fermé">
+                                                                        @if ($errors->has('sessionStartTime'))
+                                                                            <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $errors->first('sessionStartTime') }}</strong>
+                                            </span>
+                                                                        @endif
+                                                                    </div>
+
+                                                                    <div class="col-md-3">
+                                                                        <input type="time" name="sessionEndTime[]" placeholder="Fermé">
+                                                                        @if ($errors->has('sessionEndTime'))
+                                                                            <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $errors->first('sessionEndTime') }}</strong>
+                                            </span>
+                                                                        @endif
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        Laisser vide si fermé.
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-3">
+                                                                        <input type="hidden" name="sessionDay[]" data-toggle="tooltip" data-placement="top" value="2" title="Tooltip on top" > <h3>Mardi</h3>
+                                                                        @if ($errors->has('sessionDay'))
+                                                                            <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $errors->first('sessionDay') }}</strong>
+                                            </span>
+                                                                        @endif
+                                                                    </div>
+
+                                                                    <div class="col-md-3">
+                                                                        <input type="time" name="sessionStartTime[]"  placeholder="Fermé">
+                                                                        @if ($errors->has('sessionStartTime'))
+                                                                            <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $errors->first('sessionStartTime') }}</strong>
+                                            </span>
+                                                                        @endif
+                                                                    </div>
+
+                                                                    <div class="col-md-3">
+                                                                        <input type="time" name="sessionEndTime[]"  placeholder="Fermé">
+                                                                        @if ($errors->has('sessionEndTime'))
+                                                                            <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $errors->first('sessionEndTime') }}</strong>
+                                            </span>
+                                                                        @endif
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        Laisser vide si fermé.
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-3">
+                                                                        <input type="hidden" name="sessionDay[]" data-toggle="tooltip" data-placement="top" value="3" title="Tooltip on top" > <h3>Mercredi</h3>
+                                                                        @if ($errors->has('sessionDay'))
+                                                                            <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $errors->first('sessionDay') }}</strong>
+                                            </span>
+                                                                        @endif
+                                                                    </div>
+
+                                                                    <div class="col-md-3">
+                                                                        <input type="time" name="sessionStartTime[]"  placeholder="Fermé">
+                                                                        @if ($errors->has('sessionStartTime'))
+                                                                            <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $errors->first('sessionStartTime') }}</strong>
+                                            </span>
+                                                                        @endif
+                                                                    </div>
+
+                                                                    <div class="col-md-3">
+                                                                        <input type="time" name="sessionEndTime[]"  placeholder="Fermé">
+                                                                        @if ($errors->has('sessionEndTime'))
+                                                                            <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $errors->first('sessionEndTime') }}</strong>
+                                            </span>
+                                                                        @endif
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        Laisser vide si fermé.
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-3">
+                                                                        <input type="hidden" name="sessionDay[]" data-toggle="tooltip" data-placement="top" value="4" title="Tooltip on top" > <h3>Jeudi</h3>
+                                                                        @if ($errors->has('sessionDay'))
+                                                                            <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $errors->first('sessionDay') }}</strong>
+                                            </span>
+                                                                        @endif
+                                                                    </div>
+
+                                                                    <div class="col-md-3">
+                                                                        <input type="time" name="sessionStartTime[]"  placeholder="Fermé">
+                                                                        @if ($errors->has('sessionStartTime'))
+                                                                            <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $errors->first('sessionStartTime') }}</strong>
+                                            </span>
+                                                                        @endif
+                                                                    </div>
+
+                                                                    <div class="col-md-3">
+                                                                        <input type="time" name="sessionEndTime[]"  placeholder="Fermé">
+                                                                        @if ($errors->has('sessionEndTime'))
+                                                                            <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $errors->first('sessionEndTime') }}</strong>
+                                            </span>
+                                                                        @endif
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        Laisser vide si fermé.
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-3">
+                                                                        <input type="hidden" name="sessionDay[]" data-toggle="tooltip" data-placement="top" value="5" title="Tooltip on top" > <h3>Vendredi</h3>
+                                                                        @if ($errors->has('sessionDay'))
+                                                                            <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $errors->first('sessionDay') }}</strong>
+                                            </span>
+                                                                        @endif
+                                                                    </div>
+
+                                                                    <div class="col-md-3">
+                                                                        <input type="time" name="sessionStartTime[]"  placeholder="Fermé">
+                                                                        @if ($errors->has('sessionStartTime'))
+                                                                            <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $errors->first('sessionStartTime') }}</strong>
+                                            </span>
+                                                                        @endif
+                                                                    </div>
+
+                                                                    <div class="col-md-3">
+                                                                        <input type="time" name="sessionEndTime[]"  placeholder="Fermé">
+                                                                        @if ($errors->has('sessionEndTime'))
+                                                                            <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $errors->first('sessionEndTime') }}</strong>
+                                            </span>
+                                                                        @endif
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        Laisser vide si fermé.
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-3">
+                                                                        <input type="hidden" name="sessionDay[]" data-toggle="tooltip" data-placement="top" value="6" title="Tooltip on top" > <h3>Samedi</h3>
+                                                                        @if ($errors->has('sessionDay'))
+                                                                            <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $errors->first('sessionDay') }}</strong>
+                                            </span>
+                                                                        @endif
+                                                                    </div>
+
+                                                                    <div class="col-md-3">
+                                                                        <input type="time" name="sessionStartTime[]"  placeholder="Fermé">
+                                                                        @if ($errors->has('sessionStartTime'))
+                                                                            <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $errors->first('sessionStartTime') }}</strong>
+                                            </span>
+                                                                        @endif
+                                                                    </div>
+
+                                                                    <div class="col-md-3">
+                                                                        <input type="time" name="sessionEndTime[]"  placeholder="Fermé">
+                                                                        @if ($errors->has('sessionEndTime'))
+                                                                            <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $errors->first('sessionEndTime') }}</strong>
+                                            </span>
+                                                                        @endif
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        Laisser vide si fermé.
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-3">
+                                                                        <input type="hidden" name="sessionDay[]" data-toggle="tooltip" data-placement="top" value="7" title="Tooltip on top" > <h3>Dimanche</h3>
+                                                                        @if ($errors->has('sessionDay'))
+                                                                            <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $errors->first('sessionDay') }}</strong>
+                                            </span>
+                                                                        @endif
+                                                                    </div>
+
+                                                                    <div class="col-md-3">
+                                                                        <input type="time" name="sessionStartTime[]"  placeholder="Fermé">
+                                                                        @if ($errors->has('sessionStartTime'))
+                                                                            <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $errors->first('sessionStartTime') }}</strong>
+                                            </span>
+                                                                        @endif
+                                                                    </div>
+
+                                                                    <div class="col-md-3">
+                                                                        <input type="time" name="sessionEndTime[]"  placeholder="Fermé">
+                                                                        @if ($errors->has('sessionEndTime'))
+                                                                            <span class="invalid-feedback" role="alert">
+                                              <strong>{{ $errors->first('sessionEndTime') }}</strong>
+                                            </span>
+                                                                        @endif
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        Laisser vide si fermé.
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        </div>
+                                                    </div>
                                                         <button class="btn  big-btn  color-bg flat-btn">Enregistrer<i
                                                                     class="fa fa-angle-right"></i></button>
 
@@ -312,6 +596,45 @@
                 $('#otherCategorie').val(array);
                 var result = $('#otherCategorie').val();
             });
+
+            var i = 0;
+            $('#add-time').on('click', function () {
+                i++;
+                $('#date').append('<div class="row" id = "date' + i + '">' +
+                    '<div class="col-md-4">' +
+                    '<input class="form-control in-step2" type="date" name="sessionDay[]" required data-toggle="tooltip" data-placement="top" title="Tooltip on top">' +
+                    '</div>' +
+                    '<div class="col-md-3">' +
+                    '<input class="form-control in-step2" type="time" name="sessionStartTime[]" required>' +
+                    '</div>' +
+                    '<div class="col-md-3">' +
+                    '<input class="form-control in-step2" type="time" name="sessionEndTime[]" required>' +
+                    '</div>' +
+                    '<button type="button" name="button" class = "button" data-index = "' + i + '"><i class="fa fa-times-circle cross-keywrd" ></i></button>' +
+
+                    '</div>'
+                );
+
+            });
+
+            $(document).on("click", ".button", function () {
+                console.log($(this).data('index'));
+                var id = $(this).data('index');
+                $("#date" + id).remove();
+            });
+
+            var timepicker = new TimePicker('time', {
+                lang: 'fr',
+                theme: 'blue'
+            });
+            timepicker.on('change', function(evt) {
+
+                var value = (evt.hour || '00') + ':' + (evt.minute || '00');
+                evt.element.value = value;
+
+            });
+
+
         })
     </script>
 

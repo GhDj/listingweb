@@ -94,7 +94,7 @@
                                             </div>
                                           @endforeach
 
-                                          {{$userTerrains->links()}}
+                                          {{--{{$userTerrains->links()}}--}}
                                           @endisset
 
 

@@ -1,5 +1,5 @@
-<section class="list-single-section" data-scrollax-parent="true" id="sec1">
-    <div class="slideshow-container" data-scrollax="properties: { translateY: '200px' }">
+<section class="parallax-section single-par list-single-section" data-scrollax-parent="true" id="sec1" style="background-color: #4db7fe;">
+   {{-- <div class="slideshow-container" data-scrollax="properties: { translateY: '200px' }">
 
       @isset($terrain)
             @if ($terrain->medias->count() > 0)
@@ -37,8 +37,11 @@
 
 
 
-    </div>
+    </div>--}}
+    <div class="bg par-elem " data-bg="" data-scrollax="properties: { translateY: '30%' }" style="transform: translateZ(0px) translateY(-2.45148%);"></div>
+
     <div class="overlay"></div>
+    <div class="bubble-bg"></div>
     <div class="list-single-header absolute-header fl-wrap">
       <div class="container">
         <div class="list-single-header-item">
@@ -54,9 +57,11 @@
           </div>
             @isset($terrain)
               <h2>{{  $terrain->name  }}</h2>
+                <span class="section-separator"></span>
             @endisset
             @isset($clubDetail)
               <h2>{{  $clubDetail->name  }}</h2>
+                <span class="section-separator"></span>
             @endisset
 
           @isset($starsTerrain)
@@ -117,6 +122,11 @@
             <div class="col-md-6">
               <div class="fl-wrap list-single-header-column">
                 @isset($terrain)
+                      {{--<span class="viewed-counter"><i class="fa fa-share-alt"></i> Partager </span>--}}
+                      <div class="share-holder hid-share">
+                          <div class="showshare"><span>Partager</span><i class="fa fa-share"></i></div>
+                          <div class="share-container isShare"></div>
+                      </div>
                 @if (Auth::check() and Auth::user()->status == 2)
 
                   <span class="viewed-counter wichlist" id ="terrain{{$terrain->id}}" data-terrain = "{{ $terrain->id }}">
@@ -132,14 +142,17 @@
                           <span class="viewed-counter wichlist show-reg-form modal-open" id ="terrain{{$terrain->id}}" data-terrain = "{{ $terrain->id }}">
                       <span>
 
+
                               <img src="{{asset('img/unlike.png')}}" alt="">
 
                     </span> Favorie
                   </span>
                 @endif
 
-                <span class="viewed-counter"><i class="fa fa-share-alt"></i> Partager </span>
+                    <span class="viewed-counter"><i class="fa fa-eye"></i>Vues -  {{ $terrain->complex->view_count }} </span>
+
                 <span class="viewed-counter"><i class="fa fa-location-arrow"></i>Y aller </span>
+
                 @endisset
 
                 @isset($clubDetail)

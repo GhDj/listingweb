@@ -49,28 +49,28 @@
 
                                 <div class="dashboard-list-box fl-wrap activities">
                                     <div class="dashboard-header fl-wrap">
-                                        <h3>Ma Photos</h3>
+                                        <h3>Mes Photos</h3>
                                     </div>
 
                                     <!-- dashboard-list end-->
 
-                                    @foreach (Auth::user()->medias as $media)
+                                    @foreach ($medias as $media)
                                         <div class="dashboard-list">
                                             <div class="dashboard-message">
 
 
                                                 <div class="dashboard-message-text">
-
+                                                    <?php // dd($media->link ) ?>
                                                     @if ($media->terrain_id > 0)
-                                                        <div class="dashboard-list" id="element{{ $media->id }}">
+                                                        <div class="dashboard-listing">
                                                             <div class="dashboard-message">
                                                                 <div class="dashboard-listing-table-image">
                                                                     <a href="{{route('showTerrainDetails',$media->terrain_id)}}">
-                                                                        <img src="{{ $medias->link }}" alt=""></a>
+                                                                        <img src="{{ $media->link }}" alt=""></a>
                                                                 </div>
                                                                 <div class="dashboard-listing-table-text">
                                                                     <h4><a href="{{route('showTerrainDetails',$media->terrain_id)}}">{{ \App\Modules\Complex\Models\Terrain::find($media->terrain_id)->first()->name }}</a></h4>
-                                                                    <span class="dashboard-listing-table-address"><i class="fa fa-map-marker"></i><a  href="#">{{ \App\Modules\Complex\Models\Terrain::find($media->terrain_id)->first()->address->address}}</a></span>
+                                                                    <span class="dashboard-listing-table-address"><i class="fa fa-map-marker"></i><a  href="#">{{ \App\Modules\Complex\Models\Terrain::find($media->terrain_id)->first()->complex->address->address}}</a></span>
 
                                                                     <ul class="dashboard-listing-table-opt  fl-wrap">
                                                                         <li>
@@ -88,19 +88,19 @@
 
                                                     @endif
                                                     @if ($media->club_id > 0)
-                                                        <div class="dashboard-list">
+                                                        <div class="dashboard-listing">
                                                             <div class="dashboard-message">
                                                                 <div class="dashboard-listing-table-image">
-                                                                    <a href="{{route('showClubDetails',$media->club_id)}}"> <img src="{{  $medias->link}}" alt=""></a>
+                                                                    <a href="{{route('showClubDetails',$media->club_id)}}"> <img src="{{  $medias->link }}" alt=""></a>
                                                                 </div>
                                                                 <div class="dashboard-listing-table-text">
-                                                                    <h4><a href="{{route('showClubDetails',$medias->link)}}">{{ \App\Modules\Complex\Models\Club::find($medias->link)->first()->name }}</a></h4>
+                                                                    <h4><a href="{{route('showClubDetails',$medias->club_id)}}">{{ \App\Modules\Complex\Models\Club::find($medias->club_id)->first()->name }}</a></h4>
                                                                     <span class="dashboard-listing-table-address"><i class="fa fa-map-marker"></i><a  href="#"></a></span>
                                                                     <div class="listing-rating card-popup-rainingvis fl-wrap" data-starrating2="5">
 
                                                                     </div>
                                                                     <ul class="dashboard-listing-table-opt  fl-wrap">
-                                                                        <li><a href="{{route('showClubDetails',$medias->link)}}">Voir <i class="fa fa-pencil-square-o"></i></a></li>
+                                                                        <li><a href="{{route('showClubDetails',$medias->club_id)}}">Voir <i class="fa fa-pencil-square-o"></i></a></li>
                                                                     </ul>
 
                                                                 </div>

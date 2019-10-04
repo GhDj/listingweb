@@ -266,43 +266,110 @@
                                                   action="{{ route('hundleUserReviews',['terrain_id'=>$terrain->id])}}"
                                                   method="post" enctype="multipart/form-data">
                                                 {{ csrf_field() }}
-                                                <div class="leave-rating-wrap">
-                                                    <span class="leave-rating-title">Avis : </span>
-                                                    <div class="leave-rating">
-                                                        <input type="radio" name="rating" id="rating-1" value="1"/>
-                                                        <label for="rating-1" class="fa fa-star-o"></label>
-                                                        <input type="radio" name="rating" id="rating-2" value="2"/>
-                                                        <label for="rating-2" class="fa fa-star-o"></label>
-                                                        <input type="radio" name="rating" id="rating-3" value="3"/>
-                                                        <label for="rating-3" class="fa fa-star-o"></label>
-                                                        <input type="radio" name="rating" id="rating-4" value="4"/>
-                                                        <label for="rating-4" class="fa fa-star-o"></label>
-                                                        <input type="radio" name="rating" id="rating-5" value="5"/>
-                                                        <label for="rating-5" class="fa fa-star-o"></label>
+                                                <div class="row">
+                                                    <div class="leave-rating-wrap col-md-12">
+                                                        <span class="leave-rating-title">Note globale: </span>
+                                                        <div class="leave-rating">
+                                                            <span class="note"></span>/5
+                                                            <input type="hidden" name="note">
+                                                        </div>
+                                                        {{--<div class="leave-rating">
+                                                            <input type="radio" name="rating" id="rating-5" value="5"/>
+                                                            <label for="rating-5" class="fa fa-star-o"></label>
+                                                            <input type="radio" name="rating" id="rating-4" value="4"/>
+                                                            <label for="rating-4" class="fa fa-star-o"></label>
+                                                            <input type="radio" name="rating" id="rating-3" value="3"/>
+                                                            <label for="rating-3" class="fa fa-star-o"></label>
+                                                            <input type="radio" name="rating" id="rating-2" value="2"/>
+                                                            <label for="rating-2" class="fa fa-star-o"></label>
+                                                            <input type="radio" name="rating" id="rating-1" value="1"/>
+                                                            <label for="rating-1" class="fa fa-star-o"></label>
+                                                        </div>--}}
                                                     </div>
                                                 </div>
-                                                <fieldset>
+                                                <div class="row">
+                                                    <div class="leave-rating-wrap col-md-6">
+                                                        <span class="leave-rating-title">Accueil et services : </span>
 
-                                                <textarea cols="40" rows="3" placeholder="Your Review:"
-                                                          name="comment"></textarea>
+                                                       <div class="leave-rating">
 
-                                                    <div class="change-photo-btn">
-                                                        <div class="photoUpload">
-                                                            <span><i class="fa fa-upload"></i> Ajouter Photo</span>
-                                                            <input type="file" class="upload" name="image">
+                                                            <input type="radio" name="rating-accueil" id="rating-1-accueil" value="5" />
+                                                            <label for="rating-1-accueil" class="fa fa-star-o"></label>
+                                                            <input type="radio" name="rating-accueil" id="rating-2-accueil" value="4"/>
+                                                            <label for="rating-2-accueil" class="fa fa-star-o"></label>
+                                                            <input type="radio" name="rating-accueil" id="rating-3-accueil" value="3"/>
+                                                            <label for="rating-3-accueil" class="fa fa-star-o"></label>
+                                                            <input type="radio" name="rating-accueil" id="rating-4-accueil" value="2"/>
+                                                            <label for="rating-4-accueil" class="fa fa-star-o"></label>
+                                                            <input type="radio" name="rating-accueil" id="rating-5-accueil" value="1"/>
+                                                            <label for="rating-5-accueil" class="fa fa-star-o"></label>
                                                         </div>
                                                     </div>
+                                                    <div class="leave-rating-wrap col-md-6">
+                                                        <span class="leave-rating-title">Propreté / Sécurité : </span>
+                                                        <div class="leave-rating">
+                                                            <input type="radio" name="rating-securite" id="rating-1-securite" value="5" />
+                                                            <label for="rating-1-securite" class="fa fa-star-o"></label>
+                                                            <input type="radio" name="rating-securite" id="rating-2-securite" value="4"/>
+                                                            <label for="rating-2-securite" class="fa fa-star-o"></label>
+                                                            <input type="radio" name="rating-securite" id="rating-3-securite" value="3"/>
+                                                            <label for="rating-3-securite" class="fa fa-star-o"></label>
+                                                            <input type="radio" name="rating-securite" id="rating-4-securite" value="2"/>
+                                                            <label for="rating-4-securite" class="fa fa-star-o"></label>
+                                                            <input type="radio" name="rating-securite" id="rating-5-securite" value="1"/>
+                                                            <label for="rating-5-securite" class="fa fa-star-o"></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row"><div class="leave-rating-wrap col-md-6">
+                                                        <span class="leave-rating-title">Modernité des équipements : </span>
+                                                        <div class="leave-rating">
+                                                            <input type="radio" name="rating-modernite" id="rating-1-modernite" value="5" />
+                                                            <label for="rating-1-modernite" class="fa fa-star-o"></label>
+                                                            <input type="radio" name="rating-modernite" id="rating-2-modernite" value="4"/>
+                                                            <label for="rating-2-modernite" class="fa fa-star-o"></label>
+                                                            <input type="radio" name="rating-modernite" id="rating-3-modernite" value="3"/>
+                                                            <label for="rating-3-modernite" class="fa fa-star-o"></label>
+                                                            <input type="radio" name="rating-modernite" id="rating-4-modernite" value="2"/>
+                                                            <label for="rating-4-modernite" class="fa fa-star-o"></label>
+                                                            <input type="radio" name="rating-modernite" id="rating-5-modernite" value="1"/>
+                                                            <label for="rating-5-modernite" class="fa fa-star-o"></label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="leave-rating-wrap col-md-6">
+                                                        <span class="leave-rating-title">Qualités des activités : </span>
+                                                        <div class="leave-rating">
+                                                            <input type="radio" name="rating-activite" id="rating-8-activite" value="5" />
+                                                            <label for="rating-8-activite" class="fa fa-star-o"></label>
+                                                            <input type="radio" name="rating-activite" id="rating-4-activite" value="4" />
+                                                            <label for="rating-4-activite" class="fa fa-star-o"></label>
+                                                            <input type="radio" name="rating-activite" id="rating-3-activite" value="3"/>
+                                                            <label for="rating-3-activite" class="fa fa-star-o"></label>
+                                                            <input type="radio" name="rating-activite" id="rating-2-activite" value="2"/>
+                                                            <label for="rating-2-activite" class="fa fa-star-o"></label>
+                                                            <input type="radio" name="rating-activite" id="rating-1-activite" value="1"/>
+                                                            <label for="rating-1-activite" class="fa fa-star-o"></label>
+                                                        </div>
+                                                    </div></div>
+                                                <fieldset>
+
+                                                <textarea cols="40" rows="3" placeholder="Votre commentaire:"
+                                                          name="comment"></textarea>
                                                 </fieldset>
                                                 <button class="btn  big-btn  color-bg flat-btn">Poster le commentaire <i
                                                             class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                                             </form>
                                         </div>
                                         @else
-                                        <div class="share-holder hid-share show-reg-form modal-open ">
-                                            <div class="">
-                                                <span>Partager votre avis </span>
+                                        <div class="row">
+                                            <h3>Vous devez vous connecter pour donner votre avis</h3>
+                                            <div class="share-holder hid-share show-reg-form modal-open ">
+                                                <div class="">
+                                                    <span>Partager votre avis </span>
+                                                </div>
                                             </div>
                                         </div>
+
                                         @endif
                                     <!-- Add Review Box / End -->
                                 </div>
@@ -349,6 +416,32 @@
                                     </div>
                                     <!-- Add Review Box / End -->
                                 </div>
+                                <section class="gradient-bg">
+                                    <div class="cirle-bg">
+                                        <div class="bg" data-bg="images/bg/circle.png" style="background-image: url(&quot;images/bg/circle.png&quot;);"></div>
+                                    </div>
+                                    <div class="container" style="margin:0 auto;text-align:center">
+                                        <div class="join-wrap fl-wrap">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <h3 style="text-align:center;width:90%;margin-bottom: 5%;">Rejoignez l'olympiade family</h3>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="share-holder">
+                                                        <div class="showshare" style="float:left;padding: 15px 40px;margin-left:10%"><span>suivi activité sportive</span></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="share-holder">
+                                                        <div class="showshare" style="float:left;padding: 15px 40px;margin-left:10%"><span>Gagnez des recompenses</span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
                                 <!-- list-single-main-item end -->
                             @if (Auth::user())
                                 @if (checkPublicComplexRole(Auth::user())||checkPrivateComplexRole(Auth::user()))
@@ -414,7 +507,7 @@
                                         <div class="box-widget-content">
                                             @if(count($terrain->schedules)>0)
                                                 <span class="current-status"><i
-                                                            class="fa fa-clock-o"></i> Now Open</span>
+                                                            class="fa fa-clock-o"></i> Ouvert</span>
                                                 <ul>
                                                     @foreach ($terrain->schedules as $schedule)
                                                         <li>
@@ -577,6 +670,159 @@
 
                 });
 
+            });
+
+            $('input[type=radio][name=rating-accueil]').change(function(){
+                a =  parseInt($('input[type=radio][name=rating-accueil]:checked').val() ) || 0 ;
+                b=   parseInt($('input[type=radio][name=rating-activite]:checked').val() ) || 0;
+                c=   parseInt($('input[type=radio][name=rating-modernite]:checked').val() ) || 0;
+                d=   parseInt($('input[type=radio][name=rating-securite]:checked').val()) || 0;
+                rating = a +b +c +d;
+                $('input[name=note]').val(Math.round((rating/4)));
+                switch(Math.round((rating/4))) {
+                    case 1:
+                        /*   $('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
+                           $('input[type=radio][name=rating][value="1"]').attr('checked','checked');*/
+                        $('.note').text("1");
+                        break;
+                    case 2:
+                        /* $('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
+                         $('input[type=radio][name=rating][value="2"]').attr('checked','checked');*/
+                        $('.note').text("2");
+                        break;
+                    case 3:
+                        /*$('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
+                        $('input[type=radio][name=rating][value="3"]').attr('checked','checked');*/
+                        $('.note').text("3");
+                        break;
+                    case 4:
+                        /*$('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
+                        $('input[type=radio][name=rating][value="4"]').attr('checked','checked');*/
+                        $('.note').text("4");
+                        break;
+                    case 5:
+                        /*$('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
+                        $('input[type=radio][name=rating][value="5"]').attr('checked','checked');*/
+                        $('.note').text("5");
+                        break;
+                }
+
+                //$('input[type=radio][name=rating]').val(rating/4);
+            });
+
+            $('input[type=radio][name=rating-activite]').change(function(){
+                a =  parseInt($('input[type=radio][name=rating-accueil]:checked').val() ) || 0 ;
+                b=   parseInt($('input[type=radio][name=rating-activite]:checked').val() ) || 0;
+                c=   parseInt($('input[type=radio][name=rating-modernite]:checked').val() ) || 0;
+                d=   parseInt($('input[type=radio][name=rating-securite]:checked').val()) || 0;
+                rating = a +b +c +d;
+                $('input[name=note]').val(Math.round((rating/4)));
+                switch(Math.round((rating/4))) {
+                    case 1:
+                        /*   $('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
+                           $('input[type=radio][name=rating][value="1"]').attr('checked','checked');*/
+                        $('.note').text("1");
+                        break;
+                    case 2:
+                        /* $('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
+                         $('input[type=radio][name=rating][value="2"]').attr('checked','checked');*/
+                        $('.note').text("2");
+                        break;
+                    case 3:
+                        /*$('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
+                        $('input[type=radio][name=rating][value="3"]').attr('checked','checked');*/
+                        $('.note').text("3");
+                        break;
+                    case 4:
+                        /*$('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
+                        $('input[type=radio][name=rating][value="4"]').attr('checked','checked');*/
+                        $('.note').text("4");
+                        break;
+                    case 5:
+                        /*$('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
+                        $('input[type=radio][name=rating][value="5"]').attr('checked','checked');*/
+                        $('.note').text("5");
+                        break;
+                }
+
+                    //$('input[type=radio][name=rating]').val(rating/4);
+            });
+
+            $('input[type=radio][name=rating-securite]').change(function(){
+                a =  parseInt($('input[type=radio][name=rating-accueil]:checked').val() ) || 0 ;
+                 b=   parseInt($('input[type=radio][name=rating-activite]:checked').val() ) || 0;
+                 c=   parseInt($('input[type=radio][name=rating-modernite]:checked').val() ) || 0;
+                 d=   parseInt($('input[type=radio][name=rating-securite]:checked').val()) || 0;
+                 rating = a +b +c +d;
+                $('input[name=note]').val(Math.round((rating/4)));
+                switch(Math.round((rating/4))) {
+                    case 1:
+                        /*   $('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
+                           $('input[type=radio][name=rating][value="1"]').attr('checked','checked');*/
+                        $('.note').text("1");
+                        break;
+                    case 2:
+                        /* $('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
+                         $('input[type=radio][name=rating][value="2"]').attr('checked','checked');*/
+                        $('.note').text("2");
+                        break;
+                    case 3:
+                        /*$('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
+                        $('input[type=radio][name=rating][value="3"]').attr('checked','checked');*/
+                        $('.note').text("3");
+                        break;
+                    case 4:
+                        /*$('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
+                        $('input[type=radio][name=rating][value="4"]').attr('checked','checked');*/
+                        $('.note').text("4");
+                        break;
+                    case 5:
+                        /*$('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
+                        $('input[type=radio][name=rating][value="5"]').attr('checked','checked');*/
+                        $('.note').text("5");
+                        break;
+                }
+
+                //$('input[type=radio][name=rating]').val(rating/4);
+            });
+
+            $('input[type=radio][name=rating-modernite]').change(function(){
+                a =  parseInt($('input[type=radio][name=rating-accueil]:checked').val() ) || 0 ;
+                b=   parseInt($('input[type=radio][name=rating-activite]:checked').val() ) || 0;
+                c=   parseInt($('input[type=radio][name=rating-modernite]:checked').val() ) || 0;
+                d=   parseInt($('input[type=radio][name=rating-securite]:checked').val()) || 0;
+                rating = a +b +c +d;
+                $('input[name=note]').val(Math.round((rating/4)));
+                switch(Math.round((rating/4))) {
+                    case 1:
+                        /*   $('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
+                           $('input[type=radio][name=rating][value="1"]').attr('checked','checked');*/
+                        $('.note').text("1");
+
+                        break;
+                    case 2:
+                        /* $('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
+                         $('input[type=radio][name=rating][value="2"]').attr('checked','checked');*/
+                        $('.note').text("2");
+                        break;
+                    case 3:
+                        /*$('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
+                        $('input[type=radio][name=rating][value="3"]').attr('checked','checked');*/
+                        $('.note').text("3");
+                        break;
+                    case 4:
+                        /*$('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
+                        $('input[type=radio][name=rating][value="4"]').attr('checked','checked');*/
+                        $('.note').text("4");
+                        break;
+                    case 5:
+                        /*$('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
+                        $('input[type=radio][name=rating][value="5"]').attr('checked','checked');*/
+                        $('.note').text("5");
+                        break;
+                }
+
+                //$('input[type=radio][name=rating]').val(rating/4);
             });
         });
 

@@ -39,14 +39,23 @@
                         <div class="row">
                             @include('User::frontOffice.inc.asideProfile')
                             <div class="col-md-9">
-
+                                <div class="scroll-nav-wrapper fl-wrap" style="z-index: auto; position: relative; top: 0px;">
+                                    <div class="container">
+                                        <nav class="scroll-nav scroll-init">
+                                            <ul>
+                                                <li><a class="act-scrlink" href="#Equipements">Equipements</a></li>
+                                                <li><a href="#Clubs" class="">Clubs</a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
                                 <div class="dashboard-list-box fl-wrap activities">
                                     <div class="dashboard-header fl-wrap">
-                                        <h3>Ma Liste</h3>
+                                        <h3>Equipements</h3>
                                     </div>
 
                                     <!-- dashboard-list end-->
-
+                                    <div id="Equipements" >
                                         @foreach (Auth::user()->wishlists as $wishlist)
 
 
@@ -103,7 +112,17 @@
                                                             </div>
 
                                                         @endif
-                                                        @if ($wishlist->wished_type == "App\Modules\Complex\Models\Club")
+                                    @endforeach
+                                    </div>
+                                </div>
+                                <div class="dashboard-list-box fl-wrap activities">
+                                    <div class="dashboard-header fl-wrap">
+                                        <h3>Clubs</h3>
+                                    </div>
+                                    <div id="Clubs" >
+                                    @foreach (Auth::user()->wishlists as $wishlist)
+
+                                @if ($wishlist->wished_type == "App\Modules\Complex\Models\Club")
                                                             <div class="dashboard-list">
                                                                 <div class="dashboard-message">
                                                                     <div class="dashboard-listing-table-image">
@@ -151,7 +170,7 @@
 
                                         @endforeach
 
-
+                                    </div>
 
                                 <!-- dashboard-list end-->
                                 </div>

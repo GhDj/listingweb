@@ -47,27 +47,44 @@
                             @include('User::frontOffice.inc.asideProfile')
                             <div class="col-md-9">
 
-                                <div class="dashboard-list-box fl-wrap activities">
+                                <div class="dashboard-list-box fl-wrap">
                                     <div class="dashboard-header fl-wrap">
                                         <h3>Ma Liste</h3>
                                     </div>
 
                                     <!-- dashboard-list end-->
+                                    <div class="reviews-comments-wrap">
 
                                     @foreach (Auth::user()->reviews as $review)
-                                        <div class="dashboard-list">
-                                            <div class="dashboard-message">
 
 
-                                                <div class="dashboard-message-text">
+                                                    @if ($review->reviewed_type == "App\Modules\Complex\Models\Terrain" )
+                                                        <div class="reviews-comments-item" id="element{{ $review->id }}">
+                                                            <div class="review-comments-avatar">
+                                                                <img src="{{ \App\Modules\Complex\Models\Terrain::find($review->reviewed_id)->medias()->first()->link }}" alt="">
+                                                            </div>
+                                                            <div class="reviews-comments-item-text">
+                                                                <h4>
+                                                                    <a href="#">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</a> sur <a class="reviews-comments-item-link" href="{{route('showTerrainDetails',$review->reviewed_id)}}">{{ \App\Modules\Complex\Models\Terrain::find($review->reviewed_id)->first()->name }}</a>
+                                                                </h4>
 
-                                                    @if ($review->wished_type == "App\Modules\Complex\Models\Terrain" )
-                                                        <div class="dashboard-list" id="element{{ $media->id }}">
-                                                            <div class="dashboard-message">
-                                                                <div class="dashboard-listing-table-image">
+                                                                <div class="listing-rating card-popup-rainingvis" data-starrating2="{{ $review->note }}"></div>
+                                                                <div class="clearfix"></div>
+                                                                <p>
+                                                                    {{ $review->comment }}
+                                                                </p>
+
+                                                                <span class="reviews-comments-item-date">
+                                                                    <i class="fa fa-calendar-check-o"></i>
+                                                                    {{ Carbon\Carbon::parse($review->created_at)->format('d/m/Y') }}
+                                                                </span>
+
+                                                            </div>
+                                                           {{-- <div class="dashboard-message">
+                                                               --}}{{-- <div class="dashboard-listing-table-image">
                                                                     <a href="{{route('showTerrainDetails',$media->terrain_id)}}">
                                                                         <img src="{{ $medias->link }}" alt=""></a>
-                                                                </div>
+                                                                </div>--}}{{--
                                                                 <div class="dashboard-listing-table-text">
                                                                     <h4><a href="{{route('showTerrainDetails',$media->terrain_id)}}">{{ \App\Modules\Complex\Models\Terrain::find($media->terrain_id)->first()->name }}</a></h4>
                                                                     <span class="dashboard-listing-table-address"><i class="fa fa-map-marker"></i><a  href="#">{{ \App\Modules\Complex\Models\Terrain::find($media->terrain_id)->first()->address->address}}</a></span>
@@ -83,12 +100,12 @@
                                                                     </ul>
 
                                                                 </div>
-                                                            </div>
+                                                            </div>--}}
                                                         </div>
 
                                                     @endif
-                                                    @if ($media->club_id > 0)
-                                                        <div class="dashboard-list">
+                                                {{--    @if ($media->club_id > 0)
+                                                        <div class="reviews-comments-item">
                                                             <div class="dashboard-message">
                                                                 <div class="dashboard-listing-table-image">
                                                                     <a href="{{route('showClubDetails',$media->club_id)}}"> <img src="{{  $medias->link}}" alt=""></a>
@@ -106,13 +123,11 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    @endif
+                                                    @endif--}}
 
-                                                </div>
-                                            </div>
-                                        </div>
+
                                 @endforeach
-
+                                    </div>
 
 
                                 <!-- dashboard-list end-->

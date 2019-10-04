@@ -86,7 +86,7 @@ class Terrain extends Model
 
     public function schedules()
     {
-        return $this->morphMany('App\Modules\Infrastructure\Models\ComplexSchedule', 'group');
+        return $this->morphMany('App\Modules\Complex\Models\ComplexSchedule', 'group');
     }
 
     public function clubs()
