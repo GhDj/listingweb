@@ -94,14 +94,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Modules\General\Models\Notification','user_id','id');
     }
 
-    public function wishlists(){
-        return $this->hasMany('App\Modules\Reviews\Models\Wishlist','user_id');
-    }
+    public function wishlists()
+    {
+        return $this->hasMany('App\Modules\Reviews\Models\Wishlist', 'user_id');
 
-    public function medias(){
-        return $this->hasMany('App\Modules\General\Models\Media','user_id');
     }
-
     function getPictureAttribute($picture){
       return asset($picture);
   }

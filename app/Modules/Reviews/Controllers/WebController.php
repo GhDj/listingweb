@@ -68,15 +68,10 @@ class WebController extends Controller
 
 
             $validator = Validator::make($request->All(),[
-                "rating" => "required",
-                "comment" => "required",
-                "image"  => 'mimes:jpeg,jpg,png | max:1000'
+                "note" => "required",
             ],
             [
-              "rating.required" => "Veuillez choisir votre rating pour ce terrain ",
-              "comment.required" =>  "Champ commantire est obligatoire",
-              "image.mimes" => 'Choisir un format validé Pour l\'image ',
-              "image.max" => 'Champ image est obligatoire',
+              "note.required" => "Veuillez choisir votre note pour ce terrain ",
 
             ]  );
 
@@ -97,7 +92,7 @@ class WebController extends Controller
 
 
 
-           switch ($request->input('rating'))
+         /*  switch ($request->input('rating'))
              {
             case 1:
              $ratingValue = 5;
@@ -118,9 +113,9 @@ class WebController extends Controller
             case 5:
              $ratingValue = 1;
              break;
-             }
+             }*/
 
-           $review = $terrain->reviews()->create(['note' => $ratingValue,
+           $review = $terrain->reviews()->create(['note' => $request->input('note'),
                                                   'comment' => $request->input('comment'),
                                                   'user_id' => $user->id
                                              ]);
