@@ -33,6 +33,7 @@ Route::group(['module' => 'User', 'middleware' => ['userAccess'], 'namespace' =>
 
     Route::get('/user/password', 'WebController@showUserPassword')->name('showUserPassword');
     Route::get('/user/listing/terrain', 'WebController@showUserListingTerrain')->name('showUserListingTerrain');
+
     Route::get('/user/listing/club', 'WebController@showUserListingClub')->name('showUserListingClub');
     Route::get('/user/add/terrain', 'WebController@showUserAddTerrain')->name('showUserAddTerrain');
 
@@ -42,6 +43,10 @@ Route::group(['module' => 'User', 'middleware' => ['userAccess'], 'namespace' =>
 
     Route::post('/user/edit/complex', 'WebController@handleEditComplex')->name('handleEditComplex');
 
+
+    // Reports
+
+    Route::get('/user/listing/reports', 'WebController@showUserListingReports')->name('showUserListingReports');
 
     Route::get('/user/add/equipement', 'WebController@showUserAddEquipement')->name('showUserAddEquipement');
     Route::get('/user/add/club', 'WebController@showUserAddClub')->name('showUserAddClub');
@@ -133,4 +138,8 @@ Route::group(['module' => 'User', 'middleware' => ['adminAccess'], 'namespace' =
     Route::get('/admin/Category_request','WebController@showCategoryRequest')->name('showCategoryRequest');
     Route::get('/admin/Category_request/accept/{id}','WebController@handleAcceptCategoryRequest')->name('acceptCategoryRequest');
     Route::get('/admin/Category_request/cancel/{id}','WebController@handleCancelCategoryRequest')->name('cancelCategoryRequest');
+
+    //Reports
+
+    Route::get('/admin/reports', 'WebController@showReportsList')->name('showReportsList');
 });

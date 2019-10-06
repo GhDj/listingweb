@@ -30,7 +30,8 @@ class Report extends Model {
         'description',
         'reported_id',
         'reported_type',
-        'user_id'
+        'user_id',
+        'status'
 
     ];
 

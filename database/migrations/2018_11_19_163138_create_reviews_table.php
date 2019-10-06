@@ -31,6 +31,7 @@ class CreateReviewsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('reported_id');
+            $table->integer('status'); // 0 : non résolu , 1 : résolu , 2 : fermé
             $table->string('reported_type');
             $table->timestamps();
         });

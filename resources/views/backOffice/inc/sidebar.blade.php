@@ -120,10 +120,19 @@
                 </a>
             </li>
 
+
+
             <li class="nav-item">
                 <a class="" href="{{route('showClubsList')}}">
                     <i class="nav-icon i-Posterous"></i>
                     <span class="item-name">Club</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="" href="{{route('showReportsList')}}">
+                    <i class="nav-icon i-Danger"></i>
+                    <span class="item-name">Signalements des problèmes</span>
                 </a>
             </li>
 
