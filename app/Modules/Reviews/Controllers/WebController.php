@@ -53,7 +53,8 @@ class WebController extends Controller
             $report = $terrain->reports()->create(['title' => $request->input('title'),
                                                    'description' => $request->input('description'),
                                                    'reported_id' => $terrain->id,
-                                                   'user_id' => $user->id
+                                                   'user_id' => $user->id,
+                                                    'status' => 0
                                               ]);
             if (!$report) {
             SweetAlert::error('Oops !', 'Un error se produit lors de l\'envoi de votre rapport !')->persistent('Fermer');
@@ -61,6 +62,26 @@ class WebController extends Controller
 
             SweetAlert::success('Bien !', 'Votre Report a été envoyé avec succès !')->persistent('Fermer');
             return back();
+    }
+
+    public function handleUserChangeReport(Request $request)
+    {
+
+
+
+
+        $report = Report::find($request->input("report_id"))->first();
+
+        $report->status = $request->input("status");
+
+        $report->save();
+
+        if (!$report) {
+            SweetAlert::error('Oops !', 'Un error se produit lors de l\'envoi de changement de status !')->persistent('Fermer');
+        }
+
+        SweetAlert::success('Bien !', 'Votre demande a été traitée avec succès !')->persistent('Fermer');
+        return back();
     }
 
     public function hundleUserReviews(Request $request,$terrain_id)

@@ -8,6 +8,7 @@ use App\Modules\Complex\Models\ComplexRequest;
 use App\Modules\Complex\Models\Infrastructure;
 use App\Modules\Complex\Models\TerrainActivity;
 use App\Modules\Complex\Models\ComplexSchedule;
+use App\Modules\Reviews\Models\Report;
 use App\Modules\Reviews\Models\Review;
 use App\Modules\Reviews\Models\Wishlist;
 use Illuminate\Http\Request;
@@ -567,6 +568,25 @@ class WebController extends Controller
         return view('User::frontOffice.userListing',
             [
                 'userTerrains' => $userTerrains
+            ]
+        );
+    }
+
+    public function showUserListingReports()
+    {
+
+        $terrains = Terrain::whereHas('complex', function ($subQuery) {
+            $subQuery->where('user_id', Auth::user()->id);
+        })->get();
+        $reports = [];
+        foreach ($terrains as $terrain) {
+            array_push($reports,$terrain->reports->all());
+
+        }
+       // dd($reports);
+        return view('User::frontOffice.reportListing',
+            [
+                'reports' => $reports
             ]
         );
     }
@@ -1246,9 +1266,38 @@ class WebController extends Controller
 
     public function showReviewList()
     {
-        return view('User::frontOffice.Sportif.reviewList', ['reviews' => Auth::user()->medias()->get()]);
+        $user = Auth::user();
 
-        //    return Auth::user()->favoritesClubs;
+        if (checkClubRole($user)) {
+            $club = Auth::user()->club;
+            return view('User::frontOffice.Sportif.reviewList', ['reviews' => $club->reviews()]);
+        }
+
+        if (checkPublicComplexRole($user) || checkPrivateComplexRole($user)) {
+            $reviews = [];
+            if ($user->complex) {
+                //$reviewCounts = $user->complex->terrains()->with('reviews')->count();
+                $reviewCounts = 0;
+                foreach ($user->complex->terrains as $terrain) {
+                    /*$reviewCounts += Review::where('reviewed_id','=',$terrain->id)->count();*/
+                    foreach ($terrain->reviews as $review)
+                        array_push($reviews, $review);
+                }
+
+
+            }
+           // dd($reviews);
+            return view('User::frontOffice.Sportif.reviewList', ['reviews' => $reviews]);
+
+        }
+
+        if (checkAthleticRole($user)) {
+            return view('User::frontOffice.Sportif.reviewList', ['reviews' => Auth::user()->reviews()->get()]);
+        }
+
+
+
+
     }
 
     public function showTest()
@@ -1572,6 +1621,17 @@ class WebController extends Controller
         return view('User::backOffice.terrainsList',
             [
                 'userTerrains' => $userTerrains
+            ]
+        );
+    }
+
+    public function showReportsList()
+    {
+
+        $userReports = Report::all();
+        return view('User::backOffice.reportsList',
+            [
+                'userReports' => $userReports
             ]
         );
     }

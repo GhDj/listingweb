@@ -396,11 +396,11 @@
                                                         <select data-placeholder="Categories" class="chosen-select"
                                                                 name="title">
                                                             <option value="">Les catégories</option>
-                                                            <option value="Problem 1">Problem 1</option>
-                                                            <option value="Problem 2">Problem 2</option>
-                                                            <option value="Problem 3">Problem 3</option>
-                                                            <option value="Problem 4">Problem 4</option>
-                                                            <option value="Problem 5">Problem 5</option>
+                                                            <option value="Vétusté des équipements">Vétusté des équipements</option>
+                                                            <option value="Problèmes de sécurité">Problèmes de sécurité</option>
+                                                            <option value="Problème de propreté">Problème de propreté</option>
+                                                            <option value="Je veux signaler autre chose">Je veux signaler autre chose </option>
+
                                                         </select>
 
 

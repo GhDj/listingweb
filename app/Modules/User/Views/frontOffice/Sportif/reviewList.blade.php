@@ -55,7 +55,7 @@
                                     <!-- dashboard-list end-->
                                     <div class="reviews-comments-wrap">
 
-                                    @foreach (Auth::user()->reviews as $review)
+                                    @foreach ($reviews as $review)
 
 
                                                     @if ($review->reviewed_type == "App\Modules\Complex\Models\Terrain" )
@@ -65,7 +65,7 @@
                                                             </div>
                                                             <div class="reviews-comments-item-text">
                                                                 <h4>
-                                                                    <a href="#">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</a> sur <a class="reviews-comments-item-link" href="{{route('showTerrainDetails',$review->reviewed_id)}}">{{ \App\Modules\Complex\Models\Terrain::find($review->reviewed_id)->first()->name }}</a>
+                                                                    <a href="#">{{ Auth::user($review->user_id)->first_name }} {{ Auth::user($review->user_id)->last_name }}</a> sur <a class="reviews-comments-item-link" href="{{route('showTerrainDetails',$review->reviewed_id)}}">{{ \App\Modules\Complex\Models\Terrain::find($review->reviewed_id)->name }}</a>
                                                                 </h4>
 
                                                                 <div class="listing-rating card-popup-rainingvis" data-starrating2="{{ $review->note }}"></div>

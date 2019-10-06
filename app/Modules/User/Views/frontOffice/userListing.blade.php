@@ -82,7 +82,7 @@
                                                     <span class="dashboard-listing-table-address"><i class="fa fa-map-marker"></i>
                                                         <a  href="#">{{$terrain->complex->address->address}}</a>
                                                     </span>
-                                                    <div class="listing-rating card-popup-rainingvis fl-wrap" data-starrating2="5">
+                                                    <div class="listing-rating card-popup-rainingvis fl-wrap" data-starrating2=" {{ $terrain->reviews->avg('note') }}">
                                                         <span>({{$terrain->reviews->count()}} reviews)</span>
                                                     </div>
                                                     <ul class="dashboard-listing-table-opt  fl-wrap">
