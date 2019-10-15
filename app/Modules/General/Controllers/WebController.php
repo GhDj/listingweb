@@ -729,7 +729,7 @@ class WebController extends Controller
          //   dd($image);
 
             $filename = time().'-'.$image->getClientOriginalName();
-            $image->move(public_path('/uploads/terrains/'), $filename);
+            $image->move(public_path('storage/uploads/terrains/'), $filename);
 
 
           //  $image->move(public_path('/uploads/terrains/'),$filename);
@@ -738,7 +738,7 @@ class WebController extends Controller
             //dd($image);
 
           Media::create([
-                'link' =>'uploads/terrains/'.$filename,
+                'link' =>'storage/uploads/terrains/'.$filename,
                 'terrain_id' => $request['terrain_id'],
                 'type' => 10
                 /* type 10 means images uploaded for the gallery by any authentificated user and waiting for validation*/,
