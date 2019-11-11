@@ -156,6 +156,7 @@
 
                                     <!-- dashboard-list end-->
                                         <!-- dashboard-list end-->
+                                        @if(Auth::user()->reviews)
                                         @foreach (Auth::user()->reviews()->orderby('created_at', 'des')->get() as $review)
                                             <div class="dashboard-list">
                                                 <div class="dashboard-message">
@@ -179,6 +180,7 @@
                                                 </div>
                                             </div>
                                         @endforeach
+                                            @endif
                                     @endif
 
                                     @if (checkPrivateComplexRole(Auth::user()) || checkPublicComplexRole(Auth::user()))

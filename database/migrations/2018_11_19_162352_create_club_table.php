@@ -27,7 +27,7 @@ class CreateClubTable extends Migration
             $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('addresses')->onDelete('cascade');
-            $table->integer('user_id')->unsigned();
+            $table->integer('terrain_id')->unsigned();
             $table->foreign('terrain_id')->references('id')->on('terrains')->onDelete('cascade');
             $table->timestamps();
         });

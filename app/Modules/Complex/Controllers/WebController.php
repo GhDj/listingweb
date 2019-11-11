@@ -446,8 +446,28 @@ class WebController extends Controller
     public function handleAjaxGetSportsCategories(Request $request) {
        $q = $request->input('q');
         $sportsCaregories = SportCategory::where('title','LIKE',"%".$q."%")->get();
+        $formattedData = $sportsCaregories;
+        foreach ($formattedData as $caregory)
+        {
+            $caregory->id = $caregory->sport_id;
+        }
+
       //  dd($request->input('q'));
-        return response()->json(['status' => 200, 'categories' => $sportsCaregories]);
+        return response()->json(['status' => 200, 'categories' => $formattedData]);
+
+    }
+
+    public function handleAjaxGetSports(Request $request) {
+        $q = $request->input('q');
+        $sportsCaregories = Sport::where('sport_categories_id','=',$q)->get();
+       /* $formattedData = $sportsCaregories;
+        foreach ($formattedData as $caregory)
+        {
+            $caregory->id = $caregory->sport_id;
+        }*/
+
+        //  dd($request->input('q'));
+        return response()->json(['status' => 200, 'sports' => $sportsCaregories]);
 
     }
 

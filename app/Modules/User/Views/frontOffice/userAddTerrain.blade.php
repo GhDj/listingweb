@@ -119,7 +119,7 @@
                                                                     <option value="{{$sportCategory->id}}">{{$sportCategory->title}}</option>
                                                                 @endforeach
                                                             </optgroup>--}}
-                                                            <option value="{{$sport->id}}">{{$sport->title}}</option>
+                                                           {{-- <option value="{{$sport->id}}">{{$sport->title}}</option>--}}
                                                         @endforeach
                                                     </select>
                                                     @if ($errors->has('activityList'))
@@ -357,43 +357,48 @@
             },
             minimumInputLength: 1,
             templateResult: formatRepo,
-            templateSelection: formatRepoSelection
-      /*      ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
-                url: "../../sportsCategories/"+q,
-                dataType: 'json',
-                quietMillis: 250,
-                data: function (term, page) {
-                    return {
-                        q: term, // search term
-                    };
-                },
-                results: function (data, page) { // parse the results into the format expected by Select2.
-                    // since we are using custom formatting functions we do not need to alter the remote JSON data
-                    return { results: data.categories };
-                },
-                cache: true
-            },*/
-           /* initSelection: function(element, callback) {
-                // the input tag has a value attribute preloaded that points to a preselected repository's id
-                // this function resolves that id attribute to an object that select2 can render
-                // using its formatResult renderer - that way the repository name is shown preselected
-                var q = $(element).val();
-                if (q !== "") {
-                    $.ajax("../../sportsCategories/"+q, {
-                        dataType: "json"
-                    }).done(function(data) { callback(data); });
-                }
-            },
-            escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
-*/
+            templateSelection: formatRepoSelection,
 
         });
+
+		$("#sport_category_id").on('select2:select', function (e) {
+			var data = e.params.data;
+			console.log(data.id);
+
+			$("#sports").select2({
+				ajax: {
+					url: "../../getSports/",
+					dataType: 'json',
+					delay: 250,
+					data: function (params) {
+						return {
+							q: data.id
+						};
+					},
+					processResults: function (data, params) {
+						// parse the results into the format expected by Select2
+						// since we are using custom formatting functions we do not need to
+						// alter the remote JSON data, except to indicate that infinite
+						// scrolling can be used
+						params.page = params.page || 1;
+
+						return {
+							results: data.sports
+						};
+					},
+					cache: true
+				},
+				minimumInputLength: 1,
+				templateResult: formatRepo,
+				templateSelection: formatRepoSelection,
+            });
+		});
 
         $("#sports").select2({
             multiple: true,
             placeholder: "Choisir les sports",
             minimumInputLength: 1,
-            ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+           /* ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
                 url: "../../sportsCategories/"+q,
                 dataType: 'json',
                 quietMillis: 250,
@@ -420,10 +425,11 @@
                 }
             },
             dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
-            escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
+            escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results*/
 
 
         });
+
         $(document).ready(function (){
 
 
@@ -433,7 +439,7 @@
                 if (count == 0) {
                     uldiv.html("");
                 }
-                else if (count > 2) {
+                else {
                     uldiv.html("<li>" + count + " activités</li>");
                 }
             });

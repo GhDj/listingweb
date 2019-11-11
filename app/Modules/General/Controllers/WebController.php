@@ -748,11 +748,12 @@ class WebController extends Controller
                        'title' => $sport['title']
                    ]);*/
 
-                   Sport::create([
+                 $sport = Sport::create([
                        'sport_categories_id' => $sport['sport_categories_id'],
                        'title' => $sport['title']
                    ]);
 
+    //             dd($sport);
                     /*$address = Address::create([
                         'postal_code' => (isset($complex['Code Postal'])) ? $complex['Code Postal'] : '',
                         'country' => 'france',

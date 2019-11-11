@@ -135,6 +135,9 @@ class CreateComplexTable extends Migration
             $table->foreign('sport_category_id')->references('id')->on('sport_categories')->onDelete('cascade');
             $table->integer('terrain_id')->unsigned();
             $table->foreign('terrain_id')->references('id')->on('terrains')->onDelete('cascade');
+            $table->integer('sport_id')->unsigned();
+            $table->foreign('sport_id')->references('id')->on('sports')->onDelete('cascade');
+            $table->integer('prix');
             $table->timestamps();
 
         });
