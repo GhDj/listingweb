@@ -64,6 +64,8 @@ class CreateComplexTable extends Migration
         Schema::create('sports', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
+            $table->integer('sport_categories_id')->unsigned();
+            $table->foreign('sport_categories_id')->references('id')->on('sport_categories')->onDelete('cascade');
             $table->timestamps();
         });
 

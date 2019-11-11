@@ -76,11 +76,11 @@
                                             @endif
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label>Category</label>
+                                                    <label>Catégorie</label>
                                                     <select class="chosen" id="complexCategory" name="category_id">
-                                                        @foreach($complex->categories as $category)
-                                                            <option value="{{$category->category->id}}"
-                                                                    }}>{{$category->category->title}}</option>
+                                                        @foreach(\App\Modules\Complex\Models\Category::all() as $category)
+                                                            <option value="{{$category->id}}"
+                                                                    }}>{{$category->title}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>

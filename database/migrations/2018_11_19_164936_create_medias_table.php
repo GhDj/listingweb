@@ -37,6 +37,7 @@ class CreateMediasTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('category_id')->unsigned()->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->integer('status')->default(0); // 0-non validé par l'admin 1 - validé par l'admin
             $table->timestamps();
         });
 

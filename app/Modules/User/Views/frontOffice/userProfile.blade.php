@@ -178,6 +178,20 @@
                                                 </div>
                                             </div>
 
+                                            <div class="form-group row" >
+                                             {{--   <label> Genre </label>--}}
+
+                                                <label class="radio">
+                                                    <input type="radio" name="gender" value="{{ Auth::user()->newsletter }}"
+
+                                                           @if (Auth::user()->newsletter == 1)
+                                                           checked
+                                                            @endif
+
+                                                    > <span>Recevoir Newsletter</span>
+                                                </label>
+
+                                            </div>
                                                 <button class="btn  big-btn  color-bg flat-btn">Enregistrer<i class="fa fa-angle-right"></i></button>
                                         </form>
                                       </div>

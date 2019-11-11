@@ -114,6 +114,7 @@
                                 <!-- profile-edit-container end-->
 
                                 <div class="dashboard-list-box fl-wrap activities">
+
                                     <div class="dashboard-header fl-wrap" style="color:black;margin-bottom: 16px">
 
                                         @if(checkPublicComplexRole(Auth::user())&&(!Auth::user()->complex)&&(!userHasRequest(Auth::user())))
@@ -127,7 +128,7 @@
                                     <!-- dashboard-list end-->
 
                                     @if (checkAthleticRole(Auth::user()))
-                                        @foreach (Auth::user()->wishlists as $wishlist)
+                                        @foreach (Auth::user()->wishlists()->orderby('created_at', 'des')->get() as $wishlist)
                                             <div class="dashboard-list">
                                                 <div class="dashboard-message">
                                                     <span id="terrain{{$wishlist->wished->id}}"
@@ -139,7 +140,7 @@
 
                                                         @if ($wishlist->wished_type == "App\Modules\Complex\Models\Terrain")
                                                             <p><i class="fa fa-heart"></i>vous avez aimé <a
-                                                                        href="{{route('showTerrainDetails',$wishlist->wished->id)}}">{{$wishlist->wished->name}}</a>
+                                                                        href="{{route('showTerrainDetails',$wishlist->wished->id)}}">{{$wishlist->wished->name}} </a>
                                                                 listing!</p>
                                                         @endif
                                                         @if ($wishlist->wished_type == "App\Modules\Complex\Models\Club")
@@ -155,7 +156,7 @@
 
                                     <!-- dashboard-list end-->
                                         <!-- dashboard-list end-->
-                                        @foreach (Auth::user()->reviews as $review)
+                                        @foreach (Auth::user()->reviews()->orderby('created_at', 'des')->get() as $review)
                                             <div class="dashboard-list">
                                                 <div class="dashboard-message">
                                                         <span class="new-dashboard-item"><i

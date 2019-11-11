@@ -36,7 +36,8 @@ class Media extends Model {
         'post_id',
         'product_id',
         'team_id',
-        'user_id'
+        'user_id',
+        'status'
     ];
 
     function getLinkAttribute($link){

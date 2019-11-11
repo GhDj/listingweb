@@ -6,6 +6,7 @@ use App\Modules\Complex\Models\Club;
 use App\Modules\Complex\Models\ComplexCategory;
 use App\Modules\Complex\Models\Infrastructure;
 use App\Modules\Complex\Models\Sport;
+use App\Modules\Complex\Models\SportCategory;
 use App\Modules\Content\Models\Post;
 use App\Modules\General\Models\Address;
 use App\Modules\General\Models\AdressImport;
@@ -711,6 +712,148 @@ class WebController extends Controller
         //unlink($repository."complex.json");
     }
 
+    public function ExcelToJsonSports()
+    {
+        ini_set('memory_limit', '2048M');
+
+        // set_time_limit(0);
+        $repository = public_path() . '/uploads/';
+
+
+        //  dd(json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', utf8_encode($response)),true));
+        // dd($response);
+        $i = 0;
+
+      //  for ($i;$i<=453;$i++) {
+            try {
+                $response = file_get_contents($repository."sports1.json");
+            } catch (\Exception $e) {
+                SweetAlert::error('Erreur de comunication avec l\'API avec l\'erreur suivant : ' . $e->getMessage())->persistent('Fermer');
+                return $e;
+            }
+            if (isset($response))// Show response
+                // $response = json_decode($response, true);
+                $response = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', utf8_encode($response)),true);
+            else die('Echec de la syncro');
+
+            if ($response != null) {
+                foreach ($response as $sport) {
+                   // $is_admin = (isset($complex['id'])) ? $sport['Nom Lieu Dit'] : $sport['Commune '];
+                   /* if (!isset($sport['Nom de la rue'])) {
+                        $sport['Nom de la rue'] = '';
+                    }*/
+
+                  /* SportCategory::create([
+                       'sport_categories_id' => $sport['sport_categories_id'],
+                       'title' => $sport['title']
+                   ]);*/
+
+                   Sport::create([
+                       'sport_categories_id' => $sport['sport_categories_id'],
+                       'title' => $sport['title']
+                   ]);
+
+                    /*$address = Address::create([
+                        'postal_code' => (isset($complex['Code Postal'])) ? $complex['Code Postal'] : '',
+                        'country' => 'france',
+                        'city' => (isset($complex['Nom Lieu Dit'])) ? $complex['Nom Lieu Dit'] : $complex['Commune '],
+                        'address' => (isset($complex['Numro de la voie '])) ? $complex['Numro de la voie '] : '' .
+                        ", " . (isset($complex['Nom de la rue'])) ? $complex['Nom de la rue'] : '' .
+                            ", " . $complex['Commune ']
+                    ]);
+                    $complex = Complex::create([
+                        'installation_id' => $complex['Numro de l\'installation sportive '],
+                        'name' => $complex['Nom de l\'installation sportive '],
+                        'web_site' => (isset($complex['Site web'])) ? $complex['Site web'] : null,
+                        'phone' => (isset($complex['num_tel'])) ? $complex['num_tel'] : null,
+                        'address_id' => $address->id
+                    ]);
+
+                    Infrastructure::create([
+                        'handicap_access' => $complex['Installation Accessible Handicap'],
+                        'parking_place' => $complex['Nombre de place de Parking'],
+                        'handicap_parking_place' => $complex['Nombre de places Handicaps'],
+                        'complex_id' => $complex->id
+                    ]);*/
+
+
+                    /*if ((\DateTime::createFromFormat('H:i:', $complex['open_sunday']) !== FALSE) && (DateTime::createFromFormat('H:i', $complex['close_sunday']) !== FALSE)) {
+
+                        $complex->schedules()->create([
+                            'start_at' => Carbon::parse($complex['Heure de fermeture Lundi'])->format('H:i'),
+                            'ends_at' => Carbon::parse($complex['Heure de fermeture Lundi'])->format('H:i'),
+                            'day' => 0,
+                        ]);
+                    }
+
+                    if ((\DateTime::createFromFormat('H:i:', $complex['open_Monday']) !== FALSE) && (DateTime::createFromFormat('H:i:', $complex['close_Monday']) !== FALSE)) {
+                        $complex->schedules()->create([
+                            'start_at' => Carbon::parse($complex['Heure d\'ouverture Lundi'])->format('H:i'),
+                            'ends_at' => Carbon::parse($complex['Heure de fermeture Lundi'])->format('H:i'),
+                            'day' => 1,
+                        ]);
+                    }
+
+                    if ((\DateTime::createFromFormat('H:i:', $complex['open_Tuesday']) !== FALSE) && (DateTime::createFromFormat('H:i:', $complex['close_Tuesday']) !== FALSE)) {
+                        $complex->schedules()->create([
+                            'start_at' => Carbon::parse($complex['open_Tuesday'])->format('H:i'),
+                            'ends_at' => Carbon::parse($complex['close_Tuesday'])->format('H:i'),
+                            'day' => 2,
+                        ]);
+
+                    }
+                    if ((\DateTime::createFromFormat('H:i:', $complex['open_Wednesday']) !== FALSE) && (DateTime::createFromFormat('H:i:', $complex['close_wednesday']) !== FALSE)) {
+                        $complex->schedules()->create([
+                            'start_at' => Carbon::parse($complex['open_Wednesday'])->format('H:i'),
+                            'ends_at' => Carbon::parse($complex['close_wednesday'])->format('H:i'),
+                            'day' => 3,
+                        ]);
+                    }
+
+                    if ((\DateTime::createFromFormat('H:i:', $complex['open_thursday']) !== FALSE) && (DateTime::createFromFormat('H:i:', $complex['close_thursday']) !== FALSE)) {
+                        $complex->schedules()->create([
+                            'start_at' => Carbon::parse($complex['open_thursday'])->format('H:i'),
+                            'ends_at' => Carbon::parse($complex['close_thursday'])->format('H:i'),
+                            'day' => 4,
+                        ]);
+                    }
+                    if ((\DateTime::createFromFormat('H:i:', $complex['open_Friday']) !== FALSE) && (DateTime::createFromFormat('H:i:', $complex['close_Friday']) !== FALSE)) {
+                        $complex->schedules()->create([
+                            'start_at' => Carbon::parse($complex['open_Friday'])->format('H:i'),
+                            'ends_at' => Carbon::parse($complex['close_Friday'])->format('H:i'),
+                            'day' => 5,
+                        ]);
+                    }
+                    if ((\DateTime::createFromFormat('H:i:', $complex['open_saturday']) !== FALSE) && (DateTime::createFromFormat('H:i:', $complex['close_saturday']) !== FALSE)) {
+                        $complex->schedules()->create([
+                            'start_at' => Carbon::parse($complex['open_saturday'])->format('H:i'),
+                            'ends_at' => Carbon::parse($complex['close_saturday'])->format('H:i'),
+                            'day' => 6,
+                        ]);
+                    }*/
+                }
+            }
+      //  }
+
+
+
+        /*//dd($response);
+        $i = 0;
+       // $output = [];
+        $output = array_chunk($response,300,true);
+        foreach ($output as $d) {
+        //    $arrResult = json_decode($response,true);
+            Storage::disk('public')->put('data'.$i.'.json', json_encode($d));
+            $i++;
+            //array_push($complex);
+         //   dd($d);
+        }*/
+
+
+        return "done";
+        //unlink($repository."complex.json");
+    }
+
     public function handleUploadImage(Request $request) {
 
         request()->validate([
@@ -742,11 +885,12 @@ class WebController extends Controller
                 'terrain_id' => $request['terrain_id'],
                 'type' => 10
                 /* type 10 means images uploaded for the gallery by any authentificated user and waiting for validation*/,
+                'status'  => 0
             ]);
 
         }
         //dd($request['images']);
-        SweetAlert::success('Bien !', 'Images Ajoutés. !')->persistent('Fermer');
+        SweetAlert::success('Bien !', 'Images Ajoutés pour validation par l\'administrateur. !')->persistent('Fermer');
         return redirect()->back();
 
     }

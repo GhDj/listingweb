@@ -6,6 +6,8 @@
 
 
 
+    <link rel="stylesheet" href="{{ asset('css/frontOffice/css/select2.min.css') }}">
+
 @endsection
 
 
@@ -86,20 +88,19 @@
                                             <div class="row">
 
                                                 <div class="col-md-4">
-                                                    <label>Category</label>
-                                                    <select class="chosen" id="complexCategory" name="category_id">
-                                                        @foreach($complex->categories as $category)
-                                                            <option value="{{$category->category->id}}"
-                                                                    }}>{{$category->category->title}}</option>
+                                                    <label>Catégorie</label>
+                                                    <select class="chosen" id="terrainCategory" name="category_id">
+                                                        @foreach(\App\Modules\Complex\Models\Category::all() as $category)
+                                                            <option value="{{$category->id}}">{{$category->title}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label>Type de terrain</label>
-                                                    <select class="chosen" id="choose_sport" name="sport_id">
-                                                        @foreach ($sports as $sport)
-                                                            <option value="{{$sport->id}}">{{$sport->title}}</option>
-                                                        @endforeach
+                                                    <select class="chosen" id="sport_category_id" name="sport_category_id">
+                                                      {{--  @foreach (\App\Modules\Complex\Models\SportCategory::all() as $sport)
+                                                            <option value="{{$sport->sport_id}}">{{$sport->title}}</option>
+                                                        @endforeach--}}
                                                     </select>
                                                     @if ($errors->has('sport_id'))
                                                         <span class="invalid-feedback" role="alert">
@@ -110,14 +111,15 @@
 
                                                 <div class="col-md-4">
                                                     <label>Activités</label>
-                                                    <select class="chosen" id="sport_category_id"
-                                                            name="sport_category_id[]">
-                                                        @foreach ($sports as $sport)
-                                                            <optgroup id="{{$sport->id}}" label="{{$sport->title}}">
+                                                    <select class="chosen" id="sports"
+                                                            name="sports[]">
+                                                        @foreach (\App\Modules\Complex\Models\Sport::all() as $sport)
+                                                           {{-- <optgroup id="{{$sport->id}}" label="{{$sport->title}}">
                                                                 @foreach($sport->categories as $sportCategory)
                                                                     <option value="{{$sportCategory->id}}">{{$sportCategory->title}}</option>
                                                                 @endforeach
-                                                            </optgroup>
+                                                            </optgroup>--}}
+                                                            <option value="{{$sport->id}}">{{$sport->title}}</option>
                                                         @endforeach
                                                     </select>
                                                     @if ($errors->has('activityList'))
@@ -321,8 +323,122 @@
 
 
 @section('scripts')
-
+    <script src="{{ asset('js/frontOffice/select2.full.min.js') }}"></script>
     <script type="text/javascript">
+        $("#terrainCategory").select2({
+            placeholder: "Choisir la catégorie "
+        });
+
+        $("#sport_category_id").select2({
+            placeholder: "Choisir la catégorie du sport",
+            minimumInputLength: 1,
+            allowClear: true,
+            ajax: {
+                url: "../../sportsCategories/",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term
+                    };
+                },
+                processResults: function (data, params) {
+                    // parse the results into the format expected by Select2
+                    // since we are using custom formatting functions we do not need to
+                    // alter the remote JSON data, except to indicate that infinite
+                    // scrolling can be used
+                    params.page = params.page || 1;
+
+                    return {
+                        results: data.categories
+                    };
+                },
+                cache: true
+            },
+            minimumInputLength: 1,
+            templateResult: formatRepo,
+            templateSelection: formatRepoSelection
+      /*      ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+                url: "../../sportsCategories/"+q,
+                dataType: 'json',
+                quietMillis: 250,
+                data: function (term, page) {
+                    return {
+                        q: term, // search term
+                    };
+                },
+                results: function (data, page) { // parse the results into the format expected by Select2.
+                    // since we are using custom formatting functions we do not need to alter the remote JSON data
+                    return { results: data.categories };
+                },
+                cache: true
+            },*/
+           /* initSelection: function(element, callback) {
+                // the input tag has a value attribute preloaded that points to a preselected repository's id
+                // this function resolves that id attribute to an object that select2 can render
+                // using its formatResult renderer - that way the repository name is shown preselected
+                var q = $(element).val();
+                if (q !== "") {
+                    $.ajax("../../sportsCategories/"+q, {
+                        dataType: "json"
+                    }).done(function(data) { callback(data); });
+                }
+            },
+            escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
+*/
+
+        });
+
+        $("#sports").select2({
+            multiple: true,
+            placeholder: "Choisir les sports",
+            minimumInputLength: 1,
+            ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+                url: "../../sportsCategories/"+q,
+                dataType: 'json',
+                quietMillis: 250,
+                data: function (term, page) {
+                    return {
+                        q: term, // search term
+                    };
+                },
+                results: function (data, page) { // parse the results into the format expected by Select2.
+                    // since we are using custom formatting functions we do not need to alter the remote JSON data
+                    return { results: data.categories };
+                },
+                cache: true
+            },
+            initSelection: function(element, callback) {
+                // the input tag has a value attribute preloaded that points to a preselected repository's id
+                // this function resolves that id attribute to an object that select2 can render
+                // using its formatResult renderer - that way the repository name is shown preselected
+                var id = $(element).val();
+                if (id !== "") {
+                    $.ajax("../../sportsCategories/"+q, {
+                        dataType: "json"
+                    }).done(function(data) { callback(data); });
+                }
+            },
+            dropdownCssClass: "bigdrop", // apply css that makes the dropdown taller
+            escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results
+
+
+        });
+        $(document).ready(function (){
+
+
+            $('select').on('select2:close', function (evt) {
+                var uldiv = $(this).siblings('span.select2').find('ul');
+                var count = $(this).select2('data').length;
+                if (count == 0) {
+                    uldiv.html("");
+                }
+                else if (count > 2) {
+                    uldiv.html("<li>" + count + " activités</li>");
+                }
+            });
+
+        });
 
         $('#complex').change(function () {
 
@@ -378,6 +494,29 @@
                 $("#select_activity_list").children("optgroup").show();
             }
         })
+
+        function formatRepo (repo) {
+            if (repo.loading) {
+                return repo.text;
+            }
+
+            var $container = $(
+                "<div class='select2-result-repository clearfix'>" +
+                "<div class='select2-result-repository__title'></div>" +
+                "</div>" +
+                "</div>" +
+                "</div>"
+            );
+
+            $container.find(".select2-result-repository__title").text(repo.title);
+
+            return $container;
+        }
+
+        function formatRepoSelection (repo) {
+            return repo.title || repo.text;
+        }
+
     </script>
 
 @endsection

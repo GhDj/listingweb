@@ -28,6 +28,7 @@ class CreateUsersTable extends Migration
             $table->string('phone')->nullable();
             $table->char('gender', 1)->nullable(); //1 - homme / 2 - femme
             $table->integer('status')->default(0); // 0 mail invalide / 1 mail valid profile to complet / 2 OK / 3 banned
+            $table->integer('newsletter')->default(1); // 0 accepte newsletter  / 1 ^n'accepte pas
             $table->string('picture')->nullable();
             $table->string('validation')->nullable();
             $table->integer('promo_pts')->default(0);

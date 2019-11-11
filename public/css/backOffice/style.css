@@ -22745,3 +22745,7 @@ blockquote {
 button.add_user {
     margin-left: auto !important;
 }
+
+.img-preview {
+    max-width: 250px;
+}
