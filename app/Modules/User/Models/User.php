@@ -40,7 +40,8 @@ class User extends Authenticatable
         'phone',
         'gender',
         'promo_pts',
-        'address_id'
+        'address_id',
+        'newsletter'
     ];
 
     /**

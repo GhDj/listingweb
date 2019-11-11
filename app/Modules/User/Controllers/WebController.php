@@ -2038,7 +2038,7 @@ class WebController extends Controller
     public function showMediaRequest()
     {
 
-        return view('User::backOffice.showCategoryRequest', ['categoryRequests' => Category::where('status','=','0')->get()]);
+        return view('User::backOffice.showMediaRequest', ['mediaRequests' => Media::where('status','=','0')->get()]);
     }
     public function handleAcceptMediaRequest($id)
     {
@@ -2055,7 +2055,7 @@ class WebController extends Controller
     {
         $mediaRequest = Media::find($id);
         if ($mediaRequest) {
-            $mediaRequest->type = 10;
+            $mediaRequest->status = 0;
             $mediaRequest->save();
             alert()->error("Media annulé", "Bien")->persistent("Ok");
         }

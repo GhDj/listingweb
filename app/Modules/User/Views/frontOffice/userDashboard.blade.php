@@ -178,7 +178,7 @@
                                     <!-- dashboard-list end-->
 
                                     @if (checkAthleticRole(Auth::user()))
-                                        @foreach (Auth::user()->wishlists as $wishlist)
+                                        @foreach (Auth::user()->wishlists()->orderby('created_at', 'asc')->get() as $wishlist)
                                             <div class="dashboard-list">
                                                 <div class="dashboard-message">
                                                     <span id="terrain{{$wishlist->wished->id}}"
@@ -206,7 +206,7 @@
 
                                     <!-- dashboard-list end-->
                                         <!-- dashboard-list end-->
-                                        @foreach (Auth::user()->reviews as $review)
+                                        @foreach (Auth::user()->reviews()->orderby('created_at', 'asc')->get() as $review)
                                             <div class="dashboard-list">
                                                 <div class="dashboard-message">
                                                         <span class="new-dashboard-item"><i

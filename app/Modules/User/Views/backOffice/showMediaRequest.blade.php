@@ -90,15 +90,22 @@
                                    class="display table table-striped table-bordered" cellspacing="0"
                                    width="100%">
                                 <thead>
+                                <th>Media</th>
                                 <th>Utilisateur</th>
                                 <th>Lié à </th>
-                                <th>Media</th>
+
                                 <th>Date de la demande</th>
                                 <th>Action</th>
                                 </thead>
                                 <tbody>
                                 @foreach($mediaRequests as $mediaRequest)
+                                    <?php
+                                          //  dd($mediaRequest->user->first_name);
+                                    ?>
                                     <tr>
+                                        <td>
+                                            <img src="{{ asset($mediaRequest->link) }}" class="responsive-img img-preview" alt="">
+                                        </td>
                                         <td>
                                             {{$mediaRequest->user->first_name}} {{$mediaRequest->user->last_name}}
                                         </td>
@@ -119,17 +126,15 @@
                                                 Complex : {{$mediaRequest->complex_id}}
                                             @endif
                                         </td>
-                                        <td>
-                                            <img src="{{ asset($mediaRequest->link) }}" class="responsive-img" alt="">
-                                        </td>
+
                                         <td>
                                             {{$mediaRequest->created_at}}
                                         </td>
                                         <td>
-                                            @if($mediaRequest->type == 10)
+                                            @if($mediaRequest->status == 0)
                                                 <a href="{{route('acceptMediaRequest',$mediaRequest->id)}}"
                                                   ><span class="badge badge-pill badge-outline-success p-2 m-1"><i class="i-Like"></i></span></a>
-                                            @elseif ($mediaRequest->type > 10)
+                                            @elseif ($mediaRequest->status == 1)
 
                                             <a href="{{route('cancelMediaRequest',$mediaRequest->id)}}"
                                                class="btn btn-danger">Annuler</a>
@@ -140,9 +145,10 @@
                                 @endforeach
                                 </tbody>
                                 <tfoot>
+                                <th>Media</th>
                                 <th>Utilisateur</th>
                                 <th>Lié à </th>
-                                <th>Media</th>
+
                                 <th>Date de la demande</th>
                                 <th>Action</th>
                                 </tfoot>

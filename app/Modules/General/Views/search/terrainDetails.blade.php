@@ -683,27 +683,27 @@
                     case 1:
                         /*   $('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
                            $('input[type=radio][name=rating][value="1"]').attr('checked','checked');*/
-                        $('.note').text("1");
+                        $('.note').text(rating/4);
                         break;
                     case 2:
                         /* $('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
                          $('input[type=radio][name=rating][value="2"]').attr('checked','checked');*/
-                        $('.note').text("2");
+                        $('.note').text(rating/4);
                         break;
                     case 3:
                         /*$('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
                         $('input[type=radio][name=rating][value="3"]').attr('checked','checked');*/
-                        $('.note').text("3");
+                        $('.note').text(rating/4);
                         break;
                     case 4:
                         /*$('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
                         $('input[type=radio][name=rating][value="4"]').attr('checked','checked');*/
-                        $('.note').text("4");
+                        $('.note').text(rating/4);
                         break;
                     case 5:
                         /*$('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
                         $('input[type=radio][name=rating][value="5"]').attr('checked','checked');*/
-                        $('.note').text("5");
+                        $('.note').text(rating/4);
                         break;
                 }
 
@@ -721,27 +721,27 @@
                     case 1:
                         /*   $('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
                            $('input[type=radio][name=rating][value="1"]').attr('checked','checked');*/
-                        $('.note').text("1");
+                        $('.note').text(rating/4);
                         break;
                     case 2:
                         /* $('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
                          $('input[type=radio][name=rating][value="2"]').attr('checked','checked');*/
-                        $('.note').text("2");
+                        $('.note').text(rating/4);
                         break;
                     case 3:
                         /*$('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
                         $('input[type=radio][name=rating][value="3"]').attr('checked','checked');*/
-                        $('.note').text("3");
+                        $('.note').text(rating/4);
                         break;
                     case 4:
                         /*$('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
                         $('input[type=radio][name=rating][value="4"]').attr('checked','checked');*/
-                        $('.note').text("4");
+                        $('.note').text(rating/4);
                         break;
                     case 5:
                         /*$('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
                         $('input[type=radio][name=rating][value="5"]').attr('checked','checked');*/
-                        $('.note').text("5");
+                        $('.note').text(rating/4);
                         break;
                 }
 
@@ -759,17 +759,17 @@
                     case 1:
                         /*   $('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
                            $('input[type=radio][name=rating][value="1"]').attr('checked','checked');*/
-                        $('.note').text("1");
+                        $('.note').text(rating/4);
                         break;
                     case 2:
                         /* $('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
                          $('input[type=radio][name=rating][value="2"]').attr('checked','checked');*/
-                        $('.note').text("2");
+                        $('.note').text(rating/4);
                         break;
                     case 3:
                         /*$('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
                         $('input[type=radio][name=rating][value="3"]').attr('checked','checked');*/
-                        $('.note').text("3");
+                        $('.note').text(rating/4);
                         break;
                     case 4:
                         /*$('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
@@ -779,7 +779,7 @@
                     case 5:
                         /*$('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
                         $('input[type=radio][name=rating][value="5"]').attr('checked','checked');*/
-                        $('.note').text("5");
+                        $('.note').text(rating/4);
                         break;
                 }
 
@@ -797,28 +797,28 @@
                     case 1:
                         /*   $('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
                            $('input[type=radio][name=rating][value="1"]').attr('checked','checked');*/
-                        $('.note').text("1");
+                        $('.note').text(rating/4);
 
                         break;
                     case 2:
                         /* $('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
                          $('input[type=radio][name=rating][value="2"]').attr('checked','checked');*/
-                        $('.note').text("2");
+                        $('.note').text(rating/4);
                         break;
                     case 3:
                         /*$('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
                         $('input[type=radio][name=rating][value="3"]').attr('checked','checked');*/
-                        $('.note').text("3");
+                        $('.note').text(rating/4);
                         break;
                     case 4:
                         /*$('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
                         $('input[type=radio][name=rating][value="4"]').attr('checked','checked');*/
-                        $('.note').text("4");
+                        $('.note').text(rating/4);
                         break;
                     case 5:
                         /*$('input[type=radio][name=rating][checked=checked]').removeAttr('checked');
                         $('input[type=radio][name=rating][value="5"]').attr('checked','checked');*/
-                        $('.note').text("5");
+                        $('.note').text(rating/4);
                         break;
                 }
 

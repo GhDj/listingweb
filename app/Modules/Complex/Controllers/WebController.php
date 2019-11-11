@@ -3,6 +3,7 @@
 namespace App\Modules\Complex\Controllers;
 
 use App\Modules\Complex\Models\Sport;
+use App\Modules\Complex\Models\SportCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -442,5 +443,12 @@ class WebController extends Controller
         return response()->json(['status' => 200, 'categories' => $complex->categories]);
     }
 
+    public function handleAjaxGetSportsCategories(Request $request) {
+       $q = $request->input('q');
+        $sportsCaregories = SportCategory::where('title','LIKE',"%".$q."%")->get();
+      //  dd($request->input('q'));
+        return response()->json(['status' => 200, 'categories' => $sportsCaregories]);
+
+    }
 
 }

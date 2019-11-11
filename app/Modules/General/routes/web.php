@@ -13,6 +13,7 @@ Route::group(['module' => 'General', 'middleware' => ['web'], 'namespace' => 'Ap
     Route::get('/index/sports/{sportId}', 'WebController@getTerrainsBySport');
 
     Route::get('/fill','WebController@ExcelToJson')->name('kl');
+    Route::get('/fillSports','WebController@ExcelToJsonSports')->name('kl');
 });
 
 Route::group(['module' => 'General', 'middleware' => ['web'], 'namespace' => 'App\Modules\General\Controllers'], function() {
@@ -42,5 +43,6 @@ Route::group(['module' => 'General', 'middleware' => ['web'], 'namespace' => 'Ap
 
 Route::group(['module' => 'General', 'middleware' => ['userAccess'], 'namespace' => 'App\Modules\General\Controllers'], function () {
     Route::post('/media/upload', 'WebController@handleUploadImage')->name('handleUserUploadImage');
+
 });
 
