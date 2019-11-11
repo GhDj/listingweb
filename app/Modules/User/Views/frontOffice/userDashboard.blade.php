@@ -271,7 +271,7 @@
                                             @if(!empty($userTerrains))
                                                 @foreach ($userTerrains as $terrain)
                                                     @if(Auth::user()->wishlists->count() > 0)
-                                                        @foreach ($terrain->wishlists as $wishlist)
+                                                        @foreach ($terrain->wishlists() as $wishlist)
 
                                                         <div class="dashboard-list">
                                                             <div class="dashboard-message">
@@ -301,7 +301,7 @@
                                         @else
                                             @if(!empty($userTerrains))
                                                 @foreach ($userTerrains as $terrain)
-                                                @foreach ($terrain->reviews as $review)
+                                                @foreach ($terrain->reviews() as $review)
 
                                                     <div class="dashboard-list">
                                                         <div class="dashboard-message">

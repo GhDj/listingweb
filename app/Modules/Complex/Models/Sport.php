@@ -26,7 +26,8 @@ class Sport extends Model {
      * @var array
      */
     protected $fillable = [
-        'title'
+        'title',
+        'sport_categories_id'
     ];
 
 

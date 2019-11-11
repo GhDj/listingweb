@@ -498,7 +498,7 @@ class WebController extends Controller
                 //$reviewCounts = $user->complex->terrains()->with('reviews')->count();
                 $reviewCounts = 0;
                 $wishCounts = 0;
-                foreach ($user->complex->terrains() as $terrain) {
+                foreach ($user->complex->terrains as $terrain) {
                     $reviewCounts += Review::where('reviewed_id','=',$terrain->id)->count();
                     $wishCounts += Wishlist::where('wished_id','=',$terrain->id)->count();
                 }
@@ -590,6 +590,8 @@ class WebController extends Controller
             ]
         );
     }
+
+
 
     public function showUserListingClub()
     {
@@ -892,7 +894,6 @@ class WebController extends Controller
         $this->validate($request, [
             "name" => "required",
             "category_id" => "required",
-            "sport_id" => "required",
             "sport_category_id" => "required",
             "description" => "required",
             "lighting" => "required",
@@ -908,7 +909,6 @@ class WebController extends Controller
             [
                 'name' => 'Le champ Nom de terrain est  obligatoire',
                 'category_id' => 'Le champ Categorie de terrain est  obligatoire',
-                'sport_id' => 'Le champ sport de terrain est  obligatoire',
                 'sport_category_id' => 'Le champ sport de terrain est  obligatoire',
                 "description" => 'Le champ Description de terrain est  obligatoire',
                 "width.required" => 'Le champ largeur de terrain est  obligatoire',
@@ -939,7 +939,7 @@ class WebController extends Controller
             "video_recorder" => $request->video_recorder,
             "complex_id" => Auth::user()->complex->id,
             "category_id" => $request->category_id,
-            "sport_id" => $request->sport_id,
+            "sport_id" => $request->sport_category_id,
             "description" => $request->description,
         ]);
 
@@ -973,10 +973,12 @@ class WebController extends Controller
 
         }
 
-        foreach ($request->sport_category_id as $activity) {
+        foreach ($request->sports as $activity) {
             TerrainActivity::create([
-                'sport_category_id' => $activity,
+                'sport_category_id' => $request->sport_category_id,
+                'sport_id' => $activity,
                 'terrain_id' => $terrain->id,
+                'prix' => 0
             ]);
         }
 
@@ -2091,6 +2093,19 @@ class WebController extends Controller
             alert()->error("Bien !", "Catégorie annulée")->persistent("Ok");
         }
         return redirect()->back();
+    }
+
+    public function showUserListingPrix()
+    {
+
+        $terrains = Auth::user()->complex->terrains;
+
+         dd($terrains);
+        return view('User::frontOffice.prixListing',
+            [
+                'terrains' => $terrains
+            ]
+        );
     }
 
 }

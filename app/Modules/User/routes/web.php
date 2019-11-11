@@ -74,6 +74,7 @@ Route::post('user/update/terrain/{id}','WebController@handleUserUpdateTerrain')-
 Route::post('user/add/infrastructure','WebController@handleAddInfrastructure')->name('handleAddInfrastructure');
 Route::post('user/edit/infrastructure','WebController@handleEditInfrastructure')->name('handleEditInfrastructure');
 
+    Route::get('/user/listing/prix', 'WebController@showUserListingPrix')->name('showUserListingPrix');
 
 });
 
