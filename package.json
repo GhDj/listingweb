@@ -13,7 +13,7 @@
         "lint-style": "cross-env NODE_ENV=development node_modules/stylelint/bin/stylelint.js \"resources/assets/css/**/*.css\"\"resources/assets/sass/**/*.scss\""
     },
     "devDependencies": {
-        "axios": "^0.17",
+        "axios": "^0.18",
         "bootstrap-sass": "^3.3.7",
         "cross-env": "^5.1",
         "jquery": "^3.2",
