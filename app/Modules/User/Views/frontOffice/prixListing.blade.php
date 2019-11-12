@@ -57,7 +57,10 @@
 
                                         @if($terrain->activities->count() > 0)
                                             <div class="dashboard-header fl-wrap">
-                                                <h3>Activités du terrain : {{ $terrain->name }}</h3>
+                                                <h3>Activités du terrain :
+                                                    <a href="{{ route('showTerrainDetails',$terrain->id) }}">{{ $terrain->name }}</a>
+                                                   {{-- {{ $terrain->name }}--}}
+                                                </h3>
                                             </div>
                                             @foreach($terrain->activities as $activity)
                                                 <div class="dashboard-list">
@@ -70,39 +73,42 @@
                                                             </h4>
                                                             <div class="prix-activity-update-container">
 
-                                                                <div class="row custom-form">
+                                                                <div class="row custom-form" id="{{ $activity->id }}">
 
                                                                     <div class="form-group col-md-3">
                                                                         <label> Prix </label>
                                                                         <input type="hidden" class="form-control"
                                                                                name="activity_id"
+                                                                               id="activity_id"
                                                                                value="{{ $activity->id }}"
                                                                                placeholder="{{ \App\Modules\Complex\Models\Sport::where('id','=',$activity->sport_id)->first()->title }}"
                                                                                disabled/>
-                                                                        <input type="text" class="form-control"
+                                                                        <input type="number" class="form-control"
                                                                                name="prix"
-                                                                               data-value="{{ $activity->id }}"
+                                                                               id="prix"
                                                                                placeholder="0 €"/>
                                                                     </div>
                                                                     <div class="form-group col-md-3">
                                                                         <label> Minutes <i
                                                                                     class="fa fa-clock"></i></label>
 
-                                                                        <input type="text" class="form-control"
+                                                                        <input type="number" class="form-control"
                                                                                name="duree_m"
+                                                                               id="duree_m"
                                                                                placeholder="0"/>
 
                                                                     </div>
                                                                     <div class="form-group col-md-3">
                                                                         <label> Heures <i
                                                                                     class="fa fa-clock"></i></label>
-                                                                        <input type="text" class="form-control"
+                                                                        <input type="number" class="form-control"
                                                                                name="duree_h"
+                                                                               id="duree_h"
                                                                                placeholder="0"/>
 
                                                                     </div>
                                                                     <div class="form-group col-md-3">
-                                                                        <button class="btn flat-btn">Enregistrer
+                                                                        <button class="btn flat-btn" id="savePrix" data-terrain="{{ $terrain->id }}" data-activity="{{ $activity->id }}">Enregistrer
                                                                         </button>
                                                                     </div>
                                                                 </div>
@@ -141,5 +147,46 @@
 
     @include('frontOffice.inc.footer')
 
+@endsection
+
+@section('scripts')
+    <script type="text/javascript">
+		$.ajaxSetup({
+
+			headers: {
+
+				'X-CSRF-TOKEN': '{{ csrf_token() }}'
+
+			}
+
+		});
+        $('#savePrix').click(function(e) {
+            activity = $(this).data('activity');
+            console.log($('#'+activity).find('#activity_id').val());
+			console.log($('#'+activity).find('#prix').val());
+			console.log($('#'+activity).find('#duree_m').val());
+			console.log($('#'+activity).find('#duree_h').val());
+			$.ajax({
+
+				type:'post',
+
+				url:'{{ route('updateActivity') }}',
+
+				data:{
+					activity_id:$('#'+activity).find('#activity_id').val(),
+					prix:$('#'+activity).find('#prix').val(),
+					duree_m:$('#'+activity).find('#duree_m').val(),
+					duree_h:$('#'+activity).find('#duree_h').val()
+                },
+
+				success:function(data){
+
+					console.log("Success !")
+
+				}
+
+			});
+        });
+    </script>
 @endsection
 

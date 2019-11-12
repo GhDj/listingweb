@@ -76,7 +76,7 @@ Route::post('user/edit/infrastructure','WebController@handleEditInfrastructure')
 
     Route::get('/user/listing/prix', 'WebController@showUserListingPrix')->name('showUserListingPrix');
 
-    Route::post('/user/listing/prix', 'WebController@showUserListingPrix')->name('showUserListingPrix');
+    Route::post('/user/updatePrix', 'WebController@handleUpdateActivity')->name('updateActivity');
 
 });
 

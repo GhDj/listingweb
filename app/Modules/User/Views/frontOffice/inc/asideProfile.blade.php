@@ -45,7 +45,7 @@
 
                             @endif
                             <li><a href="{{route('showEditComplex')}}"><i class="fa fa-plus-square-o"></i> Modifier Complexe</a></li>
-                                <li><a href="#"><i class="fa fa-plus-square-o"></i> Les prix </a></li>
+                                <li><a href="{{route('showUserListingPrix')}}"><i class="fa fa-plus-square-o"></i> Les prix </a></li>
                                 <li><a href="{{route('showReviewList')}}"><i class="fa fa-comments-o"></i>Avis des sportifs
                                         {{--<span>{{count(Auth::user()->reviews)}}</span>--}} </a></li>
                                 <li><a href="{{route('showUserListingReports')}}"><i class="fa fa-plus-square-o"></i> Signalement des problèmes </a></li>

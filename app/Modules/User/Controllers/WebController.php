@@ -2112,12 +2112,22 @@ class WebController extends Controller
 
         $activity = TerrainActivity::find($request->input('activity_id'));
 
-        $activity->prix = $request->input('prix');
-        $activity->duree_m = $request->input('duree_m');
-        $activity->duree_h = $request->input('duree_h');
+        if ($request->input('prix')) {
+            $activity->prix = $request->input('prix');
+        }
+
+        if ($request->input('duree_m')) {
+            $activity->duree_m = $request->input('duree_m');
+        }
+
+        if ($request->input('duree_h')) {
+            $activity->duree_h = $request->input('duree_h');
+        }
+
 
         $activity->save();
 
+        alert()->success("Prix modifié avec succès", "Bien")->persistent("Ok");
         return redirect()->back();
     }
 

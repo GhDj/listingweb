@@ -121,6 +121,33 @@
 
                                 </div>
 
+                                <div class="list-single-main-item fl-wrap">
+                                    <div class="list-single-main-item-title fl-wrap">
+                                        <h3>Activités Sportives</h3>
+                                    </div>
+
+                                    <table id="clubs">
+                                        <tr>
+                                            <th>Nom de l'activité</th>
+                                            <th>Prix</th>
+                                            <th>Durée</th>
+                                        </tr>
+
+                                        @foreach ($terrain->activities as $activity)
+
+                                            <tr>
+                                                <td>{{ \App\Modules\Complex\Models\Sport::find($activity->sport_id)->first()->title }}</td>
+                                                <td>{{$activity->prix}}€</td>
+                                                <td>{{$activity->duree_m}}m {{$activity->duree_h}}h</td>
+                                            </tr>
+
+                                        @endforeach
+
+                                    </table>
+
+
+                                </div>
+
                                 <div class="list-single-main-item fl-wrap" id="sec3">
                                     <div class="list-single-main-item-title fl-wrap">
                                         <h3>Galerie - Photos</h3>

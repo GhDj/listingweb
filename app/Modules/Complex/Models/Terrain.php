@@ -55,7 +55,7 @@ class Terrain extends Model
     public function sport()
     {
 
-        return $this->belongsTo('App\Modules\Complex\Models\Sport');
+        return $this->belongsTo('App\Modules\Complex\Models\SportCategory','sport_id','sport_id');
 
     }
 
