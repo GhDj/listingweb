@@ -957,7 +957,7 @@ class WebController extends Controller
             ]);
         }
 
-        foreach ($request->sessionDay as $key => $sessionDay) {
+       /* foreach ($request->sessionDay as $key => $sessionDay) {
 
             $sessionStartTime = $request->sessionStartTime[$key];
             $sessionEndTime = $request->sessionEndTime[$key];
@@ -971,7 +971,7 @@ class WebController extends Controller
                 'day' => $dayofweek[$key]
             ]);
 
-        }
+        }*/
 
         foreach ($request->sports as $activity) {
             TerrainActivity::create([
@@ -2100,12 +2100,25 @@ class WebController extends Controller
 
         $terrains = Auth::user()->complex->terrains;
 
-         dd($terrains);
+      //   dd($terrains);
         return view('User::frontOffice.prixListing',
             [
                 'terrains' => $terrains
             ]
         );
+    }
+
+    public function handleUpdateActivity(Request $request) {
+
+        $activity = TerrainActivity::find($request->input('activity_id'));
+
+        $activity->prix = $request->input('prix');
+        $activity->duree_m = $request->input('duree_m');
+        $activity->duree_h = $request->input('duree_h');
+
+        $activity->save();
+
+        return redirect()->back();
     }
 
 }

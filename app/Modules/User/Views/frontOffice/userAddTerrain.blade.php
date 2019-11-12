@@ -237,7 +237,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="profile-edit-container add-list-container">
+                                   {{-- <div class="profile-edit-container add-list-container">
                                         <div class="profile-edit-header fl-wrap">
                                             <h4>Ajouter Temp d'ouverture et fermeture</h4>
                                         </div>
@@ -293,7 +293,7 @@
                                             </div>
 
                                         </div>
-                                    </div>
+                                    </div>--}}
                                     <button class="btn  big-btn  color-bg flat-btn">Enregistrer<i
                                                 class="fa fa-angle-right"></i></button>
                                 </form>
@@ -430,21 +430,20 @@
 
         });
 
-        $(document).ready(function (){
 
 
-            $('select').on('select2:close', function (evt) {
-                var uldiv = $(this).siblings('span.select2').find('ul');
-                var count = $(this).select2('data').length;
-                if (count == 0) {
-                    uldiv.html("");
-                }
-                else {
-                    uldiv.html("<li>" + count + " activités</li>");
-                }
-            });
 
+        $('select').on('select2:close', function (evt) {
+            var uldiv = $(this).siblings('span.select2').find('ul');
+            var count = $(this).select2('data').length;
+            if (count == 0) {
+                uldiv.html("");
+            }
+            else {
+                uldiv.html("<li>" + count + " activités</li>");
+            }
         });
+
 
         $('#complex').change(function () {
 

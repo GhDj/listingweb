@@ -99,4 +99,9 @@ class Terrain extends Model
         $terrain = Terrain::find($id);
         return $terrain->longueur * $terrain->largueur;
     }
+
+    public function activities()
+    {
+        return $this->hasMany('App\Modules\Complex\Models\TerrainActivity', 'terrain_id');
+    }
 }

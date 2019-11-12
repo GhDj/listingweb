@@ -51,53 +51,74 @@
                             @include('User::frontOffice.inc.asideProfile')
                             <div class="col-md-9">
                                 <div class="dashboard-list-box fl-wrap">
-                                    <div class="dashboard-header fl-wrap">
 
-
-                                        <h3>Activités des terrains</h3>
-
-
-
-
-                                    </div>
                                     <!-- dashboard-list end-->
-
-
-
-
-
                                     @foreach ($terrains as $terrain)
 
-                                        <div class="dashboard-list">
-                                            <div class="dashboard-message">
-                                               {{-- <div class="dashboard-listing-table-image">
-                                                    <a href="listing-single.html"><img src="images/all/3.jpg" alt=""></a>
-                                                </div>--}}
-                                                <div class="dashboard-listing-table-text">
-                                                    <h4><a href="#">{{ \App\Modules\Complex\Models\Sport::find($p->sport_id)->first()->name }}</a></h4>
-                                                    <span class="dashboard-listing-table-address"><i class="fa fa-map-marker"></i><a href="#">USA 27TH Brooklyn NY</a></span>
-                                                    <div class="listing-rating card-popup-rainingvis fl-wrap" data-starrating2="5"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-                                                        <span>(2 reviews)</span>
-                                                    </div>
-                                                    <ul class="dashboard-listing-table-opt  fl-wrap">
-                                                        <li><a href="#">Edit <i class="fa fa-pencil-square-o"></i></a></li>
-                                                        <li><a href="#" class="del-btn">Delete <i class="fa fa-trash-o"></i></a></li>
-                                                    </ul>
-                                                </div>
+                                        @if($terrain->activities->count() > 0)
+                                            <div class="dashboard-header fl-wrap">
+                                                <h3>Activités du terrain : {{ $terrain->name }}</h3>
                                             </div>
-                                        </div>
-                                @endforeach
+                                            @foreach($terrain->activities as $activity)
+                                                <div class="dashboard-list">
+                                                    <div class="dashboard-message">
 
-                                {{--{{$userTerrains->links()}}--}}
+                                                        <div class="dashboard-listing-table-text">
+                                                            <h4>
+                                                                <a href="#">{{ \App\Modules\Complex\Models\Sport::where('id','=',$activity->sport_id)->first()->title }}</a>
+
+                                                            </h4>
+                                                            <div class="prix-activity-update-container">
+
+                                                                <div class="row custom-form">
+
+                                                                    <div class="form-group col-md-3">
+                                                                        <label> Prix </label>
+                                                                        <input type="hidden" class="form-control"
+                                                                               name="activity_id"
+                                                                               value="{{ $activity->id }}"
+                                                                               placeholder="{{ \App\Modules\Complex\Models\Sport::where('id','=',$activity->sport_id)->first()->title }}"
+                                                                               disabled/>
+                                                                        <input type="text" class="form-control"
+                                                                               name="prix"
+                                                                               data-value="{{ $activity->id }}"
+                                                                               placeholder="0 €"/>
+                                                                    </div>
+                                                                    <div class="form-group col-md-3">
+                                                                        <label> Minutes <i
+                                                                                    class="fa fa-clock"></i></label>
+
+                                                                        <input type="text" class="form-control"
+                                                                               name="duree_m"
+                                                                               placeholder="0"/>
+
+                                                                    </div>
+                                                                    <div class="form-group col-md-3">
+                                                                        <label> Heures <i
+                                                                                    class="fa fa-clock"></i></label>
+                                                                        <input type="text" class="form-control"
+                                                                               name="duree_h"
+                                                                               placeholder="0"/>
+
+                                                                    </div>
+                                                                    <div class="form-group col-md-3">
+                                                                        <button class="btn flat-btn">Enregistrer
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
 
 
 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @endif
 
 
 
-
-
-                                <!-- dashboard-list end-->
+                                    @endforeach
 
                                 </div>
 

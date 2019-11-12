@@ -20,6 +20,15 @@ class TerrainActivity extends Model
          'sport_category_id',
          'terrain_id',
          'prix',
-         'sport_id'
+         'sport_id',
+         'duree_m',
+         'duree_h'
      ];
+
+    public function terrains()
+    {
+
+        return $this->hasMany('App\Modules\Complex\Models\Terrain', 'terrain_id');
+
+    }
 }

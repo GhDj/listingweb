@@ -6832,3 +6832,8 @@ footer.main-footer.fixed-footer {
 	height: 34px;
 	line-height: 30px;
 }
+
+.prix-activity-update-container .row {
+	display: flex;
+	align-items: center;
+}
