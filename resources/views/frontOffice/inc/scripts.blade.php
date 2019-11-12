@@ -81,17 +81,16 @@ $(document).ready(function(){
                 ];
                     @endisset
                     @isset($clubs)
-            var locations = [
-                            @foreach ($clubs as $club)
-                            @if ($club->medias->count()>0)
-                    [locationData('{{ route('showClubDetails',['id' => $club->id]) }}', '{{$club->terrain->category->category}}', '{{$club->medias->first()->link}}', '{{$club->name}}', '{{$club->terrain->complex->address->city}}','{{$club->terrain->complex->phone}}', "5", "27"), {{$club->terrain->complex->address->latitude}}, {{$club->terrain->complex->address->longitude}}, 0, markerIcon],
+                    var locations = [
+                                    @foreach ($clubs as $club)
+                                    @if ($club->medias->count() > 0)
+                            [locationData('{{ route('showClubDetails',['id' => $club->id]) }}', '{{$club->terrain->category->category}}', '{{$club->medias->first()->link}}', '{{$club->name}}', '{{$club->terrain->complex->address->city}}','{{$club->terrain->complex->phone}}', "5", "27"), {{$club->terrain->complex->address->latitude}}, {{$club->terrain->complex->address->longitude}}, 0, markerIcon],
+                                    @else
+                            [locationData('{{ route('showClubDetails',['id' => $club->id]) }}', '{{$club->terrain->category->category}}', 'images/unkown.jpg', '{{$club->name}}', '{{$club->terrain->complex->address->city}}','{{$club->terrain->complex->phone}}', "5", "27"), {{$club->terrain->complex->address->latitude}}, {{$club->terrain->complex->address->longitude}}, 0, markerIcon],
 
-                            @else
-                    [locationData('{{ route('showClubDetails',['id' => $club->id]) }}', '{{$club->terrain->category->category}}', 'images/unkown.jpg', '{{$club->name}}', '{{$club->terrain->complex->address->city}}','{{$club->terrain->complex->phone}}', "5", "27"), {{$club->terrain->complex->address->latitude}}, {{$club->terrain->complex->address->longitude}}, 0, markerIcon],
-
-                        @endif
-                        @endforeach
-                ];
+                                @endif
+                                @endforeach
+                        ];
                     @endisset
 
             var map = new google.maps.Map(document.getElementById('map-main'), {

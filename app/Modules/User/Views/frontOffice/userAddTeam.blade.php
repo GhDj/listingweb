@@ -75,9 +75,9 @@
                                     <div class="row">
                                       <div class="col-md-4">
                                           <label>Club</label>
-                                          <select  class="chosen" id="club" name="club_id">
+                                          {{--<select  class="chosen" id="club" name="club_id">
                                               <option value="-1">Votre Club</option>
-                                              <@foreach ($clubs as $club)
+                                              @foreach ($clubs as $club)
                                                 <option value="{{$club->id}}">{{$club->name}}</option>
                                               @endforeach
                                               @if ($errors->has('club_id'))
@@ -85,12 +85,13 @@
                                                 <strong>{{ $errors->first('club_id') }}</strong>
                                               </span>
                                               @endif
-                                          </select>
+                                          </select>--}}
+                                          <input type="text" value="{{ \Illuminate\Support\Facades\Auth::user()->club->id }}" disabled class="form-control">
                                       </div>
                                       <div class="col-md-4">
                                           <label>specialité de club</label>
                                           <select  class="chosen" name="speciality_id">
-                                              <@foreach ($specialities as $specialitie)
+                                              @foreach ($specialities as $specialitie)
                                                 <option value="{{$specialitie->id}}">{{$specialitie->speciality}}</option>
                                               @endforeach
                                           </select>
